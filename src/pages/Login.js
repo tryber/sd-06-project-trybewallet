@@ -24,7 +24,7 @@ class Login extends React.Component {
     return (password.length >= minimumPasswordLength ? true : false);
   }
 
-  handleDisableButton = () => {
+  handleDisableButton() {
     const { email, password } = this.props.user;
     const { validateEmail, validatePassword } = this;
 
