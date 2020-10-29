@@ -1,7 +1,8 @@
 import React from 'react';
+import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginAction } from '../actions';
-import propTypes from 'prop-types';
+
 
 class Login extends React.Component {
   constructor(props) {
@@ -73,6 +74,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   submitButton: propTypes.func.isRequired,
-}
+};
 
 export default connect(null, mapDispatchToProps)(Login);
