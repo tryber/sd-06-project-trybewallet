@@ -1,8 +1,7 @@
-import { combineReducers, createStore, applyMiddleWare } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { reducerWallet } from '../reducers';
+import rootReducer from '../reducers';
 
-const rootReducer = combineReducers({ reducerWallet });
 const store = createStore(
   rootReducer,
   compose(
