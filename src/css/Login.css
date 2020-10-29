@@ -1,0 +1,58 @@
+fieldset {
+  background-color: rgb(234, 253, 226);
+  border: none;
+  border-radius: 8px;
+  padding: 20px 20px 40px;
+}
+
+legend {
+  background-color: white;
+  border-radius: 8px;
+  color: rgb(0, 103, 46);
+  font-size: 1.2em;
+  font-style: italic;
+  font-weight: 500;
+  padding: 0 12px 4px 12px;
+  margin: 0 0 0 17px;
+}
+
+label {
+  color: rgb(0, 103, 46);
+  display: block;
+  font-size: 1.1em;
+  font-style: italic;
+}
+
+input {
+  border: 1px solid rgb(14, 163, 106);
+  border-radius: 8px;
+  font-size: 1em;
+  margin: 10px;
+  padding: 6px 18px;
+}
+
+.login-btn {
+  background-color: rgb(14, 163, 106);
+  border: none;
+  border-radius: 8px;
+  color: rgb(234, 253, 246);
+  font-size: 1.2em;
+  padding: 6px 16px;
+  cursor: pointer;
+  position: relative;
+  top: -18px;
+}
+
+.login-btn:hover {
+  background-color: rgb(24, 183, 126);
+}
+
+.login-btn:active {
+  background-color: rgb(4, 143, 96);
+}
+
+.login-error {
+  color: red;
+  font-size: 1.1em;
+  font-style: italic;
+}
