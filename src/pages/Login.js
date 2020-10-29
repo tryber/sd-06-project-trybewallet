@@ -14,7 +14,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       enableLogin: false,
-      loginError: false,
+      fieldsValidated: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,31 +24,33 @@ class Login extends React.Component {
 
   handleInput({ target }) {
     this.setState({ [target.id]: target.value });
+    const fieldsAreValid = this.validateFields();
+    if (fieldsAreValid) {
+      this.setState({ fieldsValidated: true });
+    } else {
+      this.setState({ fieldsValidated: false });
+    }
   }
 
   validateFields() {
     const { email } = this.state;
     const passwordInput = document.getElementById('password');
+    // using RegEx idea from https://ui.dev/validate-email-address-javascript/
     const checkEmail = (emailToVal) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailToVal);
-    const loginIsValid = checkEmail(email) && passwordInput.checkValidity();
+    const loginIsValid = (checkEmail(email) && passwordInput.checkValidity());
 
     return loginIsValid;
   }
 
   handleSubmit(email) {
     const { loginUserDispatch } = this.props;
-
-    if (this.validateFields()) {
-      loginUserDispatch(email);
-      this.setState({ loginError: false, enableLogin: true });
-    } else {
-      this.setState({ loginError: true });
-    }
+    loginUserDispatch(email);
+    this.setState({ enableLogin: true });
   }
 
   render() {
-    const { loginError, enableLogin, email } = this.state;
-    const { validateFields, handleInput, handleSubmit } = this;
+    const { enableLogin, email, fieldsValidated } = this.state;
+    const { handleInput, handleSubmit } = this;
 
     return (!enableLogin)
       ? (
@@ -57,15 +59,6 @@ class Login extends React.Component {
           <form>
             <fieldset className="login-fieldset">
               <legend>Login</legend>
-              {
-                (loginError)
-                  ? (
-                    <p className="login-error">
-                      Por favor, confira as informações preenchidas.
-                    </p>
-                  )
-                  : <span />
-              }
               <label htmlFor="email">
                 E-mail
                 <input
@@ -82,12 +75,13 @@ class Login extends React.Component {
                   type="password"
                   id="password"
                   minLength="6"
+                  onChange={ handleInput }
                   required
                   data-testid="password-input"
                 />
               </label>
             </fieldset>
-            { (validateFields())
+            { (fieldsValidated)
               ? (
                 <button
                   type="button"
