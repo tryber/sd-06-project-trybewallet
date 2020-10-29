@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-export const Page = (props) => {
+const App = () => {
   return (
     <div>
-      <h1>Opa funfo...</h1>
+      <h1>Funfo</h1>
     </div>
   );
 };
@@ -15,8 +15,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToprops = (dispach) => {
-  return {};
-};
+// const mapDispatchToprops = (dispach) => {
+//   return {
 
-export default connect(mapStateToProps, mapDispatchToprops)(Page);
+//   };
+// };
+
+export default connect(mapStateToProps)(App);
