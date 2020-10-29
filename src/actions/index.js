@@ -1,1 +1,6 @@
-// Coloque aqui suas actions
+export const UPDATE = 'UPDATE';
+
+export const saveMail = (email) => ({
+  type: UPDATE,
+  email,
+});
