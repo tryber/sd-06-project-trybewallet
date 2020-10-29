@@ -18,7 +18,7 @@ class Login extends React.Component {
     this.setState({
       email: e.target.value,
     }, () => {
-      loginDispatch(email)
+      loginDispatch(email);
     });
   }
 
@@ -31,7 +31,8 @@ class Login extends React.Component {
             <input
               type="password"
               data-testid="password-input"
-              placeholder="Password" minLength="6"
+              placeholder="Password"
+              minLength="6"
             />
           </fieldset>
           <button type="button" onClick={ this.submitEmail }>
@@ -43,12 +44,12 @@ class Login extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  loginDispatch: (email) => dispatch(loginAction(email))
-};
+// const mapDispatchToProps = (dispatch) => {
+//   loginDispatch: (email) => dispatch(loginAction(email))
+// };
 
-Login.propTypes = {
-  loginDispatch: propTypes.func.isRequired,
-};
+// Login.propTypes = {
+//   loginDispatch: propTypes.func.isRequired,
+// };
 
 export default Login;
