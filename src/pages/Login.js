@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import setEmail from '../actions';
@@ -35,7 +36,7 @@ class Login extends Component {
             maxLength="6"
           />
           <button
-            type="button"
+            type="submit"
             onClick={ () => setEmail(this.state) }
           >
             <Link to="/carteira">Entrar</Link>
@@ -53,5 +54,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setEmail: (email) => dispatch(setEmail(email)),
 });
+
+Login.propTypes = {
+  setEmail: propTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
