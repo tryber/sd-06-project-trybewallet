@@ -11,12 +11,12 @@ class Wallet extends React.Component {
           <p>
             Email:
             <span data-testid="email-field">{ email }</span>
-            </p>
+          </p>
           <p>
             Despesa Total: R$
-              <span data-testid="total-field">{ value }</span>
-              ,00
-              <span data-testid="header-currency-field">BRL</span>
+            <span data-testid="total-field">{ value }</span>
+            ,00
+            <span data-testid="header-currency-field">BRL</span>
           </p>
         </header>
       </div>

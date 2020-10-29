@@ -19,9 +19,10 @@ class Login extends React.Component {
       email: event.target.value,
     });
   }
-  
+
   render() {
     const { fieldChange } = this.props;
+    const { email } = this.state;
     return (
       <div className="login">
         <img alt="trybe-logo" src={ trybewallet } width="200px" />
@@ -31,8 +32,8 @@ class Login extends React.Component {
               type="email"
               placeholder="Enter email"
               data-testid="email-input"
-              value={this.state.email}
-              onChange={this.changeHandler}
+              value={ email }
+              onChange={ this.changeHandler }
             />
           </Form.Group>
           <Form.Group>
@@ -42,7 +43,7 @@ class Login extends React.Component {
               data-testid="password-input"
             />
           </Form.Group>
-          <Link to="/carteira" onClick={ () => fieldChange(this.state.email) }>
+          <Link to="/carteira" onClick={ () => fieldChange(email) }>
             <Button variant="success" block>Entrar</Button>
           </Link>
         </Form>
