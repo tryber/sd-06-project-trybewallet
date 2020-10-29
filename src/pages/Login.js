@@ -19,7 +19,7 @@ class Login extends React.Component {
             name="password"
             value={ password }
           />
-          <button type="submit">ENTRAR</button>
+          <button disabled="disabled" type="submit">ENTRAR</button>
         </form>
       </div>
     );
