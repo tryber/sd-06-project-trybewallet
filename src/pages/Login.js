@@ -12,13 +12,13 @@ class Login extends React.Component {
     this.handleDisableButton = this.handleDisableButton.bind(this);
   };
 
-  validateEmail = (email) => {
+  validateEmail(email) {
     const validateEmailRegex = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/;
 
     return validateEmailRegex.test(email)
   }
 
-  validatePassword = (password) => {
+  validatePassword(password) {
     const minimumPasswordLength = 6;
 
     return (password.length >= minimumPasswordLength ? true : false);
