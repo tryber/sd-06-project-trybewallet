@@ -3,7 +3,6 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginAction } from '../actions';
 
-
 class Login extends React.Component {
   constructor(props) {
     super(props);
