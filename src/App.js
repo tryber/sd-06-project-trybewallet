@@ -1,7 +1,22 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-function App() {
-  return <div>Hello, TrybeWallet!</div>;
-}
+export const Page = (props) => {
+  return (
+    <div>
+      <h1>Opa funfo...</h1>
+    </div>
+  );
+};
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+const mapDispatchToprops = (dispach) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToprops)(Page);
