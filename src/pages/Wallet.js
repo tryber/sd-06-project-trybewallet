@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class Wallet extends React.Component {
   render() {
@@ -6,4 +7,11 @@ class Wallet extends React.Component {
   }
 }
 
-export default Wallet;
+const mapStateToProps = (state) => ({
+  state,
+});
+
+export default connect(mapStateToProps)(Wallet);
+
+// mapStateToProps é equivalente a um getState()
+// mapDispatchToProps é equivalente a um setState()
