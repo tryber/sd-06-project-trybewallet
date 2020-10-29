@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { emailUpdate, passwordUpdate } from '../actions';
@@ -10,25 +11,25 @@ class Login extends React.Component {
     this.validateEmail = this.validateEmail.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
     this.handleDisableButton = this.handleDisableButton.bind(this);
-  };
+  }
 
   validateEmail(email) {
     const validateEmailRegex = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/;
 
-    return validateEmailRegex.test(email)
+    return validateEmailRegex.test(email);
   }
 
   validatePassword(password) {
     const minimumPasswordLength = 6;
 
-    return (password.length >= minimumPasswordLength ? true : false);
+    return (password.length >= minimumPasswordLength);
   }
 
   handleDisableButton() {
     const { email, password } = this.props.user;
     const { validateEmail, validatePassword } = this;
 
-    return (validateEmail(email) && validatePassword(password) ? false : true);
+    return (!validateEmail(email) || !validatePassword(password));
   };
 
   render() {
@@ -42,6 +43,7 @@ class Login extends React.Component {
         type="text"
         placeholder="email@domain.com"
         data-testid="email-input"
+        id="email-input"
         onChange={ ({ target: { value } }) => emailUpdateAction(value) }
         value={ email }
       />
@@ -50,19 +52,31 @@ class Login extends React.Component {
         type="password"
         placeholder="password"
         data-testid="password-input"
+        id="password-input"
         onChange={ ({ target: { value } }) => passwordUpdateAction(value) }
         value={ password }
       />
-      <Link to="/carteira"><button disabled={ handleDisableButton() }>Entrar</button></Link>
+      <Link to="/carteira">
+        <button disabled={ handleDisableButton() }>Entrar</button>
+      </Link>
     </div>);
-  };
-};
+  }
+}
 
 const mapStateToProps = ({ user }) => ({ user });
 
 const mapDispatchToProps = (dispatch) => ({
   emailUpdateAction: (email) => dispatch(emailUpdate(email)),
-  passwordUpdateAction: (password) => dispatch(passwordUpdate(password))
+  passwordUpdateAction: (password) => dispatch(passwordUpdate(password)),
 });
+
+Login.propTypes = {
+  user: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+  }).isRequired,
+  emailUpdateAction: PropTypes.func.isRequired,
+  passwordUpdateAction: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
