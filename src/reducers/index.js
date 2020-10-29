@@ -1,8 +1,6 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import thunk from 'redux-thunk';
+import { combineReducers } from 'redux';
 import user from './user';
 
 const reducer = combineReducers({ user });
-const store = createStore(reducer, applyMiddleware(thunk));
 
-export default store;
+export default reducer;
