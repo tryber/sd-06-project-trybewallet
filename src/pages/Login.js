@@ -24,21 +24,21 @@ class Login extends React.Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
     const { email } = this.state;
-
-    this.setState({
-      email: '',
-      submitEmail: email,
-    }, () => {
-      const { submitEmail } = this.state;
-      const { submitButton } = this.props;
-      submitButton(submitEmail);
-    });
+    event.preventDefault();
+    // this.setState({
+    //   email: email,
+    //   submitEmail: email,
+    // }, () => {
+    //   const { submitEmail } = this.state;
+    //   const { submitButton } = this.props;
+      this.props.submitButton(email);
+    // });
   }
 
   render() {
     const { email } = this.state;
+    console.log(this.props);
     return (
       <form onSubmit={ this.handleSubmit }>
         <fieldset>
