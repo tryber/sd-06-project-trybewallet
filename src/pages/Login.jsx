@@ -12,7 +12,7 @@ import Button from '../components/Button';
 // found at https://iconape.com/truemoney-wallet-logo-logo-icon-svg-png.html
 import logo from '../assets/logo.png';
 
-import { Background, Container, Content } from '../styles/login';
+import '../styles/login.css';
 
 const SignIn = ({ logIn }) => {
   const { push } = useHistory();
@@ -51,8 +51,8 @@ const SignIn = ({ logIn }) => {
   }, [setPasswordError]);
 
   return (
-    <Container>
-      <Content>
+    <div className="container">
+      <div className="content">
         <img src={ logo } alt="GoFinance Logo" />
 
         <form onSubmit={ handleLogin } method="POST">
@@ -89,9 +89,9 @@ const SignIn = ({ logIn }) => {
           <FiAlertCircle size={ 20 } />
           Cadastre-se
         </span>
-      </Content>
-      <Background />
-    </Container>
+      </div>
+      <div className="background" />
+    </div>
   );
 };
 

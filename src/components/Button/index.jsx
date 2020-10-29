@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { StyledButton } from './styles';
+import './styles.css';
 
 const Button = ({ children, ...rest }) => (
-  <StyledButton type="button" { ...rest }>
+  <button className="custom-button" type="button" { ...rest }>
     {children}
-  </StyledButton>
+  </button>
 );
 
 export default Button;

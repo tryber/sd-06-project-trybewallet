@@ -5,7 +5,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
-import { Container, StyledInput } from './styles';
+import './styles.css';
 
 const Input = ({ name, icon: Icon, error, ...rest }) => {
   const inputRef = useRef(null);
@@ -23,17 +23,28 @@ const Input = ({ name, icon: Icon, error, ...rest }) => {
   }, []);
 
   return (
-    <Container hasFocus={ hasFocus } hasText={ hasText } hasError={ error }>
+    <div
+      className={ `
+        input-container
+        ${hasFocus ? 'has-focus' : ''}
+        ${error ? 'has-error' : ''}
+        ${hasText ? 'has-text' : ''}
+      ` }
+      hasFocus={ hasFocus }
+      hasText={ hasText }
+      hasError={ error }
+    >
       {Icon && <Icon size={ 24 } />}
 
-      <StyledInput
+      <input
+        className="custom-input"
         ref={ inputRef }
         name={ name }
         onFocus={ handleFocus }
         onBlur={ handleBlur }
         { ...rest }
       />
-    </Container>
+    </div>
   );
 };
 
