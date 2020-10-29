@@ -30,9 +30,6 @@ const Input = ({ name, icon: Icon, error, ...rest }) => {
         ${error ? 'has-error' : ''}
         ${hasText ? 'has-text' : ''}
       ` }
-      hasFocus={ hasFocus }
-      hasText={ hasText }
-      hasError={ error }
     >
       {Icon && <Icon size={ 24 } />}
 
@@ -48,10 +45,14 @@ const Input = ({ name, icon: Icon, error, ...rest }) => {
   );
 };
 
+Input.defaultProps = {
+  error: false,
+};
+
 Input.propTypes = {
   name: PropTypes.string.isRequired,
   icon: PropTypes.elementType.isRequired,
-  error: PropTypes.bool.isRequired,
+  error: PropTypes.bool,
 };
 
 export default Input;
