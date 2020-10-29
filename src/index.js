@@ -11,7 +11,7 @@ import Login from './pages/Login';
 ReactDOM.render(
   <Provider store={ store }>
     <BrowserRouter>
-      <Route path="/" component={ Login }/>
+      <Route path="/" component={ Login } />
       <App />
     </BrowserRouter>
   </Provider>,

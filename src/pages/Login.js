@@ -8,7 +8,7 @@ class Login extends React.Component {
 
     this.state = {
       email: '',
-      submitEmail: ''
+      submitEmail: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -18,7 +18,7 @@ class Login extends React.Component {
   handleChange(event) {
     this.setState({
       email: event.target.value,
-      submitEmail: ''
+      submitEmail: '',
     });
   }
 
@@ -32,19 +32,19 @@ class Login extends React.Component {
       submitEmail: email,
     }, () => {
       submitButton(this.state.submitEmail);
-    })
-  }
+    });
+  };
+
   render() {
     const { email } = this.state
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={ this.handleSubmit }>
         <fieldset>
-          <label>
-            <input data-testid="password-input" type="email" placeholder="Email"onChange={this.handleChange} value={email} />
-          </label><br/><br/>
-          <label>
-            <input data-testid="email-input" type="password" placeholder="Senha" minLength="6"/>
-          </label> <br/><br/>
+            <input data-testid="password-input" type="email" placeholder="Email"onChange={ this.handleChange } value={ email } />
+            <br/><br/>
+            <input data-testid="email-input"
+            type="password" placeholder="Senha" minLength="6"/>
+            <br/><br/>
           <button type="submit">
             Entrar
           </button>
@@ -55,7 +55,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  submitButton: (email) => dispatch(loginAction(email))
-})
+  submitButton: (email) => dispatch(loginAction(email)),
+});
 
 export default connect(null, mapDispatchToProps)(Login);
