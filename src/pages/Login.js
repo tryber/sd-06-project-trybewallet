@@ -6,6 +6,17 @@ import { changeEmail } from '../actions/index'
 import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      email: ""
+    };
+  }
+  changeHandler = event => {
+    this.setState({
+      email: event.target.value
+    })
+  }
   render() {
     const { changeEmail } = this.props;
     return (
@@ -17,17 +28,19 @@ class Login extends React.Component {
               type="email"
               placeholder="Enter email"
               data-testid="email-input"
+              value={this.state.email}
+              onChange={this.changeHandler}
             />
           </Form.Group>
           <Form.Group>
             <Form.Control
-              type="email"
+              type="password"
               placeholder="Password"
               data-testid="password-input"
             />
           </Form.Group>
-          <Link to="/carteira" onClick={ () => changeEmail('testando') }>
-            <Button variant="success" block type="submit">Entrar</Button>
+          <Link to="/carteira" onClick={ () => changeEmail(this.state.email) }>
+            <Button variant="success" block>Entrar</Button>
           </Link>
         </Form>
       </div>
@@ -35,12 +48,8 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  email: state.user.user.email
-});
-
 const mapDispatchToProps = (dispatch) => ({
   changeEmail: (email) => dispatch(changeEmail(email)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);

@@ -27,3 +27,19 @@ code {
   border: solid 1px rgb(196, 195, 195);
   border-radius: 10px;
 }
+
+#root {
+  width: 100%;
+  background-color: gray;
+}
+
+.container {
+  width: 100%;
+}
+
+.header {
+  width: 100%;
+  background-color: rgb(218, 25, 25);
+  display: flex;
+  align-items: space-between;
+}
