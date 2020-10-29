@@ -5,12 +5,14 @@ const INITIAL_STATE = {
   email: '',
 };
 
-export default function (state = INITIAL_STATE, action) {
-  //retorna um novo estado baseado no type da action
-  switch(action.type) {
-    case LOGIN:
-      return { ...state, email: action.email }; // action.email - esse email é o que veio da sua action - objeto da sua action
-    default:
-      return state;
+const userReducer = (state = INITIAL_STATE, action) => {
+  //  retorna um novo estado baseado no type da action
+  switch (action.type) {
+  case LOGIN:
+    return { ...state, email: action.email }; // action.email - esse email é o que veio da sua action - objeto da sua action
+  default:
+    return state;
   }
 }
+
+export default userReducer;
