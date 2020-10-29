@@ -6,8 +6,8 @@ class App extends React.Component {
       <div>
         Hello, TrybeWallet!
       </div>
-    )
-  };
+    );
+  }
 }
 
 export default App;
