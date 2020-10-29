@@ -29,4 +29,8 @@ const mapStateToProps = (state) => ({
   email: state.user.user.email,
 });
 
+email.propTypes = {
+  email: PropTypes.string.isRequired,
+};
+
 export default connect(mapStateToProps)(Wallet);
