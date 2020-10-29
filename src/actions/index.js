@@ -1,1 +1,3 @@
-// Coloque aqui suas actions
+const action = () => ({
+
+});
