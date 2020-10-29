@@ -5,9 +5,6 @@ class LoginButton extends React.Component {
     return (
       <button
         type="submit"
-        disabled={
-          emailError || passwordError || !email || !password
-        }
       >
         Entrar
       </button>

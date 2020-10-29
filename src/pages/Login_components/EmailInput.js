@@ -8,10 +8,9 @@ class EmailInput extends React.Component {
           Email:
           <input
             name="email"
-            value={ email }
             type="email"
             data-testid="email-input"
-            onChange={ handleEmailChange }
+            // onChange={ handleEmailChange }
           />
         </label>
       </div>
