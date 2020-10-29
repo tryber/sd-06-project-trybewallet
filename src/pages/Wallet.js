@@ -8,11 +8,15 @@ class Wallet extends React.Component {
     return (
       <div className="container">
         <header className="header">
-          <p>Email:<span data-testid="email-field">{ email }</span></p>
+          <p>
+            Email:
+            <span data-testid="email-field">{ email }</span>
+            </p>
           <p>
             Despesa Total: R$
-              <span data-testid="total-field">{ value }</span>,00
-                <span data-testid="header-currency-field">BRL</span>
+              <span data-testid="total-field">{ value }</span>
+              ,00
+              <span data-testid="header-currency-field">BRL</span>
           </p>
         </header>
       </div>
@@ -21,7 +25,7 @@ class Wallet extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  email: state.user.user.email
+  email: state.user.user.email,
 });
 
 export default connect(mapStateToProps)(Wallet);

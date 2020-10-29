@@ -12,7 +12,7 @@ class Login extends React.Component {
       email: ""
     };
   }
-  changeHandler = event => {
+  changeHandler(event) {
     this.setState({
       email: event.target.value
     })
