@@ -2,10 +2,10 @@
 
 function wallet(state = {}, action) {
   switch (action.type) {
-    case 'WALLET':
-      return state;
-    default:
-      return state; 
+  case 'WALLET':
+    return state;
+  default:
+    return state;
   }
 }
 

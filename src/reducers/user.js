@@ -3,17 +3,17 @@ import { SAVE_USER } from '../actions';
 
 const initialState = {
   email: '',
-}
+};
 
 export function user(state = initialState, action) {
   switch (action.type) {
-    case SAVE_USER:
-      return {
-        ...state,
-        email: action.email,
-      };
-    default:
-      return state;
+  case SAVE_USER:
+    return {
+      ...state,
+      email: action.email,
+    };
+  default:
+    return state;
   }
 }
 

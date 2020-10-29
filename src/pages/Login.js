@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { user } from '../actions';
 
 class Login extends React.Component {
@@ -12,7 +13,6 @@ class Login extends React.Component {
 
     this.state = {
       email: '',
-      password: '',
       emailValid: false,
       passwordValid: false,
     };
@@ -21,20 +21,21 @@ class Login extends React.Component {
   ChangeEmail(e) {
     const email = e.target.value;
     let emailValid = false;
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /[A-Z0-9]{1,}@[A-Z0-9]{2,}\.[A-Z0-9]{2,}/i;
     if (re.test(email.toLowerCase())) {
       emailValid = true;
     }
-    this.setState({ email, emailValid })
+    this.setState({ email, emailValid });
   }
 
   ChangePassword(e) {
     const password = e.target.value;
     let passwordValid = false;
-    if (password.length >= 6) {
+    const maxText = 6;
+    if (password.length >= maxText) {
       passwordValid = true;
     }
-    this.setState({ password, passwordValid })
+    this.setState({ passwordValid });
   }
 
   render() {
@@ -42,32 +43,41 @@ class Login extends React.Component {
     const { loginUser } = this.props;
     return (
       <div>
-        <form onSubmit={this.submitName}>
+        <form>
           <h1>Trybe</h1>
-            <input 
-              type='text' placeholder="Enter e-mail" data-testid="email-input"
-              onChange={ this.ChangeEmail }
-            />
-            <input 
-              type='password' placeholder="Enter password" data-testid="password-input"
-              onChange={ this.ChangePassword }
-            />
-            <Link to="/carteira">
-              <button 
-                type="button" disabled={ !(emailValid && passwordValid) }
-                onClick={() => loginUser(email)}
-              >
-                Entrar
-              </button>
-            </Link>
+          <input
+            type="text"
+            placeholder="Enter e-mail"
+            data-testid="email-input"
+            onChange={ this.ChangeEmail }
+          />
+          <input
+            type="password"
+            placeholder="Enter password"
+            data-testid="password-input"
+            onChange={ this.ChangePassword }
+          />
+          <Link to="/carteira">
+            <button
+              type="button"
+              disabled={ !(emailValid && passwordValid) }
+              onClick={ () => loginUser(email) }
+            >
+              Entrar
+            </button>
+          </Link>
         </form>
       </div>
-    )
+    );
   }
 }
 
 const mapDispatchToProps = (dispatch) => (
   { loginUser: (email) => dispatch(user(email)) }
 );
+
+Login.propTypes = {
+  loginUser: PropTypes.string.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);
