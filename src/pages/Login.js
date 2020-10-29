@@ -26,7 +26,7 @@ class Login extends React.Component {
   }
 
   handleDisableButton() {
-    const { email, password } = this.props.user;
+    const { user: { email, password } } = this.props;
     const { validateEmail, validatePassword } = this;
 
     return (!validateEmail(email) || !validatePassword(password));
@@ -34,26 +34,26 @@ class Login extends React.Component {
 
   render() {
     const { emailUpdateAction, passwordUpdateAction } = this.props;
-    const { email, password } = this.props.user;
+    const { user: { email, password } } = this.props;
     const { handleDisableButton } = this;
 
     return (
       <form>
-        <label htmlFor="email-input">Insira seu e-mail:</label>
+        <label htmlFor="email-input-id">Insira seu e-mail:</label>
         <input
           type="text"
           placeholder="email@domain.com"
           data-testid="email-input"
-          id="email-input"
+          id="email-input-id"
           onChange={ ({ target: { value } }) => emailUpdateAction(value) }
           value={ email }
         />
-        <label htmlFor="password-input">Insira seu password:</label>
+        <label htmlFor="password-input-id">Insira seu password:</label>
         <input
           type="password"
           placeholder="password"
           data-testid="password-input"
-          id="password-input"
+          id="password-input-id"
           onChange={ ({ target: { value } }) => passwordUpdateAction(value) }
           value={ password }
         />
@@ -61,7 +61,9 @@ class Login extends React.Component {
           <button
             disabled={ handleDisableButton() }
             type="submit"
-          >Entrar</button>
+          >
+            Entrar
+          </button>
         </Link>
       </form>
     );
