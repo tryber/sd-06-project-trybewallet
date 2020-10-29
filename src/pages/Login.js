@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class Login extends Component {
@@ -16,7 +16,7 @@ class Login extends Component {
           placeholder="Senha"
         />
         <Link to="/carteira">
-          <button>
+          <button type="button">
             Entrar
           </button>
         </Link>
