@@ -1,9 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class Wallet extends React.Component {
   render() {
-    return <div>TrybeWallet</div>;
+    const { addEmail } = this.props;
+    return <div>{addEmail}</div>;
   }
 }
 
-export default Wallet;
+const mapStateToProps = (state) => ({
+  addEmail: state.user.email,
+});
+
+Wallet.propTypes = {
+  password: PropTypes.func.isRequired,
+}.isRequired;
+
+export default connect(mapStateToProps, null)(Wallet);
