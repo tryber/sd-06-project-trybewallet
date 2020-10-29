@@ -24,8 +24,6 @@ class Login extends React.Component {
   }
 
   render() {
-    const { email } = this.state;
-
     return (
       <div>
         <input
@@ -42,7 +40,7 @@ class Login extends React.Component {
         <Link to="/carteira">
           <button
             type="button"
-            onClick={() => this.props.emailAction(email)}
+            onClick={ () => this.props.emailAction(this.state.email) }
           >
             Entrar
           </button>
