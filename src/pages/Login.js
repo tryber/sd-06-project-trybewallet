@@ -1,12 +1,12 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
+import trybewallet from './trybewallet'
 
 class Login extends React.Component {
   render() {
-    const image = require('./trybeWallet.png');
     return (
       <div className="login">
-        <img alt="trybe-logo" src={ image } width="200px" />
+        <img alt="trybe-logo" src={ trybewallet } width="200px" />
         <Form>
           <Form.Group>
             <Form.Control
