@@ -7,11 +7,13 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store/index';
 import Login from './pages/Login';
+import Wallet from './pages/Wallet';
 
 ReactDOM.render(
   <Provider store={ store }>
     <BrowserRouter>
-      <Route path="/" component={ Login } />
+      <Route exact path="/" component={ Login } />
+      <Route exact path="/carteira" component={ Wallet } />
       <App />
     </BrowserRouter>
   </Provider>,
