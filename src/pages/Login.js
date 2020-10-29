@@ -10,6 +10,7 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
+      isDisable: true,
       email: '',
     };
   }
@@ -30,10 +31,11 @@ class Login extends React.Component {
     const buttonLogin = document.getElementById('button-login');
     const six = 6;
     if (regex.test(inputEmail) === true && inputPassword >= six) {
-      buttonLogin.removeAttribute('disabled');
+      this.setState({ isDisable: false });
     } else {
-      buttonLogin.setAttribute('disabled', true);
+      this.setState({ isDisable: true });
     }
+    this.setState({ email: inputEmail });
   }
 
   render() {
@@ -66,7 +68,7 @@ class Login extends React.Component {
         <button
           type="button"
           id="button-login"
-          disabled
+          disabled={this.state.isDisable}
           onClick={ this.handleClick }
         >
           Entrar
