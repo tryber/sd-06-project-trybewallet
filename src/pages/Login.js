@@ -59,7 +59,7 @@ class Login extends React.Component {
           />
           <br />
           <br />
-          <button onClick={ this.handleSubmit }>
+          <button type="submit" onClick={ this.handleSubmit }>
             Entrar
           </button>
         </fieldset>
