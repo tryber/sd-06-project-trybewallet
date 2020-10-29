@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import setEmail from '../actions';
 
 class Login extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      email: '',
+    };
+  }
+
   render() {
+    const { email } = this.state;
+    const { setEmail } = this.props;
     return (
       <div>
         <form>
           <input
-            type="text"
-            value=""
+            type="email"
+            value={ email }
             data-testid="email-input"
             placeholder="Nome"
-            onChange={ () => console.log('Nome') }
+            onChange={ (event) => this.setState({ email: event.target.value }) }
             required
           />
           <input
@@ -22,11 +34,24 @@ class Login extends Component {
             onChange={ () => console.log('Nome') }
             maxLength="6"
           />
-          <button type="button"><Link to="/carteira">Entrar</Link></button>
+          <button
+            type="button"
+            onClick={ () => setEmail(this.state) }
+          >
+            <Link to="/carteira">Entrar</Link>
+          </button>
         </form>
       </div>
     );
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  user: state.userReducer.user.email,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setEmail: (email) => dispatch(setEmail(email)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
