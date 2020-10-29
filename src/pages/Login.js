@@ -40,7 +40,8 @@ class Login extends React.Component {
     return (
       <form onSubmit={ this.handleSubmit }>
         <fieldset>
-          <input data-testid="password-input"
+          <input
+            data-testid="password-input"
             type="email"
             placeholder="Email"
             onChange={ this.handleChange }
@@ -48,7 +49,8 @@ class Login extends React.Component {
           />
           <br />
           <br />
-          <input data-testid="email-input"
+          <input
+            data-testid="email-input"
             type="password"
             placeholder="Senha"
             minLength="6"
