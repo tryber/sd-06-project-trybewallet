@@ -6,15 +6,15 @@ const INITIAL_STATE = {
   },
   wallet: {
     currencies: [],
-    expenses: []
+    expenses: [],
   }
-}
+};
 
 export default function userReducer(state = INITIAL_STATE, action) {
-  switch(action.type) {
+  switch (action.type) {
     case EMAIL:
-      return { ...state, user: {email: action.payload}}
+      return { ...state, user: { email: action.payload } };
     default:
-      return state
+      return state;
   }
 }
