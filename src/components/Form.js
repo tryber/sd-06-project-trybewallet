@@ -4,7 +4,6 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { login } from '../actions';
 
-
 class Form extends React.Component {
   constructor(props) {
     super(props);
