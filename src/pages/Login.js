@@ -12,7 +12,6 @@ class Login extends React.Component {
     this.handleDisableButton = this.handleDisableButton.bind(this);
   };
 
-
   validateEmail = (email) => {
     const validateEmailRegex = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/;
 
