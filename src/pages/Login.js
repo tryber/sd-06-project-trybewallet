@@ -30,36 +30,41 @@ class Login extends React.Component {
     const { validateEmail, validatePassword } = this;
 
     return (!validateEmail(email) || !validatePassword(password));
-  };
+  }
 
   render() {
     const { emailUpdateAction, passwordUpdateAction } = this.props;
     const { email, password } = this.props.user;
     const { handleDisableButton } = this;
 
-    return (<div>
-      <label htmlFor="email-input">Insira seu e-mail:</label>
-      <input
-        type="text"
-        placeholder="email@domain.com"
-        data-testid="email-input"
-        id="email-input"
-        onChange={ ({ target: { value } }) => emailUpdateAction(value) }
-        value={ email }
-      />
-      <label htmlFor="password-input">Insira seu password:</label>
-      <input
-        type="password"
-        placeholder="password"
-        data-testid="password-input"
-        id="password-input"
-        onChange={ ({ target: { value } }) => passwordUpdateAction(value) }
-        value={ password }
-      />
-      <Link to="/carteira">
-        <button disabled={ handleDisableButton() }>Entrar</button>
-      </Link>
-    </div>);
+    return (
+      <form>
+        <label htmlFor="email-input">Insira seu e-mail:</label>
+        <input
+          type="text"
+          placeholder="email@domain.com"
+          data-testid="email-input"
+          id="email-input"
+          onChange={ ({ target: { value } }) => emailUpdateAction(value) }
+          value={ email }
+        />
+        <label htmlFor="password-input">Insira seu password:</label>
+        <input
+          type="password"
+          placeholder="password"
+          data-testid="password-input"
+          id="password-input"
+          onChange={ ({ target: { value } }) => passwordUpdateAction(value) }
+          value={ password }
+        />
+        <Link to="/carteira">
+          <button
+            disabled={ handleDisableButton() }
+            type="submit"
+          >Entrar</button>
+        </Link>
+      </form>
+    );
   }
 }
 
