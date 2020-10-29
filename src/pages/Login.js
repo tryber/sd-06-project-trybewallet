@@ -13,6 +13,7 @@ class Login extends React.Component {
 
     this.state = {
       email: '',
+      password: 0,
       enableLogin: false,
       fieldsValidated: false,
     };
@@ -33,9 +34,12 @@ class Login extends React.Component {
   }
 
   validateFields() {
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const loginIsValid = (emailInput.checkValidity() && passwordInput.checkValidity());
+    const { email, password } = this.state;
+    const minLength = 5;
+    // Found this beautiful RegEx at https://ui.dev/validate-email-address-javascript/
+    const validEmail = (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+    const validPassword = (password.length >= minLength);
+    const loginIsValid = (validEmail && validPassword);
 
     return loginIsValid;
   }
