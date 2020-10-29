@@ -4,7 +4,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './index.css';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
-import store from './store';
+
+import store from './store/index';
 
 import Login from './pages/Login';
 import Wallet from './pages/Wallet';
