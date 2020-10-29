@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { login } from '../actions';
 import PropTypes from 'prop-types';
+
+import { login } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -41,8 +42,9 @@ class Login extends React.Component {
         <Link to="/carteira">
           <button
             type="button"
-            onClick={ () => this.props.emailAction(email) }
-          >Entrar
+            onClick={() => this.props.emailAction(email)}
+          >
+            Entrar
           </button>
         </Link>
       </div>
