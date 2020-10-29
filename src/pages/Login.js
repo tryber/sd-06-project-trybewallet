@@ -1,9 +1,88 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { LoginUser } from '../actions';
 
 class Login extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      email: '',
+      password: '',
+      disabled: true,
+    };
+  }
+
+  buttonValidation() {
+    const MAGIC_NUMBER = 5;
+    const em = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const { email, password } = this.state;
+    if (em.test(email) && password.length > MAGIC_NUMBER) {
+      this.setState({ disabled: false });
+    } else {
+      this.setState({ disabled: true });
+    }
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const { dispatchData, history } = this.props;
+    const { email } = this.state;
+    dispatchData(email);
+    history.push('/carteira');
+  }
+
+  async handleChange({ target }) {
+    await this.setState({ [target.name]: target.value });
+    await this.buttonValidation();
+  }
+
   render() {
-    return <div>Login</div>;
+    const { email, password, disabled } = this.state;
+    return (
+      <form className="login">
+        <input
+          type="email"
+          value={ email }
+          onChange={ this.handleChange }
+          name="email"
+          placeholder="E-mail"
+          data-testid="email-input"
+        />
+        <input
+          type="password"
+          value={ password }
+          onChange={ this.handleChange }
+          placeholder="Senha"
+          name="password"
+          data-testid="password-input"
+        />
+        <button
+          type="button"
+          onClick={ this.handleSubmit }
+          disabled={ disabled }
+        >
+          Entrar
+        </button>
+      </form>
+    );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchData: (nome) => {
+    dispatch(LoginUser(nome));
+  },
+});
+
+Login.propTypes = {
+  dispatchData: PropTypes.func,
+  history: PropTypes.string,
+};
+
+Login.defaultProps = {
+  dispatchData: '',
+  history: '/',
+};
+
+export default connect(null, mapDispatchToProps)(Login);
