@@ -8,8 +8,7 @@ payload é convenção. está email como no Readme.
 */
 export const LOGIN = 'LOGIN';
 
-export const actionLogin = (email, password) => ({
+export const actionLogin = (email) => ({
   type: 'LOGIN',
   email,
-  password,
 });

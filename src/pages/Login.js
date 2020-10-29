@@ -13,24 +13,30 @@ class Login extends React.Component {
     this.state = {
       email: '',
       pass: '',
-      // data: false,
+      disabled: false,
     };
   }
 
-  strictArea() {
-    const { login, history } = this.props;
+  componentDidUpdate(_previouState, newState) {
     const { email, pass } = this.state;
-    const six = 6;
-    const reg = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
-    if (email.match(reg) && pass.length >= six) {
-      login({ email, pass });
-      history.push('/carteira');
-    } else {
-      alert('Access denied - Try it again');
+    if (newState.email !== email || newState.pass !== pass) {
+      this.strictArea();
     }
   }
 
+  strictArea() {
+    const { login } = this.props;
+    const { email, pass } = this.state;
+    const six = /.{6,}/;
+    const reg = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
+    login(email);
+    this.setState({ disabled: reg.test(email) && six.test(pass) });
+    // return disabled;
+  }
+
   render() {
+    const { history } = this.props;
+    const { disabled } = this.state;
     return (
       <fieldset>
         <Input
@@ -49,7 +55,13 @@ class Login extends React.Component {
           min="6"
           onChange={ (e) => this.setState({ pass: e.target.value }) }
         />
-        <button onClick={ this.strictArea } type="button">Entrar</button>
+        <button
+          onClick={ () => history.push('/carteira') }
+          disabled={ !disabled }
+          type="button"
+        >
+          Entrar
+        </button>
       </fieldset>
     );
   }
@@ -57,7 +69,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
   login: propTypes.func.isRequired,
-  history: propTypes.string.isRequired,
+  history: propTypes.shape().isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
