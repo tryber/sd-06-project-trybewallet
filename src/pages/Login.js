@@ -1,24 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
-import trybewallet from './trybewallet.png';
-import { changeEmail } from '../actions/index'
 import { Link } from 'react-router-dom';
+import trybewallet from './trybewallet.png';
+import { changeEmail } from '../actions/index';
 
 class Login extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
+    this.changeHandler = this.changeHandler.bind(this);
     this.state = {
-      email: ""
+      email: '',
     };
   }
+
   changeHandler(event) {
     this.setState({
-      email: event.target.value
-    })
+      email: event.target.value,
+    });
   }
+  
   render() {
-    const { changeEmail } = this.props;
+    const { fieldChange } = this.props;
     return (
       <div className="login">
         <img alt="trybe-logo" src={ trybewallet } width="200px" />
@@ -39,7 +42,7 @@ class Login extends React.Component {
               data-testid="password-input"
             />
           </Form.Group>
-          <Link to="/carteira" onClick={ () => changeEmail(this.state.email) }>
+          <Link to="/carteira" onClick={ () => fieldChange(this.state.email) }>
             <Button variant="success" block>Entrar</Button>
           </Link>
         </Form>
@@ -49,7 +52,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  changeEmail: (email) => dispatch(changeEmail(email)),
+  fieldChange: (email) => dispatch(changeEmail(email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
