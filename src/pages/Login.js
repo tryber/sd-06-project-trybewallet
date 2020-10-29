@@ -24,7 +24,7 @@ class Login extends React.Component {
   }
 
   handleSubmit(event) {
-    event.prevenDefault();
+    event.preventDefault();
     const { email } = this.state;
 
     this.setState({
@@ -40,7 +40,7 @@ class Login extends React.Component {
   render() {
     const { email } = this.state;
     return (
-      <form>
+      <form onSubmit={ this.handleSubmit }>
         <fieldset>
           <input
             data-testid="password-input"
@@ -59,7 +59,7 @@ class Login extends React.Component {
           />
           <br />
           <br />
-          <button type="submit" onClick={ this.handleSubmit }>
+          <button type="submit" >
             Entrar
           </button>
         </fieldset>
