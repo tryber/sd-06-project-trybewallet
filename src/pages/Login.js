@@ -9,10 +9,18 @@ class Login extends React.Component {
         <img alt="trybe-logo" src={ trybeWallet } width="200px" />
         <Form>
           <Form.Group>
-            <Form.Control type="email" placeholder="Enter email" data-testid="email-input" />
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              data-testid="email-input"
+            />
           </Form.Group>
           <Form.Group>
-            <Form.Control type="email" placeholder="Your Password" data-testid="password-input" />
+            <Form.Control
+            type="email"
+            placeholder="Password"
+            data-testid="password-input"
+            />
           </Form.Group>
           <Button variant="success" block type="submit">Entrar</Button>
         </Form>
