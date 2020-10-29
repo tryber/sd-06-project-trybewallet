@@ -3,5 +3,5 @@ export const SAVE_EMAIL = 'SAVE_EMAIL';
 
 export const loginAction = (payload) => ({
   type: SAVE_EMAIL,
-  payload
+  payload,
 });

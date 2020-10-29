@@ -4,4 +4,6 @@ import userReducer from './user';
 
 // Configure os seus reducers.
 // ATENÇÃO: você obrigatoriamente tem que utilizar as chaves "user" e "wallet" no seu estado global
-export const rootReducers = combineReducers({userReducer});
+const rootReducers = combineReducers({ userReducer });
+
+export default rootReducers;

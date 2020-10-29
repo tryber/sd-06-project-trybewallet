@@ -12,8 +12,8 @@ import * as serviceWorker from './serviceWorker';
 ReactDOM.render(
   <Provider store={ store }>
     <BrowserRouter>
-      <Route exact path="/" component={Login} />
-      <Route exact path="/carteira" component={Wallet} />
+      <Route exact path="/" component={ Login } />
+      <Route exact path="/carteira" component={ Wallet } />
       <App />
     </BrowserRouter>
   </Provider>,

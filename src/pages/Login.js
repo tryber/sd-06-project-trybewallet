@@ -5,23 +5,22 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: ''
+      email: '',
     };
 
     this.submitEmail = this.submitEmail.bind(this);
-  };
+  }
 
   submitEmail(e) {
     e.preventDefault();
     const { email } = this.state;
-    const { importedThunk } = this.props;
 
     this.setState({
-      email: e.target.value
+      email: e.target.value,
     }, () => {
       loginDispatch(email)
-    })
-  };
+    });
+  }
 
   render() {
     return (
@@ -29,9 +28,13 @@ class Login extends React.Component {
         <form>
           <fieldset>
             <input type="email" data-testid="email-input" placeholder="Email" />
-            <input type="password" data-testid="password-input" placeholder="Password" minLength="6" />
+            <input
+              type="password"
+              data-testid="password-input"
+              placeholder="Password" minLength="6"
+            />
           </fieldset>
-          <button type="button" onClick={this.submitEmail}>
+          <button type="button" onClick={ this.submitEmail }>
             Entrar
           </button>
         </form>
