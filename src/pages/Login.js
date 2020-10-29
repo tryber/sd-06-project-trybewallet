@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
-import trybewallet from './trybewallet'
+import trybewallet from './trybewallet.png';
 
 class Login extends React.Component {
   render() {
