@@ -19,10 +19,11 @@ afterEach(() => jest.clearAllMocks());
 describe('1 - [PÁGINA DE LOGIN] Crie uma página inicial de login com os seguintes campos e características:', () => {
   test('A rota para esta página deve ser \'/\'', () => {
     const { history } = renderWithRouterAndStore(<App />);
+    console.log(history.location.pathname)
     expect(history.location.pathname).toBe('/');
   });
 
-  test('Crie um local para que o usuário insira seu email e senha', () => {
+  test.only('Crie um local para que o usuário insira seu email e senha', () => {
     renderWithRouterAndStore(<App />, '/');
     const email = screen.getByTestId('email-input');
     const senha = screen.getByTestId('password-input');
