@@ -41,7 +41,7 @@ class ExpensesForm extends React.Component {
           </label>
 
           <label htmlFor="tag-input">
-            Pagamento:
+            Tag:
             <select name="tag" data-testid="tag-input">
               <option value="food">Alimentação</option>
               <option value="hobbie">Lazer</option>
@@ -50,6 +50,7 @@ class ExpensesForm extends React.Component {
               <option value="health">Saúde</option>
             </select>
           </label>
+          <button onClick={console.log('HandleButton')} type="submit">Adicionar despesa</button>
 
         </fieldset>
       </form>
