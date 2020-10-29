@@ -1,4 +1,4 @@
-const INITIAL_STATE = { email: '' };
+const INITIAL_STATE = { wallet: { currencies: [], expenses: [] } };
 const ADD_EXPENSE = 'ADD_EXPENSE';
 
 function userReducer(state = INITIAL_STATE, action) {
@@ -7,8 +7,8 @@ function userReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       wallet: {
-        ...wallet,
-        expenses: [...expenses, action.payload.value],
+        ...state.wallet,
+        expenses: [...state.wallet.expenses, action.payload.value],
       },
     };
   default:
