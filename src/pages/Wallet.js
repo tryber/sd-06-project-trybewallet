@@ -1,17 +1,27 @@
 import React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 class Wallet extends React.Component {
   render() {
-    const { nomeQueEuQuiser } = this.props;
-    return <div>{ nomeQueEuQuiser }</div>;
+    return (
+      <div>Login</div>
+    );
   }
 }
 
-const mapStateToProps = (state) => ({
-  nomeQueEuQuiser: state.wallet.helloWorld,
-});
+export default Wallet;
 
-export default connect(
-  mapStateToProps,
-)(Wallet);
+// class Wallet extends React.Component {
+//   render() {
+//     const { nomeQueEuQuiser } = this.props;
+//     return <div>{ nomeQueEuQuiser }</div>;
+//   }
+// }
+
+// const mapStateToProps = (state) => ({
+//   nomeQueEuQuiser: state.wallet.helloWorld,
+// });
+
+// export default connect(
+//   mapStateToProps,
+// )(Wallet);
