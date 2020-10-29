@@ -6,6 +6,9 @@ import { LoginUser } from '../actions';
 class Login extends React.Component {
   constructor() {
     super();
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.buttonValidation = this.buttonValidation.bind(this);
     this.state = {
       email: '',
       password: '',
@@ -32,9 +35,9 @@ class Login extends React.Component {
     history.push('/carteira');
   }
 
-  async handleChange({ target }) {
-    await this.setState({ [target.name]: target.value });
-    await this.buttonValidation();
+  handleChange({ target }) {
+    this.setState({ [target.name]: target.value });
+    this.buttonValidation();
   }
 
   render() {
