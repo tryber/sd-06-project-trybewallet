@@ -1,5 +1,5 @@
 import React from 'react';
-import { loginAction } from '../actions';
+// import { loginAction } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -40,7 +40,7 @@ class Login extends React.Component {
           </button>
         </form>
       </div>
-    )
+    );
   }
 }
 
