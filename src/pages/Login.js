@@ -28,7 +28,6 @@ class Login extends React.Component {
     const inputEmail = document.getElementById('email-login').value;
     const regex = /^\w+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$/;
     const inputPassword = document.getElementById('password-login').value.length;
-    const buttonLogin = document.getElementById('button-login');
     const six = 6;
     if (regex.test(inputEmail) === true && inputPassword >= six) {
       this.setState({ isDisable: false });
@@ -39,6 +38,7 @@ class Login extends React.Component {
   }
 
   render() {
+    const { isDisable } = this.state;
     return (
       <div>
         <label htmlFor="email">
@@ -68,7 +68,7 @@ class Login extends React.Component {
         <button
           type="button"
           id="button-login"
-          disabled={this.state.isDisable}
+          disabled={ isDisable }
           onClick={ this.handleClick }
         >
           Entrar
