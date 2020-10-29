@@ -27,26 +27,38 @@ class Login extends React.Component {
     const re = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.com+$/;
     const { change } = this.props;
     const MIN = 6;
+    const TRUE = true;
+    const FALSE = false;
     return (
       <div>
         <div>
           Login
         </div>
-        <label>Email</label>
-        <input data-testid="email-input" name="email" onChange={ this.handleChange } />
+        <label htmlFor="email">
+          Email
+          <input
+            data-testid="email-input"
+            id="email"
+            name="email"
+            onChange={ this.handleChange }
+          />
+        </label>
         <br />
-        <label>Senha</label>
-        <input
-          data-testid="password-input"
-          type="password"
-          name="password"
-          onChange={ this.handleChange }
-        />
+        <label htmlFor="password">
+          Senha
+          <input
+            data-testid="password-input"
+            id="password"
+            type="password"
+            name="password"
+            onChange={ this.handleChange }
+          />
+        </label>
         <div>
           <Link to="/carteira">
             <button
               type="button"
-              disabled={ (password.length >= MIN && re.test(email)) ? false : true }
+              disabled={ (password.length >= MIN && re.test(email)) ? FALSE : TRUE }
               onClick={ () => change(email) }
             >
               Entrar
