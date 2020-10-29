@@ -38,7 +38,12 @@ class Login extends React.Component {
               onChange={(e) => this.setState({password: e.target.value})}
               />
           </label>
-          <button>Entrar</button>
+          <br/>
+          <button
+            type="button"
+            onClick={() => this.props.formLogin(this.state)}
+            >Entrar
+          </button>
         </form>
       </div>
     )
