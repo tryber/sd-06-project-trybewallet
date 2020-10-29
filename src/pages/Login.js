@@ -78,7 +78,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  saveNewUser: (userEmail) => dispatch(saveUser(userEmail))
+  saveNewUser: (userEmail) => dispatch(saveUser(userEmail)),
 });
 
 Login.propTypes = {
