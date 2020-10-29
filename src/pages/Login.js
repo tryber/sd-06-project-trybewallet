@@ -33,11 +33,9 @@ class Login extends React.Component {
   }
 
   validateFields() {
-    const { email } = this.state;
+    const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
-    // using RegEx idea from https://ui.dev/validate-email-address-javascript/
-    const checkEmail = (emailToVal) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailToVal);
-    const loginIsValid = (checkEmail(email) && passwordInput.checkValidity());
+    const loginIsValid = (emailInput.checkValidity() && passwordInput.checkValidity());
 
     return loginIsValid;
   }
