@@ -1,4 +1,5 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import comboReducers from '../reducers';
 
 const INITIAL_STATE = {
@@ -9,9 +10,13 @@ const INITIAL_STATE = {
     currencies: [],
     expenses: [],
   },
-  isFetchingConversion: false,
+  isFetching: false,
 };
 
-const store = createStore(comboReducers, INITIAL_STATE);
+const store = createStore(
+  comboReducers,
+  INITIAL_STATE,
+  applyMiddleware(thunk),
+);
 
 export default store;

@@ -1,5 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { loginUser } from '../actions';
 
 import trybeWallet from '../imgs/trybeWallet.png';
 import '../css/Login.css';
@@ -9,25 +12,35 @@ class Login extends React.Component {
     super(props);
 
     this.state = {
+      email: '',
       enableLogin: false,
       loginError: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInput = this.handleInput.bind(this);
   }
 
-  handleSubmit() {
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
+  handleInput({ target }) {
+    const email = target.value;
+    this.setState({ email });
+  }
 
-    return (email.checkValidity() && password.checkValidity())
-      ? this.setState({ loginError: false, enableLogin: true })
-      : this.setState({ loginError: true });
+  handleSubmit(email) {
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const { loginUserDispatch } = this.props;
+    if (emailInput.checkValidity() && passwordInput.checkValidity()) {
+      loginUserDispatch(email);
+      this.setState({ loginError: false, enableLogin: true });
+    } else {
+      this.setState({ loginError: true });
+    }
   }
 
   render() {
-    const { loginError, enableLogin } = this.state;
-    const { handleSubmit } = this;
+    const { loginError, enableLogin, email } = this.state;
+    const { handleSubmit, handleInput } = this;
 
     return (!enableLogin)
       ? (
@@ -47,7 +60,13 @@ class Login extends React.Component {
               }
               <label htmlFor="email">
                 E-mail
-                <input type="email" id="email" data-testid="email-input" required />
+                <input
+                  type="email"
+                  id="email"
+                  data-testid="email-input"
+                  required
+                  onChange={ handleInput }
+                />
               </label>
               <label htmlFor="password">
                 Password
@@ -60,7 +79,11 @@ class Login extends React.Component {
                 />
               </label>
             </fieldset>
-            <button type="button" onClick={ handleSubmit } className="login-btn">
+            <button
+              type="button"
+              onClick={ () => handleSubmit(email) }
+              className="login-btn"
+            >
               Entrar
             </button>
           </form>
@@ -70,4 +93,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  loginUserDispatch: (email) => dispatch(loginUser(email)),
+});
+
+Login.propTypes = {
+  loginUserDispatch: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
