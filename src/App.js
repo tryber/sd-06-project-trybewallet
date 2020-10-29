@@ -7,11 +7,11 @@ class App extends Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" component={ Login }/>
-        <Route exact path="/carteira" component={ Wallet }/>
+        <Route exact path="/" component={ Login } />
+        <Route exact path="/carteira" component={ Wallet } />
       </Switch>
-    )
-  };
+    );
+  }
 }
 
 export default App;

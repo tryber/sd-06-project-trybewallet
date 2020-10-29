@@ -1,4 +1,4 @@
-import { SAVE_USER } from "../actions";
+import { SAVE_USER } from '../actions';
 
 const INITIAL_STATE = {
   email: '',
@@ -9,11 +9,11 @@ const user = (state = INITIAL_STATE, action) => {
   case SAVE_USER:
     return {
       ...state,
-      email: action.email
+      email: action.email,
     };
   default:
     return state;
   }
-}
+};
 
 export default user;

@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { user } from '../actions';
 import { Link } from 'react-router-dom';
+import { user } from '../actions';
 import Wallet from '../img/wallet.png';
 
-
-class Login extends React.Component {
-  constructor(){
+class Login extends Component {
+  constructor() {
     super();
     this.validateEmail = this.validateEmail.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
@@ -14,39 +14,40 @@ class Login extends React.Component {
       email: '',
       emailValidate: false,
       passwordValidate: false,
-    }
+    };
   }
 
-  validateEmail = (email)  => {
+  validateEmail(email) {
     let emailValidate = false;
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if(re.test(email.toLowerCase())){
+    const re = /[A-Z0-9]{1,}@[A-Z0-9]{2,}\.[A-Z0-9]{2,}/i;
+    if (re.test(email.toLowerCase())) {
       emailValidate = true;
     }
     this.setState({
       email,
-      emailValidate
+      emailValidate,
     });
   }
 
-  validatePassword = (password) => {
+  validatePassword(password) {
     let passwordValidate = false;
-    if(password.length >= 6){
+    const LENGTH = 6;
+    if (password.length >= LENGTH) {
       passwordValidate = true;
     }
     this.setState({
-      passwordValidate
+      passwordValidate,
     });
   }
 
   render() {
-    const { email, emailValidate, passwordValidate} = this.state;
+    const { email, emailValidate, passwordValidate } = this.state;
     const { loginUser } = this.props;
 
     return (
       <div className="containerLogin">
         <div>
-          <img src={Wallet} alt="Wallet" width="100" height="100" />
+          <img src={ Wallet } alt="Wallet" width="100" height="100" />
         </div>
         <div>
           <input
@@ -54,7 +55,7 @@ class Login extends React.Component {
             type="email"
             name="email"
             placeholder="Digite seu email"
-            onChange={ e => this.validateEmail(e.target.value) }
+            onChange={ (e) => this.validateEmail(e.target.value) }
           />
         </div>
         <div>
@@ -63,7 +64,7 @@ class Login extends React.Component {
             type="password"
             name="password"
             placeholder="Digite sua senha"
-            onChange={ e => this.validatePassword(e.target.value) }
+            onChange={ (e) => this.validatePassword(e.target.value) }
           />
         </div>
         <div>
@@ -77,15 +78,16 @@ class Login extends React.Component {
               Entrar
             </button>
           </Link>
-          
         </div>
-        
       </div>
-    )
+    );
   }
 }
+
 const mapDispatchToProps = (dispatch) => ({
-  loginUser: (email) => dispatch(user(email))
-})
+  loginUser: (email) => dispatch(user(email)),
+});
+
+Login.propTypes = { loginUser: PropTypes.func.isRequired };
 
 export default connect(null, mapDispatchToProps)(Login);

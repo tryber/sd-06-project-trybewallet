@@ -6,10 +6,3 @@ export const user = (email) => (
     email,
   }
 );
-
-export const wallet = (wallet) => (
-  {
-    type: SAVE_USER,
-    wallet,
-  }
-);
