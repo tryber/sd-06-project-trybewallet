@@ -19,18 +19,26 @@ class Login extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.validateFields = this.validateFields.bind(this);
   }
 
   handleInput({ target }) {
-    const email = target.value;
-    this.setState({ email });
+    this.setState({ [target.id]: target.value });
+  }
+
+  validateFields() {
+    const { email } = this.state;
+    const passwordInput = document.getElementById('password');
+    const checkEmail = (emailToVal) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailToVal);
+    const loginIsValid = checkEmail(email) && passwordInput.checkValidity();
+
+    return loginIsValid;
   }
 
   handleSubmit(email) {
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
     const { loginUserDispatch } = this.props;
-    if (emailInput.checkValidity() && passwordInput.checkValidity()) {
+
+    if (this.validateFields()) {
       loginUserDispatch(email);
       this.setState({ loginError: false, enableLogin: true });
     } else {
@@ -40,7 +48,7 @@ class Login extends React.Component {
 
   render() {
     const { loginError, enableLogin, email } = this.state;
-    const { handleSubmit, handleInput } = this;
+    const { validateFields, handleInput, handleSubmit } = this;
 
     return (!enableLogin)
       ? (
@@ -79,13 +87,25 @@ class Login extends React.Component {
                 />
               </label>
             </fieldset>
-            <button
-              type="button"
-              onClick={ () => handleSubmit(email) }
-              className="login-btn"
-            >
-              Entrar
-            </button>
+            { (validateFields())
+              ? (
+                <button
+                  type="button"
+                  onClick={ () => handleSubmit(email) }
+                  className="login-btn"
+                >
+                  Entrar
+                </button>
+              )
+              : (
+                <button
+                  type="button"
+                  className="login-btn"
+                  disabled
+                >
+                  Entrar
+                </button>
+              )}
           </form>
         </div>
       )
