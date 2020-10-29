@@ -40,11 +40,14 @@ class Login extends React.Component {
     return (
       <form onSubmit={ this.handleSubmit }>
         <fieldset>
-          <input data-testid="password-input" type="email" placeholder="Email"onChange={ this.handleChange } value={ email } />
-          <br/><br/>
+          <input data-testid="password-input" type="email"  placeholder="Email"onChange={ this.handleChange }
+          value={ email } />
+          <br />
+          <br />
           <input data-testid="email-input"
           type="password" placeholder="Senha" minLength="6"/>
-          <br/><br/>
+          <br />
+          <br />
           <button type="submit">
             Entrar
           </button>
