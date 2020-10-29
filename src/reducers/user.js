@@ -5,7 +5,7 @@ const initialState = {
   email: '',
 };
 
-export function user(state = initialState, action) {
+function user(state = initialState, action) {
   switch (action.type) {
   case SAVE_USER:
     return {
