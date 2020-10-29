@@ -1,17 +1,41 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { login } from '../actions'
 
 class Login extends React.Component {
+  constructor() {
+    super();
+
+    this.setStateValue = this.setStateValue.bind(this);
+
+    this.state = {
+      email: '',
+    };
+  }
+
+  setStateValue(event) {
+    const { value } = event.target;
+    this.setState({
+      email: value,
+    });
+  }
+
   render() {
+    const { email } = this.state;
+
     return (
       <div>
-        <input type="email" data-testid="email-input" placeholder="Email"/>
+        <input onChange={this.setStateValue} type="email" data-testid="email-input" placeholder="Email"/>
         <input type="senha" data-testid="password-input" placeholder="Senha"/>
-        <Link to="/carteira"><button>Entrar</button></Link>
+        <Link to="/carteira"><button onClick={ () => this.props.emailAction(email) }>Entrar</button></Link>
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispacthToProps = (dispatch) => ({
+  emailAction: (email) => dispatch(login(email)),
+});
+
+export default connect(null, mapDispacthToProps)(Login);
