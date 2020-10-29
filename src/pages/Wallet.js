@@ -29,7 +29,7 @@ const mapStateToProps = (state) => ({
   email: state.user.user.email,
 });
 
-email.propTypes = {
+Wallet.propTypes = {
   email: PropTypes.string.isRequired,
 };
 

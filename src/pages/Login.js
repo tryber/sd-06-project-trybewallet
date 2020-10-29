@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import trybewallet from './trybewallet.png';
 import { changeEmail } from '../actions/index';
-import PropTypes from 'prop-types';
 
 class Login extends React.Component {
   constructor(props) {
@@ -57,7 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
   fieldChange: (email) => dispatch(changeEmail(email)),
 });
 
-fieldChange.propTypes = {
+Login.propTypes = {
   fieldChange: PropTypes.func({
     email: PropTypes.string,
   }).isRequired,
