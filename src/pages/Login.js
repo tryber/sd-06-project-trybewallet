@@ -59,7 +59,7 @@ class Login extends React.Component {
           />
           <br />
           <br />
-          <button type="submit" >
+          <button type="submit">
             Entrar
           </button>
         </fieldset>
