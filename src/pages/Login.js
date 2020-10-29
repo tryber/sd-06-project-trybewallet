@@ -24,27 +24,27 @@ class Login extends React.Component {
 
   handleSubmit(event) {
     event.prevenDefault();
-    const { email } = this.state;
+    const { email, submitEmail } = this.state;
     const { submitButton } = this.props;
 
     this.setState({
       email: '',
       submitEmail: email,
     }, () => {
-      submitButton(this.state.submitEmail);
+      submitButton(submitEmail);
     });
-  };
+  }
 
   render() {
-    const { email } = this.state
+    const { email } = this.state;
     return (
       <form onSubmit={ this.handleSubmit }>
         <fieldset>
-            <input data-testid="password-input" type="email" placeholder="Email"onChange={ this.handleChange } value={ email } />
-            <br/><br/>
-            <input data-testid="email-input"
-            type="password" placeholder="Senha" minLength="6"/>
-            <br/><br/>
+          <input data-testid="password-input" type="email" placeholder="Email"onChange={ this.handleChange } value={ email } />
+          <br/><br/>
+          <input data-testid="email-input"
+          type="password" placeholder="Senha" minLength="6"/>
+          <br/><br/>
           <button type="submit">
             Entrar
           </button>
