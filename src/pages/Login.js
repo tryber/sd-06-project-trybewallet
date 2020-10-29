@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loginAction } from '../actions'
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+import loginAction from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -9,8 +11,9 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       email: '',
+      redirect: false,
     };
-  };
+  }
 
   handleChange(event) {
     event.preventDefault();
@@ -18,41 +21,58 @@ class Login extends React.Component {
     this.setState({
       email: value,
     });
-  };
+  }
 
   handleSubmit(event) {
     event.preventDefault();
     const { email } = this.state;
     const { userLogin } = this.props;
     userLogin(email);
-  };
-
+    this.setState({
+      redirect: true,
+    });
+  }
 
   render() {
-    const { email } = this.state;
+    const { email, redirect } = this.state;
     return (
       <section>
         <h1>Login</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>
+        <form onSubmit={ this.handleSubmit }>
+          <label htmlFor="user-email">
             E-mail:
-            <input data-testid="email-input" name="user-email" type="text" onChange={this.handleChange} value={email} />
+            <input
+              data-testid="email-input"
+              id="user-email"
+              type="text"
+              onChange={ this.handleChange }
+              value={ email }
+            />
           </label>
-          <label>
+          <label htmlFor="user-password">
             Password:
-            <input data-testid="password-input" minLength="6" name="user-password" type="password" />
+            <input
+              data-testid="password-input"
+              minLength="6"
+              id="user-password"
+              type="password"
+            />
           </label>
           <button type="submit">
             Entrar
           </button>
         </form>
+        {redirect && <Redirect to="/carteira" />}
       </section>
     );
-  };
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  userLogin: (e) => dispatch(loginAction(e)) });
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  userLogin: PropTypes.func.isRequired,
 };
-
-
-const mapDispatchToProps = dispatch => ({
-  userLogin: e => dispatch(loginAction(e))});
-
-  export default connect(null, mapDispatchToProps)(Login);

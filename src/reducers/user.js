@@ -9,14 +9,13 @@ const INITIAL_STATE = {
   },
 };
 
-
 function userLogin(state = INITIAL_STATE, action) {
-  switch(action.type) {
-    case ('LOGIN'):
-      return { ...state, user: { email: action.email } };
-    default:
-      return state;
-  };
-};
+  switch (action.type) {
+  case ('LOGIN'):
+    return { ...state, user: { email: action.email } };
+  default:
+    return state;
+  }
+}
 
 export default userLogin;
