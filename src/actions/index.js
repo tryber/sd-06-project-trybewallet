@@ -12,12 +12,10 @@ export const currencyError = (error) => ({
   error,
 });
 
-export function emailSaveToState(value) {
-  return {
-    type: EMAIL_INPUT,
-    email: value,
-  };
-}
+export const emailSaveToState = (email) => ({
+  type: EMAIL_INPUT,
+  email,
+});
 
 export const thunkCurrency = (name) => (dispatch) => {
   currencyAPI(name)

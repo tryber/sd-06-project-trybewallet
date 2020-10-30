@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { emailSaveToState } from '../actions';
-// import emailSaveToState from '../actions';
-import Wallet from './Wallet';
 
 class Login extends React.Component {
   constructor() {
@@ -34,15 +33,15 @@ class Login extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { email, password } = this.state;
+    const { callbackEmail } = this.props;
 
     const emailValidation = this.validateEmail(email);
     const passwordValidation = this.validatePassword(password);
 
     if (emailValidation && passwordValidation) {
-      const { callbackEmail } = this.props;
-      // emailSaveToState(email);
       callbackEmail(email);
       this.updateState('isOk', true);
+      // return (<Link to="/carteira" />).click();
     }
   }
 
@@ -60,12 +59,6 @@ class Login extends React.Component {
 
   render() {
     const { email, password, isOk } = this.state;
-    const { history } = this.props;
-    if (isOk === true) {
-      return (
-        history.push('/carteira'), <Wallet />
-      );
-    }
     return (
       <div>
         <form>
@@ -103,7 +96,7 @@ class Login extends React.Component {
               >
                 Entrar
               </button>
-
+              { isOk ? <Redirect to="/carteira" /> : null }
             </div>
           </fieldset>
         </form>
@@ -115,13 +108,11 @@ const mapDispatchToProps = (dispatch) => ({
   callbackEmail: (e) => dispatch(emailSaveToState(e)),
 });
 
-// const mapStateToProps = (state) => ({
-// state.nomedoreducer.chavedoreducer
-// email: state.rootReducer.email,
-// });
-
 Login.propTypes = {
   callbackEmail: PropTypes.func.isRequired,
-  history: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
+
 export default connect(null, mapDispatchToProps)(Login);

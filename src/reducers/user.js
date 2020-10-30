@@ -6,36 +6,16 @@ const INITIAL_STATE = {
   },
 };
 
-function user(state = INITIAL_STATE, action) {
+export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
   case EMAIL_INPUT:
-
     return {
-      ...state,
-      // email: state.user.email.concat(action.email),
-      user: {
-        email: action.email,
-      },
+      // ...state,
+      // user: {
+      email: action.email,
+      // },
     };
   default:
     return state;
   }
 }
-
-// const user = (state = INITIAL_STATE, action) => {
-//   console.log('e aqui no user?');
-//   switch (action.type) {
-//   case EMAIL_INPUT:
-//     return {
-//       ...state,
-//       // email: state.user.email.concat(action.email),
-//       user: {
-//         email: action.email,
-//       },
-//     };
-//   default:
-//     return state;
-//   }
-// };
-
-export default user;

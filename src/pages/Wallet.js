@@ -7,5 +7,9 @@ class Wallet extends React.Component {
   }
 }
 
-// export default connect(null, null)(Wallet);
+// const mapStateToProps = (state) => ({
+//  email: state.user.email,
+// });
+
 export default Wallet;
+// export default connect(mapStateToProps, null)(Wallet);

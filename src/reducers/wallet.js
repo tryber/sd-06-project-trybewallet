@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   },
 };
 
-const wallet = (state = INITIAL_STATE, action) => {
+export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
   case 'WALLET_INPUT':
     return {
@@ -18,6 +18,4 @@ const wallet = (state = INITIAL_STATE, action) => {
   default:
     return state;
   }
-};
-
-export default wallet;
+}

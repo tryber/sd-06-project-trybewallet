@@ -10,11 +10,11 @@ import * as serviceWorker from './serviceWorker';
 import store from './store/index';
 
 ReactDOM.render(
-  <BrowserRouter history={ createBrowserHistory() }>
-    <Provider store={ store }>
+  <Provider store={ store }>
+    <BrowserRouter history={ createBrowserHistory() }>
       <App />
-    </Provider>
-  </BrowserRouter>,
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root'),
 );
 
