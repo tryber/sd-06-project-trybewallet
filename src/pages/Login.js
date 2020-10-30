@@ -20,7 +20,7 @@ class Login extends React.Component {
 
     this.setState({ [name]: value }, () => {
       let disabled = true;
-      let five = 5;
+      const five = 5;
 
       if (regexp.test(email) && senha.length >= five) disabled = false;
 
