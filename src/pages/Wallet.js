@@ -14,8 +14,8 @@ class Wallet extends React.Component {
           </div>
         </header>
       </div>
-    )
+    );
   }
 }
 
-export default Wallet
+export default Wallet;

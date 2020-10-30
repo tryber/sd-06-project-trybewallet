@@ -1,4 +1,4 @@
-export const LOGIN = 'LOGIN'
+export const LOGIN = 'LOGIN';
 
 // Coloque aqui suas actions
 // Funções que retornam objetos
@@ -6,4 +6,4 @@ export const LOGIN = 'LOGIN'
 export const login = (email) => ({
   type: LOGIN,
   email,
-})
+});

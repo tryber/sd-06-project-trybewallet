@@ -5,9 +5,9 @@ const INITIAL_STATE = { currencies: [], expenses: [] };
 export default function (state = INITIAL_STATE, action) {
   // retorna um novo estado baseado no type da action
   switch (action.type) {
-    case 'WALLET':
-      return;
-    default:
-      return state;
+  case 'WALLET':
+    return;
+  default:
+    return state;
   }
 }
