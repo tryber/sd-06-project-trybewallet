@@ -47,7 +47,7 @@ class Login extends React.Component {
           <label htmlFor="email">
             E-mail:
             <input
-              type="text"
+              type="email"
               name="email"
               data-testid="email-input"
               onChange={ this.handleChange }
