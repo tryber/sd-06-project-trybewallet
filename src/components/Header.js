@@ -19,7 +19,14 @@ class Header extends Component {
             Despesa Total: R$
             {0}
           </label>
-          <label htmlFor="field" data-testid="header-currency-field">BRL</label>
+        </div>
+        <div>
+          <label
+            htmlFor="field"
+            data-testid="header-currency-field"
+          >
+            BRL
+          </label>
         </div>
       </div>
     );
