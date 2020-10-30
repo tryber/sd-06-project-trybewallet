@@ -86,12 +86,12 @@ class Login extends React.Component {
   }
 }
 
-Login.ropTypes = {
-  emailDispatch: PropTypes.func.isRequired,
-};
-
 const mapDispatchToProps = (dispatch) => ({
   emailDispatch: (email) => dispatch(addUserEmail(email)),
 });
+
+Login.ropTypes = {
+  emailDispatch: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);
