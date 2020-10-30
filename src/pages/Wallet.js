@@ -7,9 +7,10 @@ import logo from '../images/logo.png';
 class Wallet extends React.Component {
   render() {
     const { email } = this.props;
+    console.log(this.state);
     return (
       <div>
-        <header className="header">
+        <header className="header-wallet">
           <img
             src={ logo }
             alt="Logo"
@@ -30,6 +31,42 @@ class Wallet extends React.Component {
           >
             BRL
           </span>
+        </header>
+        <form className="form">
+          <input data-testid="value-input" />
+          <input data-testid="description-input" />
+          <select data-testid="currency-input">
+            <option value="BRL">BRL</option>
+          </select>
+          <select data-testid="method-input">
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de Crédito">Cartão de Crédito</option>
+            <option value="Cartão de Débito">Cartão de Débito</option>
+          </select>
+          <select data-testid="tag-input">
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
+          </select>
+          <button
+            className="wallet-button"
+            type="button"
+          >
+            Adicionar despesa
+          </button>
+        </form>
+        <header className="header-expenses">
+          <span>Descrição</span>
+          <span>Tag</span>
+          <span>Método de pagamento</span>
+          <span>Valor</span>
+          <span>Moeda</span>
+          <span>Câmbio utilizado</span>
+          <span>Valor convertido</span>
+          <span>Moeda de conversão</span>
+          <span>Editar/Excluir</span>
         </header>
       </div>
     );

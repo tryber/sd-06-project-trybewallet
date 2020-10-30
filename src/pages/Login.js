@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import '../css/Login.css';
 import logo from '../images/logo.png';
-import { login } from '../actions';
 import { actionCreators } from '../store/index';
 
 class Login extends React.Component {
@@ -12,24 +10,7 @@ class Login extends React.Component {
 
     this.state = {
     };
-    // this.isValid = this.isValid.bind(this);
-    // this.handleChange = this.handleChange.bind(this);
   }
-
-  // handleChange(e) {
-  //   this.setState({
-  //     email: e.target.value,
-  //   });
-  // }
-
-  // isValid() {
-  //   const { email, password } = this.state;
-  //   const minLength = 5;
-  //   const validEmail = (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
-  //   const validPassword = (password.length > minLength);
-  //   const loginIsValid = (validEmail && validPassword);
-  //   return loginIsValid;
-  // }
 
   render() {
     const { history } = this.props;
@@ -42,18 +23,26 @@ class Login extends React.Component {
             className="img-logo"
           />
           <input
+            name="email"
+            id="email"
             type="email"
+            pattern="/^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/g"
             data-testid="email-input"
             onChange={ (e) => actionCreators.login(e.target.value) }
+            required
           />
           Login
           <input
+            name="password"
+            id="password"
             type="password"
+            minLength="6"
             data-testid="password-input"
+            required
           />
           Password
           <button
-            type="button"
+            type="submit"
             onClick={ () => history.push('/carteira') }
           >
             Entrar
@@ -64,15 +53,7 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  email: state.user.email,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  login: (email) => dispatch(login(email)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;
 
 // mapStateToProps é equivalente a um getState()
 // mapDispatchToProps é equivalente a um setState()
