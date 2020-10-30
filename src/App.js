@@ -1,8 +1,15 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import { Login, Wallet } from './pages';
 
 function App() {
   return (
-    <div>Hello, TrybeWallet!</div>
+    <div>
+      <Switch>
+        <Route exact path="/" component={ Login } />
+        <Route path="/carteira" component={ Wallet } />
+      </Switch>
+    </div>
 
   );
 }
