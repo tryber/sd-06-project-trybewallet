@@ -39,23 +39,17 @@ class Login extends React.Component {
 
     return (
       <form>
-        <label htmlFor="email-input-id">Insira seu e-mail:</label>
         <input
           type="text"
-          placeholder="email@domain.com"
+          placeholder="Insira seu e-mail:"
           data-testid="email-input"
-          name="email-input-id"
-          id="email-input-id"
           onChange={ ({ target: { value } }) => emailUpdateAction(value) }
           value={ email }
         />
-        <label htmlFor="password-input-id">Insira seu password:</label>
         <input
           type="password"
-          placeholder="password"
+          placeholder="Insira seu password:"
           data-testid="password-input"
-          id="password-input-id"
-          name="password-input-id"
           onChange={ ({ target: { value } }) => passwordUpdateAction(value) }
           value={ password }
         />
