@@ -8,49 +8,76 @@ class Login extends React.Component {
 
     this.emailCheck = this.emailCheck.bind(this);
     this.addToOwnState = this.addToOwnState.bind(this);
+    this.itWasUpdated = this.itWasUpdated.bind(this);
 
     this.state = {
-      login: '',
+      email: '',
       password: '',
       loggedIn: false,
       emailWarning: false,
       passwordWarning: false,
+      btEnterIsDisabled: true,
+      wasUpdated: false,
     };
   }
 
+  componentDidUpdate() {
+    const { email, password, wasUpdated } = this.state;
+    if (wasUpdated) {
+      this.emailCheck(email, password);
+      this.itWasUpdated();
+    }
+  }
+
+  itWasUpdated() {
+    this.setState({ wasUpdated: false });
+  }
+
   emailCheck(email, password) {
+    console.log(email);
     // Font: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-    const emailCheck1 = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailCheck = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const MIN_CHARACTERS = 6;
     if (password.length < MIN_CHARACTERS) {
       this.setState({ passwordWarning: false });
     }
 
-    if (email.match(emailCheck1) && email !== '') {
+    if (email.match(emailCheck) && email !== '') {
       if (password.length >= MIN_CHARACTERS) {
-        this.setState({ loggedIn: true });
+        this.setState({ btEnterIsDisabled: false, passwordWarning: false });
       } else {
-        this.setState({ passwordWarning: true });
+        this.setState({ btEnterIsDisabled: true, passwordWarning: true });
       }
       this.setState({ emailWarning: false });
     } else {
-      this.setState({ emailWarning: true });
+      this.setState({ btEnterIsDisabled: true, emailWarning: true });
     }
   }
 
   addToOwnState(nameAttribute, value) {
-    this.setState({ [nameAttribute]: value });
+    this.setState({ [nameAttribute]: value, wasUpdated: true });
+  }
+
+  btLogin() {
+    this.setState({ loggedIn: true });
   }
 
   render() {
-    const { login, password, loggedIn, emailWarning, passwordWarning } = this.state;
-    let isDisabled;
-    // {((emailWarning) || (passwordWarning)) ? (isDisabled = true) : (isDisabled = false);
+    const {
+      email,
+      password,
+      loggedIn,
+      emailWarning,
+      passwordWarning,
+      btEnterIsDisabled,
+    } = this.state;
+    const errorEmail = 'E-mail inválido';
+    const errorMsgPassword = 'Senha inválida. A senha precisa ter no mínimo 6 caracteres';
     return (
       <div className="app-content">
         {(loggedIn) ? <Redirect push to="/carteira" /> : null}
-        {(emailWarning) ? <span className="error-msg">E-mail inválido</span> : null}
-        {(passwordWarning) ? <span className="error-msg">Senha inválida. A senha precisa ter no mínimo 6 caracteres</span> : null}
+        {(emailWarning) ? <span className="error-msg">{errorEmail}</span> : null}
+        {(passwordWarning) ? <span className="error-msg">{errorMsgPassword}</span> : null}
         <form className="login-form">
           <div className="logo-vbwallet">
             <span className="vb-logo">VB</span>
@@ -58,10 +85,10 @@ class Login extends React.Component {
           </div>
           <input
             type="text"
-            name="login"
+            name="email"
             data-testid="email-input"
             placeholder="Login"
-            value={ login }
+            value={ email }
             onChange={ ({ target }) => this.addToOwnState(target.name, target.value) }
             required="required"
           />
@@ -77,8 +104,8 @@ class Login extends React.Component {
           <button
             type="button"
             className="bt-send"
-            disabled={ isDisabled }
-            onClick={ () => this.emailCheck(login, password) }
+            disabled={ btEnterIsDisabled }
+            onClick={ () => this.btLogin() }
           >
             Entrar
           </button>
