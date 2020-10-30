@@ -16,22 +16,27 @@ class Table extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {expenses.map((expense, index) => (
-            <tr key={ index }>
-              <td>{ expense.description }</td>
-              <td>{ expense.tag }</td>
-              <td>{ expense.method }</td>
-              <td>{ expense.value }</td>
-              <td>{ expense.currency }</td>
-              <td>{ expense.exchange }</td>
-              <td>{ expense.convertedValue }</td>
-              <td>{ expense.conversionCurrency }</td>
-              <td>
-                <button type="button" data-testid="edit-btn">Editar</button>
-                <button type="button" data-testid="delete-btn">Excluir</button>
-              </td>
-            </tr>
-          ))}
+          {expenses.map((expense, index) => {
+            const exchangeValue = Number(expense.exchangeRates[expense.currency].ask);
+            const currencyName = expense.exchangeRates[expense.currency].name;
+            const convertedValue = exchangeValue * expense.value;
+            return (
+              <tr key={ index }>
+                <td>{ expense.description }</td>
+                <td>{ expense.tag }</td>
+                <td>{ expense.method }</td>
+                <td>{ expense.value }</td>
+                <td>{ exchangeValue.toFixed(2) }</td>
+                <td>{ currencyName }</td>
+                <td>{ convertedValue.toFixed(2) }</td>
+                <td>Real</td>
+                <td>
+                  <button type="button" data-testid="edit-btn">Editar</button>
+                  <button type="button" data-testid="delete-btn">Excluir</button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
         <tfoot>
           <tr>

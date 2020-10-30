@@ -19,6 +19,7 @@ class Header extends React.Component {
           }, 0).toFixed(2)}
         </p>
         <p data-testid="header-currency-field">BRL</p>
+        <button type="button" data-testid="edit-btn">Editar despesa</button>
       </header>
     );
   }
