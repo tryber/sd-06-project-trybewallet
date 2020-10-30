@@ -33,7 +33,7 @@ class Login extends React.Component {
     });
   }
 
-  handleClick = () => {
+  handleClick() {
     const { emailDispatch } = this.props;
     const { email } = this.state;
 
