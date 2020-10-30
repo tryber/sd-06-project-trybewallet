@@ -31,6 +31,8 @@ class Login extends React.Component {
 
       if ((senha.length >= SEIS) && (this.emailIsValid(email))) {
         this.setState({ disabled: false });
+      } else {
+        this.setState({ disabled: true });
       }
     }));
   }
