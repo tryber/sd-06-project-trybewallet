@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import { newEmail } from '../actions';
 import { connect } from 'react-redux';
 
@@ -26,6 +27,7 @@ class Login extends React.Component {
         this.setState({ disabled: true });
       }
     };
+    myEmail(email);
   }
 
   goingToWallet(event) {
@@ -45,7 +47,7 @@ class Login extends React.Component {
             type="email"
             value=""
             data-testid="email-input"
-            onChange={ myEmail(this.handleChange) }
+            onChange={ this.handleChange }
             required
           />
           </label>
@@ -73,5 +75,9 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   myEmail: (value) => dispatch(newEmail(value))
 });
+
+Login.propTypes = {
+  myEmail: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);
