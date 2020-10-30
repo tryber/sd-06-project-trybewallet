@@ -5,3 +5,11 @@ export const addUserEmail = (email) => ({
   type: USER_EMAIL,
   payload: email,
 });
+
+export const catchInputEntries = (currencies, expenses) => ({
+  type: WALLET_CHANGES,
+  payload: {
+    currencies,
+    expenses,
+  },
+})
