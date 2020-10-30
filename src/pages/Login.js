@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { emailSaveToState } from '../actions';
+import Wallet from './Wallet';
 
 class Login extends React.Component {
   constructor() {
@@ -31,7 +32,6 @@ class Login extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(event);
     const { email, password } = this.state;
 
     const emailValidation = this.validateEmail(email);
@@ -57,7 +57,7 @@ class Login extends React.Component {
 
   render() {
     const { email, password, isOk } = this.state;
-    if (isOk === true) return (<Link to="/carteira" />);
+    // if (isOk === true) return (<Link to="/carteira" />);
     return (
       <div>
         <form>
@@ -90,9 +90,14 @@ class Login extends React.Component {
               <button
                 type="submit"
                 onClick={ this.handleSubmit }
+                disabled={ !this.validatePassword(password)
+                || !this.validateEmail(email) }
               >
-                Entrar
+                <Link to="/carteira">
+                  Entrar
+                </Link>
               </button>
+
             </div>
           </fieldset>
         </form>
