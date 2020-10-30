@@ -15,7 +15,7 @@ class Login extends React.Component {
       password: '',
       isDisabled: true,
     };
-    this.sendForm = this.sendForm.bind(this); // handelSingUp
+    this.sendForm = this.sendForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.validadorDeCampos = this.validadorDeCampos.bind(this);
   }
@@ -49,7 +49,7 @@ class Login extends React.Component {
     return (
       <div>
         <img src={ trybeWallet } alt="Trybe logo" />
-        Faça seu Login
+        Faça seu Login:
         <form onSubmit={ this.sendForm }>
           <input
             type="text"
