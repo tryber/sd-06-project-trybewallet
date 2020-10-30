@@ -26,7 +26,7 @@ class Login extends React.Component {
       const emailExpRegular = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/gi;
       const numberMinimoCaracterSenha = 6;
 
-      if (password >= numberMinimoCaracterSenha && emailExpRegular.test(email)) {
+      if (password.length >= numberMinimoCaracterSenha && emailExpRegular.test(email)) {
         return this.setState({ disabled: false });
       }
       return this.setState({ disabled: true });
