@@ -32,7 +32,7 @@ class Login extends React.Component {
       } else {
         this.setState({
           isDisabled: true,
-        })
+        });
       }
     });
   }
@@ -85,6 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   submitButton: propTypes.func.isRequired,
+  history: propTypes.string.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
