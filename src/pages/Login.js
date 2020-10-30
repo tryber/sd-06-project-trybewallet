@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 // import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../actions';
+// validação de e-mail - site consultado: https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
 
 class Login extends React.Component {
   constructor(props) {
@@ -22,18 +23,13 @@ class Login extends React.Component {
       [name]: value,
     }, () => {
       const { email, password } = this.state;
-      // https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
-      const emailExpRegular = new RegExp(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/gi);
-      const lenghtOfPassword = 6;
+      let emailExpRegular = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/gi;
+      const numberMinimoCaracterSenha = 6;
 
-      if (password >= lenghtOfPassword && emailExpRegular.test(email)) {
-        this.setState({
-          disabled: false,
-        });
+      if (password >= numberMinimoCaracterSenha && emailExpRegular.test(email)) {
+        return this.setState({ disabled: false });
       } else {
-        this.setState({
-          disabled: true,
-        });
+        return this.setState({ disabled: true });
       }
     });
   }
