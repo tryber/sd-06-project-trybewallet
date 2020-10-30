@@ -9,8 +9,8 @@ function user(state = initialState, action) {
   switch (action.type) {
   case SAVE_EMAIL:
     return {
-    ...state,
-    email: action.payload,
+      ...state,
+      email: action.payload,
     };
   default:
     return state;
