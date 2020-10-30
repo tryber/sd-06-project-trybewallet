@@ -52,7 +52,7 @@ class Forms extends Component {
           Moeda:
           <select required data-testid="currency-input" name="moeda" onChange={ handleChange }>
             {currencies.filter(currency => currency !== "USDT").map((currency, index) => (
-              <option key={index} data-testId={currency}>{currency}</option>
+              <option key={index} data-testid={currency}>{currency}</option>
             ))}
           </select>
         </label>
@@ -60,8 +60,8 @@ class Forms extends Component {
           Método de Pagamento:
           <select required data-testid="method-input" name="metodo" onChange={ handleChange }>
             <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de Crédito">Cartão de Crédito</option>
-            <option value="Cartão de Débito">Cartão de Débito</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="tag-input" >
@@ -78,7 +78,7 @@ class Forms extends Component {
           Detalhes:
           <input data-testid="description-input" name="detalhes" onChange={ handleChange } />
         </label>
-        <button type="button">Adicionar Despesa</button>
+        <button type="button">Adicionar despesa</button>
       </forms>
     );
   }
