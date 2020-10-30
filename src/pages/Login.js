@@ -45,7 +45,7 @@ class Login extends React.Component {
 
   //  https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
   validateEmail(email) {
-    const isValid = email.match(/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i);
+    const isValid = email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i);
     return isValid ? email : 0;
   }
 
