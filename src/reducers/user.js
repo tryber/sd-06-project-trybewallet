@@ -7,13 +7,13 @@ const initialState = {
 
 function user(state = initialState, action) {
   switch (action.type) {
-    case SAVE_EMAIL:
-      return {
-        ...state,
-        email: action.payload,
-      };
-    default:
-      return state;
+  case SAVE_EMAIL:
+    return {
+    ...state,
+    email: action.payload,
+    };
+  default:
+    return state;
   }
 }
 
