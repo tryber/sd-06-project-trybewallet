@@ -1,0 +1,32 @@
+button {
+  width: 100px;
+}
+
+input {
+  width: 250px;
+  height: 40px;
+}
+
+.loginForm {
+  background-attachment: fixed;
+  background-image: url('../imagens/login.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: stretch;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.loginInput {
+  margin: 220px 100px ;
+  padding: 20px;
+  width: 250px;
+  height: 90px;
+  border: 5px groove rgba(235, 235, 240, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: center;
+}
