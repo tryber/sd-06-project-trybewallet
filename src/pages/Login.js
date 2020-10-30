@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import { loginInput } from '../actions';
 import EmailInput from './Login_components/EmailInput';
 import LoginButton from './Login_components/LoginButton';
@@ -60,6 +62,16 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.defaultProps = {
+  userLogin: () => {},
+  history: {},
+};
+
+Login.propTypes = {
+  userLogin: PropTypes.func,
+  history: PropTypes.objectOf(PropTypes.string),
+};
 
 const mapDispatchToProps = (dispatch) => ({
   userLogin: (name, input) => dispatch(loginInput(name, input)),
