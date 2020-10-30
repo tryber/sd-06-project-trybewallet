@@ -10,7 +10,9 @@ function addRecord(state = INITIAL_STATE, action) {
   case 'addEmail':
     return {
       ...state,
-      user: action.payload.user.email,
+      user: {
+        email: action.payload.email,
+      },
     };
   default:
     return state;

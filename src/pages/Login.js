@@ -44,8 +44,8 @@ class Login extends React.Component {
   }
 
   render() {
-    const registerEmail = this.props;
-    console.log(store);
+    console.log(this.props);
+    const { registerEmail } = this.props;
     return (
       <div>
         <form className="login-page">
@@ -79,10 +79,16 @@ class Login extends React.Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    email: state.addRecord.user.email,
+  };
+}
+
 function mapDispacthToProps(dispatch) {
   return {
     registerEmail: (email) => dispatch(addEmailToRecord(email)),
   };
 }
 
-export default connect(null, mapDispacthToProps)(Login);
+export default connect(mapStateToProps, mapDispacthToProps)(Login);
