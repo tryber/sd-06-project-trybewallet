@@ -1,8 +1,8 @@
-import getApiWallet from "../services/api_wallet";
+import getApiWallet from '../services/api_wallet';
 
-const WALLET_REQUEST = "WALLET_REQUEST";
-const WALLET_RECEIVE = "WALLET_RECEIVE";
-const WALLET_RECEIVE_SUCESS = "WALLET_RECEIVE_SUCESS";
+const WALLET_REQUEST = 'WALLET_REQUEST';
+const WALLET_RECEIVE = 'WALLET_RECEIVE';
+const WALLET_RECEIVE_SUCESS = 'WALLET_RECEIVE_SUCESS';
 // const WALLET_RECEIVE_FAIL = "WALLET_RECEIVE_FAIL";
 
 // walletRequest

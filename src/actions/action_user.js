@@ -1,9 +1,9 @@
-import getApiUser from "../services/api_user";
+import getApiUser from '../services/api_user';
 
-const USER_REQUEST = "USER_REQUEST";
-const USER_RECEIVE = "USER_RECEIVE";
-const USER_RECEIVE_SUCESS = "USER_RECEIVE_SUCESS";
-// const USER_RECEIVE_FAIL = "USER_RECEIVE_FAIL";
+const USER_REQUEST = 'USER_REQUEST';
+const USER_RECEIVE = 'USER_RECEIVE';
+const USER_RECEIVE_SUCESS = 'USER_RECEIVE_SUCESS';
+// const USER_RECEIVE_FAIL = 'USER_RECEIVE_FAIL';
 
 // userRequest
 export const userRequest = () => ({
