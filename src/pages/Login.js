@@ -38,7 +38,6 @@ class Login extends React.Component {
 
   verifyEmail() {
     const { password, email } = this.state;
-    const validationButton = document.querySelector('.validation-button');
     const emailFormat = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
     const passwordMinLength = 6;
     if (password.length >= passwordMinLength && emailFormat) {
