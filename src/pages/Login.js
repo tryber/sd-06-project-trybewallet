@@ -10,6 +10,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      isDisabled: true,
     };
 
     this.handleSignUp = this.handleSignUp.bind(this);
@@ -27,14 +28,11 @@ class Login extends React.Component {
   }
 
   verifyEmailAndPassword() {
-    const signUpBtn = document.getElementsByClassName('signUpBtn')[0];
     const { email, password } = this.state;
     const emailFormat = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
     const passwordMinLength = 6;
 
-    if (password.length >= passwordMinLength && emailFormat) {
-      signUpBtn.removeAttribute('disabled');
-    }
+    this.setState({ isDisabled: !(password.length >= passwordMinLength && emailFormat) });
   }
 
   handleChange({ target }) {
@@ -44,7 +42,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, isDisabled } = this.state;
     return (
       <div>
         LOGIN
@@ -65,7 +63,13 @@ class Login extends React.Component {
             data-testid="password-input"
             onChange={ this.handleChange }
           />
-          <button className="signUpBtn" type="submit" disabled>Entrar</button>
+          <button
+            className="signUpBtn"
+            type="submit"
+            disabled={ isDisabled }
+          >
+            Entrar
+          </button>
         </form>
       </div>
     );
