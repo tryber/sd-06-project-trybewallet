@@ -1,4 +1,4 @@
-import getCurrencyFromApi from '../services/economiaAPI';
+import fetchApi from '../services/economiaAPI';
 
 export const HANDLE_USER = 'HANDLE_USER';
 export const REQUEST_CURRENCY = 'HANDLE_CURRENCY';
@@ -23,7 +23,8 @@ const receiveCurrency = () => ({
 export function fetchCurrency() {
   return (dispatch) => {
     dispatch(requestCurrency());
-    return getCurrencyFromApi()
+
+    return fetchApi()
       .then(
         (currency) => dispatch(receiveCurrency(currency)),
       );
