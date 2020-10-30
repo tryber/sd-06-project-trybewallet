@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../actions';
+import './Login.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -43,7 +44,7 @@ class Login extends React.Component {
   render() {
     const { email, password, isValid } = this.state;
     return (
-      <section>
+      <section className="landing-page">
         <form>
           <img
             src="/trybeWallet.png"

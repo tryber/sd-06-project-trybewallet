@@ -1,4 +1,4 @@
-.login-page {
+.landing-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,12 +6,13 @@
   width: 100vw;
 }
 
-.login-page form {
+.landing-page form {
   display: flex;
   flex-direction: column;
 }
 
-.login-page form label {
+.landing-page form label {
   display: flex;
   flex-direction: column;
+  margin: 5px 5px;
 }
