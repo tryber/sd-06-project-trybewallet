@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchAPI, saveExpense } from '../actions';
-import { response } from '../tests/mockData'; //  Provisório
 
 class Wallet extends React.Component {
   constructor() {
@@ -67,9 +66,11 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, isFetching } = this.props;
+    const { email, isFetching, coinsOptions, expenses } = this.props;
     const { value, currency, method, tag, description, totalValue } = this.state;
-    const optionsCoins = Object.keys(response).filter((coins) => coins !== 'USDT');
+    const optionsCoins = (coinsOptions)
+      ? Object.keys(coinsOptions).filter((coins) => coins !== 'USDT')
+      : ['USD'];
 
     return (
       <div>
@@ -115,13 +116,13 @@ class Wallet extends React.Component {
               data-testid="currency-input"
               id="currency"
             >
-              { optionsCoins.map((expense) => (
+              { optionsCoins.map((options) => (
                 <option
-                  key={ expense }
-                  data-testid={ expense }
-                  value={ expense }
+                  key={ options }
+                  data-testid={ options }
+                  value={ options }
                 >
-                  { expense }
+                  { options }
                 </option>
               )) }
             </select>
@@ -172,7 +173,44 @@ class Wallet extends React.Component {
           </label>
           <button onClick={ this.addExpense } type="button">Adicionar despesa</button>
         </form>
-
+        <table border="1">
+          <thead className="cabecalho">
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
+            </tr>
+          </thead>
+          { (expenses.length > 0)
+            ? expenses.map((expense) => (
+              <tbody key={ expense.id }>
+                <tr>
+                  <td>{expense.description}</td>
+                  <td>{expense.tag}</td>
+                  <td>{expense.method}</td>
+                  <td>{ expense.value }</td>
+                  <td>{ expense.exchangeRates[expense.currency].name }</td>
+                  <td>
+                    { Number(expense.exchangeRates[expense.currency].ask)
+                      .toFixed(2) }
+                  </td>
+                  <td>
+                    { (Number(expense.exchangeRates[expense.currency].ask)
+                    * Number(expense.value)).toFixed(2) }
+                  </td>
+                  <td>Real</td>
+                  <td>ICONE</td>
+                </tr>
+              </tbody>
+            ))
+            : ''}
+        </table>
         <p>{ isFetching ? 'Loading' : '' }</p>
 
         <Link to="/">Voltar</Link>
