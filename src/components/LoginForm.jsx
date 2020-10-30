@@ -1,8 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { loginInput } from '../actions';
 
 class LoginForm extends React.Component {
   render() {
+
+    const { email, userLogin } = this.props;
+
     return(
       <form>
         <fieldset>
@@ -10,7 +15,8 @@ class LoginForm extends React.Component {
           <label htmlFor="email-input">
             Email:
             <input
-              name="user-email"
+              onChange={ ({ target }) => userLogin(target.name, target.value) }
+              name="email"
               type="text"
               data-testid="email-input"
             />
@@ -33,4 +39,8 @@ class LoginForm extends React.Component {
   }
 }
 
-export default LoginForm;
+const mapDispatchToProps = (dispatch) => ({
+  userLogin: (name, input) => dispatch(loginInput(name, input)),
+});
+
+export default connect(null, mapDispatchToProps)(LoginForm);
