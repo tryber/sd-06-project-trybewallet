@@ -10,7 +10,7 @@ class Form extends Component {
             id="input-value"
             type="text"
             data-testid="value-input"
-          />  
+          />
         </label>
         <label htmlFor="description-input">
           Descrição:
@@ -18,7 +18,7 @@ class Form extends Component {
             id="description-input"
             type="text"
             data-testid="description-input"
-          />  
+          />
         </label>
         <label htmlFor="currency-input">
           Moeda:
@@ -28,7 +28,7 @@ class Form extends Component {
             data-testid="currency-input"
           >
             <option>USD</option>
-          </select>  
+          </select>
         </label>
         <label htmlFor="method-input">
           Método de pagamento:
@@ -40,7 +40,7 @@ class Form extends Component {
             <option>Dinheiro</option>
             <option>Cartão de crédito</option>
             <option>Cartão de débito</option>
-          </select>  
+          </select>
         </label>
         <label htmlFor="tag-input">
           Tag:
@@ -55,7 +55,7 @@ class Form extends Component {
             <option>Transporte</option>
             <option>Saúde</option>
           </select>
-          <button>Adicionar despesa</button>
+          <button type="button">Adicionar despesa</button>
         </label>
       </form>
     );
