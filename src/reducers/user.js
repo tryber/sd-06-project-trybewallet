@@ -25,12 +25,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
       email: action.email.value,
       // userFetch: false,
     };
-  // case USER_RECEIVE_FAIL:
-  //   return {
-  //     ...state,
-  //     email: action.email.value,
-  //     userFetch: false,
-  //   };
+    // case USER_RECEIVE_FAIL:
+    //   return {
+    //     ...state,
+    //     email: action.email.value,
+    //     userFetch: false,
+    //   };
 
   default:
     return state;

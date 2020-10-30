@@ -29,13 +29,13 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       expenses: [action.expenses],
       // walletFetch: false,
     };
-  // case walletReceiveFail:
-  //   return {
-  //     ...state,
-  //     currencies: [action.currencies],
-  //     expenses: [action.expenses],
-  //     walletFetch: false,
-  //   };
+    // case walletReceiveFail:
+    //   return {
+    //     ...state,
+    //     currencies: [action.currencies],
+    //     expenses: [action.expenses],
+    //     walletFetch: false,
+    //   };
 
   default:
     return state;

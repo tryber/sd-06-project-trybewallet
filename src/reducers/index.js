@@ -2,14 +2,14 @@ import { combineReducers } from 'redux';
 import user from './user';
 import wallet from './wallet';
 
-const rootReducer = combineReducers ({
+const rootReducer = combineReducers({
   user,
-  wallet,  
+  wallet, 
 });
 
 // function reducer(state, action) {
 //   return 
-  //   {state = action.type}
+//   {state = action.type}
 // }
 // retorna um novo estado baseado no type da action
 
