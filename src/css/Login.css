@@ -1,11 +1,11 @@
-fieldset {
+.login-form fieldset {
   background-color: rgb(234, 253, 226);
   border: none;
   border-radius: 8px;
   padding: 20px 20px 40px;
 }
 
-legend {
+.login-form legend {
   background-color: white;
   border-radius: 8px;
   color: rgb(0, 103, 46);
@@ -16,14 +16,14 @@ legend {
   margin: 0 0 0 17px;
 }
 
-label {
+.login-form label {
   color: rgb(0, 103, 46);
   display: block;
   font-size: 1.1em;
   font-style: italic;
 }
 
-input {
+.login-form input {
   border: 1px solid rgb(14, 163, 106);
   border-radius: 8px;
   font-size: 1em;

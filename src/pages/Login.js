@@ -58,7 +58,7 @@ class Login extends React.Component {
       ? (
         <div>
           <img src={ trybeWallet } alt="Trybe Wallet logo" />
-          <form>
+          <form className="login-form">
             <fieldset className="login-fieldset">
               <legend>Login</legend>
               <label htmlFor="email">

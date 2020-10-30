@@ -1,0 +1,59 @@
+.expense-form {
+  background-color: var(--main-bkgrdcolor);
+  border: none;
+  border-radius: 0 8px 0 0;
+  padding: 0 16px 0 0;
+}
+
+.expense-form legend {
+  background-color: white;
+  border-radius: 8px;
+  color: rgb(0, 103, 46);
+  font-size: 1.2em;
+  font-style: italic;
+  font-weight: 500;
+  padding: 0 12px 4px 12px;
+  margin: 0 0 0 17px;
+}
+
+.expense-form label {
+  color: rgb(100, 203, 146);
+  display: inline-block;
+  font-size: 1.1em;
+  font-style: italic;
+  margin: 0 20px;
+}
+
+.expense-form input, select {
+  background-color: rgb(230, 247, 220);
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  height: 25px;
+  margin: 0 10px;
+  padding: 6px 4px 6px 8px;
+  width: 100px;
+}
+
+.expense-form input[ type = text ] {
+  font-size: 0.9em;
+  width: 280px;
+}
+
+.expense-form select {
+  font-size: 0.9em;
+  height: 38px;
+  margin: 0 5px;
+  width: auto;
+  font-style: italic;
+}
+
+.expense-form button {
+  color: rgb(230, 247, 220);
+  border: 0;
+  border-radius: 8px;
+  background-color: rgb(7, 161, 107);
+  font-size: 1em;
+  margin: 5px 20px 0;
+  padding: 8px 16px;
+}
