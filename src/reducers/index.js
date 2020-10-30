@@ -4,11 +4,11 @@ import wallet from './wallet';
 
 const rootReducer = combineReducers({
   user,
-  wallet, 
+  wallet,
 });
 
 // function reducer(state, action) {
-//   return 
+//   return
 //   {state = action.type}
 // }
 // retorna um novo estado baseado no type da action
