@@ -1,14 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 class AddButton extends React.Component {
   render() {
-    const {  } = this.props;
+    // const {  } = this.props;
 
     return (
       <button
         type="button"
-
       >
         Adicionar despesa
       </button>

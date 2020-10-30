@@ -4,14 +4,15 @@ import AddButton from './AddButton';
 class FormularioDespesa extends React.Component {
   constructor() {
     super();
-    this.state = {
-      id: 0,
-      expenseValue: 0,
-      description: '',
-      currency: 'BRL',
-      payMethod: '',
-      categoryTag: '',
-    };
+    // this.state = {
+    //   id: 0,
+    //   value: 0,
+    //   description: '',
+    //   currency: 'BRL',
+    //   method: '',
+    //   tag: '',
+    //   exchangeRates: {},
+    // };
 
     this.addExpense = this.addExpense.bind(this);
   }
@@ -60,14 +61,13 @@ class FormularioDespesa extends React.Component {
       ));
   }
 
-  addExpense() {
-    const { userLogin, history } = this.props;
-    const { email } = this.state;
+  // addExpense() {
+  //   // const { id, expenseValue, description, currency, payMethod, categoryTag } = this.state;
 
-    userLogin('email', email.value);
-    history.push('/carteira');
-  }
-
+  //   this.setState = {
+  //     // pegar os valores dos inputs
+  //   };
+  // }
 
   render() {
     return (
