@@ -48,8 +48,8 @@ const Header = ({ user, transactions }) => {
 
 function mapStateToProps(state) {
   return {
-    user: state.user.user.email,
-    transactions: state.wallet.wallet.expenses,
+    user: state.user.email,
+    transactions: state.wallet.expenses,
   };
 }
 

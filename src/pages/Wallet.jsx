@@ -242,8 +242,8 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
 
 function mapStateToProps(state) {
   return {
-    user: state.user.user.email,
-    transactions: state.wallet.wallet.expenses,
+    user: state.user.email,
+    transactions: state.wallet.expenses,
     currencies: state.wallet.wallet.currencies,
   };
 }
