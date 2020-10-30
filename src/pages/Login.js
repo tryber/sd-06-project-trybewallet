@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginSucess } from '../actions';
 
@@ -31,10 +32,9 @@ class Login extends React.Component {
   }
 
   handleClick() {
-    const { userLogin, history } = this.props;
+    const { userLogin } = this.props;
     const { email } = this.state;
     userLogin(email);
-    history.push('/carteira');
   }
 
   render() {
@@ -61,13 +61,15 @@ class Login extends React.Component {
           minLength="6"
           onChange={ this.validateFields }
         />
-        <button
-          type="button"
-          disabled={ isDisabled }
-          onClick={ this.handleClick }
-        >
-          Entrar
-        </button>
+        <Link to="/carteira">
+          <button
+            type="button"
+            disabled={ isDisabled }
+            onClick={ this.handleClick }
+          >
+            Entrar
+          </button>
+        </Link>
       </div>
     );
   }
