@@ -90,7 +90,7 @@ const mapDispatchToProps = (dispatch) => ({
   emailDispatch: (email) => dispatch(addUserEmail(email)),
 });
 
-Login.ropTypes = {
+Login.propTypes = {
   emailDispatch: PropTypes.func.isRequired,
 };
 
