@@ -1,0 +1,13 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 20px;
+    border: 1px solid black;
+}
+
+.img-logo-wallet {
+    max-height: 15%;
+    max-width: 15%;
+}
