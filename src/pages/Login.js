@@ -18,8 +18,6 @@ class Login extends React.Component {
     this.passwordValidation = this.passwordValidation.bind(this);
   }
 
-  // Regex de validação de email retirado de: https://www.w3resource.com/javascript/form/email-validation.php
-
   emailValidation(email) {
     const regex = /[A-Z0-9]{1,}@[A-Z0-9]{2,}\.[A-Z0-9]{2,}/i;
     if (regex.test(email.toLowerCase())) {

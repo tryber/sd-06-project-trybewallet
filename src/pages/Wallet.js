@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Wallet extends React.Component {
   render() {
@@ -20,3 +21,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Wallet);
+
+Wallet.propTypes = {
+  email: PropTypes.string.isRequired,
+};
