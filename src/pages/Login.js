@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { addUserEmail } from '../actions';
 
 class Login extends React.Component {
@@ -38,7 +39,7 @@ class Login extends React.Component {
     const { email } = this.state;
 
     emailDispatch(email);
-    
+
     this.setState({ logedIn: true });
   }
 
@@ -72,21 +73,25 @@ class Login extends React.Component {
           <button
             type="button"
             disabled={ disabled }
-            onClick={this.handleClick}
+            onClick={ this.handleClick }
           >
             Entrar
           </button>
         </section>
-      )
+      );
     }
     return (
       <Redirect to="/carteira" />
     );
-  };
+  }
 }
 
-const mapDispatchToProps = dispatch => ({
+Login.ropTypes = {
+  emailDispatch: PropTypes.string.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
   emailDispatch: (email) => dispatch(addUserEmail(email)),
-})
+});
 
 export default connect(null, mapDispatchToProps)(Login);
