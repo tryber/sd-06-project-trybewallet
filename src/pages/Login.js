@@ -36,7 +36,7 @@ class Login extends React.Component {
   validateFields() {
     const { email, password } = this.state;
     const minLength = 5;
-    // Found this beautiful RegEx at https://ui.dev/validate-email-address-javascript/
+    // Found this beautiful RegExp at https://ui.dev/validate-email-address-javascript/
     const validEmail = (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
     const validPassword = (password.length >= minLength);
     const loginIsValid = (validEmail && validPassword);
@@ -57,7 +57,7 @@ class Login extends React.Component {
     return (!enableLogin)
       ? (
         <div>
-          <img src={ trybeWallet } alt="Trybe logo" />
+          <img src={ trybeWallet } alt="Trybe Wallet logo" />
           <form>
             <fieldset className="login-fieldset">
               <legend>Login</legend>
