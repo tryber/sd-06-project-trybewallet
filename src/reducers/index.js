@@ -12,6 +12,10 @@ console.log(composedThunk);
 
 // export const store = createStore(rootReducers, initialStateWithExpenses, composedThunk);
 
-export const store = createStore(rootReducers, initialStateWithExpenses, applyMiddleware(thunk));
+export const store = createStore(
+  rootReducers,
+  initialStateWithExpenses,
+  applyMiddleware(thunk),
+);
 
 export default rootReducers;
