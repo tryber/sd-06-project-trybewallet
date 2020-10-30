@@ -16,9 +16,10 @@ class Login extends React.Component {
     this.validation = this.validation.bind(this);
   }
 
-  validation(event) {
+  validation({ target }) {
+    const { name, value } = target;
     this.setState({
-      [event.target.name]: event.target.value,
+      [name]: value,
     }, () => {
       const { email, password } = this.state;
       // https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
