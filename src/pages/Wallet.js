@@ -1,9 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class Wallet extends React.Component {
   render() {
-    return <div>TrybeWallet</div>;
+    return <div>Hello</div>;
   }
 }
 
-export default Wallet;
+// eslint-disable-next-line no-multi-assign
+const mapStateToProps = (state) => ({
+  nome: state.wallet.helloWorld,
+});
+export default connect(mapStateToProps)(Wallet);
