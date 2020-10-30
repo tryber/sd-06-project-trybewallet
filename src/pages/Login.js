@@ -27,6 +27,7 @@ class Login extends React.Component {
     } else {
       this.setState({ isDisabled: true });
     }
+    this.setState({ email: emailInput });
   }
 
   handleClick() {
@@ -38,6 +39,7 @@ class Login extends React.Component {
 
   render() {
     const { isDisabled } = this.state;
+
     return (
       <div>
         <h2>Login</h2>

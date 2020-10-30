@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
+import Wallet from './pages/Wallet';
 
 function App() {
   return (
@@ -8,9 +9,9 @@ function App() {
       <h1>TrybeWallet Project!</h1>
       <BrowserRouter>
         <Switch>
-          {/* <Route exact path="/movies/:id" */}
+          <Route exact path="/carteira" component={ Wallet } />
           <Route exact path="/" component={ Login } />
-          {/* <Route path="*" component={NotFound} /> */}
+          <Route path="*" component={ Login } />
         </Switch>
       </BrowserRouter>
     </div>
