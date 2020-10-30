@@ -7,10 +7,10 @@ const INITIAL_STATE = {
 
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case NEW_EXPENSES:
+    case 'NEW_EXPENSES':
       return { ...state, expenses: [...state.wallet.expenses, action.payload] };
-    case NEW_CURRENCIES:
-      return { ...state, currencies: action.payload };
+    case 'FETCH_CURRENCIES_SUCCESS':
+      return { ...state, currencies: Object.keys(action.cotacaoMoeda).filter((element) => element != 'USDT') };
     default:
       return state;
   }

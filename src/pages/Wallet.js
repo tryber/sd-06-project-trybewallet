@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { currencies } from '../actions';
+import apiMoney from '../actions';
+
 
 
 class Wallet extends React.Component {
@@ -21,10 +22,14 @@ class Wallet extends React.Component {
     };
   }
 
+componentDidMount() {
+  const { myMoney } = this.props;
+  myMoney()
+}
+
   render() {
     const { totalValue } = this.state;
-    const { email } = this.props;
-    const moedas = ['USD', 'CAD', 'EUR', 'GBP', 'ARS', 'BTC', 'LTC', 'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP'];
+    const { email, currencies } = this.props;
     const pagamento = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
@@ -47,7 +52,7 @@ class Wallet extends React.Component {
             Moeda:{' '}
             {/* buscar atraves da api, Remova das informações trazidas pela API a opção 'USDT' (Dólar Turismo).  */}
             <select data-testid="currency-input">
-              {moedas.map((moeda) => (
+              {currencies.map((moeda) => (
                 <option value={moeda} data-testid={moeda}>
                   {moeda}
                 </option>
@@ -63,14 +68,14 @@ class Wallet extends React.Component {
             </select>
           </label>
           <label>
-            Tag:{' '}
-            {/* Ao ser clicado, o botão deve fazer uma requisição à API para trazer o câmbio mais atualizado possível. */}
+            Tag:    
             <select data-testid="tag-input">
               {tag.map((tag) => (
                 <option value={tag}>{tag}</option>
               ))}
             </select>
           </label>
+          {/* Ao ser clicado, o botão deve fazer uma requisição à API para trazer o câmbio mais atualizado possível. */}
           <button type="submit">Adicionar despesa</button>
         </form>
       </div>
@@ -79,16 +84,17 @@ class Wallet extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  email: state.user.email
+  email: state.user.email,
+  currencies: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  myNewExpenses: (payload) => dispatch(expenses(payload)),
-  myNewCurrencies: (payload) => dispatch(currencies(payload)),
+  myMoney: (cotacaoMoeda) => dispatch(apiMoney(cotacaoMoeda)),
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  currencies: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
