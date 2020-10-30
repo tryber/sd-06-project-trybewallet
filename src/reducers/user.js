@@ -1,9 +1,7 @@
 import { HANDLE_USER } from '../actions';
 
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -11,7 +9,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
   case HANDLE_USER:
     return {
       ...state,
-      ...action.email,
+      email: action.email,
     };
   default:
     return state;

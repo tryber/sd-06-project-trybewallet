@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import setEmailForm from '../actions';
+// import trybeWallet from '../img/trybeWallet';
 
 class Login extends Component {
   constructor() {
@@ -16,6 +16,7 @@ class Login extends Component {
 
     this.handleInput = this.handleInput.bind(this);
     this.validateFields = this.validateFields.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   validateFields() {
@@ -23,9 +24,9 @@ class Login extends Component {
     const minPasswordLength = 6;
     const emailFormat = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
 
-    if (emailFormat && password.length > minPasswordLength) {
+    if (emailFormat && password.length >= minPasswordLength) {
       this.setState({ isDisabled: false });
-    }
+    } else this.setState({ isDisabled: true });
   }
 
   handleInput({ target }) {
@@ -34,18 +35,20 @@ class Login extends Component {
     });
   }
 
-  // handleLogin() {
-  //   if (validateEmail() === true && validatePassword() === true) {
-  //     return false;
-  //   }
-  // }
+  handleLogin(event) {
+    event.preventDefault();
+    const { setEmail } = this.props;
+    const { email } = this.state;
+    setEmail(email);
+    const { history } = this.props;
+    history.push('/carteira');
+  }
 
   render() {
     const { email, password, isDisabled } = this.state;
-    const { setEmail } = this.props;
     return (
-      <div>
-        <form>
+      <div className="login">
+        <form onSubmit={ this.handleLogin }>
           <input
             type="email"
             value={ email }
@@ -56,21 +59,19 @@ class Login extends Component {
             required
           />
           <input
-            type="text"
+            type="password"
             value={ password }
             name="password"
             data-testid="password-input"
             placeholder="Password"
             onChange={ this.handleInput }
-            minLength="6"
             required
           />
           <button
-            type="button"
-            onClick={ () => setEmail(this.state) }
+            type="submit"
             disabled={ isDisabled }
           >
-            <Link to="/carteira">Entrar</Link>
+            Entrar
           </button>
         </form>
       </div>
@@ -79,15 +80,16 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.userReducer.user.email,
+  user: state.user.email,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setEmail: (email) => dispatch(setEmailForm(email)),
+  setEmail: (userEmail) => dispatch(setEmailForm(userEmail)),
 });
 
 Login.propTypes = {
   setEmail: propTypes.func.isRequired,
+  history: propTypes.objectOf(propTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
