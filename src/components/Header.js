@@ -20,10 +20,8 @@ class Header extends Component {
             {0}
           </label>
         </div>
-        <div id="field" data-testid="header-currency-field">
-          <label htmlFor="field">
+        <div data-testid="header-currency-field">
             BRL
-          </label>
         </div>
       </div>
     );
