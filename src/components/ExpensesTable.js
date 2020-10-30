@@ -18,6 +18,8 @@ class ExpensesTable extends React.Component {
           {expenses.map((expense) => {
             const currencyAbreviation = expense.currency;
             const currency = expense.exchangeRates[currencyAbreviation].name;
+            console.log(currency);
+            console.log(expense.exchangeRates[currencyAbreviation]);
             const exchangeRate = expense.exchangeRates[currencyAbreviation].ask;
             const convertedValue = expense.value * exchangeRate;
 
