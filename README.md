@@ -49,7 +49,7 @@ Através dessa aplicação, será possível realizar as operações básicas de 
 
   - Serão dois dias de projeto.
   
-  - O projeto tem até a seguinte data: `DD/MM/YYYY - 14:00h`. Para ser entregue a avaliação final.
+  - O projeto tem até a seguinte data: `06/11/2020 - 14:00h`. Para ser entregue a avaliação final.
 
 ---
 
