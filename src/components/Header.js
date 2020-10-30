@@ -21,7 +21,7 @@ class Header extends Component {
           </label>
         </div>
         <div data-testid="header-currency-field">
-            BRL
+          BRL
         </div>
       </div>
     );
