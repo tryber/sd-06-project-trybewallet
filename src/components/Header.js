@@ -9,7 +9,14 @@ class Header extends React.Component {
       <header>
         <p data-testid="email-field">{ email }</p>
         <p data-testid="total-field">
-          {expenses.reduce((acc, cur) => acc + parseFloat(cur.value), 0)}
+          {expenses.reduce((acc, expense) => {
+            const { currency, exchangeRates, value } = expense;
+
+            const exchangeRate = exchangeRates[currency].ask;
+            const costInBRL = exchangeRate * value;
+
+            return acc + parseFloat(costInBRL);
+          }, 0).toFixed(2)}
         </p>
         <p data-testid="header-currency-field">BRL</p>
       </header>

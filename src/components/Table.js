@@ -19,8 +19,8 @@ class Table extends React.Component {
           {expenses.map((expense, index) => (
             <tr key={ index }>
               <td>{ expense.description }</td>
-              <td>{ expense.expenseCategory }</td>
-              <td>{ expense.paymentMethod }</td>
+              <td>{ expense.tag }</td>
+              <td>{ expense.method }</td>
               <td>{ expense.value }</td>
               <td>{ expense.currency }</td>
               <td>{ expense.exchange }</td>

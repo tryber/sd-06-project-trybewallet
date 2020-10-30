@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import { addExpense, fetchCurrencies } from '../actions';
-import fetchAPI from '../services';
+import { addExpenseThunk, fetchCurrencies } from '../actions';
 
 const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const expensesCategories = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -10,18 +9,15 @@ const expensesCategories = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 
 class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.fetchInfoCurrencies = this.fetchInfoCurrencies.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      description: '',
-      expenseCategory: 'Alimentação',
-      paymentMethod: 'Dinheiro',
+      id: '',
       value: 0,
+      description: '',
       currency: 'USD',
-      exchange: 0,
-      convertedValue: 0,
-      conversionCurrency: '',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       exchangeRates: {},
     };
   }
@@ -31,26 +27,18 @@ class Form extends React.Component {
     dispatchFetchCurrencies();
   }
 
-  fetchInfoCurrencies() {
-    return async () => {
-      const apiResponse = await fetchAPI();
-      console.log(apiResponse);
-    };
-  }
-
   handleChange({ target }) {
     this.setState({ [target.name]: target.value });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
     const { sendExpense } = this.props;
-    this.fetchInfoCurrencies();
     sendExpense(this.state);
   }
 
   render() {
-    const { value, description, currency, paymentMethod, expenseCategory } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const { currencies } = this.props;
     return (
       <div>
@@ -94,30 +82,30 @@ class Form extends React.Component {
                 ))}
             </select>
           </label>
-          <label htmlFor="paymentMethod">
+          <label htmlFor="method">
             Método de pagamento:
             <select
               data-testid="method-input"
-              id="paymentMethod"
-              name="paymentMethod"
-              value={ paymentMethod }
+              id="method"
+              name="method"
+              value={ method }
               onChange={ this.handleChange }
             >
               {paymentMethods
-                .map((method) => (
-                  <option value={ method } key={ method }>
-                    { method }
+                .map((payMethod) => (
+                  <option value={ payMethod } key={ payMethod }>
+                    { payMethod }
                   </option>
                 ))}
             </select>
           </label>
-          <label htmlFor="expenseCategory">
+          <label htmlFor="tag">
             Categoria:
             <select
               data-testid="tag-input"
-              id="expenseCategory"
-              name="expenseCategory"
-              value={ expenseCategory }
+              id="tag"
+              name="tag"
+              value={ tag }
               onChange={ this.handleChange }
             >
               {expensesCategories
@@ -145,7 +133,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  sendExpense: (expense) => dispatch(addExpense(expense)),
+  sendExpense: (expense) => dispatch(addExpenseThunk(expense)),
   dispatchFetchCurrencies: () => dispatch(fetchCurrencies()),
 });
 

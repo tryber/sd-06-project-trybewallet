@@ -17,3 +17,18 @@ export function fetchCurrencies() {
     dispatch(success(currenciesWithoutUSDT));
   };
 }
+
+export function addExpenseThunk(userExpense) {
+  return async (dispatch, getState) => {
+    const apiResponse = await fetchAPI();
+    const { expenses } = getState().wallet;
+    let idExpense = 0;
+    if (expenses.length === 0) {
+      idExpense = 0;
+    } else {
+      idExpense = expenses[expenses.length - 1].id + 1;
+    }
+    const expense = { ...userExpense, id: idExpense, exchangeRates: apiResponse };
+    dispatch(addExpense(expense));
+  };
+}
