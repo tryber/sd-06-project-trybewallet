@@ -12,6 +12,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       redirect: false,
+      isDisabled: true,
     };
   }
 
@@ -33,6 +34,20 @@ class Login extends React.Component {
     });
   }
 
+  enableButton() {
+    const { email, password } = this.state;
+    const regExValidator = '/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/gi';
+    const isEmailValid = regExValidator.test(email);
+    const isPassValid = password.length >= 6;
+    (isEmailValid && isPassValid) ?
+      this.setState({
+        isDisabled: false,
+      }) :
+      this.setState({
+        isDisabled: true,
+      });
+  }
+
   render() {
     const { email, redirect } = this.state;
     return (
@@ -44,7 +59,8 @@ class Login extends React.Component {
             <input
               data-testid="email-input"
               id="user-email"
-              type="text"
+              type="email"
+              pattern="^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$"
               onChange={ this.handleChange }
               value={ email }
             />
