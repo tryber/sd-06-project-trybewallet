@@ -40,6 +40,12 @@ a {
   background-color: rgb(18, 163, 163);
 }
 
+.bt-send:disabled {
+  background-color: rgb(177, 177, 177);
+  border: 1px solid rgb(150, 150, 150);
+  color: rgb(216, 216, 216);
+}
+
 .logo-vbwallet {
   text-align: center;
   padding: 10px;
@@ -54,4 +60,12 @@ a {
 
 .wallet-logo {
   color: rgb(37, 172, 172);
+}
+
+.error-msg {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 5px;
+  color: tomato;
+  padding: 12px 20px;
+  margin-bottom: 10px;
 }

@@ -1,1 +1,1 @@
-// Coloque aqui suas actions
+export const addLoginToState = (login, password);
