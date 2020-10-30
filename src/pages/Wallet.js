@@ -2,19 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import AddExpense from '../components/AddExpense';
-import { response as mockResponse } from '../tests/mockData';
 import { storeCurrencies } from '../actions';
+import { response as mockResponse } from '../tests/mockData';
+import fetchApi from '../services/fetchApi';
 
 import '../css/Wallet.css';
 import trybeLogo from '../imgs/trybe-logo.png';
 
 window.fetch = async () => ({ json: () => Promise.resolve(mockResponse) });
-
-function fetchApi() {
-  const endpoint = 'https://economia.awesomeapi.com.br/json/all';
-  return fetch(endpoint)
-    .then((response) => response.json());
-}
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -25,6 +20,8 @@ class Wallet extends React.Component {
     this.state = {
       email,
     };
+
+    this.sumExpenses = this.sumExpenses.bind(this);
   }
 
   async componentDidMount() {
@@ -35,8 +32,23 @@ class Wallet extends React.Component {
     dispatchCurrencies(currenciesArray);
   }
 
+  sumExpenses() {
+    const { expenses } = this.props;
+
+    return (expenses.length > 0)
+      ? (
+        Math.round(
+          expenses.reduce((acc, curr) => (
+            acc + (curr.value * curr.exchangeRates[curr.currency].ask)
+          ), 0) * 100,
+        ) / 100
+      ).toFixed(2)
+      : '0.00';
+  }
+
   render() {
     const { email } = this.state;
+
     return (
       <div>
         <header>
@@ -51,8 +63,8 @@ class Wallet extends React.Component {
               </div>
               <div>
                 Total:
-                <span data-testid="total-field">
-                  { ' 0' }
+                <span className="total-expenses" data-testid="total-field">
+                  { this.sumExpenses() }
                 </span>
               </div>
               <h2 data-testid="email-field">{ email }</h2>
@@ -69,6 +81,7 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   user: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -78,6 +91,7 @@ const mapDispatchToProps = (dispatch) => ({
 Wallet.propTypes = {
   dispatchCurrencies: PropTypes.func.isRequired,
   user: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

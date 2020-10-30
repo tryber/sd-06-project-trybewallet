@@ -2,7 +2,7 @@
   background-color: var(--main-bkgrdcolor);
   border: none;
   border-radius: 0 8px 0 0;
-  padding: 0 16px 0 0;
+  padding: 0 10px 0 0;
 }
 
 .expense-form legend {
@@ -36,24 +36,41 @@
 }
 
 .expense-form input[ type = text ] {
-  font-size: 0.9em;
-  width: 280px;
+  font-size: 0.8em;
+  width: 320px;
 }
 
 .expense-form select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: rgb(230, 247, 220);
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 101%;
+  background-position-y: 5px;
   font-size: 0.9em;
+  font-style: italic;
   height: 38px;
   margin: 0 5px;
+  padding: 0 20px 0 5px;
   width: auto;
-  font-style: italic;
 }
 
 .expense-form button {
-  color: rgb(230, 247, 220);
+  background-color: rgb(7, 161, 107);
   border: 0;
   border-radius: 8px;
-  background-color: rgb(7, 161, 107);
+  color: rgb(241, 250, 235);
   font-size: 1em;
   margin: 5px 20px 0;
   padding: 8px 16px;
+}
+
+.expense-form button:hover {
+  background-color: rgb(7, 184, 122);
+}
+
+.expense-form button:active {
+  background-color: rgb(10, 131, 89);
 }
