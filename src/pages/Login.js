@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginAction } from '../actions';
 
@@ -11,75 +11,79 @@ class Login extends React.Component {
       password: '',
       isDisabled: true,
     };
-
-    this.handleInput = this.handleInput.bind(this);
-    this.submitLogin = this.submitLogin.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleInput(e) {
+  handleChange({ target }) {
+    const { name, value } = target;
     this.setState({
-      [e.target.name]: e.target.value,
+      [name]: value,
     }, () => {
       const { email, password } = this.state;
-      const emailVerify = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
+      const verifyEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
       const passwordSize = 6;
-      if (emailVerify && password.length >= passwordSize) {
-        this.setState({ isDisabled: false });
+      if (verifyEmail && password.length >= passwordSize) {
+        this.setState({
+          isDisabled: false,
+        });
       } else {
-        this.setState({ isDisabled: true });
+        this.setState({
+          isDisabled: true,
+        });
       }
     });
   }
 
-  submitLogin(e) {
-    e.preventDefault();
-    const { history, loginDispatch } = this.props;
+  handleSubmit(event) {
+    event.preventDefault();
     const { email } = this.state;
-    loginDispatch(email);
+    const { history, submitButton } = this.props;
+    submitButton(email);
     history.push('carteira');
   }
 
   render() {
     const { email, password, isDisabled } = this.state;
     return (
-      <div>
-        <form onSubmit={ this.submitLogin }>
-          <fieldset>
-            <input
-              type="email"
-              data-testid="email-input"
-              placeholder="Email"
-              name="email"
-              value={ email }
-              onChange={ this.handleInput }
-            />
-            <input
-              type="password"
-              data-testid="password-input"
-              placeholder="Password"
-              name="password"
-              value={ password }
-              onChange={ this.handleInput }
-            />
-          </fieldset>
+      <form onSubmit={ this.handleSubmit }>
+        <fieldset>
+          <input
+            data-testid="email-input"
+            type="email"
+            placeholder="Email"
+            onChange={ this.handleChange }
+            value={ email }
+            name="email"
+          />
+          <br />
+          <br />
+          <input
+            data-testid="password-input"
+            type="password"
+            placeholder="Senha"
+            onChange={ this.handleChange }
+            value={ password }
+            name="password"
+          />
+          <br />
+          <br />
           <button type="submit" disabled={ isDisabled }>
             Entrar
           </button>
-        </form>
-      </div>
+        </fieldset>
+      </form>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  loginDispatch: (payload) => dispatch(loginAction(payload)),
+  submitButton: (email) => dispatch(loginAction(email)),
 });
 
 Login.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-  loginDispatch: PropTypes.func.isRequired,
+  submitButton: propTypes.func.isRequired,
+  history: propTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

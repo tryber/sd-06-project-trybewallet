@@ -1,7 +1,7 @@
 // Coloque aqui suas actions
-export const SAVE_EMAIL = 'SAVE_EMAIL';
+export const EMAIL = 'EMAIL';
 
 export const loginAction = (payload) => ({
-  type: SAVE_EMAIL,
+  type: EMAIL,
   payload,
 });
