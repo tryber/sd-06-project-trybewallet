@@ -1,4 +1,4 @@
-import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
 import user from './user';
@@ -19,14 +19,11 @@ import user from './user';
 
 const rootReducers = combineReducers({ user });
 
-const configureStore = function () {
-  return createStore(
-    rootReducers,
-    composeWithDevTools(
-      /* logger must be the last middleware in chain to log actions */
-      applyMiddleware(thunk)
-    )
-  );
-}
+export default rootReducers;
 
-export default configureStore;
+export const store = createStore(
+  rootReducers,
+  composeWithDevTools(
+    applyMiddleware(thunk),
+  ),
+);
