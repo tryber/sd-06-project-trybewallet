@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   },
 };
 
-function addRecord(state = INITIAL_STATE, action) {
+function addEmailRecord(state = INITIAL_STATE, action) {
   switch (action.type) {
   case 'addEmail':
     return {
@@ -19,4 +19,4 @@ function addRecord(state = INITIAL_STATE, action) {
   }
 }
 
-export default addRecord;
+export default addEmailRecord;

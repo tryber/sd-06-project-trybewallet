@@ -44,7 +44,6 @@ class Login extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const { registerEmail } = this.props;
     return (
       <div>
@@ -81,7 +80,7 @@ class Login extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    email: state.addRecord.user.email,
+    email: state.addEmailRecord.user.email,
   };
 }
 
