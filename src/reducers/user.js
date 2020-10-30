@@ -7,13 +7,13 @@ const INITIAL_STATE = {
 
 function addRecord(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case 'addEmail':
-      return {
-        ...state,
-        user: action.payload.user.email,
-      };
-    default:
-      return state;
+  case 'addEmail':
+    return {
+      ...state,
+      user: action.payload.user.email,
+    };
+  default:
+    return state;
   }
 }
 
