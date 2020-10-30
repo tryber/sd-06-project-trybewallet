@@ -16,7 +16,6 @@ class Login extends React.Component {
   }
 
   handleClick(event) {
-    console.log('clicou', event);
     event.preventDefault();
     const { history, saveNewUser } = this.props;
     const { email } = this.state;
@@ -64,7 +63,6 @@ class Login extends React.Component {
             onChange={ this.handleChange }
           />
         </label>
-        {/* <Link to="/carteira"> */}
         <button
           type="button"
           id="button-login"
@@ -73,7 +71,6 @@ class Login extends React.Component {
         >
           Entrar
         </button>
-        {/* </Link> */}
       </div>
     );
   }

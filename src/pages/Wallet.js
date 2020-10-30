@@ -1,10 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { thunkCurrencies } from '../actions';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      renderCurrency: false,
+      expenses: [],
+    }
+  }
+
+  componentDidMount() {
+    const { thunkCurrency } = this.props;
+    thunkCurrency();
+  }
+
   render() {
-    const { userEmail } = this.props;
+    const { userEmail, currenciesAPI} = this.props;
     return (
       <div>
         <header>
@@ -17,6 +31,68 @@ class Wallet extends React.Component {
             <p data-testid="header-currency-field">BRL</p>
           </div>
         </header>
+        <form>
+          <fieldset>
+            <label htmlFor="input-value">
+              Valor da despesa:
+              <input
+                type="number"
+                data-testid="value-input"
+                id="input-value"
+                min="0"
+              />
+            </label>
+            <label htmlFor="input-description">
+              Descrição:
+              <input
+                type="text"
+                data-testid="description-input"
+                id="input-description"
+              />
+            </label>
+            <label htmlFor="input-currency">
+              Moeda:
+              <select
+                data-testid="currency-input"
+                id="input-currency"
+              >
+                { currenciesAPI.map((currency) => (
+                  <option
+                    key={ currency }
+                    data-testid={ currency }
+                    value={ currency }
+                  >
+                    { currency }
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label htmlFor="input-method">
+              Método:
+              <select
+                data-testid="method-input"
+                id="input-method"
+              >
+                <option>Dinheiro</option>
+                <option>Cartão de crédito</option>
+                <option>Cartão de débito</option>
+              </select>
+            </label>
+            <label htmlFor="input-tag">
+              Categoria:
+              <select
+                data-testid="tag-input"
+                id="input-tag"
+              >
+                <option>Alimentação</option>
+                <option>Lazer</option>
+                <option>Trabalho</option>
+                <option>Transporte</option>
+                <option>Saúde</option>
+              </select>
+            </label>
+          </fieldset>
+        </form>
       </div>
     );
   }
@@ -24,6 +100,11 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   userEmail: state.user,
+  currenciesAPI: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  thunkCurrency: () => dispatch(thunkCurrencies())
 });
 
 Wallet.propTypes = {
@@ -32,4 +113,4 @@ Wallet.propTypes = {
   }).isRequired,
 };
 
-export default connect(mapStateToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
