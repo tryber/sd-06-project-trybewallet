@@ -19,7 +19,7 @@ class Wallet extends React.Component {
           <label>Descrição:
             <input type="text" data-testid="description-input" />
           </label>
-          <label>Moeda:
+          <label>Moeda: {/* buscar atraves da api, Remova das informações trazidas pela API a opção 'USDT' (Dólar Turismo).  */}
             <select data-testid="currency-input">
               {moedas.map((moeda) => <option value={moeda}>{moeda}</option>)}
             </select>
@@ -30,7 +30,7 @@ class Wallet extends React.Component {
             </select>
           </label>
           <label>Tag:
-            <select>
+            <select data-testid="tag-input">
               {tag.map((tag) => <option value={tag}>{tag}</option>)}
             </select>
           </label>
