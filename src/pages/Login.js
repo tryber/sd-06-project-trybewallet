@@ -9,8 +9,10 @@ class Login extends React.Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.enableButton = this.enableButton.bind(this);
     this.state = {
       email: '',
+      password: '',
       redirect: false,
       isDisabled: true,
     };
@@ -18,9 +20,11 @@ class Login extends React.Component {
 
   handleChange(event) {
     event.preventDefault();
-    const { value } = event.target;
+    const { value, name } = event.target;
     this.setState({
-      email: value,
+      [name]: value,
+    }, () => {
+      this.enableButton();
     });
   }
 
@@ -36,20 +40,17 @@ class Login extends React.Component {
 
   enableButton() {
     const { email, password } = this.state;
-    const regExValidator = '/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/gi';
+    const regExValidator = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/gi;
     const isEmailValid = regExValidator.test(email);
-    const isPassValid = password.length >= 6;
-    (isEmailValid && isPassValid) ?
-      this.setState({
-        isDisabled: false,
-      }) :
-      this.setState({
-        isDisabled: true,
-      });
+    const validLength = 6;
+    const isPassValid = (password.length > 0) ? password.length >= validLength : false;
+    return this.setState({
+      isDisabled: !(isEmailValid && isPassValid),
+    });
   }
 
   render() {
-    const { email, redirect } = this.state;
+    const { email, redirect, isDisabled } = this.state;
     return (
       <section>
         <h1>Login</h1>
@@ -59,6 +60,7 @@ class Login extends React.Component {
             <input
               data-testid="email-input"
               id="user-email"
+              name="email"
               type="email"
               pattern="^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$"
               onChange={ this.handleChange }
@@ -70,11 +72,13 @@ class Login extends React.Component {
             <input
               data-testid="password-input"
               minLength="6"
+              name="password"
+              onChange={ this.handleChange }
               id="user-password"
               type="password"
             />
           </label>
-          <button type="submit">
+          <button type="submit" disabled={ isDisabled }>
             Entrar
           </button>
         </form>
