@@ -1,9 +1,13 @@
 import React from 'react';
+import Login from './pages/Login';
+// import { Link } from 'react-router-dom';
+import Routes from './Routes';
 
 function App() {
   return (
     <div>
-      <h1>test</h1>
+      <Routes />
+      {/* <Link to="/carteira">Wallet</Link> */}
     </div>
   );
 }
