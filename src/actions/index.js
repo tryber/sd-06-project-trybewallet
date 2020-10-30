@@ -35,3 +35,10 @@ export function registerExpense(expenseData) {
     dispatch(saveExpense(expenseData, exchangeRates));
   };
 }
+
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+
+export const deleteExpense = (expenseId) => ({
+  type: DELETE_EXPENSE,
+  expenseId,
+});
