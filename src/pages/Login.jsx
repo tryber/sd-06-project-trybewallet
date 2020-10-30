@@ -39,7 +39,7 @@ const SignIn = ({ logIn }) => {
     const validEmail = target.value.match(/\w+@(\w+\.)+\w+$/i);
 
     setEmailError(!validEmail);
-  }, [setEmailError]);
+  }, [setEmailError, setEmail]);
 
   const handlePasswordChange = useCallback(({ target }) => {
     setPassword(target.value);
@@ -48,7 +48,7 @@ const SignIn = ({ logIn }) => {
     const validPassword = target.value.length > MIN_PW_LENGTH;
 
     setPasswordError(!validPassword);
-  }, [setPasswordError]);
+  }, [setPasswordError, setPassword]);
 
   return (
     <div className="container">

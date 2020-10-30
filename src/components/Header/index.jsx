@@ -40,7 +40,7 @@ const Header = ({ user, transactions }) => {
       </div>
       <div className="user-container">
         <FiUser size={ 20 } />
-        <span>{user}</span>
+        <span data-testid="email-field">{user}</span>
       </div>
     </header>
   );

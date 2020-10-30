@@ -18,7 +18,7 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
 //   return <div>NOT LOGGED</div>;
 // }
 
-  const [value, setValue] = useState();
+  const [value, setValue] = useState('');
   const [currency, setCurrency] = useState('USD');
   const [method, setMethod] = useState('credit');
   const [tag, setTag] = useState('food');
@@ -32,23 +32,23 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
 
   const handleValueChange = useCallback(({ target }) => {
     setValue(target.value);
-  });
+  }, [setValue]);
 
   const handleCurrencyChange = useCallback(({ target }) => {
     setCurrency(target.value);
-  });
+  }, [setCurrency]);
 
   const handleMethodChange = useCallback(({ target }) => {
     setMethod(target.value);
-  });
+  }, [setMethod]);
 
   const handleCategoryChange = useCallback(({ target }) => {
     setTag(target.value);
-  });
+  }, [setTag]);
 
   const handleDescriptionChange = useCallback(({ target }) => {
     setDescription(target.value);
-  });
+  }, [setDescription]);
 
   const handleEdit = useCallback((transactionID) => {
     setEditMode(true);
@@ -67,7 +67,7 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
 
   const handleTransactionDeletion = useCallback((transactionID) => {
     remove(transactionID);
-  });
+  }, [remove]);
 
   const handleTransactionCreation = useCallback((formEvent) => {
     formEvent.preventDefault();
@@ -92,7 +92,9 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
     setValue(0);
     setDescription('');
     setEditID(null);
-  });
+  }, [value, tag, description, currency, method, editID, register, update, setValue,
+    setDescription, setEditID,
+  ]);
 
   return (
     <>
@@ -100,7 +102,7 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
       <div className="wallet-content">
         <form method="POST" onSubmit={ handleTransactionCreation }>
           <div className="wallet-input">
-            <label htmlFor="value">Valor</label>
+            <label htmlFor="value">Valor:</label>
             <Input
               id="value"
               name="value"
@@ -112,7 +114,7 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
             />
           </div>
           <div className="wallet-input">
-            <label htmlFor="currency">Moeda</label>
+            <label htmlFor="currency">Moeda:</label>
             <select
               id="currency"
               name="currency"
@@ -128,7 +130,7 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
             </select>
           </div>
           <div className="wallet-input">
-            <label htmlFor="method">Método</label>
+            <label htmlFor="method">Método:</label>
             <select
               id="method"
               name="method"
@@ -136,13 +138,13 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
               value={ method }
               onChange={ handleMethodChange }
             >
-              <option value="credit">Cartão de crédito</option>
-              <option value="debit">Cartão de Débito</option>
-              <option value="cash">Dinheiro</option>
+              <option value="Cartão de crédito">Cartão de crédito</option>
+              <option value="Cartão de débito">Cartão de débito</option>
+              <option value="Dinheiro">Dinheiro</option>
             </select>
           </div>
           <div className="wallet-input">
-            <label htmlFor="tag">Categoria</label>
+            <label htmlFor="tag">Categoria:</label>
             <select
               id="tag"
               name="tag"
@@ -150,15 +152,15 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
               value={ tag }
               onChange={ handleCategoryChange }
             >
-              <option value="food">Alimentação</option>
-              <option value="fun">Lazer</option>
-              <option value="work">Trabalho</option>
-              <option value="transport">Transporte</option>
-              <option value="health">Saúde</option>
+              <option value="Alimentação">Alimentação</option>
+              <option value="Lazer">Lazer</option>
+              <option value="Trabalho">Trabalho</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Saúde">Saúde</option>
             </select>
           </div>
           <div className="wallet-input">
-            <label htmlFor="value">Descrição</label>
+            <label htmlFor="value">Detalhes:</label>
             <Input
               id="value"
               name="value"
@@ -182,14 +184,16 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
                 <th>Valor</th>
                 <th>Moeda</th>
                 <th>Câmbio utilizado</th>
-                <th>Valor Convertido</th>
-                <th>Moeda de Conversão</th>
+                <th>Valor convertido</th>
+                <th>Moeda de conversão</th>
+                <th>Editar/Excluir</th>
               </tr>
             </thead>
 
             <tbody>
               {transactions.map((transaction) => {
                 const exValue = transaction.exchangeRates[transaction.currency].ask;
+                const currName = transaction.exchangeRates[transaction.currency].name;
 
                 return (
                   <tr key={ transaction.id }>
@@ -197,17 +201,18 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
                     <td className="field">{transaction.tag}</td>
                     <td className="field">{transaction.method}</td>
                     <td className="outcome">
-                      {`${formatValue(Number(transaction.value))}`}
+                      {/* {`${formatValue(Number(transaction.value))}`} */}
+                      {transaction.value}
                     </td>
-                    <td className="field">{transaction.currency}</td>
+                    <td className="field">{currName}</td>
                     <td className="field">
                       {formatValue(Number(exValue))}
                     </td>
                     <td className="field">
                       {formatValue(exValue * transaction.value)}
                     </td>
+                    <td className="field">Real</td>
                     <td className="field">
-                      Real
                       <div className="modify-btns">
                         <button
                           type="button"
@@ -226,7 +231,6 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
                         >
                           <FiStopCircle />
                         </button>
-
                       </div>
                     </td>
                   </tr>
@@ -244,7 +248,7 @@ function mapStateToProps(state) {
   return {
     user: state.user.email,
     transactions: state.wallet.expenses,
-    currencies: state.wallet.wallet.currencies,
+    currencies: state.wallet.currencies,
   };
 }
 

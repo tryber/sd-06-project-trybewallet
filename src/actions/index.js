@@ -78,7 +78,9 @@ export function loadCurrencies() {
 
       const currencies = Object.keys(exchangeRates);
 
-      dispatch(loadAction(currencies));
+      const rightCurrencies = currencies.filter((currency) => currency !== 'USDT');
+
+      dispatch(loadAction(rightCurrencies));
     }
   );
 }

@@ -1,4 +1,4 @@
-import initialAppState from '../state';
+import { initialTransactionsState } from '../state';
 import { REGISTER, REMOVE, LOAD, UPDATE } from '../actions';
 
 function handleTransactionCreation(state, action) {
@@ -11,7 +11,7 @@ function handleTransactionCreation(state, action) {
     exchangeRates,
   } = action.payload;
 
-  const id = state.wallet.expenses.length;
+  const id = state.expenses.length;
 
   const newExpense = {
     id,
@@ -23,39 +23,39 @@ function handleTransactionCreation(state, action) {
     exchangeRates,
   };
 
-  const oldWallet = { ...state.wallet };
-  const oldExpenses = [...state.wallet.expenses];
+  const oldWallet = { ...state };
+  const oldExpenses = [...state.expenses];
   const newExpenses = [...oldExpenses, newExpense];
 
-  return { ...state, wallet: { ...oldWallet, expenses: newExpenses } };
+  return { ...oldWallet, expenses: newExpenses };
 }
 
 function handleTransactionRemoval(state, action) {
   const { transactionID } = action.payload;
 
-  const oldWallet = { ...state.wallet };
-  const oldExpenses = [...state.wallet.expenses];
+  const oldWallet = { ...state };
+  const oldExpenses = [...state.expenses];
 
   const newExpenses = oldExpenses.filter((transaction) => (
     transaction.id !== transactionID
   ));
 
-  return { ...state, wallet: { ...oldWallet, expenses: newExpenses } };
+  return { ...oldWallet, expenses: newExpenses };
 }
 
 function handleLoadCurrencies(state, action) {
   const { currencies } = action.payload;
 
-  const oldWallet = { ...state.wallet };
+  const oldWallet = { ...state };
 
-  return { ...state, wallet: { ...oldWallet, currencies } };
+  return { ...oldWallet, currencies };
 }
 
 function handleTransactionUpdate(state, action) {
   const { transactionData, id } = action.payload;
 
-  const oldWallet = { ...state.wallet };
-  const oldExpenses = [...state.wallet.expenses];
+  const oldWallet = { ...state };
+  const oldExpenses = [...state.expenses];
 
   const newExpenses = oldExpenses.map((transaction) => {
     if (transaction.id !== id) {
@@ -65,10 +65,10 @@ function handleTransactionUpdate(state, action) {
     return Object.assign(transaction, transactionData);
   });
 
-  return { ...state, wallet: { ...oldWallet, expenses: newExpenses } };
+  return { ...oldWallet, expenses: newExpenses };
 }
 
-export default function transactionReducer(state = initialAppState, action) {
+export default function transactionReducer(state = initialTransactionsState, action) {
   switch (action.type) {
   case REGISTER:
     return handleTransactionCreation(state, action);

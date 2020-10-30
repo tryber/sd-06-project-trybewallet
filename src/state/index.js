@@ -1,11 +1,8 @@
-const initialAppState = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+export const initialUserState = {
+  email: '',
 };
 
-export default initialAppState;
+export const initialTransactionsState = {
+  currencies: [],
+  expenses: [],
+};

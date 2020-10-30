@@ -1,14 +1,12 @@
 import React, {
   useState,
   useCallback,
-  useRef,
 } from 'react';
 import PropTypes from 'prop-types';
 
 import './styles.css';
 
-const Input = ({ name, icon: Icon, error, ...rest }) => {
-  const inputRef = useRef(null);
+const Input = ({ name, icon: Icon, error, value, ...rest }) => {
   const [hasFocus, setHasFocus] = useState(false);
   const [hasText, setHasText] = useState(false);
 
@@ -19,7 +17,7 @@ const Input = ({ name, icon: Icon, error, ...rest }) => {
   const handleBlur = useCallback(() => {
     setHasFocus(false);
 
-    setHasText(!!inputRef.current.value);
+    setHasText(!!value);
   }, []);
 
   return (
@@ -35,8 +33,8 @@ const Input = ({ name, icon: Icon, error, ...rest }) => {
 
       <input
         className="custom-input"
-        ref={ inputRef }
         name={ name }
+        value={ value }
         onFocus={ handleFocus }
         onBlur={ handleBlur }
         { ...rest }
@@ -47,11 +45,16 @@ const Input = ({ name, icon: Icon, error, ...rest }) => {
 
 Input.defaultProps = {
   error: false,
+  value: '',
 };
 
 Input.propTypes = {
   name: PropTypes.string.isRequired,
   icon: PropTypes.elementType.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   error: PropTypes.bool,
 };
 
