@@ -1,8 +1,8 @@
 export const HANDLE_USER = 'HANDLE_USER';
 
-const setEmail = (email) => ({
+const setEmailForm = (email) => ({
   type: HANDLE_USER,
   email,
 });
 
-export default setEmail;
+export default setEmailForm;
