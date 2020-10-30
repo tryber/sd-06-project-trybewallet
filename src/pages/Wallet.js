@@ -27,11 +27,6 @@ class Wallet extends React.Component {
             Descrição:
             <input data-testid="description-input" id="description" type="text" />
           </label>
-          {/* <label htmlFor="currency">
-            Moeda:
-            <select data-testid="currency-input" id="currency">
-            </select>
-          </label> */}
         </form>
       </div>
     );
