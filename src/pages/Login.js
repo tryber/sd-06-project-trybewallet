@@ -29,7 +29,7 @@ class Login extends React.Component {
           data-testid="password-input"
         />
         <br />
-        <button onClick={() => history.push('/carteira')} type="button">Entrar</button>
+        <button onClick={ () => history.push('/carteira') } type="button">Entrar</button>
       </div>
     );
   }
