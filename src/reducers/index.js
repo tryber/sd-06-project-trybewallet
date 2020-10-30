@@ -1,5 +1,5 @@
-export { default as user } from './user'
-export { default as wallet } from './wallet'
+export { default as user } from './user';
+export { default as wallet } from './wallet';
 
 const INITIAL_STATE = {
   user: {
@@ -7,8 +7,8 @@ const INITIAL_STATE = {
   },
   wallet: {
     currencies: [],
-    expenses: []
-  }
+    expenses: [],
+  },
 };
 
 function getAPI() {
@@ -24,7 +24,7 @@ function failedRequest() {
 }
 
 export default function apiMoney() {
-  return async (dispatch) => {
+  return async dispatch => {
     try {
       dispatch(requestAPI());
 

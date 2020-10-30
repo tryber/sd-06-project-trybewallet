@@ -13,20 +13,20 @@ class Login extends React.Component {
       disabled: true,
     };
 
-    this.disabledButton = this.disabledButton.bind(this);
-  }
+  this.handleChange = this.handleChange.bind(this);
+}
 
   handleChange({ target }) {
-    this.setState({ [target.name]: target.value }), () => {
-      const { password, email } = this.state;
-      const passLength = 6;
-      const emailValidation = /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/g.test(email);
+    const { password, email } = this.state;
+    const passLength = 6;
+    const emailValidation = /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/g.test(email);
+    this.setState({ [target.name]: target.value }, () => {
       if (password >= passLength && emailValidation) {
         return this.setState({ disabled: false });
       } else {
         this.setState({ disabled: true });
       }
-    };
+    });
     myEmail(email);
   }
 
@@ -64,7 +64,7 @@ class Login extends React.Component {
         <button
           type="button"
           disabled={ disabled }
-          onClick={ (e) => this.goingToWallet(e) }
+          onClick={ () => this.goingToWallet() }
         >Entrar
         </button>
       </div>
@@ -78,6 +78,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   myEmail: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
