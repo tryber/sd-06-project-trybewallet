@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import apiMoney from '../actions';
+import apiMoney, { expenses } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -25,16 +25,19 @@ class Wallet extends React.Component {
     myMoney();
   }
 
+  onClick(value) {
+    expenses(value)
+  }
+
   render() {
-    const { totalValue } = this.state;
-    const { email, currencies } = this.props;
+    const { email, currencies, expenses } = this.props;
     const pagamento = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <div>
         <header>
           <p data-testid="email-field">Email: {email}</p>
-          <p data-testid="total-field">Despesas totais: {totalValue}</p>
+          <p data-testid="total-field">Despesas totais: {expenses}</p>
           <p data-testid="header-currency-field">Câmbio: BRL</p>
         </header>
         <form>
@@ -50,6 +53,7 @@ class Wallet extends React.Component {
             Moeda:{' '}
             {/* buscar atraves da api, Remova das informações trazidas pela API a opção 'USDT' (Dólar Turismo).  */}
             <select data-testid="currency-input">
+              <option value="BRL" data-testid="BRL">BRL</option>
               {currencies.map((moeda) => (
                 <option value={moeda} data-testid={moeda}>
                   {moeda}
@@ -84,16 +88,19 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   myMoney: (cotacaoMoeda) => dispatch(apiMoney(cotacaoMoeda)),
+  myExpenses: (value) => dispatch(expenses(value)),
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
   myMoney: PropTypes.func.isRequired,
+  myExpenses: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

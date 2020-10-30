@@ -13,6 +13,6 @@ const composeWithDevTools =
         return compose(...args);
       };
 
-const store = createStore(rootReducers, composeWithDevTools(applyMiddleware(thunk)));
+export const store = createStore(rootReducers, composeWithDevTools(applyMiddleware(thunk)));
 
-export default store;
+
