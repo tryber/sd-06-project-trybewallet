@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { emailLogin } from '../actions';
 
 class Login extends React.Component {
@@ -30,14 +31,15 @@ class Login extends React.Component {
     }, () => this.validateData());
   }
 
-  handleClick({ target }) {
-    const { value } = target;
+  handleClick() {
+    const { email } = this.state;
     const { login } = this.props;
+    login(email);
+
   }
 
   render() {
     const { email, password, disabled } = this.state;
-    const { login } = this.props;
     return (
       <div>
         <h1>TrybeWallet</h1>
@@ -62,7 +64,11 @@ class Login extends React.Component {
               value={ password }
             />
           </label>
-          <button type="button" disabled={ disabled } onClick={ this.handleClick }>Entrar</button>
+          <Link to="/carteira">
+            <button type="button" disabled={ disabled } onClick={ this.handleClick }>
+              Entrar
+            </button>
+          </Link>
         </form>
       </div>
     );
