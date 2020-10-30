@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propType from 'prop-types';
-import { fetchSavedCurrencies, saveExpensesAction } from '../actions';
+import { fetchSavedCurrencies, saveExpensesAction, saveExpenses } from '../actions';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      total: 0,
       expenses: 0,
       description: '',
       currency: '',
@@ -16,7 +18,6 @@ class Wallet extends React.Component {
     this.handleClickSubmit = this.handleClickSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
-
   }
 
   componentDidMount() {
@@ -25,10 +26,11 @@ class Wallet extends React.Component {
   }
 
   handleClickSubmit() {
-    const { dispatchSaveExpenses } = this.props;
-    const { expenses, description, currency, paymentMethod, tag } = this.state;
+    const { dispatchSaveExpenses, dispatch2 } = this.props;
+    const { expenses, description, currency, paymentMethod, tag, total } = this.state;
+
     const expense = { expenses, description, currency, paymentMethod, tag };
-    dispatchSaveExpenses(expense);
+    dispatch2(this.state);
     this.setState({
       expenses: 0,
       description: '',
@@ -56,7 +58,8 @@ class Wallet extends React.Component {
     const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { email, currencies } = this.props;
-    const { expenses, description } = this.state;
+    const { expenses, description,total } = this.state;
+    console.log(this.props.expenses.currency);
     return (
       <div className="containerWallet">
         <header className="containerHeader">
@@ -64,7 +67,7 @@ class Wallet extends React.Component {
           <div data-testid="email-field">{ email }</div>
           Despesa total:
           <div data-testid="total-field">
-            { expenses }
+            { total }
             <div data-testid="header-currency-field">
               BRL
             </div>
@@ -150,20 +153,22 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
         </main>
+        <Table />
       </div>
     );
   }
 }
 
-// eslint-disable-next-line no-multi-assign
 const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchFetchCurrencies: () => dispatch(fetchSavedCurrencies()),
-  dispatchSaveExpenses: (data) => dispatch(saveExpensesAction(data)),
+  // dispatchSaveExpenses: (data) => dispatch(saveExpensesAction(data)),
+  dispatch2: (e) => dispatch(saveExpenses(e)),
 });
 
 Wallet.propTypes = {
