@@ -5,9 +5,10 @@ import '../css/Wallet.css';
 import logo from '../images/logo.png';
 
 class Wallet extends React.Component {
+  // componentDidMount {
+  // }
   render() {
     const { email } = this.props;
-    console.log(this.state);
     return (
       <div>
         <header className="header-wallet">
@@ -33,15 +34,15 @@ class Wallet extends React.Component {
           </span>
         </header>
         <form className="form">
-          <input data-testid="value-input" />
-          <input data-testid="description-input" />
+          <input data-testid="value-input" placeholder="Valor" />
+          <input data-testid="description-input" placeholder="Descrição" />
           <select data-testid="currency-input">
             <option value="BRL">BRL</option>
           </select>
           <select data-testid="method-input">
             <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de Crédito">Cartão de Crédito</option>
-            <option value="Cartão de Débito">Cartão de Débito</option>
+            <option value="Cartão de Crédito">Cartão de crédito</option>
+            <option value="Cartão de Débito">Cartão de débito</option>
           </select>
           <select data-testid="tag-input">
             <option value="Alimentação">Alimentação</option>

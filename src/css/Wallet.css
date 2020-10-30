@@ -5,7 +5,7 @@
     justify-content: space-between;
     padding: 20px;
     border: 1px solid black;
-    background-color: whitesmoke;
+    background-image: linear-gradient(to right, white , whitesmoke);
 }
 
 .img-logo-wallet {
@@ -22,8 +22,18 @@
     border: 1px solid black;
 }
 
+span {
+    font-size: 1.5vw;
+}
+
 .form input {
     width: 100%;
+    font-size: 1.5vw;
+}
+
+.form select {
+    width: 100%;
+    font-size: 1.5vw;
 }
 
 .wallet-button {
@@ -36,7 +46,7 @@
     cursor:pointer;
     color:#666666;
     font-family:Arial;
-    font-size:15px;
+    font-size: 1.5vw;
     font-weight:bold;
     padding: 6px 24px;
     text-decoration:none;
