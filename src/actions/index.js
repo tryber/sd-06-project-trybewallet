@@ -1,4 +1,5 @@
-// definição: objeto com propriedade type e qq outro valor q eu queria passar
+import fetchCurrencyApi from '../services/fetchApi';
+
 export const LOGIN = 'LOGIN';
 export const WALLET = 'WALLET';
 
@@ -12,3 +13,18 @@ export const wallet = (currencies, expenses) => ({
   currencies: [],
   expenses: [],
 });
+
+export function thunkCurrency() {
+  return (dispatch) => {
+    dispatch(wallet());
+    return fetchCurrencyApi()
+      
+  }
+}
+
+// export const thunkCurrence = () => {
+//   return (dispatch) => {
+//     fetchApi()
+//       .then((curr) => dispatch(wallet(curr)))
+//   }
+// }

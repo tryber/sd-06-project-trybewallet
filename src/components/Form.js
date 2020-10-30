@@ -1,4 +1,5 @@
 import React from 'react';
+import { fetchCurrence } from '../actions';
 import { connect } from 'react-redux';
 
 class Form extends React.Component {

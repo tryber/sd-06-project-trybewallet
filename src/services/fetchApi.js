@@ -1,11 +1,10 @@
-import { response } from '../tests/mockData';
+const API_URL = 'https://economia.awesomeapi.com.br/json/all';
 
-window.fetch = async () => ({ json: () => Promise.resolve(response) });
+const fetchCurrencyApi = () => {
+  fetch(API_URL)
+    .then((response) => {
+      response.json()
+    })
+};
 
-function fetchApi() {
-  const endpoint = 'https://economia.awesomeapi.com.br/json/all';
-  return fetch(endpoint)
-    .then((answer) => answer.json());
-}
-
-export default fetchApi;
+export default fetchCurrencyApi;
