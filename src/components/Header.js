@@ -9,17 +9,17 @@ class Header extends Component {
     return (
       <div>
         <div data-testid="email-field">
-          <label>
+          <label htmlFor="email">
             Email:
             { userEmail }
           </label>
         </div>
         <div data-testid="total-field">
-          <label>
-            <p>Despesa Total: R$</p>
+          <label htmlFor="despesa">
+            Despesa Total: R$
             {0}
           </label>
-          <label data-testid="header-currency-field">BRL</label>
+          <label htmlFor="field" data-testid="header-currency-field">BRL</label>
         </div>
       </div>
     );
