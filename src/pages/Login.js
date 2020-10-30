@@ -39,26 +39,26 @@ class Login extends React.Component {
 
     return (
       <form>
-        <label>
-          Insira seu e-mail:
-          <input
-            type="text"
-            placeholder="email@domain.com"
-            data-testid="email-input"
-            onChange={ ({ target: { value } }) => emailUpdateAction(value) }
-            value={ email }
-          />
-        </label>
-        <label>
-          Insira seu password:
-          <input
-            type="password"
-            placeholder="password"
-            data-testid="password-input"
-            onChange={ ({ target: { value } }) => passwordUpdateAction(value) }
-            value={ password }
-          />
-        </label>
+        <label htmlFor="email-input-id">Insira seu e-mail:</label>
+        <input
+          type="text"
+          placeholder="email@domain.com"
+          data-testid="email-input"
+          name="email-input-id"
+          id="email-input-id"
+          onChange={ ({ target: { value } }) => emailUpdateAction(value) }
+          value={ email }
+        />
+        <label htmlFor="password-input-id">Insira seu password:</label>
+        <input
+          type="password"
+          placeholder="password"
+          data-testid="password-input"
+          id="password-input-id"
+          name="password-input-id"
+          onChange={ ({ target: { value } }) => passwordUpdateAction(value) }
+          value={ password }
+        />
         <Link to="/carteira">
           <button
             disabled={ handleDisableButton() }
