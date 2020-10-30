@@ -98,7 +98,7 @@ describe('1 - [PÁGINA DE LOGIN] Crie uma página inicial de login com os seguin
     expect(history.location.pathname).toBe('/carteira');
   });
 });
-
+/*
 describe('2 - [PÁGINA DA CARTEIRA] Crie uma página para sua carteira com as seguintes características:', () => {
   test('A rota para esta página deve ser \'/carteira\'', () => {
     const { history } = renderWithRouterAndStore(<App />);
@@ -451,3 +451,4 @@ describe('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela contendo
     expect(store.getState().wallet.expenses).toStrictEqual(newExpenses);
   });
 });
+*/
