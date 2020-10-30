@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { emailSaveToState } from '../actions';
+// import emailSaveToState from '../actions';
 import Wallet from './Wallet';
 
 class Login extends React.Component {
@@ -38,7 +39,10 @@ class Login extends React.Component {
     const passwordValidation = this.validatePassword(password);
 
     if (emailValidation && passwordValidation) {
-      emailSaveToState(email);
+      const { callbackEmail } = this.props;
+      console.log('saiu daqui');
+      // emailSaveToState(email);
+      callbackEmail(email);
       this.updateState('isOk', true);
     }
   }
@@ -109,15 +113,16 @@ class Login extends React.Component {
   }
 }
 const mapDispatchToProps = (dispatch) => ({
-  email: (e) => dispatch(emailSaveToState(e)),
+  callbackEmail: (e) => dispatch(emailSaveToState(e)),
 });
 
 // const mapStateToProps = (state) => ({
-// email: state.user,
+// state.nomedoreducer.chavedoreducer
+// email: state.rootReducer.email,
 // });
 
 Login.propTypes = {
+  callbackEmail: PropTypes.func.isRequired,
   history: PropTypes.func.isRequired,
 };
-
 export default connect(null, mapDispatchToProps)(Login);

@@ -6,9 +6,11 @@ const INITIAL_STATE = {
   },
 };
 
-const user = (state = INITIAL_STATE, action) => {
+function user(state = INITIAL_STATE, action) {
+  console.log('e aqui no user?, que action é essa? :', action);
   switch (action.type) {
   case EMAIL_INPUT:
+    console.log('dentro da funcao do user!');
     return {
       ...state,
       // email: state.user.email.concat(action.email),
@@ -16,11 +18,25 @@ const user = (state = INITIAL_STATE, action) => {
         email: action.email,
       },
     };
-  case 'RESET':
-    return INITIAL_STATE;
   default:
     return state;
   }
-};
+}
+
+// const user = (state = INITIAL_STATE, action) => {
+//   console.log('e aqui no user?');
+//   switch (action.type) {
+//   case EMAIL_INPUT:
+//     return {
+//       ...state,
+//       // email: state.user.email.concat(action.email),
+//       user: {
+//         email: action.email,
+//       },
+//     };
+//   default:
+//     return state;
+//   }
+// };
 
 export default user;
