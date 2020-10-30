@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { FiDollarSign, FiPenTool, FiStopCircle, FiEdit } from 'react-icons/fi';
+import { FiDollarSign, FiPenTool, FiX, FiEdit } from 'react-icons/fi';
 
 import { createTransaction, removeTransaction, loadCurrencies, updateTransaction } from '../actions';
 import formatValue from '../utils/formatValue';
@@ -20,8 +20,8 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
 
   const [value, setValue] = useState('');
   const [currency, setCurrency] = useState('USD');
-  const [method, setMethod] = useState('credit');
-  const [tag, setTag] = useState('food');
+  const [method, setMethod] = useState('Cartão de crédito');
+  const [tag, setTag] = useState('Alimentação');
   const [description, setDescription] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [editID, setEditID] = useState(null);
@@ -89,7 +89,7 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
       register(transactionData);
     }
 
-    setValue(0);
+    setValue('');
     setDescription('');
     setEditID(null);
   }, [value, tag, description, currency, method, editID, register, update, setValue,
@@ -101,7 +101,7 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
       <Header />
       <div className="wallet-content">
         <form method="POST" onSubmit={ handleTransactionCreation }>
-          <div className="wallet-input">
+          <div className="wallet-input value-input-container">
             <label htmlFor="value">Valor:</label>
             <Input
               id="value"
@@ -113,7 +113,7 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
               data-testid="value-input"
             />
           </div>
-          <div className="wallet-input">
+          <div className="wallet-input currency-input-container">
             <label htmlFor="currency">Moeda:</label>
             <select
               id="currency"
@@ -170,9 +170,11 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
               onChange={ handleDescriptionChange }
             />
           </div>
-          <Button type="submit">
-            {editMode ? ('Editar despesa') : ('Adicionar despesa')}
-          </Button>
+          <div className="wallet-input">
+            <Button type="submit">
+              {editMode ? ('Editar despesa') : ('Adicionar despesa')}
+            </Button>
+          </div>
         </form>
         <div className="transactions-table">
           <table>
@@ -191,28 +193,33 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
             </thead>
 
             <tbody>
-              {transactions.map((transaction) => {
+              {transactions.map((transaction, index) => {
                 const exValue = transaction.exchangeRates[transaction.currency].ask;
                 const currName = transaction.exchangeRates[transaction.currency].name;
 
+                const ZERO = 0;
+                const EVEN_DIVISOR = 2;
+                const isOddIndex = (index % EVEN_DIVISOR !== ZERO);
+                const oddClass = (isOddIndex ? 'alternative-color' : '');
+
                 return (
                   <tr key={ transaction.id }>
-                    <td className="field">{transaction.description}</td>
-                    <td className="field">{transaction.tag}</td>
-                    <td className="field">{transaction.method}</td>
-                    <td className="outcome">
+                    <td className={ `field ${oddClass}` }>{transaction.description}</td>
+                    <td className={ `field ${oddClass}` }>{transaction.tag}</td>
+                    <td className={ `field ${oddClass}` }>{transaction.method}</td>
+                    <td className={ `outcome ${oddClass}` }>
                       {/* {`${formatValue(Number(transaction.value))}`} */}
                       {transaction.value}
                     </td>
-                    <td className="field">{currName}</td>
-                    <td className="field">
+                    <td className={ `field ${oddClass}` }>{currName}</td>
+                    <td className={ `field ${oddClass}` }>
                       {formatValue(Number(exValue))}
                     </td>
-                    <td className="field">
+                    <td className={ `field ${oddClass}` }>
                       {formatValue(exValue * transaction.value)}
                     </td>
-                    <td className="field">Real</td>
-                    <td className="field">
+                    <td className={ `field ${oddClass}` }>Real</td>
+                    <td className={ `field ${oddClass}` }>
                       <div className="modify-btns">
                         <button
                           type="button"
@@ -221,7 +228,7 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
                           className="edit-btn"
                           onClick={ () => handleEdit(transaction.id) }
                         >
-                          <FiEdit />
+                          <FiEdit size={ 18 } />
                         </button>
                         <button
                           type="button"
@@ -229,7 +236,7 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
                           id={ transaction.id }
                           onClick={ () => handleTransactionDeletion(transaction.id) }
                         >
-                          <FiStopCircle />
+                          <FiX size={ 18 } />
                         </button>
                       </div>
                     </td>
