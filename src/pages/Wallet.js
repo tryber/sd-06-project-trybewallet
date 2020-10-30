@@ -1,4 +1,5 @@
 import React from 'react';
+import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Wallet extends React.Component {
