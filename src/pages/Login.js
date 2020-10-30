@@ -23,13 +23,12 @@ class Login extends React.Component {
       [name]: value,
     }, () => {
       const { email, password } = this.state;
-      const emailExpRegular = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/gi;
+      const emailExpRegular = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/i;
       const numberMinimoCaracterSenha = 6;
-
-      if (password.length >= numberMinimoCaracterSenha && emailExpRegular.test(email)) {
-        return this.setState({ disabled: false });
-      }
-      return this.setState({ disabled: true });
+      return this.setState({
+        disabled:
+        !((password.length >= numberMinimoCaracterSenha)
+        && (emailExpRegular.test(email))) });
     });
   }
 
@@ -76,7 +75,7 @@ class Login extends React.Component {
             <button
               disabled={ disabled }
               type="submit"
-              onClick={ () => formLogin(this.state) }
+              onClick={ () => formLogin(email) }
             >
               Entrar
             </button>
