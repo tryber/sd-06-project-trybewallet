@@ -1,15 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { addUserEmail } from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
 
     this.state = {
       email: '',
       senha: '',
       disabled: true,
+      logedIn: false,
     };
   }
 
@@ -28,36 +33,60 @@ class Login extends React.Component {
     });
   }
 
-  render() {
-    const { disabled } = this.state;
+  handleClick = () => {
+    const { emailDispatch } = this.props;
+    const { email } = this.state;
 
-    return (
-      <section>
-        <label htmlFor="email-input">
-          Email:
-          <input
-            required
-            data-testid="email-input"
-            placeholder="email@email.com"
-            name="email"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <label htmlFor="password-input">
-          Senha:
-          <input
-            type="password"
-            required
-            data-testid="password-input"
-            placeholder="senha"
-            name="senha"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <button type="button" disabled={ disabled }>Entrar</button>
-      </section>
-    );
+    emailDispatch(email);
+    
+    this.setState({ logedIn: true });
   }
+
+  render() {
+    const { disabled, logedIn } = this.state;
+
+    if (!logedIn) {
+      return (
+        <section>
+          <label htmlFor="email-input">
+            Email:
+            <input
+              required
+              data-testid="email-input"
+              placeholder="email@email.com"
+              name="email"
+              onChange={ this.handleChange }
+            />
+          </label>
+          <label htmlFor="password-input">
+            Senha:
+            <input
+              type="password"
+              required
+              data-testid="password-input"
+              placeholder="senha"
+              name="senha"
+              onChange={ this.handleChange }
+            />
+          </label>
+          <button
+            type="button"
+            disabled={ disabled }
+            onClick={this.handleClick}
+          >
+            Entrar
+          </button>
+        </section>
+      )
+    }
+    return (
+      <Redirect to="/carteira" />
+    );
+  };
 }
 
-export default Login;
+const mapDispatchToProps = dispatch => ({
+  emailDispatch: (email) => dispatch(addUserEmail(email)),
+})
+
+export default connect(null, mapDispatchToProps)(Login);
