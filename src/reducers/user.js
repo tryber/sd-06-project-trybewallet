@@ -10,7 +10,7 @@ const user = (state = USER_INITIAL_STATE, action) => {
     return { ...state, email: action.payload };
   default:
     return state;
-  };
+  }
 };
 
 export default user;

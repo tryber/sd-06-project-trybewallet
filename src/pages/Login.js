@@ -87,7 +87,7 @@ class Login extends React.Component {
 }
 
 Login.ropTypes = {
-  emailDispatch: PropTypes.string.isRequired,
+  emailDispatch: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
