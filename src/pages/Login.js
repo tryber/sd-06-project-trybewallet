@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { actionCreators } from '../store/index';
 
 class Login extends React.Component {
-
   constructor() {
     super();
     this.state = {
@@ -36,3 +36,9 @@ class Login extends React.Component {
 }
 
 export default Login;
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
