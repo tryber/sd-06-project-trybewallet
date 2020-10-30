@@ -10,14 +10,16 @@ class Login extends Component {
       email: '',
       isValidPassword: false,
       isValidLogin: false,
+      validateButton: false,
+      password: '',
     };
     this.validateEmail = this.validateEmail.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
   }
 
-  componentDidUpdate() {
-    this.handleWithLoginButton();
-  }
+  // componentDidUpdate() {
+  //   this.handleWithLoginButton();
+  // }
 
   /* O regex usado nesta função foi retirado do site:
   https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail */
@@ -40,12 +42,22 @@ class Login extends Component {
   }
 
   handleWithLoginButton() {
-    const { isValidPassword, isValidLogin } = this.state;
+    const { isValidPassword, isValidLogin, validateButton, email, password } = this.state;
     const buttonLogin = document.getElementById('button-login');
     if (isValidLogin === true
       && isValidPassword === true) {
-      buttonLogin.disabled = false;
+      // buttonLogin.disabled = false;
+      this.setState({ validateButton: true });
     }
+    // const inputEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    // const inputPasswordLenght = 6;
+    // this.setState({ validateButton: inputEmail.test(email) && password.length >= inputPasswordLenght });
+  }
+
+  handleLogin() {
+    const { email } = this.state
+    this.props.login({email})
+    this.props.history.push('/carteira')
   }
 
   render() {
@@ -54,7 +66,6 @@ class Login extends Component {
     console.log(email);
     return (
       <div>
-        <h1>Hello World!!!</h1>
         <input
           type="text"
           data-testid="email-input"
@@ -72,8 +83,8 @@ class Login extends Component {
             type="button"
             id="button-login"
             value="Entrar"
-            // disabled
-            onClick={ () => login({ email }) }
+            disabled={ !(this.state.isValidLogin && this.state.isValidPassword) }
+            onClick={ () => this.handleLogin() }
           />
         </Link>
       </div>
