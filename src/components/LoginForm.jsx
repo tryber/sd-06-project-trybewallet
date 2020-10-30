@@ -9,11 +9,11 @@ class LoginForm extends React.Component {
     this.state = {
       email: '',
       password: '',
-      button: false,
+      button: true,
     }
 
     this.handlePassword = this.handlePassword.bind(this);
-
+    this.handleEmail = this.handleEmail.bind(this);
   }
 
   handlePassword({ target }) {
@@ -21,12 +21,24 @@ class LoginForm extends React.Component {
     if (value.length >= 6) {
       this.setState({
         [name]: value,
-        button: true,
       });
     } else {
       this.setState({
         [name]: '',
-        button: false,
+      });
+    }
+  }
+  
+  handleEmail({ target }) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const { name, value } = target;
+    if (emailRegex.test(value)) {
+      this.setState({
+        [name]: value,
+      });
+    } else {
+      this.setState({
+        [name]: '',
       });
     }
   }
@@ -43,7 +55,7 @@ class LoginForm extends React.Component {
           <label htmlFor="email-input">
             Email:
             <input
-              onChange={ 'fodasse' }
+              onChange={ this.handleEmail }
               name="email"
               type="text"
               data-testid="email-input"
@@ -56,11 +68,11 @@ class LoginForm extends React.Component {
               name="password"
               type="password"
               data-testid="password-input"
-              minLength="6"
             />
           </label>
           <Link to="/carteira">
             <button
+              disabled={ email !== '' && password !== '' ? false : true }
               onClick={ () => userData(email, password) }
               type="submit">
                 Entrar

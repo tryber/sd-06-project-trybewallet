@@ -35,8 +35,8 @@ class ExpensesForm extends React.Component {
             Pagamento:
             <select name="method" data-testid="method-input">
               <option value="dinheiro">Dinheiro</option>
-              <option value="credito">Cartão de Crédito</option>
-              <option value="debito">Cartão de Débito</option>
+              <option value="credito">Cartão de crédito</option>
+              <option value="debito">Cartão de débito</option>
             </select>
           </label>
 
