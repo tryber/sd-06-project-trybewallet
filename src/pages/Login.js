@@ -9,27 +9,39 @@ class Login extends React.Component {
   constructor() {
     super();
 
-    this.setStateValue = this.setStateValue.bind(this);
+    this.setStateEmail = this.setStateEmail.bind(this);
+    this.setStatePassword = this.setStatePassword.bind(this);
     this.verifyEmail = this.verifyEmail.bind(this);
 
     this.state = {
       email: '',
+      password: '',
       isDisabled: true,
     };
   }
 
-  setStateValue(event) {
+  setStatePassword(event) {
     const { value } = event.target;
     this.setState({
-      email: value,
+      password: value,
     }, () => {
       this.verifyEmail(value);
     });
   }
 
-  verifyEmail(email) {
+  setStateEmail(event) {
+    const { value } = event.target;
+    this.setState({
+      email: value,
+    });
+  }
+
+  verifyEmail() {
+    const { password, email } = this.state;
+    const validationButton = document.querySelector('.validation-button');
     const emailFormat = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
-    if (emailFormat) {
+    const passwordMinLength = 6;
+    if (password.length >= passwordMinLength && emailFormat) {
       this.setState({
         isDisabled: false,
       });
@@ -44,13 +56,14 @@ class Login extends React.Component {
       <div>
         <h2>Login</h2>
         <input
-          onChange={ this.setStateValue }
+          onChange={ this.setStateEmail }
           type="email"
           data-testid="email-input"
           placeholder="Email"
           minLength="6"
         />
         <input
+          onChange={ this.setStatePassword }
           type="password"
           data-testid="password-input"
           placeholder="Senha"
