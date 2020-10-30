@@ -10,12 +10,16 @@ class Wallet extends React.Component {
         <p data-testid="total-field">0</p>
         <p data-testid="header-currency-field">BRL</p>
       </header>
-    </div>;
+    </div>
   }
 }
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
 });
+
+Wallet.propTypes = {
+  email: propTypes.string.isRequired,
+};
 
 export default connect(mapStateToProps)(Wallet);
