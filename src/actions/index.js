@@ -1,7 +1,9 @@
 // Coloque aqui suas actions
-export default addEmailToRecord = ({ email }) => ({
+const addEmailToRecord = (email) => ({
   type: 'addRecord',
   payload: {
     email,
   },
 });
+
+export default addEmailToRecord;

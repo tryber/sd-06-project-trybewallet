@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import addEmailToRecord from '../actions';
 import './Login.css';
 
 class Login extends React.Component {
@@ -40,6 +42,7 @@ class Login extends React.Component {
   }
 
   render() {
+    const registerEmail = this.props;
     return (
       <div>
         <form className="login-page">
@@ -58,7 +61,14 @@ class Login extends React.Component {
             onChange={ ({ target }) => this.onPasswordChange(target) }
           />
           <Link to="/carteira">
-            <button type="button" id="login-button" disabled>Entrar</button>
+            <button
+              type="button"
+              id="login-button"
+              disabled
+              onClick={ registerEmail }
+            >
+              Entrar
+            </button>
           </Link>
         </form>
       </div>
@@ -66,4 +76,11 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+function mapDispacthToProps(dispatch) {
+  const emailValue = document.getElementById('email').value;
+  return {
+    registerEmail: () => dispatch(addEmailToRecord(emailValue)),
+  };
+}
+
+export default connect(null, mapDispacthToProps)(Login);
