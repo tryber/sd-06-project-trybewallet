@@ -1,4 +1,6 @@
 import React from 'react';
+import { newEmail } from '../actions';
+import { connect } from 'react-redux';
 
 class Login extends React.Component {
   constructor() {
@@ -14,7 +16,7 @@ class Login extends React.Component {
   }
 
   handleChange({ target }) {
-    this.setState({ target: target.value }), () => {
+    this.setState({ [target.name]: target.value }), () => {
       const { password, email } = this.state;
       const passLength = 6;
       const emailValidation = /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/g.test(email);
@@ -43,7 +45,7 @@ class Login extends React.Component {
             type="email"
             value=""
             data-testid="email-input"
-            onChange={ this.handleChange }
+            onChange={ myEmail(this.handleChange) }
             required
           />
           </label>
@@ -68,4 +70,8 @@ class Login extends React.Component {
   };
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  myEmail: (value) => dispatch(newEmail(value))
+});
+
+export default connect(null, mapDispatchToProps)(Login);
