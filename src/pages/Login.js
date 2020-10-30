@@ -22,7 +22,7 @@ class Login extends React.Component {
     }, () => {
       const { email, password } = this.state;
       // https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
-      const emailExpRegular = new RegExp('/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/gi');
+      const emailExpRegular = new RegExp(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/gi);
       const lenghtOfPassword = 6;
 
       if (password >= lenghtOfPassword && emailExpRegular.test(email)) {
