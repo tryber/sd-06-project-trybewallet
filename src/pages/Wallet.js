@@ -10,7 +10,9 @@ class Wallet extends Component {
       <section>
         <header>
           <div className="user-data">
-            <span data-testid="email-field">User: { userEmail }</span>
+            <span data-testid="email-field">
+              User: { userEmail }
+            </span>
             <span data-testid="total-field">Total Spends: 0</span>
             <span data-testid="header-currency-field">BRL</span>
           </div>
