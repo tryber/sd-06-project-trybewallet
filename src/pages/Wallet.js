@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 
 class Wallet extends React.Component {
   render() {
-    const { userReducer } = this.props;
+    const { user } = this.props;
     return (
       <div>
         <span>E-mail</span>
-        <span data-testid="email-field">{ userReducer.email }</span>
+        <span data-testid="email-field">{ user.email }</span>
         <span>Despesa Total</span>
         <span data-testid="total-field">0</span>
         <span>Câmbio utilizado</span>
@@ -19,11 +19,11 @@ class Wallet extends React.Component {
 }
 
 const mapStateToProps = (StateDaStore) => ({
-  userReducer: StateDaStore,
+  user: StateDaStore,
 });
 
 Wallet.propTypes = {
-  userReducer: PropTypes.func.isRequired,
+  user: PropTypes.func.isRequired,
 };
 
 export default connect(

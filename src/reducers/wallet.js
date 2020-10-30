@@ -6,7 +6,7 @@
 //   expenses: [],
 // };
 
-// const walletReducer = (state = INITIAL_STATE, action) => {
+// const wallet = (state = INITIAL_STATE, action) => {
 //   //  retorna um novo estado baseado no type da action
 //   switch (action.type) {
 //   case WALLET:
@@ -16,4 +16,4 @@
 //   }
 // }
 
-// export default walletReducer;
+// export default wallet;
