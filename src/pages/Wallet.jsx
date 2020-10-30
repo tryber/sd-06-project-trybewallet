@@ -1,8 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { FiDollarSign, FiPenTool, FiX, FiEdit } from 'react-icons/fi';
 
-import { createTransaction, removeTransaction, loadCurrencies, updateTransaction } from '../actions';
+import {
+  createTransaction, removeTransaction,
+  loadCurrencies, updateTransaction,
+} from '../actions';
 import formatValue from '../utils/formatValue';
 
 import Header from '../components/Header';
@@ -14,9 +18,9 @@ import { WalletProps } from '../types/appTypes';
 import '../styles/wallet.css';
 
 const Wallet = ({ user, transactions, register, remove, currencies, load, update }) => {
-// if (!user) {
-//   return <div>NOT LOGGED</div>;
-// }
+  // if (!user) {
+  //   return <Redirect to="/" />;
+  // }
 
   const [value, setValue] = useState('');
   const [currency, setCurrency] = useState('USD');
@@ -89,7 +93,7 @@ const Wallet = ({ user, transactions, register, remove, currencies, load, update
       register(transactionData);
     }
 
-    setValue('');
+    setValue(0);
     setDescription('');
     setEditID(null);
   }, [value, tag, description, currency, method, editID, register, update, setValue,
