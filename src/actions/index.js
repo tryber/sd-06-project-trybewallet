@@ -1,7 +1,7 @@
 export const LOGIN_INPUT = 'LOGIN_INPUT';
 
-export const loginInput = (name, input) => ({
+export const loginInput = (email, password) => ({
   type: LOGIN_INPUT,
-  field: name,
-  value: input,
+  email: email,
+  password: password,
 });

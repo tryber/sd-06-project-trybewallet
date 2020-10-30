@@ -4,9 +4,37 @@ import { connect } from 'react-redux';
 import { loginInput } from '../actions';
 
 class LoginForm extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      email: '',
+      password: '',
+      button: false,
+    }
+
+    this.handlePassword = this.handlePassword.bind(this);
+
+  }
+
+  handlePassword({ target }) {
+    const { name, value } = target;
+    if (value.length >= 6) {
+      this.setState({
+        [name]: value,
+        button: true,
+      });
+    } else {
+      this.setState({
+        [name]: '',
+        button: false,
+      });
+    }
+  }
+
   render() {
 
-    const { email, userLogin } = this.props;
+    const { userData } = this.props;
+    const { email, password } = this.state;
 
     return(
       <form>
@@ -15,7 +43,7 @@ class LoginForm extends React.Component {
           <label htmlFor="email-input">
             Email:
             <input
-              onChange={ ({ target }) => userLogin(target.name, target.value) }
+              onChange={ 'fodasse' }
               name="email"
               type="text"
               data-testid="email-input"
@@ -24,14 +52,19 @@ class LoginForm extends React.Component {
           <label htmlFor="password-input">
             Senha:
             <input
-              name="user-password"
+              onChange={ this.handlePassword }
+              name="password"
               type="password"
               data-testid="password-input"
               minLength="6"
             />
           </label>
           <Link to="/carteira">
-            <button type="submit">Entrar</button>
+            <button
+              onClick={ () => userData(email, password) }
+              type="submit">
+                Entrar
+            </button>
           </Link>
         </fieldset>
       </form>
@@ -40,7 +73,7 @@ class LoginForm extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  userLogin: (name, input) => dispatch(loginInput(name, input)),
+  userData: (email, password) => dispatch(loginInput(email, password)),
 });
 
 export default connect(null, mapDispatchToProps)(LoginForm);
