@@ -52,12 +52,12 @@ class ExpenseForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+// const mapStateToProps = (state) => ({
 
-});
+// });
 
 const mapDispatchToProps = (dispatch) => ({
   expense: (object) => dispatch(addExpense(object)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
+export default connect(null, mapDispatchToProps)(ExpenseForm);
