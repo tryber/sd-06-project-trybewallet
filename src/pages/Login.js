@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import addEmailToRecord from '../actions';
+import store from '../store';
 import './Login.css';
 
 class Login extends React.Component {
@@ -39,10 +40,12 @@ class Login extends React.Component {
     } else {
       document.getElementById('login-button').setAttribute('disabled', 'true');
     }
+    console.log(store.addRecord);
   }
 
   render() {
     const registerEmail = this.props;
+    console.log(store);
     return (
       <div>
         <form className="login-page">
@@ -65,7 +68,7 @@ class Login extends React.Component {
               type="button"
               id="login-button"
               disabled
-              onClick={ registerEmail }
+              onClick={ () => registerEmail(document.getElementById('email').value) }
             >
               Entrar
             </button>
@@ -77,9 +80,8 @@ class Login extends React.Component {
 }
 
 function mapDispacthToProps(dispatch) {
-  const emailValue = document.getElementById('email').value;
   return {
-    registerEmail: () => dispatch(addEmailToRecord(emailValue)),
+    registerEmail: (email) => dispatch(addEmailToRecord(email)),
   };
 }
 
