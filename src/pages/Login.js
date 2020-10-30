@@ -26,6 +26,7 @@ class Login extends React.Component {
     else this.setState({ buttonDisabled: true });
   }
 
+  // refatorar p/ criar um hadler único de estado
   emailValidation(event) {
     const email = event.target.value;
     const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
