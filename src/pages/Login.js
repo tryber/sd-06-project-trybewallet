@@ -10,6 +10,7 @@ class Login extends React.Component {
     super();
 
     this.setStateValue = this.setStateValue.bind(this);
+    this.verifyEmail = this.verifyEmail.bind(this);
 
     this.state = {
       email: '',
@@ -20,7 +21,17 @@ class Login extends React.Component {
     const { value } = event.target;
     this.setState({
       email: value,
+    }, () => {
+      this.verifyEmail(value);
     });
+  }
+
+  verifyEmail(email) {
+    const validationButton = document.querySelector('.validation-button');
+    const emailFormat = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
+    if (emailFormat) {
+      validationButton.removeAttribute('disabled');
+    }
   }
 
   render() {
@@ -29,21 +40,25 @@ class Login extends React.Component {
 
     return (
       <div>
+        <h2>Login</h2>
         <input
           onChange={ this.setStateValue }
           type="email"
           data-testid="email-input"
           placeholder="Email"
+          minLength="6"
         />
         <input
-          type="senha"
+          type="password"
           data-testid="password-input"
           placeholder="Senha"
         />
         <Link to="/carteira">
           <button
-            type="button"
+            className="validation-button"
+            type="submit"
             onClick={ () => emailAction(email) }
+            disabled
           >
             Entrar
           </button>
