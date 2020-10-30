@@ -1,3 +1,5 @@
+import currencyApi from '../services/currencyApi';
+
 export const SAVE_USER = 'SAVE_USER';
 
 export const saveUser = (userEmail) => ({
@@ -5,9 +7,31 @@ export const saveUser = (userEmail) => ({
   payload: userEmail,
 });
 
-export const SAVE_WALLET = 'SAVE_WALLET';
+export const SAVE_CURRENCIES = 'SAVE_CURRENCIES';
 
-export const saveWallet = (payload) => ({
-  type: SAVE_WALLET,
+export const saveCurrencies = (payload) => ({
+  type: SAVE_CURRENCIES,
   payload,
 });
+
+export function fetchCurrencies() {
+  return async (dispatch) => {
+    const response = await currencyApi();
+    const currencies = Object.keys(response);
+    dispatch(saveCurrencies(currencies));
+  };
+}
+
+export const SAVE_EXPENSE = 'SAVE_EXPENSE';
+
+export const saveExpense = (expenseData, currencies) => ({
+  type: SAVE_EXPENSE,
+  payload: { ...expenseData, exchangeRates: currencies },
+});
+
+export function registerExpense(expenseData) {
+  return async (dispatch) => {
+    const exchangeRates = await currencyApi();
+    dispatch(saveExpense(expenseData, exchangeRates));
+  };
+}
