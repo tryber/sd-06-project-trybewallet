@@ -3,14 +3,14 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-  switch(action.type) {
-    case 'LOGIN':
-      return (
-        {
+  switch (action.type) {
+  case 'LOGIN':
+    return (
+      {
         ...state,
         email: action.email,
       });
-    default:
-      return state;
-  };
+  default:
+    return state;
+  }
 };

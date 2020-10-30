@@ -1,35 +1,37 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import loginAction from '../actions';
 
-class Login extends React.Component {  
+class Login extends React.Component {
   constructor() {
     super();
     this.state = {
       disabled: true,
       email: '',
       senha: '',
-    }
+    };
     this.emailIsValid = this.emailIsValid.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
   emailIsValid(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-  };
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
 
   handleChange({ target }) {
     this.setState(({
       [target.name]: target.value,
-    }),(() => {
+    }), (() => {
       const { email, senha } = this.state;
       const SEIS = 6;
-      
+
       if ((senha.length >= SEIS) && (this.emailIsValid(email))) {
-        this.setState({ disabled: false })
-      } 
+        this.setState({ disabled: false });
+      }
     }));
   }
 
@@ -51,32 +53,33 @@ class Login extends React.Component {
         <div>
           <input
             data-testid="email-input"
-            type='email'
-            name='email'
-            placeholder='Digite seu e-mail'
+            type="email"
+            name="email"
+            placeholder="Digite seu e-mail"
             onChange={ (event) => this.handleChange(event) }
-            value={ email }/>
+            value={ email }
+          />
         </div>
         <div>
           <input
             data-testid="password-input"
-            type='password'
-            name='senha'
-            placeholder='Digite sua senha'
+            type="password"
+            name="senha"
+            placeholder="Digite sua senha"
             onChange={ (event) => this.handleChange(event) }
             value={ senha }
           />
         </div>
         <div>
-          <Link to='/carteira'>
-          <button
-            type='button'
-            disabled={ disabled }
-            onClick={ () => this.handleClick() }
-          >
+          <Link to="/carteira">
+            <button
+              type="button"
+              disabled={ disabled }
+              onClick={ () => this.handleClick() }
+            >
               Entrar
-          </button>
-            </Link>
+            </button>
+          </Link>
         </div>
       </div>
     );
@@ -89,6 +92,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setEmail: (email) => dispatch(loginAction(email)),
-})
+});
+
+Login.propTypes = {
+  setEmail: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
