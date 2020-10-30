@@ -13,13 +13,15 @@ class Login extends React.Component {
     };
   }
 
-  handleChange = ({ target }) => {
+  handleChange({ target }) {
     const { name, value } = target;
     const { email, senha } = this.state;
-    const regexp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
+    const regexp = /^[a-zA-Z0-9.!#$%&_-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
     this.setState({ [name]: value }, () => {
-      const disabled = regexp.test(email) && senha.length >= 6 ? true: false;
+      let disabled = true;
+
+      if(regexp.test(email) && senha.length >= 5) disabled = false;
 
       this.setState({ disabled });
     });
