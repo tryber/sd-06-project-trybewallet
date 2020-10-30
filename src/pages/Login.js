@@ -23,7 +23,7 @@ class Login extends React.Component {
       const { email, password } = this.state;
       const emailVerify = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
       const passwordSize = 6;
-      if(emailVerify && password.length >= passwordSize) {
+      if (emailVerify && password.length >= passwordSize) {
         this.setState({ isDisabled: false });
       } else {
         this.setState({ isDisabled: true });
@@ -72,10 +72,13 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  loginDispatch: (email) => dispatch(loginAction(email))
+  loginDispatch: (email) => dispatch(loginAction(email));
 });
 
 Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   loginDispatch: PropTypes.func.isRequired,
 };
 
