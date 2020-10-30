@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../actions';
 // validação de e-mail - site consultado: https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
@@ -72,14 +72,15 @@ class Login extends React.Component {
             />
           </label>
           <br />
-          <button
-            disabled={ disabled }
-            type="submit"
-            onClick={ () => formLogin(this.state) }
-            // <Redirect to="/carteira" />
-          >
-            Entrar
-          </button>
+          <Link to="/carteira">
+            <button
+              disabled={ disabled }
+              type="submit"
+              onClick={ () => formLogin(this.state) }
+            >
+              Entrar
+            </button>
+          </Link>
         </form>
       </div>
     );
