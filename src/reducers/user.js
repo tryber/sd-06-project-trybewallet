@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   },
 };
 
-function user(state = INITIAL_STATE, action) {
+function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case UPDATE:
     return { ...state, user: { ...state.user, email: action.email } };
@@ -20,4 +20,4 @@ function user(state = INITIAL_STATE, action) {
   }
 }
 
-export default user;
+export default userReducer;

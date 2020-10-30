@@ -25,3 +25,29 @@
 .form-login a button{
   width: 100%;
 }
+
+header {
+  margin: 10px;
+}
+
+header nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-right {
+  display: flex;
+}
+
+nav p {
+  margin-right: 30px;
+}
+
+.form-expense {
+  padding: 40px;
+  background-color: grey;
+}
+
+form label {
+  margin-left: 20px;
+}

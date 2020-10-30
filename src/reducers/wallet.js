@@ -1,5 +1,5 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { UPDATE } from '../actions';
+import { ERROR, LOADING, SUCCESS, SAVE } from '../actions';
 
 const INITIAL_STATE = {
   user: {
@@ -9,12 +9,27 @@ const INITIAL_STATE = {
     currencies: [],
     expenses: [],
   },
+  isFetching: false,
+  coinsOptions: {},
 };
 
-export default function user(state = INITIAL_STATE, action) {
+export default function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case UPDATE:
-    return { ...state, user: { ...state.user, email: action.email } };
+  case LOADING:
+    return { ...state, isFetching: true };
+  case SUCCESS:
+    return {
+      ...state,
+      coinsOptions: action.data,
+      isFetching: false,
+    };
+  case ERROR:
+    return { ...state };
+  case SAVE:
+    return {
+      ...state,
+      wallet: { ...state.wallet, expenses: action.expenses },
+    };
   default:
     return state;
   }
