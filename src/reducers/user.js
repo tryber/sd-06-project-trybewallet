@@ -7,10 +7,9 @@ const INITIAL_STATE = {
 };
 
 function user(state = INITIAL_STATE, action) {
-  console.log('e aqui no user?, que action é essa? :', action);
   switch (action.type) {
   case EMAIL_INPUT:
-    console.log('dentro da funcao do user!');
+
     return {
       ...state,
       // email: state.user.email.concat(action.email),

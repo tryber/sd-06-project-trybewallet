@@ -6,7 +6,6 @@ const INITIAL_STATE = {
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
-  console.log('e aqui no wallet?');
   switch (action.type) {
   case 'WALLET_INPUT':
     return {

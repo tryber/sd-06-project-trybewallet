@@ -40,7 +40,6 @@ class Login extends React.Component {
 
     if (emailValidation && passwordValidation) {
       const { callbackEmail } = this.props;
-      console.log('saiu daqui');
       // emailSaveToState(email);
       callbackEmail(email);
       this.updateState('isOk', true);
