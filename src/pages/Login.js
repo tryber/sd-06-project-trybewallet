@@ -9,57 +9,68 @@ class Login extends React.Component {
 
     this.state = {
       email: '',
-      submitEmail: '',
+      password: '',
+      isDisabled: true,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
+  handleChange({ target }) {
+    const { name, value } = target;
     this.setState({
-      email: event.target.value,
-      submitEmail: '',
+      [name]: value,
+    }, () => {
+      const { email, password } = this.state;
+      const verifyEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
+      const passwordSize = 6;
+      if (verifyEmail && password.length >= passwordSize) {
+        this.setState({
+          isDisabled: false,
+        });
+      } else {
+        this.setState({
+          isDisabled: true,
+        })
+      }
     });
   }
 
   handleSubmit(event) {
-    const { email } = this.state;
     event.preventDefault();
-    // this.setState({
-    //   email: email,
-    //   submitEmail: email,
-    // }, () => {
-    //   const { submitEmail } = this.state;
-    //   const { submitButton } = this.props;
-      this.props.submitButton(email);
-    // });
+    const { email } = this.state;
+    const { history, submitButton } = this.props;
+    submitButton(email);
+    history.push('carteira');
   }
 
   render() {
-    const { email } = this.state;
-    console.log(this.props);
+    const { email, password, isDisabled } = this.state;
     return (
       <form onSubmit={ this.handleSubmit }>
         <fieldset>
           <input
-            data-testid="password-input"
+            data-testid="email-input"
             type="email"
             placeholder="Email"
             onChange={ this.handleChange }
             value={ email }
+            name="email"
           />
           <br />
           <br />
           <input
-            data-testid="email-input"
+            data-testid="password-input"
             type="password"
             placeholder="Senha"
-            minLength="6"
+            onChange={ this.handleChange }
+            value={ password }
+            name="password"
           />
           <br />
           <br />
-          <button type="submit">
+          <button type="submit" disabled={ isDisabled }>
             Entrar
           </button>
         </fieldset>
