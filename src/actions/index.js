@@ -12,4 +12,4 @@ export const catchInputEntries = (currencies, expenses) => ({
     currencies,
     expenses,
   },
-})
+});
