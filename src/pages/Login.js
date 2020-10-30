@@ -10,39 +10,76 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.changeHandler = this.changeHandler.bind(this);
+    this.verifyFields = this.verifyFields.bind(this);
     this.state = {
       email: '',
+      password: '',
     };
   }
 
   changeHandler(event) {
+    const { name, value } = event.target;
     this.setState({
-      email: event.target.value,
+      [name]: value,
     });
+  }
+
+  verifyFields() {
+    const { password, email } = this.state;
+    const isValid = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{3})$/i);
+    const six = 6;
+    let answer = true;
+    if (isValid && password.length >= six) {
+      answer = false;
+    }
+    return answer;
   }
 
   render() {
     const { fieldChange } = this.props;
-    const { email } = this.state;
+    const { email, password } = this.state;
     return (
       <div className="container">
         <div className="login">
           <img alt="trybe-logo" src={ trybewallet } width="200px" />
-          <input
-            type="email"
-            placeholder="Enter email"
-            data-testid="email-input"
-            value={ email }
-            onChange={ this.changeHandler }
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            data-testid="password-input"
-          />
-          <Link to="/carteira" onClick={ () => fieldChange(email) }>
-            <button type="submit">Entrar</button>
-          </Link>
+          <form>
+            <div className="form-group">
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter email"
+                data-testid="email-input"
+                value={ email }
+                onChange={ this.changeHandler }
+                className="form-control"
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                data-testid="password-input"
+                value={ password }
+                onChange={ this.changeHandler }
+                className="form-control"
+              />
+            </div>
+            <Link
+              to="/carteira"
+              onClick={ () => {
+                fieldChange(email);
+              } }
+            >
+              <button
+                type="button"
+                disabled={ this.verifyFields() }
+                className="btn btn-success btn-block"
+              >
+                Entrar
+              </button>
+            </Link>
+          </form>
         </div>
       </div>
     );
