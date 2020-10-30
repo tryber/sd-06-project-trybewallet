@@ -89,7 +89,7 @@ Através dessa aplicação, será possível realizar as operações básicas de 
   1. `git status` _(para verificar o que está em vermelho - fora do stage - e o que está em verde - no stage)_
   2. `git add` _(para adicionar arquivos ao stage do Git)_
   3. `git commit` _(para criar um commit com os arquivos que estão no stage do Git)_
-  4. `git push -u nome-da-branch` _(para enviar o commit para o repositório remoto na primeira vez que fizer o `push` de uma nova branch)_
+  4. `git push -u origin nome-da-branch` _(para enviar o commit para o repositório remoto na primeira vez que fizer o `push` de uma nova branch)_
   5. `git push` _(para enviar o commit para o repositório remoto após o passo anterior)_
 
 ---
@@ -187,7 +187,7 @@ Nessa aplicação você deverá **obrigatoriamente** utilizar o seguinte formato
 
 É importante respeitar esse formato para que o avaliador funcione corretamente. Você pode adicionar novos campos ao seu estado global, mas essa estrutura básica deve se manter. Por exemplo, você pode adicionar uma propriedade `isFetching` no seu estado. Mas você **não** pode salvar as despesas em uma chave diferente de `wallet.expenses`.
 
-Outra coisa importante: devido a estrutura que o avaliador utiliza para realizar os testes, é **necessário** que o seu <Provider /> e o seu <BrowserRouter /> estejam no arquivo `index.js` e **não** no `<App />`.
+Outra coisa importante: devido a estrutura que o avaliador utiliza para realizar os testes, é **necessário** que o seu `<Provider />` e o seu `<BrowserRouter />` estejam no arquivo `index.js` e **não** no `<App />`.
 
 ### Página de Login
 
@@ -288,8 +288,6 @@ Crie uma página para gerenciar a carteira de gastos em diversas moedas, e que t
     * Este campo deve ser um dropdown. a pessoa usuária deve poder escolher entre os campos: 'Alimentação', 'Lazer', 'Trabalho', 'Transporte' e 'Saúde'.
 
     * Adicione o atributo `data-testid="tag-input"`.
-
-    * Ao ser clicado, o botão deve fazer uma requisição à API para trazer o câmbio mais atualizado possível.
 
   * Um botão com o texto \'Adicionar despesa\' que salva as informações da despesa no estado global e atualiza a soma de despesas no header.
 
@@ -409,7 +407,7 @@ Crie uma página para gerenciar a carteira de gastos em diversas moedas, e que t
 
 5. Desenvolva uma tabela com os gastos contendo as seguintes características:
 
-  * A tabela deve possuir um cabeçalho **exatamente** com os campos Descrição, Tag, Método de pagamento, Valor, Moeda, Câmbio utilizado, Valor convertido e Moeda de conversão
+  * A tabela deve possuir um cabeçalho **exatamente** com os campos Descrição, Tag, Método de pagamento, Valor, Moeda, Câmbio utilizado, Valor convertido, Moeda de conversão e Editar/Excluir
 
   * A tabela deve ser alimentada pelo estado da aplicação, que estará disponível na chave ***expenses*** que vem do reducer `wallet`.
 
