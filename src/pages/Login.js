@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { emailSaveToState } from '../actions';
 import Wallet from './Wallet';
 
@@ -57,7 +57,12 @@ class Login extends React.Component {
 
   render() {
     const { email, password, isOk } = this.state;
-    // if (isOk === true) return (<Link to="/carteira" />);
+    const { history } = this.props;
+    if (isOk === true) {
+      return (
+        history.push('/carteira'), <Wallet />
+      );
+    }
     return (
       <div>
         <form>
@@ -93,9 +98,7 @@ class Login extends React.Component {
                 disabled={ !this.validatePassword(password)
                 || !this.validateEmail(email) }
               >
-                <Link to="/carteira">
-                  Entrar
-                </Link>
+                Entrar
               </button>
 
             </div>
@@ -113,8 +116,8 @@ const mapDispatchToProps = (dispatch) => ({
 // email: state.user,
 // });
 
-// Login.propTypes = {
-//   emailSaveToState: PropTypes.func.isRequired,
-// };
+Login.propTypes = {
+  history: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);
