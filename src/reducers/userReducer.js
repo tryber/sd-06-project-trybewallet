@@ -9,7 +9,7 @@ const initialState = {
 export default function user(state = initialState, action) {
   switch (action.type) {
   case CHANGE_EMAIL:
-    return { ...state, user: { ...state.user, email: action.email } };
+    return { email: action.email };
   default:
     return state;
   }
