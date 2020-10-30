@@ -1,24 +1,43 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { emailLogin } from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.validateData = this.validateData.bind(this);
     this.state = {
       email: '',
       password: '',
+      disabled: true,
     };
+  }
+
+  validateData() {
+    const { email, password } = this.state;
+    const minPassChar = 6;
+    const emailExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const validated = password.length >= minPassChar && emailExp.test(email);
+    this.setState({ disabled: !validated });
   }
 
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({
       [name]: value,
-    });
+    }, () => this.validateData());
+  }
+
+  handleClick({ target }) {
+    const { value } = target;
+    const { login } = this.props;
   }
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, disabled } = this.state;
+    const { login } = this.props;
     return (
       <div>
         <h1>TrybeWallet</h1>
@@ -43,11 +62,15 @@ class Login extends React.Component {
               value={ password }
             />
           </label>
-          <button type="button">Entrar</button>
+          <button type="button" disabled={ disabled } onClick={ this.handleClick }>Entrar</button>
         </form>
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  login: (email) => dispatch(emailLogin(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);

@@ -1,5 +1,6 @@
+import { ADD_EXPENSE } from '../actions';
+
 const INITIAL_STATE = { wallet: { currencies: [], expenses: [] } };
-const ADD_EXPENSE = 'ADD_EXPENSE';
 
 function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
