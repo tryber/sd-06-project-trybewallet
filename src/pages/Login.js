@@ -20,27 +20,41 @@ class Login extends React.Component {
 
     this.setState({ [name]: value }, () => {
       let disabled = true;
+      let five = 5;
 
-      if(regexp.test(email) && senha.length >= 5) disabled = false;
+      if (regexp.test(email) && senha.length >= five) disabled = false;
 
       this.setState({ disabled });
     });
-  };
+  }
 
   render() {
     const { disabled } = this.state;
 
     return (
       <section>
-        <label>
+        <label htmlFor="email-input">
           Email:
-          <input required data-testid="email-input" placeholder="email@email.com" name="email" onChange={ this.handleChange } />
+          <input
+            required
+            data-testid="email-input"
+            placeholder="email@email.com"
+            name="email"
+            onChange={ this.handleChange }
+          />
         </label>
-        <label>
+        <label htmlFor="password-input">
           Senha:
-          <input type="password" required data-testid="password-input" placeholder="senha" name="senha" onChange={ this.handleChange } />
+          <input
+            type="password"
+            required
+            data-testid="password-input"
+            placeholder="senha"
+            name="senha"
+            onChange={ this.handleChange }
+          />
         </label>
-        <button disabled={disabled}>Entrar</button>
+        <button type="button" disabled={ disabled }>Entrar</button>
       </section>
     );
   }
