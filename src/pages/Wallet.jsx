@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { FiDollarSign, FiPenTool, FiStopCircle } from 'react-icons/fi';
+import { FiDollarSign, FiPenTool, FiStopCircle, FiEdit } from 'react-icons/fi';
 
-import { createTransaction, removeTransaction } from '../actions';
+import { createTransaction, removeTransaction, loadCurrencies, updateTransaction } from '../actions';
 import formatValue from '../utils/formatValue';
 
 import Header from '../components/Header';
@@ -13,7 +13,7 @@ import { WalletProps } from '../types/appTypes';
 
 import '../styles/wallet.css';
 
-const Wallet = ({ user, transactions, register, remove }) => {
+const Wallet = ({ user, transactions, register, remove, currencies, load, update }) => {
 // if (!user) {
 //   return <div>NOT LOGGED</div>;
 // }
@@ -23,6 +23,12 @@ const Wallet = ({ user, transactions, register, remove }) => {
   const [method, setMethod] = useState('credit');
   const [tag, setTag] = useState('food');
   const [description, setDescription] = useState('');
+  const [editMode, setEditMode] = useState(false);
+  const [editID, setEditID] = useState(null);
+
+  useEffect(() => {
+    load();
+  }, [load]);
 
   const handleValueChange = useCallback(({ target }) => {
     setValue(target.value);
@@ -44,6 +50,21 @@ const Wallet = ({ user, transactions, register, remove }) => {
     setDescription(target.value);
   });
 
+  const handleEdit = useCallback((transactionID) => {
+    setEditMode(true);
+
+    const editTransaction = transactions.find((transaction) => (
+      transactionID === transaction.id
+    ));
+
+    setValue(editTransaction.value);
+    setMethod(editTransaction.method);
+    setTag(editTransaction.tag);
+    setCurrency(editTransaction.currency);
+    setDescription(editTransaction.description);
+    setEditID(transactionID);
+  }, [transactions, editID]);
+
   const handleTransactionDeletion = useCallback((transactionID) => {
     remove(transactionID);
   });
@@ -53,16 +74,24 @@ const Wallet = ({ user, transactions, register, remove }) => {
 
     if (!Number(value) || !value || !description) return;
 
-    register({
+    const transactionData = {
       value,
       tag,
       description,
       currency,
       method,
-    });
+    };
+
+    if (editMode) {
+      update(transactionData, editID);
+      setEditMode(false);
+    } else {
+      register(transactionData);
+    }
 
     setValue(0);
     setDescription('');
+    setEditID(null);
   });
 
   return (
@@ -91,20 +120,11 @@ const Wallet = ({ user, transactions, register, remove }) => {
               value={ currency }
               onChange={ handleCurrencyChange }
             >
-              <option value="USD" data-testid="USD">USD</option>
-              <option value="CAD" data-testid="CAD">CAD</option>
-              <option value="EUR" data-testid="EUR">EUR</option>
-              <option value="GBP" data-testid="GBP">GBP</option>
-              <option value="ARS" data-testid="ARS">ARS</option>
-              <option value="BTC" data-testid="BTC">BTC</option>
-              <option value="LTC" data-testid="LTC">LTC</option>
-              <option value="JPY" data-testid="JPY">JPY</option>
-              <option value="CHF" data-testid="CHF">CHF</option>
-              <option value="AUD" data-testid="AUD">AUD</option>
-              <option value="CNY" data-testid="CNY">CNY</option>
-              <option value="ILS" data-testid="ILS">ILS</option>
-              <option value="ETH" data-testid="ETH">ETH</option>
-              <option value="XRP" data-testid="XRP">XRP</option>
+              {currencies.map((currName) => (
+                <option key={ currName } value={ currName } data-testid={ currName }>
+                  {currName}
+                </option>
+              ))}
             </select>
           </div>
           <div className="wallet-input">
@@ -116,7 +136,7 @@ const Wallet = ({ user, transactions, register, remove }) => {
               value={ method }
               onChange={ handleMethodChange }
             >
-              <option value="credit">Cartão de Crédito</option>
+              <option value="credit">Cartão de crédito</option>
               <option value="debit">Cartão de Débito</option>
               <option value="cash">Dinheiro</option>
             </select>
@@ -149,7 +169,7 @@ const Wallet = ({ user, transactions, register, remove }) => {
             />
           </div>
           <Button type="submit">
-            Adicionar despesa
+            {editMode ? ('Editar despesa') : ('Adicionar despesa')}
           </Button>
         </form>
         <div className="transactions-table">
@@ -188,14 +208,26 @@ const Wallet = ({ user, transactions, register, remove }) => {
                     </td>
                     <td className="field">
                       Real
-                      <button
-                        type="button"
-                        data-testid="delete-btn"
-                        id={ transaction.id }
-                        onClick={ () => handleTransactionDeletion(transaction.id) }
-                      >
-                        <FiStopCircle />
-                      </button>
+                      <div className="modify-btns">
+                        <button
+                          type="button"
+                          data-testid="edit-btn"
+                          id={ transaction.id }
+                          className="edit-btn"
+                          onClick={ () => handleEdit(transaction.id) }
+                        >
+                          <FiEdit />
+                        </button>
+                        <button
+                          type="button"
+                          data-testid="delete-btn"
+                          id={ transaction.id }
+                          onClick={ () => handleTransactionDeletion(transaction.id) }
+                        >
+                          <FiStopCircle />
+                        </button>
+
+                      </div>
                     </td>
                   </tr>
                 );
@@ -212,6 +244,7 @@ function mapStateToProps(state) {
   return {
     user: state.user.user.email,
     transactions: state.wallet.wallet.expenses,
+    currencies: state.wallet.wallet.currencies,
   };
 }
 
@@ -219,6 +252,8 @@ function dispatchToStore(dispatch) {
   return {
     register: (transactionData) => dispatch(createTransaction(transactionData)),
     remove: (transactionID) => dispatch(removeTransaction(transactionID)),
+    load: () => dispatch(loadCurrencies()),
+    update: (transactionData, id) => dispatch(updateTransaction(transactionData, id)),
   };
 }
 

@@ -6,7 +6,7 @@ import formatValue from '../../utils/formatValue';
 
 import logo from '../../assets/logo.png';
 
-import { WalletProps } from '../../types/appTypes';
+import { HeaderProps } from '../../types/appTypes';
 
 import './styles.css';
 
@@ -53,6 +53,6 @@ function mapStateToProps(state) {
   };
 }
 
-Header.propTypes = WalletProps;
+Header.propTypes = HeaderProps;
 
 export default connect(mapStateToProps, null)(Header);

@@ -39,16 +39,29 @@
   color: #e83f5b;
 }
 
-.transactions-table table td button {
+.transactions-table table td div {
   position: absolute;
   right: 10%;
   top: 0;
+  height: 100%;
+  display: flex;
+}
+
+.transactions-table table td button {
   height: 100%;
   border: none;
   display: flex;
   align-items: center;
   background: none;
   color: red;
+}
+
+.transactions-table table td button.edit-btn {
+  color: rgb(255, 139, 62);
+}
+
+.transactions-table table td button + button {
+  margin-left: 5px;
 }
 
 .transactions-table table td button svg {

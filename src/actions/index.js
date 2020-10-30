@@ -59,3 +59,38 @@ export function removeTransaction(transactionID) {
     },
   };
 }
+
+export const LOAD = 'LOAD ';
+
+function loadAction(currencies) {
+  return {
+    type: LOAD,
+    payload: {
+      currencies,
+    },
+  };
+}
+
+export function loadCurrencies() {
+  return (
+    async (dispatch) => {
+      const exchangeRates = await fetchExchangeRates();
+
+      const currencies = Object.keys(exchangeRates);
+
+      dispatch(loadAction(currencies));
+    }
+  );
+}
+
+export const UPDATE = 'UPDATE ';
+
+export function updateTransaction(transactionData, id) {
+  return {
+    type: UPDATE,
+    payload: {
+      id,
+      transactionData,
+    },
+  };
+}
