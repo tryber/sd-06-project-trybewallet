@@ -14,6 +14,7 @@ class Login extends React.Component {
 
     this.state = {
       email: '',
+      isDisabled: true,
     };
   }
 
@@ -27,15 +28,16 @@ class Login extends React.Component {
   }
 
   verifyEmail(email) {
-    const validationButton = document.querySelector('.validation-button');
     const emailFormat = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
     if (emailFormat) {
-      validationButton.removeAttribute('disabled');
+      this.setState({
+        isDisabled: false,
+      });
     }
   }
 
   render() {
-    const { email } = this.state;
+    const { email, isDisabled } = this.state;
     const { emailAction } = this.props;
 
     return (
@@ -58,7 +60,7 @@ class Login extends React.Component {
             className="validation-button"
             type="submit"
             onClick={ () => emailAction(email) }
-            disabled
+            disabled={ isDisabled }
           >
             Entrar
           </button>
