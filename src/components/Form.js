@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 class Form extends React.Component {
   render() {
-    const { email } = this.props;
     return (
       <form>
         <label

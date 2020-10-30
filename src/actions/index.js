@@ -10,5 +10,5 @@ export const login = (email) => ({
 export const wallet = (currencies, expenses) => ({
   type: WALLET,
   currencies: [],
-  expenses: []
+  expenses: [],
 });
