@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import addEmailToRecord from '../actions';
-import store from '../store';
 import './Login.css';
 
 class Login extends React.Component {
@@ -40,7 +39,6 @@ class Login extends React.Component {
     } else {
       document.getElementById('login-button').setAttribute('disabled', 'true');
     }
-    console.log(store.addRecord);
   }
 
   render() {
