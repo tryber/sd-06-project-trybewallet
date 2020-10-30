@@ -23,7 +23,7 @@ const mapStateToProps = (StateDaStore) => ({
 });
 
 Wallet.propTypes = {
-  userReducer: PropTypes.string.isRequired,
+  userReducer: PropTypes.object.isRequired,
 };
 
 export default connect(
