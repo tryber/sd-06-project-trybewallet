@@ -23,14 +23,13 @@ class Login extends React.Component {
       [name]: value,
     }, () => {
       const { email, password } = this.state;
-      let emailExpRegular = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/gi;
+      const emailExpRegular = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/gi;
       const numberMinimoCaracterSenha = 6;
 
       if (password >= numberMinimoCaracterSenha && emailExpRegular.test(email)) {
         return this.setState({ disabled: false });
-      } else {
-        return this.setState({ disabled: true });
       }
+      return this.setState({ disabled: true });
     });
   }
 
