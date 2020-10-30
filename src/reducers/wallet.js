@@ -2,18 +2,13 @@
 import { ERROR, LOADING, SUCCESS, SAVE } from '../actions';
 
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
   isFetching: false,
   coinsOptions: {},
 };
 
-export default function walletReducer(state = INITIAL_STATE, action) {
+export default function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
   case LOADING:
     return { ...state, isFetching: true };
@@ -28,7 +23,7 @@ export default function walletReducer(state = INITIAL_STATE, action) {
   case SAVE:
     return {
       ...state,
-      wallet: { ...state.wallet, expenses: action.expenses },
+      expenses: [...state.expenses, action.expenses],
     };
   default:
     return state;

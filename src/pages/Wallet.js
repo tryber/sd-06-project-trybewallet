@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchAPI, saveExpense } from '../actions';
+import { response } from '../tests/mockData'; //  Provisório
 
 class Wallet extends React.Component {
   constructor() {
@@ -10,9 +11,9 @@ class Wallet extends React.Component {
 
     this.state = {
       totalValue: 0,
-      inputValue: '',
-      coin: 'USD',
-      payMethod: 'Dinheiro',
+      value: 0,
+      currency: 'USD',
+      method: 'Dinheiro',
       tag: 'Alimentação',
       description: '',
     };
@@ -30,29 +31,45 @@ class Wallet extends React.Component {
   }
 
   addExpense() {
-    const { search } = this.props;
+    const { saveState, coinsOptions, search, expenses } = this.props;
     search();
-    const { saveState, coinsOptions } = this.props;
-    const { totalValue, inputValue, coin } = this.state;
-    const newExpenses = [{ id: 0, ...this.state, exchangeRates: { ...coinsOptions } }];
+    const {
+      totalValue,
+      value,
+      currency,
+      method,
+      tag,
+      description,
+    } = this.state;
+
+    const newExpenses = {
+      id: expenses.length,
+      value,
+      currency,
+      method,
+      tag,
+      description,
+      exchangeRates: { ...coinsOptions },
+    };
+
     saveState(newExpenses);
 
-    const total = totalValue + (Number(inputValue) * Number(coinsOptions[coin].ask));
+    const total = totalValue + (Number(value) * Number(coinsOptions[currency].ask));
 
     this.setState({
       totalValue: total,
-      inputValue: '',
-      coin: 'USD',
-      payMethod: 'Dinheiro',
+      value: 0,
+      currency: 'USD',
+      method: 'Dinheiro',
       tag: 'Alimentação',
       description: '',
     });
   }
 
   render() {
-    const { email, isFetching, coinsOptions, search } = this.props;
-    const { inputValue, coin, payMethod, tag, description, totalValue } = this.state;
-    const optionsCoins = Object.keys(coinsOptions).filter((coins) => coins !== 'USDT');
+    const { email, isFetching } = this.props;
+    const { value, currency, method, tag, description, totalValue } = this.state;
+    const optionsCoins = Object.keys(response).filter((coins) => coins !== 'USDT');
 
     return (
       <div>
@@ -80,8 +97,8 @@ class Wallet extends React.Component {
           <label htmlFor="value">
             Valor:
             <input
-              name="inputValue"
-              value={ inputValue }
+              name="value"
+              value={ value }
               onChange={ (event) => this.handleInput(event) }
               data-testid="value-input"
               type="number"
@@ -89,14 +106,14 @@ class Wallet extends React.Component {
             />
           </label>
 
-          <label htmlFor="coin">
+          <label htmlFor="currency">
             Moeda:
             <select
-              name="coin"
-              value={ coin }
+              name="currency"
+              value={ currency }
               onChange={ (event) => this.handleInput(event) }
               data-testid="currency-input"
-              id="coin"
+              id="currency"
             >
               { optionsCoins.map((expense) => (
                 <option
@@ -113,8 +130,8 @@ class Wallet extends React.Component {
           <label htmlFor="pay-metod">
             Método de pagamento:
             <select
-              name="payMethod"
-              value={ payMethod }
+              name="method"
+              value={ method }
               onChange={ (event) => this.handleInput(event) }
               data-testid="method-input"
               id="pay-metod"
@@ -131,7 +148,6 @@ class Wallet extends React.Component {
               name="tag"
               value={ tag }
               onChange={ (event) => this.handleInput(event) }
-              onClick={ search }
               data-testid="tag-input"
               id="tag"
             >
@@ -166,10 +182,10 @@ class Wallet extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  email: state.userReducer.user.email,
-  isFetching: state.walletReducer.isFetching,
-  expenses: state.walletReducer.wallet.expenses,
-  coinsOptions: state.walletReducer.coinsOptions,
+  email: state.user.email,
+  isFetching: state.wallet.isFetching,
+  expenses: state.wallet.expenses,
+  coinsOptions: state.wallet.coinsOptions,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -180,7 +196,7 @@ const mapDispatchToProps = (dispatch) => ({
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  // expenses: PropTypes.arrayOf(Object).isRequired,
+  expenses: PropTypes.arrayOf(Object).isRequired,
   coinsOptions: PropTypes.objectOf(String).isRequired,
   search: PropTypes.func.isRequired,
   saveState: PropTypes.func.isRequired,

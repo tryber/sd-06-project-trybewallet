@@ -2,22 +2,16 @@
 import { UPDATE } from '../actions';
 
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  email: '',
 };
 
-function userReducer(state = INITIAL_STATE, action) {
+function user(state = INITIAL_STATE, action) {
   switch (action.type) {
   case UPDATE:
-    return { ...state, user: { ...state.user, email: action.email } };
+    return { ...state, email: action.email };
   default:
     return state;
   }
 }
 
-export default userReducer;
+export default user;
