@@ -55,13 +55,13 @@ class Wallet extends React.Component {
           <section className="header">
             <img src={ trybeLogo } alt="Trybe logo" className="trybe-logo" />
             <section className="header-right">
-              <div>
+              <div className="header-inner-wrapper">
                 Câmbio:
                 <span data-testid="header-currency-field">
                   {' BRL' }
                 </span>
               </div>
-              <div>
+              <div className="header-inner-wrapper total-expense-wrapper">
                 Total:
                 <span className="total-expenses" data-testid="total-field">
                   { this.sumExpenses() }

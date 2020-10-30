@@ -43,3 +43,24 @@ header h2 {
   margin: 0;
   padding: 0;
 }
+
+.header-inner-wrapper {
+  background-color: rgb(32, 37, 34);
+  border-radius: 8px;
+  font-size: 1.2em;
+  padding: 6px 15px;
+}
+
+.total-expense-wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  min-width: 170px;
+}
+
+.total-expenses {
+  color: rgb(230, 247, 220);
+  font-style: italic;
+  font-weight: 600;
+  margin: 0 7px;
+}
