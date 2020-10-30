@@ -30,6 +30,7 @@ class Wallet extends React.Component {
     const { expenses, description, currency, paymentMethod, tag, total } = this.state;
 
     const expense = { expenses, description, currency, paymentMethod, tag };
+    //Metodo passado no mapDispatchToProps
     dispatch2(this.state);
     this.setState({
       expenses: 0,
