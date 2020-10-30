@@ -6,12 +6,12 @@ const INITIAL_STATE = {
 
 function user(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case 'NEW_USER':
-      return { ...state, email: action.value };
-    case 'REMOVE_USER':
-      return { ...state, ...(state.email.filter() - action.value) };
-    default:
-      return state;
+  case 'NEW_USER':
+    return { ...state, email: action.value };
+  case 'REMOVE_USER':
+    return { ...state, ...(state.email.filter() - action.value) };
+  default:
+    return state;
   }
 }
 

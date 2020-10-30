@@ -14,8 +14,8 @@ export const expenses = (payload) => ({
 });
 
 export const fetchCurrencies = (cotacaoMoeda) => ({
-	type: 'FETCH_CURRENCIES_SUCCESS',
-	cotacaoMoeda
+  type: 'FETCH_CURRENCIES_SUCCESS',
+  cotacaoMoeda,
 });
 
 export default function apiMoney() {
@@ -24,5 +24,5 @@ export default function apiMoney() {
     const cotacaoMoeda = await moneyResponse.json();
 
     dispatch(fetchCurrencies(cotacaoMoeda));
-  } 
+  };
 }

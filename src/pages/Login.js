@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types'
-import { newEmail } from '../actions';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { newEmail } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -13,20 +13,20 @@ class Login extends React.Component {
       disabled: true,
     };
 
-  this.handleChange = this.handleChange.bind(this);
-  this.goingToWallet = this.goingToWallet.bind(this);
-}
+    this.handleChange = this.handleChange.bind(this);
+    this.goingToWallet = this.goingToWallet.bind(this);
+  }
 
   handleChange({ target }) {
     this.setState({ [target.name]: target.value }, () => {
       const { password, email } = this.state;
       const passLength = 6;
       const emailValidation = /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/g.test(email);
-        if (password.length >= passLength && emailValidation) {
-          return this.setState({ disabled: false });
-        } else {
-          this.setState({ disabled: true });
-        }
+      if (password.length >= passLength && emailValidation) {
+        return this.setState({ disabled: false });
+      } else {
+        this.setState({ disabled: true });
+      }
     });
   }
 
@@ -43,9 +43,9 @@ class Login extends React.Component {
     return (
       <div>
         <form onSubmit={ this.goingToWallet }>
-          <label>
-            E-mail:
-          <input 
+          <label htmlFor="email">E-mail:
+          <input
+            id="email"
             type="email"
             name="email"
             value={email}
@@ -54,8 +54,7 @@ class Login extends React.Component {
             required
           />
           </label>
-          <label>
-            Password
+          <label>Password
           <input type="password"
             value={password}
             name="password"
