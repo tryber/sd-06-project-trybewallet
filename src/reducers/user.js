@@ -2,9 +2,7 @@
 import { FILL_EMAIL } from '../actions/index';
 
 const initialState = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
 export default function (state = initialState, action) {

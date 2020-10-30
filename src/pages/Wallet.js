@@ -1,11 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import deletar from '../img/deletar.png';
 
 class Wallet extends React.Component {
   render() {
+    const { _Email } = this.props;
+    console.log(this.props);
     return (
       <div>
-        <div data-testid="email-field" />
+        <div data-testid="email-field">{ _Email }</div>
         <div data-testid="total-field">
           0
         </div>
@@ -117,4 +121,12 @@ class Wallet extends React.Component {
   }
 }
 
-export default Wallet;
+const mapStateToProps = (state) => ({
+  _Email: state.user.email,
+});
+
+Wallet.propTypes = {
+  _Email: PropTypes.string.isRequired,
+};
+
+export default connect(mapStateToProps)(Wallet);
