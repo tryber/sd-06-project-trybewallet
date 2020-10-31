@@ -1,22 +1,22 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 
-const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
-  isFetching: false,
-};
+// const INITIAL_STATE = {
+//   user: {
+//     email: '',
+//   },
+//   wallet: {
+//     currencies: [],
+//     expenses: [],
+//   },
+//   isFetching: false,
+// };
 
-const store = createStore(
-  rootReducer,
-  INITIAL_STATE,
-  // usado para o uso do REDUX DEV TOOLS
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
+const store = createStore(rootReducer,
+  compose(
+    applyMiddleware(thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  ));
 
 export default store;

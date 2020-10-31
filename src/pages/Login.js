@@ -78,6 +78,7 @@ class Login extends React.Component {
     );
   }
 }
+
 const mapDispatchToProps = (dispatch) => ({
   dispatchEmail: (email) => dispatch(loginUsers(email)),
 });
