@@ -14,7 +14,7 @@ class FormularioDespesa extends React.Component {
     //   exchangeRates: {},
     // };
 
-    this.addExpense = this.addExpense.bind(this);
+    // this.addExpense = this.addExpense.bind(this);
   }
 
   currencyOptions() {
