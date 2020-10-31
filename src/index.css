@@ -55,6 +55,22 @@ code {
   cursor: default;
 }
 
-Link {
-  border: 1px solid black;
+header {
+  /* border: 1px solid; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+header img {
+  width: 150px;
+}
+
+header div {
+  margin: 0 10px;
+}
+
+header div span {
+  margin-left: 10px;
 }

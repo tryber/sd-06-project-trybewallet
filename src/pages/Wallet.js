@@ -1,9 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-class Wallet extends React.Component {
-  render() {
-    return <div>TrybeWallet</div>;
-  }
+import '../index.css'
+import trybeLogo from '../img/trybe-logo.png';
+
+function Wallet({email}) {
+  return (
+  <header>
+    <img src={trybeLogo} />
+    <div>
+      <span data-testid="email-field">E-mail: {email}</span>
+      <span data-testid="total-field">Despesa Total: R$ 0,00</span> 
+      <span data-testid="header-currency-field">BRL</span>
+    </div>
+  </header>
+  )
 }
 
-export default Wallet;
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+})
+
+export default connect(mapStateToProps)(Wallet);
