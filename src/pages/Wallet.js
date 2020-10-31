@@ -4,25 +4,24 @@ import propTypes from 'prop-types';
 import { fetchAction } from '../actions';
 import fetchApi from '../services/mockAPI';
 
-
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       currencies: undefined,
-    }
+    };
+  }
+
+  componentDidMount() {
+    this.handleFetch();
   }
 
   async handleFetch() {
     const result = await fetchApi();
     this.setState({
-      currencies: Object.entries(result)
+      currencies: Object.entries(result),
     })
-  }
-
-  componentDidMount() {
-    this.handleFetch();
   }
 
   render() {
@@ -52,8 +51,8 @@ class Wallet extends React.Component {
             <label>
               <select data-testid="currency-input">
               {currencies !== undefined ? currencies.map((currency) => (
-                <option key={currency[0]} >{currency[0]}</option>
-                )) : <p>não rolou</p>}
+                <option key={ currency[0] }>{currency[0]}</option>
+              )) : <p>não rolou</p>}
               </select>
             </label>
           </fieldset>
@@ -67,9 +66,9 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   fetchCurrency: (data) => dispatch(fetchAction(data)),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrency: (data) => dispatch(fetchAction(data)),
+});
 
 Wallet.propTypes = {
   email: propTypes.string.isRequired,
