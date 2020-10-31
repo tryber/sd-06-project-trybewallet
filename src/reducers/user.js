@@ -1,22 +1,18 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
-function addEmailRecord(state = INITIAL_STATE, action) {
+function user(state = INITIAL_STATE, action) {
   switch (action.type) {
   case 'addEmail':
     return {
       ...state,
-      user: {
-        email: action.payload.email,
-      },
+      email: action.payload.email,
     };
   default:
     return state;
   }
 }
 
-export default addEmailRecord;
+export default user;

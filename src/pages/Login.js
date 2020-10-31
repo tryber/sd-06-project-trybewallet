@@ -9,6 +9,7 @@ class Login extends React.Component {
     super();
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onEmailchange = this.onEmailchange.bind(this);
+    this.disableButton = this.disableButton.bind(this);
     this.state = {
       email: '',
       password: '',
@@ -16,35 +17,23 @@ class Login extends React.Component {
   }
 
   onEmailchange({ value }) {
-    const simpleEmailRegex = /.+@.+\.com/;
-    const validEmail = simpleEmailRegex.test(value);
-    const inputPassword = document.getElementById('password').value;
-    if (inputPassword !== null) {
-      const passwordMinimunLength = 6;
-      const validPassword = inputPassword.length >= passwordMinimunLength;
-      this.enableButton(validEmail, validPassword);
-    }
     this.setState({ email: value });
   }
 
   onPasswordChange({ value }) {
-    const passwordMinimunLength = 6;
-    const validPassword = value.length >= passwordMinimunLength;
-    const inputEmail = document.getElementById('email').value;
-    if (inputEmail !== null) {
-      const simpleEmailRegex = /.+@.+\..+/;
-      const validEmail = simpleEmailRegex.test(inputEmail);
-      this.enableButton(validEmail, validPassword);
-    }
     this.setState({ password: value });
   }
 
-  enableButton(validEmail, validPassword) {
-    if (validEmail && validPassword) {
-      document.getElementById('login-button').removeAttribute('disabled');
-    } else {
-      document.getElementById('login-button').setAttribute('disabled', 'true');
+  disableButton() {
+    const { email, password } = this.state;
+    const simpleEmailRegex = /.+@.+\.com/;
+    const validEmail = simpleEmailRegex.test(email);
+    const passwordMinimunLength = 6;
+    const validPassword = password.length >= passwordMinimunLength;
+    if (validPassword && validEmail) {
+      return false;
     }
+    return true;
   }
 
   render() {
@@ -73,7 +62,7 @@ class Login extends React.Component {
             <button
               type="button"
               id="login-button"
-              disabled
+              disabled={ this.disableButton() }
             >
               Entrar
             </button>

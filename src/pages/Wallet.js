@@ -23,7 +23,7 @@ class Wallet extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    email: state.addEmailRecord.user.email,
+    email: state.user.email,
   };
 }
 
