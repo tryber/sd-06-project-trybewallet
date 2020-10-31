@@ -1,9 +1,18 @@
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-class App extends React.Component {
-  render() {
-    return <div>Hello, TrybeWallet!</div>;
-  }
+import Wallet from './pages/Wallet';
+import Login from './pages/Login';
+
+function App() {
+  return (
+    <div className="App">
+      <Switch>
+        <Route exact path="/carteira" component={ Wallet } />
+        <Route exact path="/" component={ Login } />
+      </Switch>
+    </div>
+  );
 }
 
 export default App;
