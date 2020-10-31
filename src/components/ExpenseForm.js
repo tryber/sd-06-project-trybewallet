@@ -6,11 +6,11 @@ class ExpenseForm extends Component {
       <div>
         <form>
           <label htmlFor="value">
-            Valor
+            Valor:
             <input data-testid="value-input" type="number" />
           </label>
           <label htmlFor="coin">
-            Moeda
+            Moeda:
             <select data-testid="currency-input">
               <option>BRL</option>
             </select>

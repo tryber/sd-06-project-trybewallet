@@ -10,7 +10,8 @@ class TableExpenses extends Component {
       'Moeda',
       'Câmbio utilizado',
       'Valor convertido',
-      'Moeda de conversão'];
+      'Moeda de conversão',
+      'Editar/Excluir'];
 
     return (
       <div>
