@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import TrybeLogo from '../img/trybe-logo.png'
+import Despesas from '../components/Despesas'
 
 class Wallet extends React.Component {
   constructor() {
@@ -18,7 +20,7 @@ class Wallet extends React.Component {
       <div className="wallet-container">
         <header>
           <div className="wallet-image-div">
-            <p>Imagem da Trybe</p>
+            <img src={TrybeLogo} width="150" />
           </div>
           <div className="wallet-info-div">
             <p data-testid="email-field">
@@ -32,6 +34,7 @@ class Wallet extends React.Component {
             </p>
           </div>
         </header>
+        <Despesas />
       </div>
     );
   }

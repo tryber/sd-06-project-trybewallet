@@ -1,3 +1,13 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+header {
+  background-color: rgb(235, 235, 235);
+  height: 100px;
+}
+
 .login-container {
   display: flex;
   justify-content: center;
@@ -11,12 +21,12 @@
   flex-direction: column;
 }
 
-.login-div input{
+.login-div input {
   height: 23.5px;
   margin-bottom: 15px;
 }
 
-.login-div button{
+.login-div button {
   height: 26.5px;
 }
 
@@ -42,3 +52,39 @@
   width: 30%;
   margin: 20px 50px 0 0;
 }
+
+.despesas-container {
+  background-color: rgb(46, 44, 44);
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  height: 90px;
+  align-items: center;
+}
+
+.despesas-container input {
+  height: 25px;
+  margin: 5px;
+  border-radius: 4px;
+  border: 2px solid rgb(185, 185, 185);
+}
+
+.despesas-container select {
+  height: 30px;
+  margin: 5px;
+  border-radius: 4px;
+  border: 2px solid rgb(185, 185, 185);
+  background-color: white;
+}
+
+.despesas-container button {
+  height: 30px;
+  margin: 5px;
+  border-radius: 4px;
+  background: linear-gradient(rgb(31, 107, 207), rgb(50, 83, 185));
+  color: white;
+  width: 150px;
+  height: 35px;
+  font: 600 13.5px Arial , Helvetica , sans-serif;
+}
+
