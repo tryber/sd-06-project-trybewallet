@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 };
 
 export default function (state = INITIAL_STATE, action) {
-switch (action.type) {
+  switch (action.type) {
   case EMAIL:
     return { ...state, email: action };
   case PASSWORD:
