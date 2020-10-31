@@ -15,10 +15,20 @@ export const currencyAction = (currency) => ({
   currency,
 });
 
-export const expenses = (expense) => ({
+export const addExpense = (expense) => ({
   type: EXPENSES,
   expense,
 });
+
+export const newCurrency = (expense) => async (dispatch, getState) => {
+  const { wallet: { expenses } } = getState();
+  const firstId = 0;
+  const nextId = expenses.length ? expenses[expenses.length - 1].id + 1 : firstId;
+  const apiRequest = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const exchangeRates = await apiRequest.json();
+  const newExpanse = { ...expense, exchangeRates, id: nextId };
+  dispatch(addExpense(newExpanse));
+};
 
 export function fetchCurrency() {
   return (dispatch) => {
