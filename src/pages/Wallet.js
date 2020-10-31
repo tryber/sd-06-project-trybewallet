@@ -8,7 +8,7 @@ class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      totalValue: '',
+      value: '',
       description: '',
       currency: '',
       method: '',
@@ -34,8 +34,11 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { totalValue, ...expense } = this.state;
+    const { value, ...expense } = this.state;
     const { email, currencies, expenses } = this.props;
+    const totalValue = expenses.length ? Math.round(expenses
+      .reduce((acc, cur) => acc + cur.value
+       * cur.exchangeRates[cur.currency].ask, 0) * 100) / 100 : 0;
     return (
       <main>
         <header>
@@ -44,30 +47,26 @@ class Wallet extends React.Component {
             { email }
           </span>
           <span data-testid="total-field">
-            Despesa: R$
-            {expenses.length ? expenses.reduce((acc, cur) => {
-              const sum = Number(totalValue);
-              cur = sum;
-              return acc + cur;
-            }, 0) : <span>0</span>}
+            { totalValue }
           </span>
           <span data-testid="header-currency-field">BRL</span>
         </header>
         <form>
-          <label htmlFor="totalValue">
+          <label htmlFor="value">
             Valor:
             <input
               onChange={ this.handleChange }
               type="text"
-              name="totalValue"
-              id="totalValue"
+              name="value"
+              id="value"
               data-testid="value-input"
-              value={ totalValue }
+              value={ value }
             />
           </label>
           <label htmlFor="description">
             Descrição:
             <input
+              onChange={ this.handleChange }
               type="text"
               name="description"
               id="description"
@@ -82,6 +81,7 @@ class Wallet extends React.Component {
               id="currency"
               data-testid="currency-input"
               value={ expense.currency }
+              onChange={ this.handleChange }
             >
               {currencies.map((coin) => (
                 <option key={ coin } data-testid={ `${coin}` }>
@@ -97,6 +97,7 @@ class Wallet extends React.Component {
               id="method"
               data-testid="method-input"
               value={ expense.method }
+              onChange={ this.handleChange }
             >
               <option value="Dinheiro">Dinheiro</option>
               <option value="Cartão de crédito">Cartão de crédito</option>
@@ -110,6 +111,7 @@ class Wallet extends React.Component {
               id="tag"
               name="tag"
               value={ expense.tag }
+              onChange={ this.handleChange }
             >
               <option value="Alimentação">Alimentação</option>
               <option value="Lazer">Lazer</option>
