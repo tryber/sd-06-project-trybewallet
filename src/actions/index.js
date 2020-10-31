@@ -1,1 +1,6 @@
-// Coloque aqui suas actions
+export const LOGIN = 'LOGIN';
+
+export default loginAction = (email) => ({
+  type: LOGIN,
+  email,
+});
