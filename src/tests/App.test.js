@@ -113,7 +113,7 @@ describe('2 - [PÁGINA DA CARTEIRA] Crie uma página para sua carteira com as se
   });
 });
 
-describe.only('3 - [PÁGINA DA CARTEIRA] Crie um header para a página de carteira contendo as seguintes características:', () => {
+describe('3 - [PÁGINA DA CARTEIRA] Crie um header para a página de carteira contendo as seguintes características:', () => {
   const initial = initialStateHeader;
 
   test('Um elemento que exiba o email do usuário que fez login.', () => {
@@ -141,7 +141,7 @@ describe.only('3 - [PÁGINA DA CARTEIRA] Crie um header para a página de cartei
   });
 });
 
-describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
+describe.only('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
   test('Um campo para adicionar o valor da despesa', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const valueInput = await screen.findByTestId('value-input');
@@ -225,7 +225,7 @@ describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma
     expect(healthOption).toBeInTheDocument();
   });
 
-  test('Um botão com o texto \'Adicionar despesa\' que salva as informações da despesa no estado global e atualiza a soma de despesas no header', async () => {
+  test.only('Um botão com o texto \'Adicionar despesa\' que salva as informações da despesa no estado global e atualiza a soma de despesas no header', async () => {
     const { store } = renderWithRouterAndStore(<Wallet />, '/carteira');
     const addButton = await screen.findByText(/Adicionar despesa/i);
     const valueInput = await screen.findByTestId('value-input');
