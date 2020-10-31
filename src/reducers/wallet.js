@@ -1,5 +1,5 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { SAVE_CURRENCIES, SAVE_EXPENSES, DELETE_EXPENSE } from '../actions';
+import { SAVE_CURRENCIES, SAVE_EXPENSES } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -18,7 +18,7 @@ export default function reducer(state = INITIAL_STATE, action) {
       ...state,
       expenses: [
         ...state.expenses,
-        action.currencies,
+        action.expenses,
       ],
     };
   default:

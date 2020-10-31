@@ -1,8 +1,8 @@
-import { response } from '../tests/mockData';
+// import { response } from '../tests/mockData';
 
-window.fetch = async () => ({ json: () => Promise.resolve(response) });
+// window.fetch = async () => ({ json: () => Promise.resolve(response) });
 
- function fetchApi() {
+function fetchApi() {
   const endpoint = 'https://economia.awesomeapi.com.br/json/all';
   return fetch(endpoint)
     .then((response) => response.json());

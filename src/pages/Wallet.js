@@ -1,23 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propType from 'prop-types';
-import { fetchSavedCurrencies, saveExpensesAction, saveExpenses } from '../actions';
-import Table from '../components/Table';
+import { fetchSavedCurrencies, addElement } from '../actions';
+// import Table from '../components/Table';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      total: 0,
-      expenses: 0,
+      value: '',
       description: '',
       currency: '',
-      paymentMethod: '',
+      method: '',
       tag: '',
     };
-    this.handleClickSubmit = this.handleClickSubmit.bind(this);
+    this.handleAddNewExpense = this.handleAddNewExpense.bind(this);
     this.handleInput = this.handleInput.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
   }
 
   componentDidMount() {
@@ -25,44 +23,26 @@ class Wallet extends React.Component {
     dispatchFetchCurrencies();
   }
 
-  handleClickSubmit() {
-    const { dispatchSaveExpenses, dispatch2 } = this.props;
-    const { expenses, description, currency, paymentMethod, tag, total } = this.state;
-    const expense = parseInt(expenses);
-    // console.log(typeof(total));
-    console.log(typeof(expense));
-    //Metodo passado no mapDispatchToProps
-    dispatch2(this.state);
-    this.setState({
-      total: total + expense,
-      expenses: 0,
-      description: '',
-      currency: '',
-      paymentMethod: '',
-      tag: '',
-    });
+  handleAddNewExpense(e) {
+    e.preventDefault();
+    const { dispatchSaveExpenses } = this.props;
+    dispatchSaveExpenses(this.state);
   }
 
-  handleInput(e) {
-    const { id, value } = e.target;
+  handleInput({ target }) {
     this.setState({
-      [id]: value,
-    });
-  }
-
-  handleSelect(e) {
-    const { id, value } = e.target;
-    this.setState({
-      [id]: value,
+      [target.name]: target.value,
     });
   }
 
   render() {
     const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-    const { email, currencies } = this.props;
-    const { expenses, description, total } = this.state;
-    // console.log(expenses);
+    const { email, currencies, expenses } = this.props;
+    const { value, ...expense } = this.state;
+    const total = expenses.length ? Math.round(expenses
+      .reduce((acc, cur) => acc + cur.value
+       * cur.exchangeRates[cur.currency].ask, 0) * 100) / 100 : 0;
     return (
       <div className="containerWallet">
         <header className="containerHeader">
@@ -78,12 +58,13 @@ class Wallet extends React.Component {
         </header>
         <main className="containerMain">
           <input
-            type="number"
+            type="text"
             data-testid="value-input"
             required
             placeholder="Type the value of the expense"
-            value={ expenses }
-            id="expenses"
+            value={ value }
+            name="value"
+            id="value"
             onChange={ this.handleInput }
           />
           <input
@@ -91,8 +72,9 @@ class Wallet extends React.Component {
             data-testid="description-input"
             required
             placeholder="Type the description of the expense"
-            value={ description }
+            value={ expense.description }
             id="description"
+            name="description"
             onChange={ this.handleInput }
           />
           <select
@@ -100,7 +82,9 @@ class Wallet extends React.Component {
             required
             placeholder="Currency"
             id="currency"
-            onChange={ this.handleSelect }
+            name="currency"
+            value={ expense.currency }
+            onChange={ this.handleInput }
           >
             <option>Select a currency </option>
             {currencies.map((currency) => (
@@ -117,8 +101,10 @@ class Wallet extends React.Component {
             data-testid="method-input"
             required
             placeholder="Payment type"
-            id="paymentMethod"
-            onChange={ this.handleSelect }
+            id="method"
+            name="method"
+            value={ expense.method }
+            onChange={ this.handleInput }
           >
             <option>Select a payment type</option>
             {paymentMethods.map((method) => (
@@ -136,7 +122,9 @@ class Wallet extends React.Component {
             required
             placeholder="Category"
             id="tag"
-            onChange={ this.handleSelect }
+            name="tag"
+            value={ expense.tag }
+            onChange={ this.handleInput }
           >
             <option>Select a tag</option>
             {tags.map((tag) => (
@@ -150,13 +138,13 @@ class Wallet extends React.Component {
             ))}
           </select>
           <button
-            type="button"
-            onClick={ this.handleClickSubmit }
+            type="submit"
+            onClick={ this.handleAddNewExpense }
           >
             Adicionar despesa
           </button>
         </main>
-        <Table />
+        {/* <Table /> */}
       </div>
     );
   }
@@ -170,12 +158,15 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchFetchCurrencies: () => dispatch(fetchSavedCurrencies()),
-  // dispatchSaveExpenses: (data) => dispatch(saveExpensesAction(data)),
-  dispatch2: (e) => dispatch(saveExpenses(e)),
+  dispatchSaveExpenses: (expense) => dispatch(addElement(expense)),
 });
 
 Wallet.propTypes = {
   email: propType.string.isRequired,
+  dispatchFetchCurrencies: propType.func.isRequired,
+  dispatchSaveExpenses: propType.func.isRequired,
+  currencies: propType.arrayOf(Object).isRequired,
+  expenses: propType.arrayOf(Object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
