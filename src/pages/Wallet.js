@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import '../index.css';
 import trybeLogo from '../img/trybe-logo.png';
@@ -7,16 +8,20 @@ import trybeLogo from '../img/trybe-logo.png';
 function Wallet({ email }) {
   return (
     <header>
-      <img src={ trybeLogo } alt='Trybe logo' />
+      <img src={ trybeLogo } alt="Trybe logo" />
       <div>
-        <span data-testid="email-field">E-mail: 
-          {email}
+        <span data-testid="email-field">
+          E-mail: {email}
         </span>
         <span data-testid="total-field">Despesa Total: R$ 0,00</span>
         <span data-testid="header-currency-field">BRL</span>
       </div>
     </header>
   );
+}
+
+Wallet.propTypes = {
+  email:  PropTypes.string.isRequired;
 }
 
 const mapStateToProps = (state) => ({
