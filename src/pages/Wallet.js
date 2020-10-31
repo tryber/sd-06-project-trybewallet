@@ -4,21 +4,13 @@ import { connect } from 'react-redux';
 import { thunkCurrencies } from '../actions';
 
 class Wallet extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      renderCurrency: false,
-      expenses: [],
-    }
-  }
-
   componentDidMount() {
     const { thunkCurrency } = this.props;
     thunkCurrency();
   }
 
   render() {
-    const { userEmail, currenciesAPI} = this.props;
+    const { userEmail, currenciesAPI } = this.props;
     return (
       <div>
         <header>
@@ -104,13 +96,15 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  thunkCurrency: () => dispatch(thunkCurrencies())
+  thunkCurrency: () => dispatch(thunkCurrencies()),
 });
 
 Wallet.propTypes = {
   userEmail: PropTypes.shape({
     email: PropTypes.string.isRequired,
   }).isRequired,
+  currenciesAPI: PropTypes.arrayOf(Object).isRequired,
+  thunkCurrencies: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
