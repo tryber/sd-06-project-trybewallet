@@ -5,6 +5,7 @@ import '../index.css'
 import trybeLogo from '../img/trybe-logo.png';
 
 function Wallet({email}) {
+  // Vai mandar?
   return (
   <header>
     <img src={trybeLogo} />
