@@ -3,12 +3,18 @@ import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Wallet from './pages/Wallet';
 
+import './App.css';
+import './styles/Login.css';
+import './styles/Wallet.css';
+
 function App() {
   return (
-    <Switch>
-      <Route exact path="/" component={ Login } />
-      <Route exact path="/carteira" component={ Wallet } />
-    </Switch>
+    <main className="App">
+      <Switch>
+        <Route exact path="/" component={ Login } />
+        <Route exact path="/carteira" component={ Wallet } />
+      </Switch>
+    </main>
   );
 }
 

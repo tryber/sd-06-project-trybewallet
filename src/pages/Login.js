@@ -38,31 +38,41 @@ class Login extends React.Component {
     const { history } = this.props;
     const { disabled } = this.state;
     return (
-      <fieldset>
-        <Input
-          testId="email-input"
-          name="email"
-          id="email-login"
-          type="email"
-          onChange={ (e) => this.setState({ email: e.target.value }) }
-        />
-        <Input
-          testId="password-input"
-          name="password"
-          id="pass-login"
-          type="password"
-          max="20"
-          min="6"
-          onChange={ (e) => this.setState({ pass: e.target.value }) }
-        />
-        <button
-          onClick={ () => history.push('/carteira') }
-          disabled={ !disabled }
-          type="button"
-        >
-          Entrar
-        </button>
-      </fieldset>
+      <section className="login-container">
+        <h3>WALLET</h3>
+        <fieldset className="field-container">
+          <div className="image-login" />
+          <div className="field-inputs">
+            <Input
+              id="email"
+              testId="email-input"
+              name="email"
+              className="email-login"
+              type="email"
+              place="E-mail"
+              onChange={ (e) => this.setState({ email: e.target.value }) }
+            />
+            <Input
+              testId="password-input"
+              name="password"
+              className="pass-login"
+              type="password"
+              max="20"
+              min="6"
+              place="Password"
+              onChange={ (e) => this.setState({ pass: e.target.value }) }
+            />
+          </div>
+          <button
+            className="btn-login"
+            onClick={ () => history.push('/carteira') }
+            disabled={ !disabled }
+            type="button"
+          >
+            Entrar
+          </button>
+        </fieldset>
+      </section>
     );
   }
 }
