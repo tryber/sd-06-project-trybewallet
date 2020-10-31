@@ -55,6 +55,24 @@ class Wallet extends React.Component {
                 )) : <p>não rolou</p>}
               </select>
             </label>
+            <label htmlFor="pagamento">
+              Pagamento
+              <select name="pagamento" data-testid="method-input">
+                <option>Dinheiro</option>
+                <option>Cartão de crédito</option>
+                <option>Cartão de débito</option>
+              </select>
+            </label>
+            <label htmlFor="categoria">
+              Categoria
+              <select name="categoria" data-testid="tag-input" >
+                <option>Alimentação</option>
+                <option>Lazer</option>
+                <option>Trabalho</option>
+                <option>Transporte</option>
+                <option>Saúde</option>
+              </select>
+            </label>
           </fieldset>
         </form>
       </div>
