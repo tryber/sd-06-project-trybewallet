@@ -56,12 +56,13 @@ function Login({ getEmail, getPassword }) {
       />
       <br />
 
-        <button
+      <button
         onClick={ () => history.push('/carteira') }
-        disabled={!validation}
-        type="button">
-          Entrar
-        </button>
+        disabled={ !validation }
+        type="button"
+      >
+        Entrar
+      </button>
 
       <br />
       { (localState.emailValid) ? <span> </span>
