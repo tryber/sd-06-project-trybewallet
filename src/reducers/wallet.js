@@ -1,4 +1,4 @@
-export const WALLET_INPUT = 'WALLET_INPUT';
+import { IS_SUCCESS, ADD_EXPENSE } from '../actions';
 
 const initialState = {
   currencies: [],
@@ -7,8 +7,14 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-  case WALLET_INPUT:
-    return { ...state };
+  case IS_SUCCESS:
+    return { ...state, currencies: [...Object.keys(action.currencies)] };
+  case ADD_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses, { ...action.expenseArray,
+        exhangeRates: { cu: 'cu' } }],
+    };
   default:
     return state;
   }

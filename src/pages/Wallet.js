@@ -1,9 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
 import ExpensesForm from '../components/ExpensesForm';
 import ExpensesTable from '../components/ExpensesTable';
+import { fetchData } from '../actions';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { fetchCurrency } = this.props;
+    fetchCurrency();
+  }
+
   render() {
     return (
       <div>
@@ -15,4 +22,8 @@ class Wallet extends React.Component {
   }
 }
 
-export default Wallet;
+const mapDispatachToProps = (dispatch) => ({
+  fetchCurrency: () => dispatch(fetchData()),
+});
+
+export default connect(null, mapDispatachToProps)(Wallet);

@@ -10,7 +10,7 @@ export default function (state = initialState, action) {
   case LOGIN_INPUT:
     return { ...state,
       email: action.email,
-      password: action.password 
+      password: action.password,
     };
   default:
     return state;
