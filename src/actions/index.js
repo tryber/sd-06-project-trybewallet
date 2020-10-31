@@ -1,13 +1,17 @@
-export const ADD_USER_EMAIL = 'ADD_USER_EMAIL';
+// export const ADD_USER_EMAIL = 'ADD_USER_EMAIL';
+
 export const ADD_CURRENCIES = 'ADD_CURRENCIES';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 
-const addUserEmail = (email) => ({
-  type: ADD_USER_EMAIL,
-  payload: {
-    email,
-  },
-});
+export { ADD_USER_EMAIL, loginUser } from './ADD_USER_EMAIL';
+export { REMOVE_EXPENSE, removeExpense } from './REMOVE_EXPENSE';
+
+// const addUserEmail = (email) => ({
+//   type: ADD_USER_EMAIL,
+//   payload: {
+//     email,
+//   },
+// });
 
 const addCurrencies = (currencies) => ({
   type: ADD_CURRENCIES,
@@ -23,11 +27,11 @@ const addExpense = (expense) => ({
   },
 });
 
-export function loginUser(email) {
-  return (dispatch) => {
-    dispatch(addUserEmail(email));
-  };
-}
+// export function loginUser(email) {
+//   return (dispatch) => {
+//     dispatch(addUserEmail(email));
+//   };
+// }
 
 export function storeCurrencies(currencies) {
   return (dispatch) => {

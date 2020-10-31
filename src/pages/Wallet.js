@@ -8,6 +8,7 @@ import fetchApi from '../services/fetchApi';
 
 import '../css/Wallet.css';
 import trybeLogo from '../imgs/trybe-logo.png';
+import ExpenseTable from '../components/ExpenseTable';
 
 window.fetch = async () => ({ json: () => Promise.resolve(mockResponse) });
 
@@ -48,12 +49,15 @@ class Wallet extends React.Component {
 
   render() {
     const { email } = this.state;
+    const { expenses } = this.props;
 
     return (
       <div>
         <header>
           <section className="header">
-            <img src={ trybeLogo } alt="Trybe logo" className="trybe-logo" />
+            <div className="trybe-logo">
+              <img src={ trybeLogo } alt="Trybe logo" />
+            </div>
             <section className="header-right">
               <div className="header-inner-wrapper">
                 Câmbio:
@@ -67,13 +71,16 @@ class Wallet extends React.Component {
                   { this.sumExpenses() }
                 </span>
               </div>
-              <h2 data-testid="email-field">{ email }</h2>
+              <h2 data-testid="email-field" className="email-field">{ email }</h2>
             </section>
           </section>
           <section className="header-form">
             <AddExpense />
           </section>
         </header>
+        { (expenses.length > 0)
+          ? <ExpenseTable />
+          : <p>Você não tem gastos</p> }
       </div>
     );
   }

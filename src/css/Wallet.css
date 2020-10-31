@@ -1,21 +1,22 @@
 .header {
+  align-items: center;
   background-color: rgb(21, 26, 23);
   color: var(--main-bkgrdcolor);
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  align-items: center;
 }
 
 .header-right {
-  align-items: stretch;
+  align-items: center;
   display: flex;
   flex-flow: row nowrap;
-  flex-grow: 1;
-  justify-content: space-around;
+  justify-content: space-between;
+  width: 70%;
 }
 
 header h2 {
+  align-self: stretch;
   color: var(--main-bkgrdcolor);
   font-family: serif;
   font-size: 1em;
@@ -26,11 +27,16 @@ header h2 {
 }
 
 .trybe-logo {
+  align-self: flex-start;
   background-color: var(--main-bkgrdcolor);
   border-radius: 0 10px 0 10px;
-  height: 60px;
+  display: inline-block;
   padding: 0 34px 0 18px;
   margin: 0 10px;
+}
+
+.trybe-logo img {
+  height: 60px;
 }
 
 .header-form {

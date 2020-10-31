@@ -1,0 +1,6 @@
+.expense-table {
+  background-color: var(--main-bkgrdcolor);
+  border: none;
+  border-radius: 0 8px 0 0;
+  padding: 0 10px 0 0;
+}
