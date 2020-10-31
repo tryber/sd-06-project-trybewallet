@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
   case 'SAVE_CURRENCY':
-    return { 
+    return {
       ...state,
       currencies: Object.keys(action.payload).filter((currency) => currency !== 'USDT'),
     };
