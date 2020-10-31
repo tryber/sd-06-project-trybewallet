@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setNewExpense, fetchExchangeRates } from '../actions'
+import { fetchExchangeRates } from '../actions'
 import CurrencyOptions from './CurrencyOptions';
 
 class ExpensesForm extends React.Component {
@@ -45,7 +45,7 @@ class ExpensesForm extends React.Component {
 
   render() {
 
-    const { currencyProp, newExpense, fetchRates } = this.props;
+    const { currencyProp, fetchRates } = this.props;
     const { expense, description, currency, method, tag, id } = this.state
 
     const localExpenseArray = { id, expense, description, currency, method, tag };
@@ -76,8 +76,8 @@ class ExpensesForm extends React.Component {
 
           <label htmlFor="method-input">
             Moeda:
-            <select 
-              name="currencyLocal"
+            <select
+              name="currency"
               data-testid="currency-input"
               onChange={ this.handleChange }
             >
@@ -113,7 +113,7 @@ class ExpensesForm extends React.Component {
             </select>
           </label>
           <button
-            onClick={ () => newExpense(localExpenseArray, this.handleID, fetchRates()) }
+            onClick={ () => fetchRates(localExpenseArray, this.handleID) }
             type="button"
           >
             Adicionar despesa
@@ -130,8 +130,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  newExpense: (expenseArray, callback) => dispatch(setNewExpense(expenseArray, callback)),
-  fetchRates: () => dispatch(fetchExchangeRates()),
+  fetchRates: (expenseArray, callback) => dispatch(fetchExchangeRates(expenseArray, callback)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);

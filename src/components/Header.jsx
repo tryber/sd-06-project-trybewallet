@@ -2,10 +2,27 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 class Header extends React.Component {
+  constructor() {
+    super();
+
+    this.handleReducer = this.handleReducer.bind(this);
+  }
+
+  handleReducer = () => {
+    const { allExpenses, eachExpense, eachBid } = this.props;
+
+    if (allExpenses.length > 0) {
+      const updatedValue = eachExpense.reduce((acc, curr, index) => {
+        return (acc += (curr * eachBid[index]))
+      }, 0);
+      return updatedValue;
+    } else {
+      return 0;
+    }
+  }
 
   render() {
-
-    const { email } = this.props;
+    const { email, } = this.props;
 
     return(
       <header className="header">
@@ -13,7 +30,7 @@ class Header extends React.Component {
           {email}
         </span>
         <span data-testid="total-field">
-          Despesa Total: 0,00
+          {`Despesa Total: ${this.handleReducer()} `}
         </span>
         <span data-testid="header-currency-field">
           BRL
@@ -25,6 +42,9 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  allExpenses: state.wallet.expenses,
+  eachBid: state.wallet.expenses.map((value) => parseFloat(value.exchangeRates[value.currency].ask).toFixed(2)),
+  eachExpense: state.wallet.expenses.map((value) => parseFloat(value.expense).toFixed(2))
 });
 
 export default connect(mapStateToProps)(Header);

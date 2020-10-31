@@ -1,8 +1,8 @@
 export const LOGIN_INPUT = 'LOGIN_INPUT';
 export const IS_SUCCESS = 'IS_SUCCESS';
-export const RATES_SUCCESS = 'RATES_SUCCESS';
-export const RATES_REQUEST = 'RATES_REQUEST';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+// export const RATES_SUCCESS = 'RATES_SUCCESS';
+// export const RATES_REQUEST = 'RATES_REQUEST';
 
 export const loginInput = (email, password) => ({
   type: LOGIN_INPUT,
@@ -21,25 +21,23 @@ export const fetchData = () => async (dispatch) => {
   dispatch(receiveCurrenciesSuccess(currencies));
 };
 
-export const setNewExpense = (expenseArray, callback) => ({
+export const setNewExpense = (expenseArray, callback, rates) => ({
   callback: callback(),
   type: ADD_EXPENSE,
   expenseArray,
-});
-
-const receiveRatesSuccess = (rates) => ({
-  type: RATES_SUCCESS,
   rates,
 });
 
-const requestRates = (rates) => ({
-  type: RATES_REQUEST,
-});
+// const receiveRatesSuccess = () => ({
+//   type: RATES_SUCCESS,
+// });
 
+// const requestRates = () => ({
+//   type: RATES_REQUEST,
+// });
 
-export const fetchExchangeRates = () => async (dispatch) => {
-  dispatch(requestRates());
+export const fetchExchangeRates = (expenseArray, callback) => async (dispatch) => {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const exchangeRates = await response.json();
-  dispatch(receiveRatesSuccess(exchangeRates));
+  dispatch(setNewExpense(expenseArray, callback, exchangeRates));
 };
