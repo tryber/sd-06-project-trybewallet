@@ -104,7 +104,7 @@ Wallet.propTypes = {
     email: PropTypes.string.isRequired,
   }).isRequired,
   currenciesAPI: PropTypes.arrayOf(Object).isRequired,
-  thunkCurrencies: PropTypes.func.isRequired,
+  thunkCurrency: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
