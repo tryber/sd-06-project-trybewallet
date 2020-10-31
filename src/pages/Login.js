@@ -1,6 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import './Login.css';
+import { connect } from 'react-redux';
+import { addEmailToState } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -9,11 +11,11 @@ class Login extends React.Component {
     this.emailCheck = this.emailCheck.bind(this);
     this.addToOwnState = this.addToOwnState.bind(this);
     this.itWasUpdated = this.itWasUpdated.bind(this);
+    this.btLogin = this.btLogin.bind(this);
 
     this.state = {
       email: '',
       password: '',
-      loggedIn: false,
       emailWarning: false,
       passwordWarning: false,
       btEnterIsDisabled: true,
@@ -59,18 +61,21 @@ class Login extends React.Component {
   }
 
   btLogin() {
-    this.setState({ loggedIn: true });
+    const { addEmail } = this.props;
+    const { email } = this.state;
+    addEmail(email, true);
   }
 
   render() {
     const {
       email,
       password,
-      loggedIn,
       emailWarning,
       passwordWarning,
       btEnterIsDisabled,
     } = this.state;
+    const { loggedIn } = this.props;
+
     const errorEmail = 'E-mail inválido';
     const errorMsgPassword = 'Senha inválida. A senha precisa ter no mínimo 6 caracteres';
     return (
@@ -115,4 +120,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  loggedIn: state.userReducer.loggedIn,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addEmail: (email, loggedIn) => dispatch(addEmailToState(email, loggedIn)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
