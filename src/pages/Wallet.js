@@ -13,7 +13,7 @@ function Wallet({ email }) {
         <img src={ trybeLogo } alt="Trybe logo" />
         <div>
           <span data-testid="email-field">
-            E-mail: 
+            E-mail:
             {email}
           </span>
           <span data-testid="total-field">Despesa Total: R$ 0,00</span>
