@@ -29,7 +29,7 @@ class Form extends React.Component {
         type="submit"
         value="Entrar"
         onClick={ () => doLogin(email) }
-        className="button is-dark is-block is-large is-fullwidth is-dark"
+        className="button is-block is-large is-fullwidth"
       />);
     }
     return (<input

@@ -4,6 +4,7 @@ import propType from 'prop-types';
 import { apiCurrencies, apiExpense } from '../actions';
 import { paymentOpt, categoryOpt } from '../services/helper';
 import Table from './Table';
+import '../css/bulma.css';
 
 class WalletForm extends React.Component {
   constructor(props) {
@@ -65,78 +66,88 @@ class WalletForm extends React.Component {
 
   render() {
     const { currencies, email } = this.props;
-    const { value, sumTotal } = this.state;
+    const { value, sumTotal = 0 } = this.state;
     if (currencies) {
       return (
         <section>
-          <header>
-            <p data-testid="email-field">
-              Bem vindo:
-              {email}
-            </p>
-            <p data-testid="total-field" value="0">{ sumTotal }</p>
-            <p data-testid="header-currency-field" value="BRL" />
-
-            <form className="wallet-page">
-              <input
-                data-testid="value-input"
-                type="number"
-                placeholder="Valor da despesa"
-                id="value"
-                onChange={ this.handleInputs }
-                value={ value }
-              />
-              <input
-                type="text"
-                data-testid="description-input"
-                placeholder="Descrição da despesa"
-                id="description"
-                onChange={ this.handleInputs }
-              />
-
-              <select
-                data-testid="currency-input"
-                id="currency"
-                onChange={ (e) => this.handleOptions(e.target.value, e.target.id) }
-              >
-                <option disabled selected>Moeda</option>
-                {currencies.map((item) => (
-                  <option key={ item } data-testid={ item } value={ item }>
-                    { item }
-                  </option>
-                ))}
-              </select>
-              <select
-                data-testid="method-input"
-                id="method"
-                onChange={ (e) => this.handleOptions(e.target.value, e.target.id) }
-              >
-                <option disabled selected>Método de pagamento</option>
-                {paymentOpt.map((item) => (
-                  <option key={ item } data-testid={ item } value={ item }>
-                    { item }
-                  </option>
-                ))}
-              </select>
-              <select
-                data-testid="tag-input"
-                id="tag"
-                onChange={ (e) => this.handleOptions(e.target.value, e.target.id) }
-              >
-                <option disabled selected>Categoria</option>
-                {categoryOpt.map((item) => (
-                  <option key={ item } data-testid={ item } value={ item }>
-                    { item }
-                  </option>
-                ))}
-              </select>
-              <button
-                type="button"
-                onClick={ () => this.handleSubmit() }
-              >
-                Adicionar despesa
-              </button>
-            </form>
+          <header className="hero is-dark">
+            <div className="hero-body">
+              <div className="container">
+                <p
+                  data-testid="email-field"
+                  className="subtitle"
+                >
+                  {`Bem vindo : ${email}`}
+                </p>
+                <p data-testid="total-field">{`Total = ${sumTotal}`}</p>
+                <p data-testid="header-currency-field" value="BRL">Moeda Local: BRL</p>
+                <form className="field-body">
+                  <input
+                    className="input is-grouped is-small"
+                    data-testid="value-input"
+                    type="number"
+                    placeholder="Valor da despesa"
+                    id="value"
+                    onChange={ this.handleInputs }
+                    value={ value }
+                  />
+                  <input
+                    className="input is-grouped is-small"
+                    type="text"
+                    data-testid="description-input"
+                    placeholder="Descrição da despesa"
+                    id="description"
+                    onChange={ this.handleInputs }
+                  />
+                  <select
+                    className="select is-grouped is-small"
+                    data-testid="currency-input"
+                    id="currency"
+                    onChange={ (e) => this.handleOptions(e.target.value, e.target.id) }
+                  >
+                    <option disabled selected>moeda</option>
+                    {currencies.map((item) => (
+                      <option key={ item } data-testid={ item } value={ item }>
+                        { item }
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    className="select is-grouped is-small"
+                    data-testid="method-input"
+                    id="method"
+                    onChange={ (e) => this.handleOptions(e.target.value, e.target.id) }
+                  >
+                    <option disabled selected>método de pagamento</option>
+                    {paymentOpt.map((item) => (
+                      <option key={ item } data-testid={ item } value={ item }>
+                        { item }
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    className="select is-grouped is-small"
+                    data-testid="tag-input"
+                    id="tag"
+                    onChange={ (e) => this.handleOptions(e.target.value, e.target.id) }
+                  >
+                    <option disabled selected>categoria</option>
+                    {categoryOpt.map((item) => (
+                      <option key={ item } data-testid={ item } value={ item }>
+                        { item }
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    className="input is-grouped is-small"
+                    onClick={ () => this.handleSubmit() }
+                  >
+                    Adicionar despesa
+                  </button>
+                </form>
+              </div>
+            </div>
           </header>
           <Table />
         </section>
