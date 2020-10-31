@@ -10,7 +10,7 @@ export const delEmail = (value) => ({
 
 export const expenses = (payload) => ({
   type: 'NEW_EXPENSES',
-  payload,
+  payload
 });
 
 export const fetchCurrencies = (cotacaoMoeda) => ({

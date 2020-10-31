@@ -18,6 +18,8 @@ class Wallet extends React.Component {
       }],
       totalValue: '',
     };
+
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -25,19 +27,20 @@ class Wallet extends React.Component {
     myMoney();
   }
 
-  onClick(value) {
-    expenses(value)
+  onSubmit(value) {
+    const { myExpenses } = this.props;
+    myExpenses(value);
   }
 
   render() {
-    const { email, currencies, expenses } = this.props;
+    const { email, currencies } = this.props;
     const pagamento = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <div>
         <header>
           <p data-testid="email-field">Email: {email}</p>
-          <p data-testid="total-field">Despesas totais: {expenses}</p>
+          <p data-testid="total-field">Despesas totais:</p>
           <p data-testid="header-currency-field">Câmbio: BRL</p>
         </header>
         <form>
@@ -78,7 +81,7 @@ class Wallet extends React.Component {
             </select>
           </label>
           {/* Ao ser clicado, o botão deve fazer uma requisição à API para trazer o câmbio mais atualizado possível. */}
-          <button type="submit">Adicionar despesa</button>
+          <button type="submit" onSubmit={this.onSubmit}>Adicionar despesa</button>
         </form>
       </div>
     );
@@ -88,7 +91,6 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
-  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({

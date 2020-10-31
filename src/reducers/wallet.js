@@ -8,9 +8,9 @@ const INITIAL_STATE = {
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
     case 'NEW_EXPENSES':
-      return { ...state, expenses: [...state.wallet.expenses, action.payload] };
+      return { ...state, expenses: [...state.expenses, action.payload] };
     case 'FETCH_CURRENCIES_SUCCESS':
-      return { ...state, currencies: Object.keys(action.cotacaoMoeda).filter((element) => element != 'USDT') };
+      return { ...state, currencies: Object.keys(action.cotacaoMoeda).filter((element) => element !== 'USDT') };
     default:
       return state;
   }
