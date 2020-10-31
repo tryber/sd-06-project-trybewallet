@@ -15,4 +15,4 @@ export const thunkCurrencyAPI = () => async (dispatch) => {
   const responseAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
   const currency = await responseAPI.json();
   dispatch(fetchAction(currency));
-}
+};

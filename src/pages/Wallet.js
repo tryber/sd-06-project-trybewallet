@@ -15,6 +15,10 @@ class Wallet extends React.Component {
     this.handleFetch = this.handleFetch.bind(this);
   }
 
+  componentDidMount() {
+    this.handleFetch();
+  }
+
   async handleFetch() {
     const { fetchCurrency, email } = this.props;
     const result = await fetchCurrency();
@@ -22,10 +26,6 @@ class Wallet extends React.Component {
       email: email,
       currencies: result,
     });
-  }
-
-  componentDidMount() {
-    this.handleFetch()
   }
 
   render() {
@@ -90,7 +90,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Wallet.propTypes = {
-  currencies: propTypes.array.isRequired,
+  currencies: propTypes.object.isRequired,
+  email: propTypes.string.isRequired,
   fetchCurrency: propTypes.func.isRequired,
 };
 
