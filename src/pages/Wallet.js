@@ -123,7 +123,7 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
         </form>
-        <table id="tabela" border="1">
+        <table id="tbl" border="1">
           <thead>
             <tr>
               {titles.map((title) => <td key={ title }>{ title }</td>)}
@@ -131,14 +131,18 @@ class Wallet extends React.Component {
           </thead>
           <tbody>
             {expenses.map((despesa, index) => {
+              const exchangeValue = Number(despesa.exchangeRates[despesa.currency].ask);
               const currencyName = despesa.exchangeRates[despesa.currency].name;
+              const convertedValue = exchangeValue * despesa.value;
               return (
                 <tr key={ index }>
                   <td>{ despesa.description }</td>
                   <td>{ despesa.tag }</td>
                   <td>{ despesa.method }</td>
                   <td>{ despesa.value }</td>
+                  <td>{ exchangeValue.toFixed(2) }</td>
                   <td>{ currencyName }</td>
+                  <td>{ convertedValue.toFixed(2) }</td>
                   <td>Real</td>
                   <td>
                     <button type="button" data-testid="edit-btn">Editar</button>
