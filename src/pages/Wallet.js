@@ -24,7 +24,7 @@ class Wallet extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({ 
+const mapStateToProps = ({ user }) => ({
   user,
 });
 
@@ -33,13 +33,6 @@ Wallet.propTypes = {
     email: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
   }).isRequired,
-  //wallet: PropTypes.shape({
-    //currencies: PropTypes.arrayOf(PropTypes.shape({
-      //code: PropTypes.string.isRequired,
-      //name: PropTypes.string.isRequired,
-      //ask: PropTypes.number.isRequired,
-    //})).isRequired,
-  //}).isRequired,
 };
 
 export default connect(mapStateToProps)(Wallet);
