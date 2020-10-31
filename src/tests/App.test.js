@@ -99,7 +99,7 @@ describe('1 - [PÁGINA DE LOGIN] Crie uma página inicial de login com os seguin
   });
 });
 
-describe.skip('2 - [PÁGINA DA CARTEIRA] Crie uma página para sua carteira com as seguintes características:', () => {
+describe('2 - [PÁGINA DA CARTEIRA] Crie uma página para sua carteira com as seguintes características:', () => {
   test('A rota para esta página deve ser \'/carteira\'', () => {
     const { history } = renderWithRouterAndStore(<App />);
     history.push('/carteira');
@@ -113,7 +113,7 @@ describe.skip('2 - [PÁGINA DA CARTEIRA] Crie uma página para sua carteira com 
   });
 });
 
-describe.skip('3 - [PÁGINA DA CARTEIRA] Crie um header para a página de carteira contendo as seguintes características:', () => {
+describe('3 - [PÁGINA DA CARTEIRA] Crie um header para a página de carteira contendo as seguintes características:', () => {
   const initial = initialStateHeader;
 
   test('Um elemento que exiba o email do usuário que fez login.', () => {
