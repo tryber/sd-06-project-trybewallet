@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../actions';
+import './login.css';
 import logo from '../images/logo.png';
-// validação de e-mail - site consultado: https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
 
 class Login extends React.Component {
   constructor(props) {
@@ -38,13 +38,16 @@ class Login extends React.Component {
     const { formLogin } = this.props;
 
     return (
-      <div>
+      <div className="form-login">
         <form>
-          <img src={ logo } alt="logo-trybe" />
+          <img
+            src={ logo }
+            alt="logo-trybe"
+          />
           <label
             htmlFor="email"
           >
-            Email
+            E-mail
             <input
               data-testid="email-input"
               id="email"
@@ -65,7 +68,7 @@ class Login extends React.Component {
               data-testid="password-input"
               id="password"
               name="password"
-              type="text"
+              type="password"
               minLength="6"
               value={ password }
               required

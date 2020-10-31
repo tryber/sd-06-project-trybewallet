@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { thunkCurrency } from '../actions';
+import './form.css';
 
 class Form extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class Form extends React.Component {
     const { currency } = this.state;
     const { fetchCurrencies } = this.props;
     return (
-      <form>
+      <form className="form-container">
         <label
           htmlFor="valorDespesa"
         >
