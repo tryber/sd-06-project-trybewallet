@@ -2,20 +2,20 @@ import React from 'react';
 import AddButton from './AddButton';
 
 class FormularioDespesa extends React.Component {
-  constructor() {
-    super();
-    // this.state = {
-    //   id: 0,
-    //   value: 0,
-    //   description: '',
-    //   currency: 'BRL',
-    //   method: '',
-    //   tag: '',
-    //   exchangeRates: {},
-    // };
+  // constructor() {
+  //   super();
+  //   // this.state = {
+  //   //   id: 0,
+  //   //   value: 0,
+  //   //   description: '',
+  //   //   currency: 'BRL',
+  //   //   method: '',
+  //   //   tag: '',
+  //   //   exchangeRates: {},
+  //   // };
 
-    // this.addExpense = this.addExpense.bind(this);
-  }
+  //   // this.addExpense = this.addExpense.bind(this);
+  // }
 
   currencyOptions() {
     const currencyArray = ['USD', 'CAD', 'EUR', 'GBP',
