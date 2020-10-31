@@ -15,8 +15,7 @@ function Form() {
           { moedas.map((moeda, index) => (
             <option key={ index } data-testid={ moeda } value={ moeda }>
               { moeda }
-            </option>))
-          }
+            </option>)) }
         </select>
       </label>
       <label htmlFor="descricao">
