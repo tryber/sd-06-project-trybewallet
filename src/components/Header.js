@@ -27,7 +27,7 @@ class Header extends Component {
   //   }
   // }
 
-  handleState(state) {
+  handleState() {
     // this.setState({ allExpenses: state });
   }
 
