@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import trybeWallet from '../img/trybeWallet.png';
 import { emailLogin, passwordLogin } from '../actions';
@@ -13,7 +13,7 @@ const localState = {
 function Login({ getEmail, getPassword }) {
   // console.log(email.email)
   const PASSWORD_SIZE = 6;
-  const validation = localState.emailValid && localState.passwordValid
+  const validation = localState.emailValid && localState.passwordValid;
   const history = useHistory();
   return (
     <div className="loginDiv">
@@ -21,7 +21,7 @@ function Login({ getEmail, getPassword }) {
       <input
         onChange={ (e) => {
           const lastChar = e.target.value[e.target.value.length - 1];
-          const numberOfAts = e.target.value.replace(/[^@]/g, "").length;
+          const numberOfAts = e.target.value.replace(/[^@]/g, '').length;
           if (e.target.value.includes('@')
           && numberOfAts === 1
           && lastChar !== '@'
@@ -55,11 +55,13 @@ function Login({ getEmail, getPassword }) {
         placeholder="Password"
       />
       <br />
-      
-      <button 
-      onClick={() => history.push("/carteira")} 
-      disabled={!validation} 
-      type="button">Entrar</button>
+
+        <button
+        onClick={ () => history.push('/carteira') }
+        disabled={!validation}
+        type="button">
+          Entrar
+        </button>
 
       <br />
       { (localState.emailValid) ? <span> </span>
