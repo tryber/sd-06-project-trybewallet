@@ -12,7 +12,7 @@ class Table extends React.Component {
   render() {
     const { expenses } = this.props;
     // const {currency} = expenses;
-    console.log(expenses);
+    // console.log(expenses);
     return (
       <div>
         <table>
@@ -29,9 +29,22 @@ class Table extends React.Component {
             </tr>
           </thead>
           <tbody>
+            {expenses.map((item) => {
+              const nameOfCoin = item.currency;
+              const finalCoins = item.exchangeRates[nameOfCoin].ask;
+              return (
+                <tr>
+                  <td>{item.description}</td>
+                  <td>{item.tag}</td>
+                  <td>{item.paymentMethod}</td>
+                  <td>{item.expenses}</td>
+                  {/* <td>{finalCoins}</td> */}
+                </tr>
+                
+              );
+            })}
             <tr>
-              {/* <td>{expenses.currency}</td> */}
-              { expenses.length ? (expenses.map((item) => (<td>{item.currency}</td>))) : (<p>Vazio</p>) }
+              {/* { expenses.length ? (expenses.map((item) => (<td>{item.currency}</td>))) : (<p>Vazio</p>) } */}
             </tr>
           </tbody>
         </table>

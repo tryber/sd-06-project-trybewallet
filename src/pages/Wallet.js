@@ -28,11 +28,13 @@ class Wallet extends React.Component {
   handleClickSubmit() {
     const { dispatchSaveExpenses, dispatch2 } = this.props;
     const { expenses, description, currency, paymentMethod, tag, total } = this.state;
-
-    const expense = { expenses, description, currency, paymentMethod, tag };
+    const expense = parseInt(expenses);
+    // console.log(typeof(total));
+    console.log(typeof(expense));
     //Metodo passado no mapDispatchToProps
     dispatch2(this.state);
     this.setState({
+      total: total + expense,
       expenses: 0,
       description: '',
       currency: '',
@@ -59,8 +61,8 @@ class Wallet extends React.Component {
     const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { email, currencies } = this.props;
-    const { expenses, description,total } = this.state;
-    console.log(this.props.expenses.currency);
+    const { expenses, description, total } = this.state;
+    // console.log(expenses);
     return (
       <div className="containerWallet">
         <header className="containerHeader">
