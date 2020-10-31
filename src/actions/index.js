@@ -12,4 +12,4 @@ export const addExpenses = (expenses) => ({
   expenses,
 });
 
-export const login = (email) => ({ type: 'LOGIN', email });
+export const actionLogin = (email) => ({ type: 'LOGIN', email });
