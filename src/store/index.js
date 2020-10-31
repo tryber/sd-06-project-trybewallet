@@ -1,6 +1,6 @@
-const { combineReducers } = require("redux");
-import { createStore, combineReducers } from 'redux';
+import { createStore } from 'redux';
+import rootReducer from '../reducers'
 
-const store = createStore(combineReducers({ user, wallet }))
+const store = createStore(rootReducer);
 
 export default store;
