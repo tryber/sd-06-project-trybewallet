@@ -9,6 +9,10 @@ class Login extends React.Component {
     super();
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onEmailchange = this.onEmailchange.bind(this);
+    this.state = {
+      email: '',
+      password: '',
+    };
   }
 
   onEmailchange({ value }) {
@@ -20,6 +24,7 @@ class Login extends React.Component {
       const validPassword = inputPassword.length >= passwordMinimunLength;
       this.enableButton(validEmail, validPassword);
     }
+    this.setState({ email: value });
   }
 
   onPasswordChange({ value }) {
@@ -31,6 +36,7 @@ class Login extends React.Component {
       const validEmail = simpleEmailRegex.test(inputEmail);
       this.enableButton(validEmail, validPassword);
     }
+    this.setState({ password: value });
   }
 
   enableButton(validEmail, validPassword) {
@@ -43,12 +49,14 @@ class Login extends React.Component {
 
   render() {
     const { registerEmail } = this.props;
+    const { email, password } = this.state;
     return (
       <div>
         <form className="login-page">
           <input
             type="email"
             id="email"
+            value={ email }
             data-testid="email-input"
             placeholder="email"
             onChange={ ({ target }) => this.onEmailchange(target) }
@@ -56,16 +64,16 @@ class Login extends React.Component {
           <input
             type="password"
             id="password"
+            value={ password }
             data-testid="password-input"
             placeholder="password"
             onChange={ ({ target }) => this.onPasswordChange(target) }
           />
-          <Link to="/carteira">
+          <Link to="/carteira" onClick={ () => registerEmail(email) }>
             <button
               type="button"
               id="login-button"
               disabled
-              onClick={ () => registerEmail(document.getElementById('email').value) }
             >
               Entrar
             </button>
@@ -76,16 +84,10 @@ class Login extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    email: state.addEmailRecord.user.email,
-  };
-}
-
 function mapDispacthToProps(dispatch) {
   return {
     registerEmail: (email) => dispatch(addEmailToRecord(email)),
   };
 }
 
-export default connect(mapStateToProps, mapDispacthToProps)(Login);
+export default connect(null, mapDispacthToProps)(Login);

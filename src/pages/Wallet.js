@@ -1,12 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Form from '../components/Form';
 
 class Wallet extends React.Component {
   render() {
+    const { email } = this.props;
     return (
       <div>
         <header>
-          <div data-testid="email-field">Email do usuario</div>
+          <div data-testid="email-field">{ email }</div>
           <div data-testid="total-field">
             Gastos totais:
             { 0 }
@@ -19,4 +21,10 @@ class Wallet extends React.Component {
   }
 }
 
-export default Wallet;
+function mapStateToProps(state) {
+  return {
+    email: state.addEmailRecord.user.email,
+  };
+}
+
+export default connect(mapStateToProps)(Wallet);
