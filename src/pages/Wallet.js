@@ -42,7 +42,7 @@ class Wallet extends React.Component {
     //totalValue feito com a ajuda do colega William pelo SLACK
     const totalValue = expenses.length ? Math.round(expenses
       .reduce((acc, cur) => acc + cur.value
-       * cur.exchangeRates[cur.crrency].ask, 0) * 100) / 100 : 0;
+       * cur.exchangeRates[cur.currency].ask, 0) * 100) / 100 : 0;
     return (
       <div>
         <header>
