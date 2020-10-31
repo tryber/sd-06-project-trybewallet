@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import addEmailUser from '../actions';
 
 class Login extends Component {
@@ -8,82 +9,61 @@ class Login extends Component {
     super(props);
     this.state = {
       email: '',
-      isValidPassword: false,
-      isValidLogin: false,
-      validateButton: false,
       password: '',
     };
-    this.validateEmail = this.validateEmail.bind(this);
-    this.validatePassword = this.validatePassword.bind(this);
+    // this.validateEmail = this.validateEmail.bind(this);
+    // this.validatePassword = this.validatePassword.bind(this);
   }
-
-  // componentDidUpdate() {
-  //   this.handleWithLoginButton();
-  // }
 
   /* O regex usado nesta função foi retirado do site:
   https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail */
 
   validateEmail(email) {
     const inputEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-    if (inputEmail.test(email)) {
-      return this.setState({
-        email,
-        isValidLogin: true,
-      });
-    }
+    return inputEmail.test(email);
   }
 
   validatePassword(password) {
-    const inputPasswordLenght = 6;
-    if (password.length >= inputPasswordLenght) {
-      this.setState({ isValidPassword: true });
-    }
+    const PASSWORD_MIN_SIZE = 6;
+    return password.length >= PASSWORD_MIN_SIZE;
   }
 
-  handleWithLoginButton() {
-    const { isValidPassword, isValidLogin, validateButton, email, password } = this.state;
-    const buttonLogin = document.getElementById('button-login');
-    if (isValidLogin === true
-      && isValidPassword === true) {
-      // buttonLogin.disabled = false;
-      this.setState({ validateButton: true });
-    }
-    // const inputEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-    // const inputPasswordLenght = 6;
-    // this.setState({ validateButton: inputEmail.test(email) && password.length >= inputPasswordLenght });
+  handleChange(event, name) {
+    this.setState({ [name]: event.target.value });
   }
 
   handleLogin() {
-    const { email } = this.state
-    this.props.login({email})
-    this.props.history.push('/carteira')
+    const { login } = this.props;
+    const { email } = this.state;
+    console.log();
+    login({ email });
   }
 
   render() {
-    const { email } = this.state;
-    const { login } = this.props;
-    console.log(email);
+    const { email, password } = this.state;
+    const activeButton = this.validateEmail(email) && this.validatePassword(password);
     return (
       <div>
         <input
           type="text"
           data-testid="email-input"
           placeholder="digite seu email"
-          onChange={ (e) => this.validateEmail(e.target.value) }
+          onChange={ (event) => this.handleChange(event, 'email') }
+          value={ email }
         />
         <input
           type="text"
           data-testid="password-input"
           placeholder="digite sua senha"
-          onChange={ (e) => this.validatePassword(e.target.value) }
+          onChange={ (event) => this.handleChange(event, 'password') }
+          value={ password }
         />
         <Link to="/carteira">
           <input
             type="button"
             id="button-login"
             value="Entrar"
-            disabled={ !(this.state.isValidLogin && this.state.isValidPassword) }
+            disabled={ !activeButton }
             onClick={ () => this.handleLogin() }
           />
         </Link>
@@ -95,5 +75,7 @@ class Login extends Component {
 const mapDispatchToProps = (dispatch) => ({
   login: (e) => dispatch(addEmailUser(e)),
 });
+
+Login.propTypes = { login: PropTypes.func.isRequired };
 
 export default connect(null, mapDispatchToProps)(Login);
