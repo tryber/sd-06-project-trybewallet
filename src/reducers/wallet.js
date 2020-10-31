@@ -1,4 +1,4 @@
-import { SV_EXPENSES, CURRENCIES } from '../actions';
+import { SV_EXPENSES, CURRENCIES, DEL_EXPENSES } from '../actions';
 
 const initialState = {
   currencyDefault: 'BRL',
@@ -25,6 +25,13 @@ export default function (state = initialState, action) {
           ...action.payload,
         }],
     });
+  case DEL_EXPENSES: {
+    const newExpenses = state.expenses.filter((item) => item.id !== action.id);
+    return ({
+      ...state,
+      expenses: newExpenses,
+    });
+  }
   default:
     return state;
   }

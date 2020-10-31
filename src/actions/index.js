@@ -3,6 +3,7 @@ import getAll from '../services/api';
 export const LOGIN = 'LOGIN';
 export const CURRENCIES = 'CURRENCIES';
 export const SV_EXPENSES = 'SV_EXPENSES';
+export const DEL_EXPENSES = 'DEL_EXPENSES';
 
 export const login = (email) => ({
   type: LOGIN,
@@ -33,3 +34,8 @@ export function apiExpense(expensesForm) {
     dispatch(saveExpenses(expensesForm, exchangeRates));
   };
 }
+
+export const deleteExpenseID = (id) => ({
+  type: DEL_EXPENSES,
+  id,
+});

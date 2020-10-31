@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import propType from 'prop-types';
 import { apiCurrencies, apiExpense } from '../actions';
 import { paymentOpt, categoryOpt } from '../services/helper';
+import Table from './Table';
 
 class WalletForm extends React.Component {
   constructor(props) {
@@ -67,75 +68,78 @@ class WalletForm extends React.Component {
     const { value, sumTotal } = this.state;
     if (currencies) {
       return (
-        <header>
-          <p data-testid="email-field">
-            Bem vindo:
-            {email}
-          </p>
-          <p data-testid="total-field" value="0">{ sumTotal }</p>
-          <p data-testid="header-currency-field" value="BRL" />
+        <section>
+          <header>
+            <p data-testid="email-field">
+              Bem vindo:
+              {email}
+            </p>
+            <p data-testid="total-field" value="0">{ sumTotal }</p>
+            <p data-testid="header-currency-field" value="BRL" />
 
-          <form className="wallet-page">
-            <input
-              data-testid="value-input"
-              type="number"
-              placeholder="Valor da despesa"
-              id="value"
-              onChange={ this.handleInputs }
-              value={ value }
-            />
-            <input
-              type="text"
-              data-testid="description-input"
-              placeholder="Descrição da despesa"
-              id="description"
-              onChange={ this.handleInputs }
-            />
+            <form className="wallet-page">
+              <input
+                data-testid="value-input"
+                type="number"
+                placeholder="Valor da despesa"
+                id="value"
+                onChange={ this.handleInputs }
+                value={ value }
+              />
+              <input
+                type="text"
+                data-testid="description-input"
+                placeholder="Descrição da despesa"
+                id="description"
+                onChange={ this.handleInputs }
+              />
 
-            <select
-              data-testid="currency-input"
-              id="currency"
-              onChange={ (e) => this.handleOptions(e.target.value, e.target.id) }
-            >
-              <option disabled selected>Moeda</option>
-              {currencies.map((item) => (
-                <option key={ item } data-testid={ item } value={ item }>
-                  { item }
-                </option>
-              ))}
-            </select>
-            <select
-              data-testid="method-input"
-              id="method"
-              onChange={ (e) => this.handleOptions(e.target.value, e.target.id) }
-            >
-              <option disabled selected>Método de pagamento</option>
-              {paymentOpt.map((item) => (
-                <option key={ item } data-testid={ item } value={ item }>
-                  { item }
-                </option>
-              ))}
-            </select>
-            <select
-              data-testid="tag-input"
-              id="tag"
-              onChange={ (e) => this.handleOptions(e.target.value, e.target.id) }
-            >
-              <option disabled selected>Categoria</option>
-              {categoryOpt.map((item) => (
-                <option key={ item } data-testid={ item } value={ item }>
-                  { item }
-                </option>
-              ))}
-            </select>
-            <button
-              type="button"
-              onClick={ () => this.handleSubmit() }
-            >
-              Adicionar despesa
-            </button>
-          </form>
-        </header>
+              <select
+                data-testid="currency-input"
+                id="currency"
+                onChange={ (e) => this.handleOptions(e.target.value, e.target.id) }
+              >
+                <option disabled selected>Moeda</option>
+                {currencies.map((item) => (
+                  <option key={ item } data-testid={ item } value={ item }>
+                    { item }
+                  </option>
+                ))}
+              </select>
+              <select
+                data-testid="method-input"
+                id="method"
+                onChange={ (e) => this.handleOptions(e.target.value, e.target.id) }
+              >
+                <option disabled selected>Método de pagamento</option>
+                {paymentOpt.map((item) => (
+                  <option key={ item } data-testid={ item } value={ item }>
+                    { item }
+                  </option>
+                ))}
+              </select>
+              <select
+                data-testid="tag-input"
+                id="tag"
+                onChange={ (e) => this.handleOptions(e.target.value, e.target.id) }
+              >
+                <option disabled selected>Categoria</option>
+                {categoryOpt.map((item) => (
+                  <option key={ item } data-testid={ item } value={ item }>
+                    { item }
+                  </option>
+                ))}
+              </select>
+              <button
+                type="button"
+                onClick={ () => this.handleSubmit() }
+              >
+                Adicionar despesa
+              </button>
+            </form>
+          </header>
+          <Table />
+        </section>
       );
     }
     if (!currencies) {
