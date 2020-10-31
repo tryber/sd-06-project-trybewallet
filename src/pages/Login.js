@@ -9,20 +9,35 @@ class Login extends Component {
     super();
     this.state = {
       email: '',
+      password: '',
+      isValid: false,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.validateEmailAndPassword = this.validateEmailAndPassword.bind(this);
   }
 
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({
       [name]: value,
+    }, () => {
+      this.validateEmailAndPassword();
+    });
+  }
+
+  validateEmailAndPassword() {
+    const { email, password } = this.state;
+    // Reference to email regex: https://regexr.com/3e48o, need to delete '\.', because of the lint;
+    const emailPattern = /^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const minLength = 6;
+    this.setState({
+      isValid: emailPattern.test(email) && password.length >= minLength,
     });
   }
 
   render() {
     const { login } = this.props;
-    const { email } = this.state;
+    const { email, isValid } = this.state;
     return (
       <div>
         <input
@@ -37,11 +52,13 @@ class Login extends Component {
           type="password"
           name="password"
           placeholder="Senha"
+          onChange={ this.handleChange }
         />
         <Link to="/carteira">
           <button
             type="button"
             onClick={ () => login(email) }
+            disabled={ !isValid }
           >
             Entrar
           </button>
