@@ -3,12 +3,12 @@ export const PASSWORD = 'PASSWORD';
 
 export const emailLogin = (email) => ({
   type: EMAIL,
-  email: email,
+  email,
 });
 
 export const passwordLogin = (password) => ({
   type: PASSWORD,
-  password: password,
+  password,
 });
 
 // payload = {
