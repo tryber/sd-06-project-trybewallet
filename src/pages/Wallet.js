@@ -21,7 +21,7 @@ class Wallet extends React.Component {
     const result = await fetchApi();
     this.setState({
       currencies: Object.entries(result),
-    })
+    });
   }
 
   render() {
@@ -40,19 +40,19 @@ class Wallet extends React.Component {
         </header>
         <form>
           <fieldset>
-            <label>
+            <label htmlFor="valor">
               Valor:
-              <input data-testid="value-input"/>
+              <input name="valor" data-testid="value-input" />
             </label>
-            <label>
+            <label htmlFor="descrição">
               Descrição
-              <input data-testid="description-input"/>
+              <input name="descrição" data-testid="description-input" />
             </label>
-            <label>
-              <select data-testid="currency-input">
-              {currencies !== undefined ? currencies.map((currency) => (
-                <option key={ currency[0] }>{currency[0]}</option>
-              )) : <p>não rolou</p>}
+            <label htmlFor="options">
+              <select name="options" data-testid="currency-input">
+                {currencies !== undefined ? currencies.map((currency) => (
+                  <option key={ currency[0] }>{currency[0]}</option>
+                )) : <p>não rolou</p>}
               </select>
             </label>
           </fieldset>
@@ -74,4 +74,4 @@ Wallet.propTypes = {
   email: propTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

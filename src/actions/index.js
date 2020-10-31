@@ -17,5 +17,5 @@ export function fetchApi() {
     return fetch(endpoint)
       .then((response) => response.json())
       .then((data) => dispatch(fetchAction(data)));
-  }
+  };
 }
