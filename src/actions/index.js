@@ -1,3 +1,5 @@
-export const addUser = (value) => ({ type: 'ADD_USER', value });
+export const startLogin = (email) => ({ type: 'START_LOGIN', email });
 
-export const addExpense = (value) => ({ type: 'ADD_EXPENSE', value });
+export const addExpenses = (expenses) => ({ type: 'ADD_EXPENSES', expenses });
+
+export const allCurrencies = (currencies) => ({ type: 'CURRENCIES', currencies });

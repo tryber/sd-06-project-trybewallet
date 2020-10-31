@@ -1,9 +1,14 @@
-const INITIAL_STATE = [];
+const INITIAL_STATE = {
+  email: '',
+};
 
-export default function user(state = INITIAL_STATE, action) {
-  switch (action.type) {
-  case 'ADD_USER':
-    return [...state, action.value];
+export default function user(state = INITIAL_STATE, { type, email }) {
+  switch (type) {
+  case 'START_LOGIN':
+    return {
+      ...state,
+      email,
+    };
   default:
     return state;
   }

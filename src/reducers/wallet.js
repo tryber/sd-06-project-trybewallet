@@ -1,9 +1,20 @@
-const INITIAL_STATE = [];
+const INITIAL_STATE = {
+  currencies: [],
+  expenses: [],
+};
 
-export default function wallet(state = INITIAL_STATE, action) {
-  switch (action.type) {
-  case 'ADD_EXPENSE':
-    return [...state, action.value];
+export default function wallet(state = INITIAL_STATE, { type, expenses, currencies }) {
+  switch (type) {
+  case 'ADD_EXPENSES':
+    return {
+      ...state,
+      expenses,
+    };
+  case 'CURRENCIES':
+    return {
+      ...state,
+      currencies,
+    };
   default:
     return state;
   }
