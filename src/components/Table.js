@@ -1,76 +1,88 @@
-// import React from 'react';
-// import { connect } from 'react-redux';
+import React from 'react';
+import propType from 'prop-types';
+import { connect } from 'react-redux';
 
-// class Table extends React.Component {
-//   // constructor(props) {
-//   //   super(props);
-//   //   this.state = {
+class Table extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
 
-//   //   };
-//   // }
+  //   };
+  // }
 
-//   render() {
-//     const { expenses } = this.props;
-//     // const {currency} = expenses;
-//     console.log(expenses);
-//     return (
-//       <div>
-//         <table>
-//           <thead>
-//             <tr>
-//               <th>Descrição</th>
-//               <th>Tag</th>
-//               <th>Método de pagamento</th>
-//               <th>Valor</th>
-//               <th>Moeda</th>
-//               <th>Câmbio utilizado</th>
-//               <th>Valor convertido</th>
-//               <th>Moeda de conversão</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             { expenses.length ? (expenses.map((item) => {
-//               const nameOfCoin = item.currency;
-//               const finalNameCoin = item.rates[nameOfCoin].name;
-//               const finalValueCoin = item.rates[nameOfCoin].ask;
-//               const convertedCoin = item.expenses * finalValueCoin;
-//               return (
-//                 <tr>
-//                   <td className="table-cell">{item.description}</td>
-//                   <td className="table-cell">{item.tag}</td>
-//                   <td className="table-cell">{item.paymentMethod}</td>
-//                   <td className="table-cell">{item.expenses}</td>
-//                   <td className="table-cell">{finalNameCoin}</td>
-//                   <td className="table-cell">{finalValueCoin}</td>
-//                   <td className="table-cell">{convertedCoin}</td>
-//                   <td className="table-cell">Real</td>
-//                   <td>
-//                     <div className="edit-expense-container">
-//                       <button
-//                         type="button"
-//                         data-testid="delete-btn"
-//                         // onClick={ () => dispatchDeleteExpense(expense.id) }
-//                       >
-//                         Delete
-//                       </button>
-//                     </div>
-//                   </td>
-//                 </tr>
-//               );
-//             })) : (<p>Vazio</p>) }
-//             <tr>
-//               {/* { expenses.length ? (expenses.map((item) => (<td>{item.currency}</td>))) : (<p>Vazio</p>) } */}
-//             </tr>
-//           </tbody>
-//         </table>
-//       </div>
+  render() {
+    const { expenses } = this.props;
+    // const {currency} = expenses;
+    // console.log(expenses);
+    return (
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th className="table-cell">Editar/Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            { (expenses.length > 0) ? expenses.map((item) => (
+              // const nameOfCoin = item.currency;
+              // const finalNameCoin = item.exchangeRates[nameOfCoin].name;
+              // const finalValueCoin = item.exchangeRates[nameOfCoin].ask;
+              // const convertedCoin = item.value * finalValueCoin;
+              // return (
+              <tr key={ item.id }>
+                <td className="cell">{item.description}</td>
+                <td className="cell">{item.tag}</td>
+                <td className="cell">{item.method}</td>
+                <td className="cell">{item.value}</td>
+                <td className="cell">{item.exchangeRates[item.currency].name}</td>
+                <td className="cell">
+                  { Number(item.exchangeRates[item.currency].ask).toFixed(2) }
+                </td>
+                <td className="cell">
+                  { (Number(item.exchangeRates[item.currency].ask)
+                  * Number(item.value)).toFixed(2) }
+                </td>
+                <td className="cell">Real</td>
+                <td>
+                  {/* <div className="edit-expense-container">
+                    <button
+                      type="button"
+                      data-testid="delete-btn"
+                      // onClick={ () => dispatchDeleteExpense(expense.id) }
+                    >
+                      Delete
+                    </button>
+                  </div> */}
+                </td>
+              </tr>
+              // );
+            )) : (<p>Vazio</p>) }
+            <tr>
+              {/* { expenses.length ? (expenses.map((item)
+                => (<td>{item.currency}</td>))) : (<p>Vazio</p>) } */}
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-//     );
-//   }
-// }
+    );
+  }
+}
 
-// const mapStateToProps = (state) => ({
-//   expenses: state.wallet.expenses,
-// });
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
 
-// export default connect(mapStateToProps)(Table);
+Table.propTypes = {
+  expenses: propType.arrayOf(Object).isRequired,
+};
+
+export default connect(mapStateToProps)(Table);
