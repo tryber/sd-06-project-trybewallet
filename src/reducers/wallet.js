@@ -1,16 +1,16 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-const INITIAL_STATE = {
-  currencies: [],
-  expenses: [],
-};
+// const INITIAL_STATE = {
+//   currencies: [],
+//   expenses: [],
+// };
 
-export default function (state = INITIAL_STATE, action) {
-  switch (action.type) {
-  // case '':
-  //   return ;
-  // case '':
-  //   return ;
-  default:
-    return state;
-  }
-}
+// export const wallet = (state = INITIAL_STATE, action) => {
+//   switch (action.type) {
+//   case COIN:
+//     return {
+//       ...state,
+//       currencies: action.currencies,
+//     };
+//   default:
+//     return state;
+//   }
+// }

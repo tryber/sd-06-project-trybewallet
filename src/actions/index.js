@@ -1,7 +1,6 @@
-// Coloque aqui suas actions
-// import redux from 'redux';
+export const LOGIN = 'LOGIN';
 
-// redux.dispatch({
-//   type: 'TAL',
-//   parametros: 'tal',
-// });
+export const login = (email) => ({
+  type: LOGIN,
+  email,
+});
