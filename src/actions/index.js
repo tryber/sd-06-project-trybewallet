@@ -6,16 +6,13 @@ export const loginAction = (payload) => ({
   payload,
 });
 
-export const fetchAction = (data) => ({
+export const fetchAction = (currencies) => ({
   type: CURRENCY,
-  data,
+  currencies,
 });
 
-export function fetchApi() {
-  return (dispatch) => {
-    const endpoint = 'https://economia.awesomeapi.com.br/json/all';
-    return fetch(endpoint)
-      .then((response) => response.json())
-      .then((data) => dispatch(fetchAction(data)));
-  };
+export const thunkCurrencyAPI = () => async (dispatch) => {
+  const responseAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const currency = await responseAPI.json();
+  dispatch(fetchAction(currency));
 }

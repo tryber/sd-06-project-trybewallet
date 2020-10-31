@@ -1,35 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import { fetchAction } from '../actions';
-import fetchApi from '../services/mockAPI';
+import { thunkCurrencyAPI } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      currencies: undefined,
+      email: '',
+      currency: undefined,
     };
-  }
 
-  componentDidMount() {
-    this.handleFetch();
+    this.handleFetch = this.handleFetch.bind(this);
   }
 
   async handleFetch() {
-    const result = await fetchApi();
+    const { fetchCurrency, email } = this.props;
+    const result = await fetchCurrency();
     this.setState({
-      currencies: Object.entries(result),
+      email: email,
+      currencies: result,
     });
   }
 
+  componentDidMount() {
+    this.handleFetch()
+  }
+
   render() {
-    const { email } = this.props;
-    const { currencies } = this.state;
-    // if(currencies !== undefined){
-    //   console.log(currencies[0][0]);
-    // }
+    const { email, currencies } = this.props;
     return (
       <div>
         <header>
@@ -49,9 +49,10 @@ class Wallet extends React.Component {
               <input name="descrição" data-testid="description-input" />
             </label>
             <label htmlFor="options">
+              Moedas
               <select name="options" data-testid="currency-input">
                 {currencies !== undefined ? currencies.map((currency) => (
-                  <option key={ currency[0] }>{currency[0]}</option>
+                  <option key={ currency }>{currency}</option>
                 )) : <p>não rolou</p>}
               </select>
             </label>
@@ -76,20 +77,21 @@ class Wallet extends React.Component {
           </fieldset>
         </form>
       </div>
-
     );
   }
 }
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  currencies: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchCurrency: (data) => dispatch(fetchAction(data)),
+  fetchCurrency: () => dispatch(thunkCurrencyAPI()),
 });
 
 Wallet.propTypes = {
-  email: propTypes.string.isRequired,
+  currencies: propTypes.array.isRequired,
+  fetchCurrency: propTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
