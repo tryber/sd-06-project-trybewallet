@@ -1,10 +1,11 @@
 import React from 'react';
 
 function Form() {
-  return(
+  return (
     <div>
-      sss
-    </div>
+      <label for="valor">Valor: </label>
+      <input type="number" id="valor" data-testid="value-input" />
+    </div>;
   )
 }
 
