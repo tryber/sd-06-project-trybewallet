@@ -1,9 +1,7 @@
 import { SAVE_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
 function userReducer(state = INITIAL_STATE, action) {

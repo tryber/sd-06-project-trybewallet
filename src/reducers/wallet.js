@@ -1,16 +1,22 @@
-import { SAVE_CURRENCY } from '../actions';
+import { SAVE_CURRENCY, SAVE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
 };
 
 function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case SAVE_CURRENCY:
-    return { ...state, wallet: { ...state.wallet, currencies: action.currencies } };
+    return {
+      ...state,
+      currencies: Object.keys(action.currencies)
+        .filter((currency) => currency !== 'USDT'),
+    };
+  case SAVE_EXPENSE:
+    return {
+      ...state, expenses: [...state.expenses, action.expense],
+    };
   default:
     return state;
   }
