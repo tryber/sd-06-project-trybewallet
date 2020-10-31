@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import rootReducers from '../reducers'
+import rootReducers from '../reducers';
 
 /* Código importado do Slack, com a ajuda com Instrutor Ícaro */
 

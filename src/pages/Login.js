@@ -43,12 +43,13 @@ class Login extends React.Component {
     return (
       <div>
         <form onSubmit={ this.goingToWallet }>
-          <label htmlFor="email">E-mail:
+          <label htmlFor="email">
+            E-mail:
           <input
             id="email"
             type="email"
             name="email"
-            value={email}
+            value={ email }
             data-testid="email-input"
             onChange={ this.handleChange }
             required
@@ -56,7 +57,7 @@ class Login extends React.Component {
           </label>
           <label>Password
           <input type="password"
-            value={password}
+            value={ password }
             name="password"
             data-testid="password-input"
             minlength="6"
