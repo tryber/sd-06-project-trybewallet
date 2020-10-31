@@ -1,4 +1,4 @@
-import { SAVE_CURRENCY, SAVE_EXPENSE } from '../actions';
+import { SAVE_CURRENCY, SAVE_EXPENSE, EXCLUDE_ITEM } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -16,6 +16,10 @@ function walletReducer(state = INITIAL_STATE, action) {
   case SAVE_EXPENSE:
     return {
       ...state, expenses: [...state.expenses, action.expense],
+    };
+  case EXCLUDE_ITEM:
+    return {
+      ...state, expenses: [state.expenses.filter((item) => (item.id !== action.id))],
     };
   default:
     return state;

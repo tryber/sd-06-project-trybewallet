@@ -51,12 +51,12 @@ class Wallet extends React.Component {
           <span> </span>
           <span data-testid="total-field">
             { importedCurrencies.expenses.length !== 0
-              ? Math.round(importedCurrencies.expenses.reduce((sum, expense) => (
+              ? (Math.round(importedCurrencies.expenses.reduce((sum, expense) => (
                 Number(sum) + (Number(expense.value)
                   * (Object.values(expense.exchangeRates)
                     .find((actualCurrency) => actualCurrency.code === expense.currency)
                     .ask))
-              ), 0) * 100) / 100 : 0.00}
+              ), 0) * 100) / 100).toFixed(2) : 0.00}
           </span>
           <span> </span>
           <span data-testid="header-currency-field">BRL</span>

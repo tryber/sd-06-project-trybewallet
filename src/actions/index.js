@@ -6,6 +6,8 @@ export const SAVE_CURRENCY = 'SAVE_CURRENCY';
 
 export const SAVE_EXPENSE = 'SAVE_EXPENSE';
 
+export const EXCLUDE_ITEM = 'EXCLUDE_ITEM';
+
 export const saveEmail = (email) => ({
   type: SAVE_EMAIL,
   email,
@@ -19,6 +21,11 @@ export const saveCurrency = (currencies) => ({
 export const saveExpense = (expense) => ({
   type: SAVE_EXPENSE,
   expense,
+});
+
+export const excludeItem = (id) => ({
+  type: EXCLUDE_ITEM,
+  id,
 });
 
 export function thunkCurrency() {
