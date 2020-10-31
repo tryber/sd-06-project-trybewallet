@@ -1,6 +1,7 @@
 export const LOGIN_INPUT = 'LOGIN_INPUT';
 export const IS_SUCCESS = 'IS_SUCCESS';
 export const RATES_SUCCESS = 'RATES_SUCCESS';
+export const RATES_REQUEST = 'RATES_REQUEST';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 export const loginInput = (email, password) => ({
@@ -26,13 +27,19 @@ export const setNewExpense = (expenseArray, callback) => ({
   expenseArray,
 });
 
-export const receiveRatesSuccess = (rates) => ({
+const receiveRatesSuccess = (rates) => ({
   type: RATES_SUCCESS,
   rates,
 });
 
+const requestRates = (rates) => ({
+  type: RATES_REQUEST,
+});
+
+
 export const fetchExchangeRates = () => async (dispatch) => {
-  const response = await fetch('ttps://economia.awesomeapi.com.br/json/all');
+  dispatch(requestRates());
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const exchangeRates = await response.json();
   dispatch(receiveRatesSuccess(exchangeRates));
 };
