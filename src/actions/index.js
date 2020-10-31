@@ -17,7 +17,7 @@ export const currenciesFetch = (currencies) => ({
 });
 
 export const addNewExpense = (expenses) => ({
-  type: 'ADD_NEW_EXPENSE',
+  type: ADD_NEW_EXPENSE,
   expenses,
 });
 

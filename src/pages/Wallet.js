@@ -9,7 +9,7 @@ class Wallet extends React.Component {
     this.state = {
       value: '',
       description: '',
-      currency: '',
+      currency: 'USD',
       method: '',
       tag: '',
     };
@@ -53,7 +53,7 @@ class Wallet extends React.Component {
             Valor:
             <input
               onChange={ this.handleChange }
-              type="text"
+              type="number"
               name="value"
               id="value"
               data-testid="value-input"
