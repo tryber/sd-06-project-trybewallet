@@ -54,6 +54,11 @@ a {
   margin-bottom: 30px;
 }
 
+.logo-small {
+  font-size: 22pt;
+  margin-bottom: 0;
+}
+
 .vb-logo {
   color: darkcyan;
 }

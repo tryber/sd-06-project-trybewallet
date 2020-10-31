@@ -5,8 +5,7 @@ const INITIAL_STATE = {
   loggedIn: false,
 };
 
-export default function userReducer(state = INITIAL_STATE, action) {
-  console.log(action);
+export default function user(state = INITIAL_STATE, action) {
   switch (action.type) {
   case ADD_EMAIL:
     return {
