@@ -10,7 +10,7 @@ export default function (state = initialState, action) {
   switch (action.type) {
   case LOGIN:
     return {
-      ...state.user,
+      ...state,
       email: action.email,
     };
   default:

@@ -64,7 +64,6 @@ class Form extends React.Component {
           </label>
           {this.handleRedirect()}
           {this.filterForm()}
-
         </form>
       </div>);
   }
