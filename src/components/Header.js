@@ -10,7 +10,7 @@ class Header extends Component {
     this.handleState = this.handleState.bind(this);
 
     this.state = {
-      allExpenses: [],
+      // allExpenses: [],
     };
   }
 
@@ -28,7 +28,7 @@ class Header extends Component {
   // }
 
   handleState(state) {
-    this.setState({ allExpenses: state });
+    // this.setState({ allExpenses: state });
   }
 
   render() {
