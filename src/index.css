@@ -54,3 +54,7 @@ code {
   background-color:#5FA36F;
   cursor: default;
 }
+
+Link {
+  border: 1px solid black;
+}

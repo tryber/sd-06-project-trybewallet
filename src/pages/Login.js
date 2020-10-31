@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import trybeWallet from '../img/trybeWallet.png';
 import { emailLogin, passwordLogin } from '../actions';
@@ -13,16 +13,25 @@ const localState = {
 function Login({ getEmail, getPassword }) {
   // console.log(email.email)
   const PASSWORD_SIZE = 6;
+  const validation = localState.emailValid && localState.passwordValid
+  const history = useHistory();
   return (
     <div className="loginDiv">
       <img src={ trybeWallet } alt="Trybe Wallet" />
       <input
         onChange={ (e) => {
-          if (e.target.value.includes('@')) {
+          const lastChar = e.target.value[e.target.value.length - 1];
+          const numberOfAts = e.target.value.replace(/[^@]/g, "").length;
+          if (e.target.value.includes('@')
+          && numberOfAts === 1
+          && lastChar !== '@'
+          && lastChar !== '.'
+          ) {
             localState.emailValid = true;
             getEmail(e.target.value);
           } else {
-            localState.emailValid = true;
+            localState.emailValid = false;
+            getEmail(e.target.value);
           }
         } }
         type="text"
@@ -38,6 +47,7 @@ function Login({ getEmail, getPassword }) {
             getPassword(e.target.value);
           } else {
             localState.passwordValid = false;
+            getPassword(e.target.value);
           }
         } }
         type="password"
@@ -45,10 +55,12 @@ function Login({ getEmail, getPassword }) {
         placeholder="Password"
       />
       <br />
+      
+      <button 
+      onClick={() => history.push("/carteira")} 
+      disabled={!validation} 
+      type="button">Entrar</button>
 
-      {(localState.emailValid && localState.passwordValid)
-        ? <Link to="/carteira"><button disabled="" type="button">Entrar</button></Link>
-        : <button type="button" disabled="disabled">Entrar</button> }
       <br />
       { (localState.emailValid) ? <span> </span>
         : <span>Digite um e-mail válido.</span> }
