@@ -140,8 +140,11 @@ class Wallet extends React.Component {
                   <td>{ despesa.tag }</td>
                   <td>{ despesa.method }</td>
                   <td>{ despesa.value }</td>
+                  {/* Câmbio utilizado */}
                   <td>{ exchangeValue.toFixed(2) }</td>
+                  {/* Moeda de conversão */}
                   <td>{ currencyName }</td>
+                  {/* Valor convertido */}
                   <td>{ convertedValue.toFixed(2) }</td>
                   <td>Real</td>
                   <td>
