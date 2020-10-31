@@ -47,8 +47,8 @@ function Login({ getEmail, getPassword }) {
       <br />
 
       {(localState.emailValid && localState.passwordValid)
-        ? <Link to="/carteira"><button type="button">Entrar</button></Link>
-        : <button type="button" disabled>Entrar</button> }
+        ? <Link to="/carteira"><button disabled="" type="button">Entrar</button></Link>
+        : <button type="button" disabled="disabled">Entrar</button> }
       <br />
       { (localState.emailValid) ? <span> </span>
         : <span>Digite um e-mail válido.</span> }
