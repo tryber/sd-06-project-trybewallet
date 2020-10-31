@@ -8,7 +8,7 @@ class ExpensesForm extends React.Component {
     super();
     this.state = {
       id: 0,
-      expense: 0,
+      value: 0,
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
@@ -19,14 +19,14 @@ class ExpensesForm extends React.Component {
     this.handleID = this.handleID.bind(this);
   }
 
-  handleChange = ({ target }) => {
+  handleChange({ target }) {
     const { name, value } = target;
     this.setState({
       [name]: value,
     });
   }
 
-  handleID = () => {
+  handleID() {
     const { id } = this.state;
     const updateId = id + 1;
     this.setState({
@@ -46,9 +46,9 @@ class ExpensesForm extends React.Component {
   render() {
 
     const { currencyProp, fetchRates } = this.props;
-    const { expense, description, currency, method, tag, id } = this.state
+    const { value, description, currency, method, tag, id } = this.state
 
-    const localExpenseArray = { id, expense, description, currency, method, tag };
+    const localExpenseArray = { id, value, description, currency, method, tag };
 
     return(
       <form className="expenses">
@@ -57,10 +57,12 @@ class ExpensesForm extends React.Component {
           <label htmlFor="value-input">
             Valor:
             <input
+              id="value-input"
               onChange={ this.handleChange }
-              name="expense"
+              name="value"
               type="number"
               data-testid="value-input"
+              value={value}
             />
           </label>
 
@@ -74,10 +76,11 @@ class ExpensesForm extends React.Component {
             />
           </label>
 
-          <label htmlFor="method-input">
+          <label htmlFor="currency-input">
             Moeda:
             <select
               name="currency"
+              id="currency-input"
               data-testid="currency-input"
               onChange={ this.handleChange }
             >
@@ -89,6 +92,7 @@ class ExpensesForm extends React.Component {
             Pagamento:
             <select
               name="method"
+              id="method-input"
               data-testid="method-input"
               onChange={ this.handleChange }
             >
@@ -101,6 +105,7 @@ class ExpensesForm extends React.Component {
           <label htmlFor="tag-input">
             Tag:
             <select
+              id="tag-input"
               name="tag"
               data-testid="tag-input"
               onChange={ this.handleChange }

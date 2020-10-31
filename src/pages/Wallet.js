@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import ExpensesForm from '../components/ExpensesForm';
 import ExpensesTable from '../components/ExpensesTable';
@@ -27,3 +28,7 @@ const mapDispatachToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatachToProps)(Wallet);
+
+Wallet.propTypes = {
+  fetchCurrency: PropTypes.arrayOf(Object).isRequired,
+};
