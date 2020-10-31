@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import Login from './pages/Login';
-import Wallet from './pages/Wallet';
+import Wallet from './pages/Wallet'
 
 function App() {
   return (
