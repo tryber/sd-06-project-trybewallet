@@ -130,14 +130,14 @@ class Wallet extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {expenses.map((expense, index) => {
-              const currencyName = expense.exchangeRates[expense.currency].name;
+            {expenses.map((despesa, index) => {
+              const currencyName = despesa.exchangeRates[despesa.currency].name;
               return (
                 <tr key={ index }>
-                  <td>{ expense.description }</td>
-                  <td>{ expense.tag }</td>
-                  <td>{ expense.method }</td>
-                  <td>{ expense.value }</td>
+                  <td>{ despesa.description }</td>
+                  <td>{ despesa.tag }</td>
+                  <td>{ despesa.method }</td>
+                  <td>{ despesa.value }</td>
                   <td>{ currencyName }</td>
                   <td>Real</td>
                   <td>
