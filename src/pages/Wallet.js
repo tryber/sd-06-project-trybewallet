@@ -29,13 +29,13 @@ class Wallet extends React.Component {
 
   handleNewExpense(event) {
     const { saveExpensesInfo } = this.props;
-    const { ...expense } = this.state;
+    const { ...cervejaÉVida } = this.state;
     event.preventDefault();
-    saveExpensesInfo(expense);
+    saveExpensesInfo(cervejaÉVida);
   }
 
   render() {
-    const { value, ...expense } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const { email, currencies, expenses } = this.props;
     const totalValue = expenses.length ? Math.round(expenses
       .reduce((acc, cur) => acc + cur.value
@@ -75,7 +75,7 @@ class Wallet extends React.Component {
               name="description"
               id="description"
               data-testid="description-input"
-              value={ expense.description }
+              value={ description }
             />
           </label>
           <label htmlFor="currency">
@@ -84,7 +84,7 @@ class Wallet extends React.Component {
               name="currency"
               id="currency"
               data-testid="currency-input"
-              value={ expense.currency }
+              value={ currency }
               onChange={ this.handleChange }
             >
               {currencies.map((coin) => (
@@ -100,7 +100,7 @@ class Wallet extends React.Component {
               name="method"
               id="method"
               data-testid="method-input"
-              value={ expense.method }
+              value={ method }
               onChange={ this.handleChange }
             >
               <option value="Dinheiro">Dinheiro</option>
@@ -114,7 +114,7 @@ class Wallet extends React.Component {
               data-testid="tag-input"
               id="tag"
               name="tag"
-              value={ expense.tag }
+              value={ tag }
               onChange={ this.handleChange }
             >
               <option value="Alimentação">Alimentação</option>
