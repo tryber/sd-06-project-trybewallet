@@ -7,17 +7,22 @@ import trybeLogo from '../img/trybe-logo.png';
 
 function Wallet({ email }) {
   return (
-    <header>
-      <img src={ trybeLogo } alt="Trybe logo" />
-      <div>
-        <span data-testid="email-field">
-          E-mail: {email}
-        </span>
-        <span data-testid="total-field">Despesa Total: R$ 0,00</span>
-        <span data-testid="header-currency-field">BRL</span>
-      </div>
-    </header>
-  );
+    <div>
+      <header>
+        <img src={ trybeLogo } alt="Trybe logo" />
+        <div>
+          <span data-testid="email-field">
+            E-mail: {email}
+          </span>
+          <span data-testid="total-field">Despesa Total: R$ 0,00</span>
+          <span data-testid="header-currency-field">BRL</span>
+        </div>
+      </header>
+      <form>
+        ss
+      </form>
+    </div>
+  )
 }
 
 Wallet.propTypes = {
