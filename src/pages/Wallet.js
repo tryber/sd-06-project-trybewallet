@@ -30,5 +30,5 @@ const mapDispatachToProps = (dispatch) => ({
 export default connect(null, mapDispatachToProps)(Wallet);
 
 Wallet.propTypes = {
-  fetchCurrency: PropTypes.arrayOf(Object).isRequired,
+  fetchCurrency: PropTypes.func.isRequired,
 };

@@ -301,7 +301,7 @@ describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma
   });
 });
 
-describe.skip('5 - [PÁGINA DA CARTEIRA] Desenvolva uma tabela com os gastos contendo as seguintes características:', () => {
+describe('5 - [PÁGINA DA CARTEIRA] Desenvolva uma tabela com os gastos contendo as seguintes características:', () => {
   const initial = initialStateWithExpenses;
 
   test('A tabela deve possuir um cabeçalho com os campos Descrição, Tag, Método de pagamento, Valor, Moeda, Câmbio utilizado, Valor convertido e Moeda de conversão', () => {
@@ -327,7 +327,7 @@ describe.skip('5 - [PÁGINA DA CARTEIRA] Desenvolva uma tabela com os gastos con
     expect(thEditarExcluir).toBeInTheDocument();
   });
 
-  test('A tabela deve ser alimentada pelo estado da aplicação, que estará disponível na chave expenses que vem do reducer wallet.', () => {
+  test.skip('A tabela deve ser alimentada pelo estado da aplicação, que estará disponível na chave expenses que vem do reducer wallet.', () => {
     renderWithRouterAndStore(<Wallet />, '/carteira', initial);
     expect(screen.getAllByRole('cell', { name: 'Dez dólares' })[0]).toBeInTheDocument();
     expect(screen.getAllByRole('cell', { name: 'Lazer' })[0]).toBeInTheDocument();

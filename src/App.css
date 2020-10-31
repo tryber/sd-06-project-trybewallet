@@ -8,7 +8,7 @@ body {
 }
 
 .table {
-  align-content: center;
+  align-content: space-between;
   border-width: 0px 1px;
   border-color: gray;
   border-style: solid;
@@ -18,23 +18,38 @@ body {
   width: 95%;
 }
 
-.table th {
-  border-width: 1px 0px;
+thead {
+  background-color: rgb(204, 204, 204);
+  border-width: 1px;
   border-color: gray;
   border-style: solid;
-  justify-content: last baseline;
   display: flex;
-  flex-direction: column;
-  width: 80%;
+  flex-wrap: nowrap;
+  width: 100%;
 }
 
-.table tr {
-  align-items: center;
+th {
+  background-color: rgb(247, 247, 247);
+  border-width: 1px;
+  border-color: gray;
+  border-style: solid;
+  width: 130px;
+}
+
+tbody {
   background-color: rgb(204, 204, 204);
-  border-width: 1px 0px 0px 0px;
+  border-width: 1px;
   border-color: gray;
   border-style: solid;
   display: flex;
-  height: 30px;
-  justify-content: center;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+td {
+  background-color: rgb(247, 247, 247);
+  border-width: 1px;
+  border-color: gray;
+  border-style: solid;
+  width: 130px;
 }
