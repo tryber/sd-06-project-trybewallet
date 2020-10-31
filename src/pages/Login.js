@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../actions';
+import logo from '../images/logo.png';
 // validação de e-mail - site consultado: https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
 
 class Login extends React.Component {
@@ -39,6 +40,7 @@ class Login extends React.Component {
     return (
       <div>
         <form>
+          <img src={ logo } alt="logo-trybe" />
           <label
             htmlFor="email"
           >

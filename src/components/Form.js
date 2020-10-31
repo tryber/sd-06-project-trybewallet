@@ -1,9 +1,23 @@
 import React from 'react';
-import { fetchCurrence } from '../actions';
 import { connect } from 'react-redux';
+import { thunkCurrency } from '../actions';
 
 class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currency: [],
+    };
+  }
+
+  componentDidMount() {
+    const { fetchCurrencies } = this.props;
+    fetchCurrencies();
+  }
+
   render() {
+    const { currency } = this.state;
+    const { fetchCurrencies } = this.props;
     return (
       <form>
         <label
@@ -34,7 +48,12 @@ class Form extends React.Component {
             name="moedaCorrente"
             id="moedaCorrente"
           >
-            <option data-testid="" value="">{}</option>
+            <option
+              data-testid=""
+              value={ fetchCurrencies(currency) }
+            >
+              { (e) => e.target.value }
+            </option>
           </select>
         </label>
         <label
@@ -75,4 +94,15 @@ class Form extends React.Component {
   }
 }
 
-export default Form;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.curriencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrencies: () => dispatch(thunkCurrency()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Form);
