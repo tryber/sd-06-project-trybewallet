@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { loginAction } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -15,15 +14,21 @@ class Wallet extends React.Component {
   }
 
   render() {
-    // const { nomequalquer } = this.props;
+    const { email } = this.props;
 
-    return <div>TrybeWallet</div>;
+    return (
+      <>
+        <header>
+          <h1 data-testid="email-field">oi, { email }</h1>
+        </header>
+      </>
+    );
     // return <div onClick={this.handleClick}>TrybeWallet {nomequalquer}</div>;
   }
 }
 
-const mapStateToProps = () => ({
-  // nomequalquer: state.wallet.helloWorld,
+const mapStateToProps = (state) => ({
+  email: state.user.email,
 });
 
 const mapDispatchToProps = () => ({
