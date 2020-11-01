@@ -19,7 +19,9 @@ class Wallet extends React.Component {
     return (
       <>
         <header>
-          <h1 data-testid="email-field">oi, { email }</h1>
+          <p data-testid="email-field">{ email }</p>
+          <p data-testid="total-field">0</p>
+          <p data-testid="header-currency-field">BRL</p>
         </header>
       </>
     );
