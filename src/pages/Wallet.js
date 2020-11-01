@@ -43,12 +43,14 @@ class Wallet extends React.Component {
     return (
       <div>
         <header>
-          Email:
-          <span> </span>
+          <span className="bold">Email:</span>
+          {' '}
           <span data-testid="email-field">{ emailUser.email }</span>
-          <span> </span>
-          Despesa total: R$
-          <span> </span>
+          {'  '}
+          <span className="bold">| Despesa total:</span>
+          {' '}
+          <span> R$</span>
+          {' '}
           <span data-testid="total-field">
             { importedCurrencies.expenses.length !== 0
               ? (Math.round(importedCurrencies.expenses.reduce((sum, expense) => (
@@ -58,13 +60,16 @@ class Wallet extends React.Component {
                     .ask))
               ), 0) * 100) / 100).toFixed(2) : 0.00}
           </span>
-          <span> </span>
+          {' '}
           <span data-testid="header-currency-field">BRL</span>
         </header>
-        <form onSubmit={ this.sendData }>
+        <br />
+        <form onSubmit={ this.sendData } className="add-expense">
           <label htmlFor="expenseValue">
-            Valor:
+            <span className="bold">Valor:</span>
+            {' '}
             <input
+              placeholder="Valor"
               value={ value }
               name="value"
               data-testid="value-input"
@@ -73,9 +78,12 @@ class Wallet extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
+          {'  '}
           <label htmlFor="description">
-            Descrição:
+            <span className="bold">Descrição:</span>
+            {' '}
             <input
+              placeholder="Descrição"
               name="description"
               data-testid="description-input"
               id="description"
@@ -83,6 +91,7 @@ class Wallet extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
+          {'  '}
           <select
             name="currency"
             data-testid="currency-input"
@@ -99,6 +108,7 @@ class Wallet extends React.Component {
               </option>
             ))}
           </select>
+          {'  '}
           <select
             name="method"
             data-testid="method-input"
@@ -109,6 +119,7 @@ class Wallet extends React.Component {
             <option>Cartão de crédito</option>
             <option>Cartão de débito</option>
           </select>
+          {'  '}
           <select
             data-testid="tag-input"
             id="typeExpense"
@@ -121,8 +132,10 @@ class Wallet extends React.Component {
             <option>Transporte</option>
             <option>Saúde</option>
           </select>
+          {'  '}
           <button type="submit">Adicionar despesa</button>
         </form>
+        <br />
         <Table />
       </div>
     );

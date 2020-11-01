@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { saveEmail } from '../actions';
+import './login.css';
 
 class Login extends React.Component {
   constructor() {
@@ -40,10 +41,14 @@ class Login extends React.Component {
     const { disable } = this.state;
     return (
       <div>
-        <form onSubmit={ this.redirect }>
+        <form onSubmit={ this.redirect } className="form-login">
+          <h1 className="title">Wallet</h1>
+          <br />
           <label htmlFor="email">
-            Email:
+            <span className="bold">Email:</span>
+            {' '}
             <input
+              placeholder="Email"
               type="email"
               name="email"
               pattern="/^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/g"
@@ -53,9 +58,12 @@ class Login extends React.Component {
               required
             />
           </label>
+          <br />
           <label htmlFor="password">
-            Senha:
+            <span className="bold">Senha:</span>
+            {' '}
             <input
+              placeholder="Senha"
               type="password"
               name="password"
               id="password"
@@ -65,7 +73,9 @@ class Login extends React.Component {
               required
             />
           </label>
+          <br />
           <button
+            className="button-login"
             type="submit"
             disabled={ disable }
           >
