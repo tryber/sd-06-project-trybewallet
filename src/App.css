@@ -42,7 +42,7 @@ tbody {
   border-color: gray;
   border-style: solid;
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   width: 100%;
 }
 
@@ -52,4 +52,8 @@ td {
   border-color: gray;
   border-style: solid;
   width: 130px;
+}
+
+tr {
+  display: flex;
 }

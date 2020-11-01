@@ -10,7 +10,7 @@ class Header extends React.Component {
 
   handleReducer() {
     const { allExpenses, eachExpense, eachBid } = this.props;
-
+    
     if (allExpenses.length > 0) {
       const updatedValue = eachExpense.reduce((acc, curr, index) => {
         return (acc + (curr * eachBid[index]))
