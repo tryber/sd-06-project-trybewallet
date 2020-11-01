@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { catchInputEntries } from '../actions';
+import PropTypes from 'prop-types';
 import fetchApi from '../services';
 
 class Forms extends Component {
@@ -13,17 +14,13 @@ class Forms extends Component {
     this.state = {
       forms: {
         id: 0,
-        value: "",
-        description: "",
-        currency: "USD",
-        method: "Dinheiro",
-        tag: "Alimentação",
+        value: '',
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
       },
     };
-  }
-
-  componentDidMount() {
-    console.log(this.props.currencieState);
   }
 
   handleChange({ target }) {
@@ -62,8 +59,6 @@ class Forms extends Component {
 
     const { forms } = this.state;
 
-    console.log(expenseState)
-
     dispachExpenses(forms);
   }
 
@@ -72,7 +67,7 @@ class Forms extends Component {
     const { currencieState } = this.props;
     
     return (
-      <forms>
+      <section>
         <label htmlFor="value-input" >
           Valor:
           <input required type="number" data-testid="value-input" name="value" onChange={ handleChange } />
@@ -81,7 +76,7 @@ class Forms extends Component {
           Moeda:
           <select data-testid="currency-input" name="currency" onChange={ handleChange }>
             { currencieState.map((currency, index) => (
-              <option key={index} data-testid={currency}>{currency}</option>
+              <option key={index} data-testid={currency} value={currency}>{currency}</option>
             ))}
           </select>
         </label>
@@ -108,7 +103,7 @@ class Forms extends Component {
           <input required data-testid="description-input" name="description" onChange={ handleChange } />
         </label>
         <button type="submit" onClick={this.handleClick}>Adicionar despesa</button>
-      </forms>
+      </section>
     );
   }
 }
@@ -121,5 +116,9 @@ const mapStateToProps = (state) => ({
   expenseState: state.wallet.expenses,
   currencieState: state.wallet.currencies,
 });
+
+Forms.propTypes = {
+  dispachExpenses: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Forms);

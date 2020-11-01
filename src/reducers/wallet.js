@@ -16,7 +16,7 @@ const wallet = (state = WALLET_INITIAL_STATE, action) => {
     return ({
       ...state,
       currencies: [...state.expenses, ...action.payload.currencies],
-    })
+    });
   default:
     return state;
   }
