@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import EmailLogin from './components/Email';
+import PasswordLogin from './components/Password';
+import ButtonLogin from './components/Button';
 
-class Login extends React.Component {
-  render() {
-    return <div>Login</div>;
-  }
-}
+const Login = () => (
+  <>
+    <EmailLogin />
+    <PasswordLogin />
+    <ButtonLogin />
+  </>
+);
 
 export default Login;
