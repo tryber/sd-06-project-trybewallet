@@ -1,7 +1,11 @@
 import React from 'react';
 
 function App() {
-  return <div>Hello, TrybeWallet!</div>;
+  return (
+    <div>
+      <h2>Hello, TrybeWallet!</h2>
+    </div>
+  );
 }
 
 export default App;
