@@ -60,7 +60,7 @@ class Login extends React.Component {
             value={ password }
             name="password"
             data-testid="password-input"
-            minlength="6"
+            minLength="6"
             onChange={ this.handleChange } required
           />
           </label>

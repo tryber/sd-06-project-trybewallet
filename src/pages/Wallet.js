@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import apiMoney, { expenses } from '../actions';
-import Tabela from './Tabela'
+/* import Tabela from './Tabela' */
 
 class Wallet extends React.Component {
   constructor() {
@@ -32,7 +32,8 @@ class Wallet extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     const { myExpenses } = this.props;
-    myExpenses(this.state);
+    const { value, description, currency, method, tag } = this.state;
+    myExpenses({ value, description, currency, method, tag });
   }
 
   render() {
@@ -41,8 +42,8 @@ class Wallet extends React.Component {
     const tag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     //totalValue feito com a ajuda do colega William pelo SLACK
     const totalValue = expenses.length ? Math.round(expenses
-      .reduce((acc, cur) => acc + cur.value
-       * cur.exchangeRates[cur.currency].ask, 0) * 100) / 100 : 0;
+      .reduce((acc, cur) => acc + cur.value * cur.exchangeRates[cur.currency]
+      .ask, 0) * 100) / 100 : 0;
     return (
       <div>
         <header>
@@ -63,7 +64,7 @@ class Wallet extends React.Component {
             Moeda:{' '}
             {/* buscar atraves da api, Remova das informações trazidas pela API a opção 'USDT' (Dólar Turismo).  */}
             <select data-testid="currency-input" name="currency" onChange={ this.handleChange }>
-              <option value="BRL" data-testid="BRL">BRL</option>
+              <option value="" selected>Selecione</option>
               { currencies.map((moeda) => (
                 <option value={ moeda } data-testid={ moeda }>
                   { moeda }
@@ -74,6 +75,7 @@ class Wallet extends React.Component {
           <label>
             Método de Pagamento:
             <select data-testid="method-input" name="method" onChange={ this.handleChange }>
+              <option value="" selected>Selecione</option>
               { pagamento.map((pagamento) => (
                 <option value={ pagamento }>{ pagamento }</option>
               ))}
@@ -82,6 +84,7 @@ class Wallet extends React.Component {
           <label>
             Tag:    
             <select data-testid="tag-input" name="tag" onChange={ this.handleChange }>
+              <option value="" selected>Selecione</option>
               { tag.map((tag) => (
                 <option value={ tag }>{ tag }</option>
               ))}
@@ -90,7 +93,7 @@ class Wallet extends React.Component {
           {/* Ao ser clicado, o botão deve fazer uma requisição à API para trazer o câmbio mais atualizado possível. */}
           <button type="submit" onClick={ this.onSubmit }>Adicionar despesa</button>
         </form>
-        {Tabela}
+        {/* {Tabela} */}
       </div>
     );
   }

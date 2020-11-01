@@ -5,7 +5,7 @@ class Tabela extends React.Component {
 	render() {
 		const { expenses, currency } = this.props;
 		return (
-			<div>
+			<table>
 				<tr>
 					<th>Descrição</th>
 					<th>Tag</th>
@@ -26,7 +26,9 @@ class Tabela extends React.Component {
 					<td>{}</td>
 					<td>Real</td>
 				</tr>
-			</div>
+{/* 				<button data-testid="delete-btn">Deletar</button>
+				<button data-testid="edit-btn">Editar despesa</button> */}
+			</table>
 		)
 	}
 }
