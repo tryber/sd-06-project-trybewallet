@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../actions';
 
-
 class Login extends React.Component {
   constructor() {
     super();
@@ -38,14 +37,12 @@ class Login extends React.Component {
           { disabled: true },
         );
       }
-      }
-    );
+    });
     // Caso a função fique fora como mostra o console.log ela não pega o state no momento da ação,
     // somente na próxima, por isso ela tem que ficar em cima logo após atualizar o state.
     // console.log(this.state);
   }
   
-
   render() {
     const { email, password, disabled } = this.state;
     // Destruturate my login action as a props
@@ -69,11 +66,11 @@ class Login extends React.Component {
         <br />
         <Link to="/carteira">
           <button type="button"
-          disabled={ disabled }
-          // Clicking at button disparates dispatch function to save state email at /actions/index
-          onClick={ () => login(email) }
-          >
-            Entrar
+            disabled={ disabled }
+            // Clicking at button disparates dispatch function to save state email at /actions/index
+            onClick={ () => login(email) }
+            >
+              Entrar
           </button>
         </Link>
       </div>
