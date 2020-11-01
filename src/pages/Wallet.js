@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../css/Wallet.css';
 import logo from './logo.png';
-import { createExpense, fetchObj, deleteObj } from '../actions';
+import { createExpense, fetchObj, deleteObj, editObj } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.changeHandler = this.changeHandler.bind(this);
     this.buttonAdd = this.buttonAdd.bind(this);
+    this.changeAll = this.changeAll.bind(this);
     this.state = {
       expense: {
         value: '',
@@ -19,6 +20,11 @@ class Wallet extends React.Component {
         tag: '',
       },
       display: false,
+      button: {
+        add: 'block',
+        edit: 'none',
+        background: '#888888',
+      },
     };
   }
 
@@ -54,6 +60,25 @@ class Wallet extends React.Component {
     }
   }
 
+  editExpense(exp) {
+    const { value, currency, method, tag, description, id } = exp;
+    this.setState({
+      expense: {
+        id,
+        value,
+        description,
+        currency,
+        method,
+        tag,
+      },
+      button: {
+        add: 'none',
+        edit: 'block',
+        background: 'rgb(99, 192, 99)',
+      },
+    });
+  }
+
   changeHandler(event) {
     const { name, value } = event.target;
     const { expense } = this.state;
@@ -66,13 +91,36 @@ class Wallet extends React.Component {
     });
   }
 
+  async changeAll() {
+    const { changeExpense } = this.props;
+    const { expense } = this.state;
+    await changeExpense(expense);
+    this.setState({
+      expense: {
+        value: '',
+        description: '',
+        currency: '',
+        method: '',
+        tag: '',
+      },
+      button: {
+        add: 'block',
+        edit: 'none',
+        background: '#888888',
+      },
+    });
+  }
+
   render() {
-    const { email, currencies, sum = '0', expenses, deleteExpense } = this.props;
-    const { expense, display } = this.state;
+    const { email, currencies, expenses, deleteExpense } = this.props;
+    const { expense, display, button: { add, edit, background } } = this.state;
     const { value, currency, method, tag, description } = expense;
     const tabela = ['Descrição',
       'Tag', 'Método de pagamento', 'Valor', 'Moeda', 'Câmbio utilizado',
       'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
+    const sum = expenses
+      .reduce(((acc, curr) => acc + parseFloat((curr
+        .exchangeRates[curr.currency].ask * curr.value).toFixed(2))), 0);
     return (
       <div>
         <header className="header">
@@ -87,7 +135,7 @@ class Wallet extends React.Component {
             <span className="bold" data-testid="header-currency-field">BRL</span>
           </p>
         </header>
-        <div className="form">
+        <div className="form" style={ { backgroundColor: background } }>
           Valor:
           <input
             type="number"
@@ -151,8 +199,17 @@ class Wallet extends React.Component {
             type="button"
             className="btn btn-primary text-nowrap"
             onClick={ this.buttonAdd }
+            style={ { display: add } }
           >
             Adicionar despesa
+          </button>
+          <button
+            type="button"
+            className="btn btn-warning text-nowrap"
+            onClick={ this.changeAll }
+            style={ { display: edit } }
+          >
+            Editar despesa
           </button>
         </div>
         <div
@@ -183,6 +240,15 @@ class Wallet extends React.Component {
                 <td>
                   <button
                     type="button"
+                    data-testid="edit-btn"
+                    className="btn-warning"
+                    onClick={ () => this
+                      .editExpense(exp) }
+                  >
+                    Editar
+                  </button>
+                  <button
+                    type="button"
                     data-testid="delete-btn"
                     className="btn-danger"
                     onClick={ () => deleteExpense(exp.id) }
@@ -202,7 +268,6 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
-  sum: state.wallet.sum,
   expenses: state.wallet.expenses,
 });
 
@@ -210,6 +275,7 @@ const mapDispatchToProps = (dispatch) => ({
   fieldSave: (expense) => dispatch(createExpense(expense)),
   getCurrencies: () => dispatch(fetchObj()),
   deleteExpense: (expense) => dispatch(deleteObj(expense)),
+  changeExpense: (expense) => dispatch(editObj(expense)),
 });
 
 Wallet.propTypes = {
@@ -218,12 +284,8 @@ Wallet.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
   expenses: PropTypes.arrayOf(Object).isRequired,
-  sum: PropTypes.string,
   deleteExpense: PropTypes.func.isRequired,
-};
-
-Wallet.defaultProps = {
-  sum: '0',
+  changeExpense: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
