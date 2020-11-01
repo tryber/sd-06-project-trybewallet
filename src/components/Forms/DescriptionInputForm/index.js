@@ -2,6 +2,7 @@ import React from 'react';
 
 class DescriptionInputForm extends React.Component {
   render() {
+    const { descriptionOnChange } = this.props;
     return (
       <label htmlFor="description">
         Descrição:
@@ -10,6 +11,7 @@ class DescriptionInputForm extends React.Component {
           type="text"
           name="description"
           id="description"
+          onChange={ ({ target }) => descriptionOnChange(target.value) }
         />
       </label>
     );
