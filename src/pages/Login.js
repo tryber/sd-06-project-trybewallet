@@ -42,7 +42,7 @@ class Login extends React.Component {
     // somente na próxima, por isso ela tem que ficar em cima logo após atualizar o state.
     // console.log(this.state);
   }
-  
+
   render() {
     const { email, password, disabled } = this.state;
     // Destruturate my login action as a props
@@ -50,27 +50,29 @@ class Login extends React.Component {
 
     return (
       <div>
-        <input data-testid="email-input"
-          type="text" placeholder="Enter Email"
+        <input 
+          data-testid="email-input"
+          type="text"
+          placeholder="Enter Email"
           name="email"
           value={ email }
-          onChange={ this.handleOnChange }>
-        </input>
+          onChange={ this.handleOnChange } />
         <br />
-        <input data-testid="password-input"
-          type="text" placeholder="Enter Password"
+        <input 
+          data-testid="password-input"
+          type="text"
+          placeholder="Enter Password"
           name="password"
           value={ password }
-          onChange={ this.handleOnChange }>
-        </input>
+          onChange={ this.handleOnChange } />
         <br />
         <Link to="/carteira">
           <button type="button"
             disabled={ disabled }
             // Clicking at button disparates dispatch function to save state email at /actions/index
             onClick={ () => login(email) }
-            >
-              Entrar
+          >
+            Entrar
           </button>
         </Link>
       </div>
