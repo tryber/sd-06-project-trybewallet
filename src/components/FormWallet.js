@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import './FormWallet.css';
 
-// import getCurrencies from '../services/serviceApi';
 import { addWallet, fetchCurrencies } from '../actions';
 
 class FormWallet extends React.Component {
@@ -10,7 +10,6 @@ class FormWallet extends React.Component {
     super();
     this.handleChange = this.handleChange.bind(this);
     this.callFetchCurrencies = this.callFetchCurrencies.bind(this);
-    // this.updateExpenseState = this.updateExpenseState.bind(this);
     this.showInputValue = this.showInputValue.bind(this);
     this.showInputDescription = this.showInputDescription.bind(this);
     this.showInputCurrency = this.showInputCurrency.bind(this);
@@ -33,7 +32,6 @@ class FormWallet extends React.Component {
 
   componentDidMount() {
     this.callFetchCurrencies();
-    // this.updateExpenseState();
   }
 
   async callFetchCurrencies() {
@@ -49,12 +47,6 @@ class FormWallet extends React.Component {
       },
     );
   }
-
-  // updateExpenseState() {
-  //   const { wallet } = this.props; // Global state
-  //   console.log(wallet);
-  //   // this.setState({ expense: { ...expense, exchangeRates: currencies } });
-  // }
 
   handleChange({ name, value }) {
     const { expense } = this.state;
@@ -166,7 +158,7 @@ class FormWallet extends React.Component {
     const { isFetching } = this.props;
     return (
       isFetching ? <p>Loading...</p> : (
-        <div>
+        <div className="form-Wallet">
           <form>
             { this.showInputValue(this.state) }
             { this.showInputDescription(this.state) }
@@ -194,13 +186,13 @@ const mapDispatchToProps = (dispatch) => (
 );
 
 const mapStateToProps = (state) => ({
-  // wallet: state.wallet,
   isFetching: state.wallet.isFetching,
-  // currencies: state.wallet.currencies,
+  idEditing: state.wallet.idEditing,
 });
 
 FormWallet.propTypes = {
   isFetching: PropTypes.bool.isRequired,
+  // idEditing: PropTypes.bool.isRequired,
   newWallet: PropTypes.func.isRequired,
   getCurrencies: PropTypes.func.isRequired,
 };

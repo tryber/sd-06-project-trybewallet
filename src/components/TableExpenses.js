@@ -2,10 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './TableExpenses.css';
+import { deleteWallet, isEditingWallet } from '../actions';
+import deleteBtn from '../imgs/delete.png';
+import editBtn from '../imgs/edit.png';
 
 class TableExpenses extends React.Component {
   render() {
-    const { wallet } = this.props;
+    const { wallet, deleteItem, editItem } = this.props;
     const { expenses } = wallet;
     return (
       (expenses.length === 0) ? <p>Nenhuma Despesa</p> : (
@@ -25,10 +28,10 @@ class TableExpenses extends React.Component {
           </thead>
           <tbody>
             { expenses.map((item) => {
-              const currencyAsk = item.exchangeRates[item.currency].ask;
-              const currencyOrigin = 'Real';
               const currencyConvert = item.exchangeRates[item.currency].name;
+              const currencyAsk = item.exchangeRates[item.currency].ask;
               const valueConvert = item.value * item.exchangeRates[item.currency].ask;
+              const currencyOrigin = 'Real';
 
               return (
                 <tr key={ item.id }>
@@ -41,7 +44,20 @@ class TableExpenses extends React.Component {
                   <td>{ Math.round(valueConvert * 100) / 100 }</td>
                   <td>{ currencyOrigin }</td>
                   <td>
-                    <button type="button" data-testid="delete-btn">X</button>
+                    <button
+                      type="button"
+                      data-testid="edit-btn"
+                      onClick={ () => editItem(item.id) }
+                    >
+                      <img src={ editBtn } alt="edit button" width="20px" />
+                    </button>
+                    <button
+                      type="button"
+                      data-testid="delete-btn"
+                      onClick={ () => deleteItem(item.id) }
+                    >
+                      <img src={ deleteBtn } alt="delete button" width="20px" />
+                    </button>
                   </td>
                 </tr>
               );
@@ -57,8 +73,15 @@ const mapStateToProps = (state) => ({
   wallet: state.wallet,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  deleteItem: (id) => dispatch(deleteWallet(id)),
+  editItem: (id) => dispatch(isEditingWallet(id)),
+});
+
 TableExpenses.propTypes = {
   wallet: PropTypes.shape.isRequired,
+  deleteItem: PropTypes.func.isRequired,
+  editItem: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(TableExpenses);
+export default connect(mapStateToProps, mapDispatchToProps)(TableExpenses);

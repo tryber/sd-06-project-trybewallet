@@ -4,6 +4,9 @@ export const SAVE_USER = 'SAVE_USER';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const RECEIVE_CURRENCIES = 'RECEIVE_CURRENCIES';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const IS_EDITING_EXPENSE = 'IS_EDITING_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 
 export const saveUser = (email) => (
   {
@@ -18,6 +21,22 @@ export const addWallet = (expense) => (
     expense,
   }
 );
+
+export const deleteWallet = (id) => ({
+  type: DELETE_EXPENSE,
+  id,
+});
+
+export const isEditingWallet = (id) => ({
+  type: IS_EDITING_EXPENSE,
+  id,
+});
+
+export const editWallet = (id, expense) => ({
+  type: EDIT_EXPENSE,
+  id,
+  expense,
+});
 
 const requestCurrencies = () => ({
   type: REQUEST_CURRENCIES,

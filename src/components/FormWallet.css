@@ -1,0 +1,9 @@
+.form-Wallet {
+  color: rgb(185, 183, 183);
+  display: flex;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 20px;
+  background-color: yellow;
+}
