@@ -3,7 +3,6 @@
   background-color: whitesmoke;
   width: 100%;
   flex-direction: row;
-  flex-wrap: nowrap;
 }
 
 .form-header img {
@@ -12,6 +11,8 @@
 }
 
 .form-header span {
-  padding: 15px;
+  padding: 20px;
   margin-left: 30px;
+  display: flex;
+  justify-content: flex-end;
 }

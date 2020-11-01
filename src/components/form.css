@@ -8,9 +8,14 @@
   flex-wrap: nowrap;
   justify-content: space-between;
   padding-top: 20px;
+  padding-left: 60px;
 }
 
 .form-container button {
   width: 10%;
   height: 50%;
+}
+
+.form-container label input {
+  margin-left: 10px;
 }

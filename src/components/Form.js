@@ -90,6 +90,7 @@ class Form extends React.Component {
         >
           Adicionar despesa
         </button>
+        <br/>
       </form>
     );
   }
