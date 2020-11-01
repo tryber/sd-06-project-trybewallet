@@ -9,37 +9,56 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      disabledButton: false,
     };
     this.handleInput = this.handleInput.bind(this);
     this.submitLogin = this.submitLogin.bind(this);
+    this.inputValidations = this.inputValidations.bind(this);
   }
 
   handleInput({ value, name }) {
     this.setState({
       [name]: value,
+    },
+    () => {
+      this.inputValidations();
+    });
+  }
+
+  inputValidations() {
+    const { email, password } = this.state;
+    const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/;
+    const lengthMinPassword = 5;
+
+    this.setState({
+      disabledButton: (emailRegex.test(email) && password.length > lengthMinPassword),
     });
   }
 
   submitLogin(event) {
     event.preventDefault();
-    const { email } = this.state;
+    const { email, disabledButton } = this.state;
     const { history, login } = this.props;
-    history.push('/carteira');
-    return login(email);
+    if (disabledButton) {
+      console.log('state atual disableButton:', disabledButton);
+      history.push('/carteira');
+      return login(email);
+    }
   }
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, disabledButton } = this.state;
     return (
       <div>
         <form onSubmit={ this.submitLogin }>
           <input
             data-testid="email-input"
-            type="text"
+            type="email"
             name="email"
             value={ email }
             placeholder="email"
             onChange={ ({ target }) => this.handleInput(target) }
+            required
           />
           <input
             data-testid="password-input"
@@ -48,8 +67,9 @@ class Login extends React.Component {
             value={ password }
             placeholder="password"
             onChange={ ({ target }) => this.handleInput(target) }
+            required
           />
-          <button type="submit">ENTRAR</button>
+          <button disabled={ !disabledButton } type="submit">ENTRAR</button>
         </form>
       </div>
     );
