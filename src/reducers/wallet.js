@@ -12,7 +12,8 @@ export default function (state = INITIAL_STATE, action) {
   case CURRENCIES_FECTH_SUCESS:
     return {
       ...state,
-      currencies: Object.keys(action.currencies).filter((cur) => cur !== 'USDT'),
+      currencies: Object.keys(action.currencies)
+        .filter((currency) => currency !== 'USDT'),
     };
   case ADD_NEW_EXPENSE:
     return {
