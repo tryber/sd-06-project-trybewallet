@@ -1,15 +1,25 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
-import { WALLET } from '../actions';
+import { GET_CURRENCY, ADD_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  total: 0,
 };
 
 export default function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case WALLET:
-    return state;
+  case GET_CURRENCY:
+    return { ...state, currencies: action.currency };
+  case ADD_EXPENSE:
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses,
+        { id: state.expenses.length, ...action.expense.expenses },
+      ],
+      total: action.expense.total,
+    };
   default:
     return state;
   }
