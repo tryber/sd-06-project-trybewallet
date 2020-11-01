@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  /* background-color: aqua; */
+  height: 80px;
+  /* border-bottom: 1px solid black; */
+}
+
+.logo-container {
+  /* background-color: brown; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+}
+
+.info-container {
+  /* background-color: chartreuse; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: row;
+  width: 100vmax;
+  font-size: 18px;
+  padding: 5px 15px;
+}
+
+.info-container p {
+  margin-right: 20px;
+  padding-top: 10px;
+}
+
+.logo {
+  width: 120px;
+  margin-left: 20px;
+}
