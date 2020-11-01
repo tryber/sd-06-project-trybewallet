@@ -59,6 +59,16 @@ class Forms extends Component {
 
     dispachExpenses(forms);
 
+    this.setState({
+      forms: {
+        value: '',
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Lazer',
+      }
+    });
+
     document.getElementById('myForm').reset();
   }
 
@@ -70,7 +80,7 @@ class Forms extends Component {
       <form id="myForm">
         <label htmlFor="value-input" >
           Valor:
-          <input id="value-input" data-testid="value-input" name="value" placeholder="0" onChange={ handleChange } />
+          <input id="value-input"  type="number" data-testid="value-input" name="value" placeholder="0" onChange={ handleChange } />
         </label>
         <label htmlFor="currency-input" >
           Moeda:
@@ -91,8 +101,8 @@ class Forms extends Component {
         <label htmlFor="tag-input" >
           Tag:
           <select id="tag-input" data-testid="tag-input" name="tag" onChange={ handleChange }>
-            <option value="Alimentação">Alimentação</option>
             <option value="Lazer ">Lazer</option>
+            <option value="Alimentação">Alimentação</option>
             <option value="Trabalho">Trabalho</option>
             <option value="Transporte">Transporte</option>
             <option value="Saúde">Saúde</option>

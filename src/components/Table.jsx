@@ -7,30 +7,41 @@ class Table extends Component {
 
     return (
       <table>
-        <tr>
-          <th>Descrição</th>
-          <th>Tag</th>
-          <th>Método de Pagamento</th>
-          <th>Valor</th>
-          <th>Moeda</th>
-          <th>Câmbio Utilizado</th>
-          <th>Valor Comvertido</th>
-          <th>Moeda de Conversão</th>
-          <th>Editar/Excluir</th>
-        </tr>
-        { expenseState.map(expense => {
+        <thead>
           <tr>
-            <th>{expense.description}</th>
+            <th>Descrição</th>
             <th>Tag</th>
-            <th>Método de Pagamento</th>
+            <th>Método de pagamento</th>
             <th>Valor</th>
             <th>Moeda</th>
-            <th>Câmbio Utilizado</th>
-            <th>Valor Comvertido</th>
-            <th>Moeda de Conversão</th>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
             <th>Editar/Excluir</th>
           </tr>
-        }) }
+        </thead>
+        <tbody>
+          { expenseState.map((expense) => (
+            <tr key={ expense.id }>
+              <td name={ expense.description }>{ expense.description }</td>
+              <td>{ expense.tag }</td>
+              <td>{ expense.method }</td>
+              <td>{ expense.value }</td>
+              <td>{ expense.exchangeRates[expense.currency].name }</td>
+              <td>{ 
+                  (Math.round((expense.exchangeRates[expense.currency].ask) * 100) / 100
+                  ).toFixed(2)
+                }
+              </td>
+              <td>{ 
+                  (Math.round((expense.value * expense.exchangeRates[expense.currency].ask) * 100) / 100
+                  ).toFixed(2)
+                }
+              </td>
+              <td>Real</td>
+            </tr>
+          )) }
+        </tbody>
       </table>
     );
   }
@@ -39,5 +50,9 @@ class Table extends Component {
 const mapStateToProps = (state) => ({
   expenseState: state.wallet.expenses,
 });
+
+Table.propTypes = {
+  expenseState: PropTypes.arrayOf(PropTypes.any).isRequired, 
+};
 
 export default connect(mapStateToProps)(Table);
