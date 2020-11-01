@@ -41,7 +41,7 @@ class Table extends React.Component {
               <td>{expense.description}</td>
               <td>{expense.tag}</td>
               <td>{expense.method}</td>
-              <td>{Math.round((expense.value) * 100)/100}</td>
+              <td>{Math.round((expense.value) * 100) / 100}</td>
               <td>
                 {
                   Object.values(expense.exchangeRates)
