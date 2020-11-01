@@ -1,4 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loginAction as action } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -14,6 +18,7 @@ class Login extends React.Component {
     this.toggleButton = this.toggleButton.bind(this);
     this.verifyPassword = this.verifyPassword.bind(this);
     this.verifyEmail = this.verifyEmail.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   verifyPassword(password) {
@@ -53,6 +58,13 @@ class Login extends React.Component {
     }, () => this.toggleButton());
   }
 
+  handleLogin() {
+    const { loginAction } = this.props;
+    const { email } = this.state;
+
+    loginAction(email);
+  }
+
   render() {
     const { isDisabled } = this.state;
 
@@ -77,10 +89,26 @@ class Login extends React.Component {
             data-testid="password-input"
           />
         </label>
-        <button type="submit" disabled={ isDisabled }>Entrar</button>
+        <Link to="/carteira">
+          <button
+            type="submit"
+            disabled={ isDisabled }
+            onClick={ this.handleLogin }
+          >
+            Entrar
+          </button>
+        </Link>
       </>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  loginAction: (email) => dispatch(action(email)),
+});
+
+Login.propTypes = {
+  loginAction: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
