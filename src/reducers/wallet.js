@@ -1,10 +1,8 @@
-const INITIAL_STATE_WALLET = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
-};
+// const INITIAL_STATE_WALLET = {
+//   currencies: [],
+//   expenses: [],
+// };
 
-function walletReducer(state = INITIAL_STATE_WALLET) {}
+// // function walletReducer(state = INITIAL_STATE_WALLET, action ) {}
 
-export default walletReducer;
+// export default walletReducer;

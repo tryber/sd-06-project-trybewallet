@@ -1,3 +1,5 @@
-const addEmailUser = (value) => ({ type: 'LOGIN', value });
+export const LOGIN = 'LOGIN';
 
-export default addEmailUser;
+const login = (emailAddress) => ({ type: LOGIN, emailAddress });
+
+export default login;
