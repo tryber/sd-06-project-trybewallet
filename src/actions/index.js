@@ -11,7 +11,7 @@ export const login = (email) => ({
 
 export const sucessCurrencies = (currencies) => ({
   type: SUCESS_CURRENCIES,
-  currencies: [],
+  currencies,
 });
 
 // export const sucessExpenses = (expenses) => ({
@@ -19,14 +19,12 @@ export const sucessCurrencies = (currencies) => ({
 //   expenses: [],
 // });
 
-export const thunkCurrency = () => async (dispatch) => {
-  const curriencies = await fetchCurrencyApi();
-  dispatch(sucessCurrencies(curriencies));
-};
-
-// export const thunkCurrence = () => {
-//   return (dispatch) => {
-//     fetchApi()
-//       .then((curr) => dispatch(wallet(curr)))
-//   }
-// }
+export function thunkCurrency() {
+  return (dispatch) => (
+    fetchCurrencyApi()
+      .then((currencies) => {
+        const tempCurrencies = Object.keys(currencies);
+        dispatch(sucessCurrencies(tempCurrencies.filter((curr) => curr !== 'USDT')));
+      })
+  );
+}

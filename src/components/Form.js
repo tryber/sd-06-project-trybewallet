@@ -4,21 +4,13 @@ import { thunkCurrency } from '../actions';
 import './form.css';
 
 class Form extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currency: [],
-    };
-  }
-
   componentDidMount() {
     const { fetchCurrencies } = this.props;
     fetchCurrencies();
   }
 
   render() {
-    const { currency } = this.state;
-    const { fetchCurrencies } = this.props;
+    const { listOfcurrencies } = this.props;
     return (
       <form className="form-container">
         <label
@@ -42,19 +34,21 @@ class Form extends React.Component {
           />
         </label>
         <label
-          htmlFor="moedaCorrente"
+          htmlFor="currencies"
         >
           <select
             data-testid="currency-input"
-            name="moedaCorrente"
-            id="moedaCorrente"
+            name="currencies"
+            id="currencies"
           >
-            <option
-              data-testid=""
-              value={ fetchCurrencies(currency) }
-            >
-              { (e) => e.target.value }
-            </option>
+            { listOfcurrencies.currencies.map((curr) => (
+              <option
+                key={ curr }
+                data-testid={ curr }
+              >
+                { curr }
+              </option>
+            ))}
           </select>
         </label>
         <label
@@ -90,14 +84,14 @@ class Form extends React.Component {
         >
           Adicionar despesa
         </button>
-        <br/>
+        <br />
       </form>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  currencies: state.wallet.curriencies,
+  listOfcurrencies: state.wallet,
 });
 
 const mapDispatchToProps = (dispatch) => ({

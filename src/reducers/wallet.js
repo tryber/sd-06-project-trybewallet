@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case SUCESS_CURRENCIES:
-    return { ...state, currencies: Object.keys(action.currencies) };
+    return { ...state, currencies: action.currencies };
   case SUCESS_EXPENSES:
     return { ...state, currencies: action.expenses };
   default:
