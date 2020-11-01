@@ -42,9 +42,7 @@ class Forms extends Component {
       return {
         ...obj,
         [current]: {
-          code: currentCurrencies[current].code,
-          name: currentCurrencies[current].name,
-          ask: currentCurrencies[current].ask,
+          ...currentCurrencies[current],
         },
       };
     }, {});
@@ -60,6 +58,8 @@ class Forms extends Component {
     const { forms } = this.state;
 
     dispachExpenses(forms);
+
+    document.getElementById('myForm').reset();
   }
 
   render() {
@@ -67,10 +67,10 @@ class Forms extends Component {
     const { currencieState } = this.props;
     
     return (
-      <section>
+      <form id="myForm">
         <label htmlFor="value-input" >
           Valor:
-          <input required type="number" data-testid="value-input" name="value" onChange={ handleChange } />
+          <input type="number" data-testid="value-input" name="value" onChange={ handleChange } />
         </label>
         <label htmlFor="currency-input" >
           Moeda:
@@ -100,10 +100,10 @@ class Forms extends Component {
         </label>
         <label htmlFor="description-input" >
           Descrição:
-          <input required data-testid="description-input" name="description" onChange={ handleChange } />
+          <input data-testid="description-input" name="description" onChange={ handleChange } />
         </label>
-        <button type="submit" onClick={this.handleClick}>Adicionar despesa</button>
-      </section>
+        <button type="button" onClick={this.handleClick}>Adicionar despesa</button>
+      </form>
     );
   }
 }
