@@ -1,1 +1,3 @@
-// Coloque aqui suas actions
+import registerUser from './registerUser';
+
+export default registerUser;
