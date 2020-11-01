@@ -7,53 +7,51 @@ body {
   background-color: rgb(247, 247, 247);
 }
 
-.table {
-  align-content: space-between;
-  border-width: 0px 1px;
-  border-color: gray;
-  border-style: solid;
-  display: flex;
+table {
   margin: auto;
   margin-top: 30px;
   width: 95%;
 }
 
 thead {
-  background-color: rgb(204, 204, 204);
-  border-width: 1px;
-  border-color: gray;
-  border-style: solid;
   display: flex;
   flex-wrap: nowrap;
-  width: 100%;
 }
 
 th {
   background-color: rgb(247, 247, 247);
-  border-width: 1px;
+  border-width: 1px 0.5px 1px 1px;
   border-color: gray;
   border-style: solid;
-  width: 130px;
+  width: 100%;
+  height: 40px;
 }
 
 tbody {
-  background-color: rgb(204, 204, 204);
-  border-width: 1px;
-  border-color: gray;
-  border-style: solid;
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
 }
 
 td {
-  background-color: rgb(247, 247, 247);
-  border-width: 1px;
+  border-width: 0 0.5px 0.5px 1px;
   border-color: gray;
   border-style: solid;
-  width: 130px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
-tr {
+thead tr {
   display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+tbody tr {
+  width: 11.1%;
+  height: 30px;
+}
+
+button {
+  height: 18px;
 }

@@ -17,13 +17,29 @@ class ExpensesTable extends React.Component {
         <tbody>
           <tr>
             {description.map((value) => <td key={value}>{value}</td>)}
+          </tr>
+          <tr>
             {tag.map((value) => <td key={value}>{value}</td>)}
+          </tr>
+          <tr>
             {method.map((value) => <td key={value}>{value}</td>)}
+          </tr>
+          <tr>
             {value.map((value) => <td key={value}>{value}</td>)}
+          </tr>
+          <tr>
             {currency.map((value) => <td key={value}>{value}</td>)}
+          </tr>
+          <tr>
             {askRate.map((value) => <td key={value}>{value.toFixed(2)}</td>)}
+          </tr>
+          <tr>
             {value.map((each, index) => <td key={each}>{(each * askRate[index]).toFixed(2)}</td>)}
+          </tr>
+          <tr>
             {expensesArr.map((value) => <td key={value}>{'Real'}</td>)}
+          </tr>
+          <tr>
             {expensesArr.map((value, index) => <td><button key={`edit${index}`}>{'EDIT'}</button><button key={`del${index}`}>{'DEL'}</button></td>)}
           </tr>
         </tbody>
