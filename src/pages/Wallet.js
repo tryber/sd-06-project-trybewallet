@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../css/Wallet.css';
 import logo from './logo.png';
-import { createExpense, fetchObj } from '../actions';
+import { createExpense, fetchObj, deleteObj } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -67,7 +67,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencies, sum = 0, expenses } = this.props;
+    const { email, currencies, sum = '0', expenses, deleteExpense } = this.props;
     const { expense, display } = this.state;
     const { value, currency, method, tag, description } = expense;
     const tabela = ['Descrição',
@@ -180,6 +180,16 @@ class Wallet extends React.Component {
                 <td>{ (parseFloat(exp.exchangeRates[exp.currency].ask)).toFixed(2) }</td>
                 <td>{ (exp.exchangeRates[exp.currency].ask * exp.value).toFixed(2) }</td>
                 <td>Real</td>
+                <td>
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    className="btn-danger"
+                    onClick={ () => deleteExpense(exp.id) }
+                  >
+                    Deletar
+                  </button>
+                </td>
               </tr>
             )) }
           </tbody>
@@ -199,6 +209,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fieldSave: (expense) => dispatch(createExpense(expense)),
   getCurrencies: () => dispatch(fetchObj()),
+  deleteExpense: (expense) => dispatch(deleteObj(expense)),
 });
 
 Wallet.propTypes = {
@@ -207,11 +218,12 @@ Wallet.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
   expenses: PropTypes.arrayOf(Object).isRequired,
-  sum: PropTypes.number,
+  sum: PropTypes.string,
+  deleteExpense: PropTypes.func.isRequired,
 };
 
 Wallet.defaultProps = {
-  sum: 0,
+  sum: '0',
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
