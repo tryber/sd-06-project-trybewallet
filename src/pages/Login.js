@@ -111,3 +111,6 @@ Login.propTypes = {
 };
 
 export default connect(null, mapDispatchToProps)(Login);
+
+// referência onde peguei a validação de email e a ideia para estilização:
+// [https://www.youtube.com/watch?v=HzJngc-Se9Q] - excelente canal de css.
