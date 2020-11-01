@@ -1,21 +1,25 @@
-import { SAVE_EXPENSES, REQUEST_OBJE, GET_OBJE, FAILED_REQUEST } from '../actions';
+import { SAVE_EXPENSES, GET_OBJE } from '../actions';
 
 const initialState = {
   expenses: [],
-  error: '',
-  currencies: '',
+  currencies: [],
+  sum: 0,
 };
 
 export default function wallet(state = initialState, action) {
   switch (action.type) {
-  case SAVE_EXPENSES:
-    return { ...state, expenses: [...state.expenses, action.expense] };
-  case REQUEST_OBJE:
-    return state;
+  case SAVE_EXPENSES: {
+    const { expense: { value, exchangeRates, currency } } = action;
+    const decimalBase = 10;
+    return { ...state,
+      expenses: [...state.expenses, action.expense],
+      sum: state.sum
+      + parseFloat((parseInt(value, decimalBase)
+      * exchangeRates[currency].ask).toFixed(2), decimalBase),
+    };
+  }
   case GET_OBJE:
-    return { ...state, currencies: action.payload };
-  case FAILED_REQUEST:
-    return { ...state, error: action.payload };
+    return { ...state, currencies: Object.keys(action.json).filter((c) => c !== 'USDT') };
   default:
     return state;
   }

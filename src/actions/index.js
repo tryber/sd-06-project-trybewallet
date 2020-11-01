@@ -3,38 +3,29 @@ import Api from '../services/currencisAPI';
 export const CHANGE_EMAIL = 'CHANGE_EMAIL';
 export const SAVE_EXPENSES = 'SAVE_EXPENSES';
 export const GET_OBJE = 'GET_OBJE';
-export const REQUEST_OBJE = 'REQUEST_OBJE';
-export const FAILED_REQUEST = 'FAILED_REQUEST';
 
 export const changeEmail = (email) => ({
   type: CHANGE_EMAIL,
   email,
 });
 
-export const saveExpenses = (expense) => ({
-  type: SAVE_EXPENSES,
-  expense,
-});
+function saveExpenses(expense) {
+  return { type: SAVE_EXPENSES, expense };
+}
 
 function getApi(json) {
-  return { type: GET_OBJE, payload: json };
-}
-
-function requestObj() {
-  return { type: REQUEST_OBJE };
-}
-
-function failedRequest(error) {
-  return { type: FAILED_REQUEST, payload: error };
+  return { type: GET_OBJE, json };
 }
 
 export function fetchObj() {
-  return (dispatch) => {
-    dispatch(requestObj());
-    return Api()
-      .then(
-        (json) => dispatch(getApi(json)),
-        (error) => dispatch(failedRequest(error.message)),
-      );
+  return (dispatch) => { Api().then((json) => dispatch(getApi(json))); };
+}
+
+export function createExpense(expense) {
+  return async (dispatch, getState) => {
+    const { wallet: { expenses } } = getState();
+    const id = expenses.length;
+    const exchangeRates = await Api();
+    dispatch(saveExpenses({ ...expense, exchangeRates, id }));
   };
 }
