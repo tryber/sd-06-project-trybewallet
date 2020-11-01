@@ -1,64 +1,93 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { catchInputEntries } from '../actions';
 import fetchApi from '../services';
 
 class Forms extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
 
     this.state = {
       forms: {
-        moeda: 'USD',
-        valor: 'Dinheiro',
-        tag: 'Alimentação',
+        id: 0,
+        value: "",
+        description: "",
+        currency: "USD",
+        method: "Dinheiro",
+        tag: "Alimentação",
       },
-      isFetching: true, 
     };
   }
 
-  async componentDidMount() {
-    const currencies = await fetchApi();
-
-    this.setState({ currencies: Object.keys(currencies) }, () => {
-      this.setState({ isFetching: false });
-    });
+  componentDidMount() {
+    console.log(this.props.currencieState);
   }
 
   handleChange({ target }) {
     const { name, value } = target;
 
-    this.setState({
+    this.setState((prevState) => ({
       forms: {
+        ...prevState.forms,
         [name]: value,
       }
-    });
+    }));
+  }
+
+  async handleClick() {
+    const { expenseState, dispachExpenses } = this.props;
+    const currentCurrencies = await fetchApi();
+    const currencies = Object.keys(currentCurrencies);
+    const exchangeRates = currencies.reduce((obj, current) => {
+      return {
+        ...obj,
+        [current]: {
+          code: currentCurrencies[current].code,
+          name: currentCurrencies[current].name,
+          ask: currentCurrencies[current].ask,
+        },
+      };
+    }, {});
+
+    this.setState((prevState) => ({
+      forms: {
+        ...prevState.forms,
+        id: expenseState.length,
+        exchangeRates,
+      }
+    }));
+
+    const { forms } = this.state;
+
+    console.log(expenseState)
+
+    dispachExpenses(forms);
   }
 
   render() {
-    const { currencies, isFetching } = this.state;
     const { handleChange } = this;
-
-    if (isFetching) {
-      return <span>Loading</span>;
-    }
+    const { currencieState } = this.props;
+    
     return (
       <forms>
         <label htmlFor="value-input" >
           Valor:
-          <input required type="number" data-testid="value-input" name="valor" onChange={ handleChange } />
+          <input required type="number" data-testid="value-input" name="value" onChange={ handleChange } />
         </label>
         <label htmlFor="currency-input" >
           Moeda:
-          <select required data-testid="currency-input" name="moeda" onChange={ handleChange }>
-            {currencies.filter(currency => currency !== "USDT").map((currency, index) => (
+          <select data-testid="currency-input" name="currency" onChange={ handleChange }>
+            { currencieState.map((currency, index) => (
               <option key={index} data-testid={currency}>{currency}</option>
             ))}
           </select>
         </label>
         <label htmlFor="method-input" >
           Método de Pagamento:
-          <select required data-testid="method-input" name="metodo" onChange={ handleChange }>
+          <select data-testid="method-input" name="method" onChange={ handleChange }>
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
             <option value="Cartão de débito">Cartão de débito</option>
@@ -66,7 +95,7 @@ class Forms extends Component {
         </label>
         <label htmlFor="tag-input" >
           Tag:
-          <select required data-testid="tag-input" name="tag" onChange={ handleChange }>
+          <select data-testid="tag-input" name="tag" onChange={ handleChange }>
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer ">Lazer</option>
             <option value="Trabalho">Trabalho</option>
@@ -75,13 +104,22 @@ class Forms extends Component {
           </select>
         </label>
         <label htmlFor="description-input" >
-          Detalhes:
-          <input data-testid="description-input" name="detalhes" onChange={ handleChange } />
+          Descrição:
+          <input required data-testid="description-input" name="description" onChange={ handleChange } />
         </label>
-        <button type="button">Adicionar despesa</button>
+        <button type="submit" onClick={this.handleClick}>Adicionar despesa</button>
       </forms>
     );
   }
 }
 
-export default Forms;
+const mapDispatchToProps = (dispatch) => ({
+  dispachExpenses: (expenses) => dispatch(catchInputEntries(expenses)),
+});
+
+const mapStateToProps = (state) => ({
+  expenseState: state.wallet.expenses,
+  currencieState: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Forms);
