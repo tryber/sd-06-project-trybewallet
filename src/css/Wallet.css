@@ -1,0 +1,10 @@
+.headerInfo ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  list-style: none;
+}
+
+.headerInfo ul li {
+  padding: 0 8px;
+}
