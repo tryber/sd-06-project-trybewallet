@@ -5,6 +5,7 @@
 export const LOGIN = 'LOGIN';
 export const CURRENCIES_FECTH_SUCESS = 'CURRENCIES_FECTH_SUCESS';
 export const ADD_NEW_EXPENSE = 'ADD_NEW_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const login = (email) => ({
   type: LOGIN,
@@ -19,6 +20,11 @@ export const currenciesFetchSucess = (currencies) => ({
 export const addNewExpense = (expense) => ({
   type: ADD_NEW_EXPENSE,
   expense,
+});
+
+export const deleteExpense = (id) => ({
+  type: DELETE_EXPENSE,
+  id,
 });
 
 // export async function fetchApi() {
