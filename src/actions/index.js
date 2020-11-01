@@ -36,8 +36,6 @@ export const setNewExpense = (expenseArray, callback, rates) => ({
 //   type: RATES_REQUEST,
 // });
 
-//{expensesArr.map((null, index) => <tr key={`row${index}`}></tr>
-
 export const fetchExchangeRates = (expenseArray, callback) => async (dispatch) => {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const exchangeRates = await response.json();
