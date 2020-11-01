@@ -67,9 +67,12 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencies, sum = 0 } = this.props;
+    const { email, currencies, sum = 0, expenses } = this.props;
     const { expense, display } = this.state;
     const { value, currency, method, tag, description } = expense;
+    const tabela = ['Descrição',
+      'Tag', 'Método de pagamento', 'Valor', 'Moeda', 'Câmbio utilizado',
+      'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
     return (
       <div>
         <header className="header">
@@ -158,6 +161,29 @@ class Wallet extends React.Component {
         >
           Favor preencher todos os campos!
         </div>
+        <table className="table table-dark">
+          <thead>
+            <tr>
+              { tabela.map((campo) => (
+                <th key={ campo } scope="col">{ campo }</th>
+              )) }
+            </tr>
+          </thead>
+          <tbody>
+            { expenses.map((exp) => (
+              <tr key={ exp.id }>
+                <td>{ exp.description }</td>
+                <td>{ exp.tag }</td>
+                <td>{ exp.method }</td>
+                <td>{ exp.value }</td>
+                <td>{ exp.exchangeRates[exp.currency].name }</td>
+                <td>{ (parseFloat(exp.exchangeRates[exp.currency].ask)).toFixed(2) }</td>
+                <td>{ (exp.exchangeRates[exp.currency].ask * exp.value).toFixed(2) }</td>
+                <td>Real</td>
+              </tr>
+            )) }
+          </tbody>
+        </table>
       </div>
     );
   }
@@ -167,6 +193,7 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
   sum: state.wallet.sum,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -179,6 +206,7 @@ Wallet.propTypes = {
   fieldSave: PropTypes.func.isRequired,
   getCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
+  expenses: PropTypes.arrayOf(Object).isRequired,
   sum: PropTypes.number,
 };
 
