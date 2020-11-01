@@ -5,6 +5,7 @@ window.fetch = async () => ({ json: () => Promise.resolve(response) });
 export const USER_REGISTER = 'USER_REGISTER';
 export const GET_CURRENCY = 'GET_CURRENCY';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const userRegister = (email) => ({
   type: USER_REGISTER,
@@ -19,6 +20,12 @@ export const getCurrency = (currency) => ({
 export const addExpense = (expense) => ({
   type: ADD_EXPENSE,
   expense,
+});
+
+export const removeExpense = (expense, convValue) => ({
+  type: REMOVE_EXPENSE,
+  expense,
+  convValue,
 });
 
 export function fetchCurrency() {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { addExpense, fetchCurrency } from '../actions';
 
 class Form extends Component {
@@ -161,8 +161,8 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
 
 Form.propTypes = {
-  fetchCurrencies: propTypes.func.isRequired,
-  addExpenses: propTypes.func.isRequired,
-  currenciesKeys: propTypes.arrayOf(propTypes.string).isRequired,
-  currencies: propTypes.objectOf().isRequired,
+  fetchCurrencies: PropTypes.func.isRequired,
+  addExpenses: PropTypes.func.isRequired,
+  currenciesKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currencies: PropTypes.objectOf().isRequired,
 };

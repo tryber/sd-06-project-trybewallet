@@ -3,11 +3,29 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
+import { removeExpense } from '../actions';
+
 class Table extends Component {
+  constructor() {
+    super();
+
+    this.renderTable = this.renderTable.bind(this);
+  }
+
   renderTable(expense) {
-    const { id, description, method, tag, value, currency, exchangeRates } = expense;
-    const currentCurrency = Object.values(exchangeRates)
-      .find((item) => item.code === currency);
+    const { removeExpenses } = this.props;
+    const {
+      id,
+      description,
+      method,
+      tag,
+      value,
+      currency,
+      exchangeRates,
+    } = expense;
+    const currentCurrency = Object.values(exchangeRates).find(
+      (item) => item.code === currency,
+    );
 
     const { name, ask } = currentCurrency;
     const convValue = (ask * value).toFixed(2);
@@ -22,6 +40,18 @@ class Table extends Component {
         <td>{parseFloat(ask).toFixed(2)}</td>
         <td>{convValue}</td>
         <td>Real</td>
+        <td>
+          <button type="button" data-testid="edit-btn">
+            Editar
+          </button>
+          <button
+            type="button"
+            data-testid="delete-btn"
+            onClick={ () => removeExpenses(expense, convValue) }
+          >
+            Excluir
+          </button>
+        </td>
       </tr>
     );
   }
@@ -45,9 +75,8 @@ class Table extends Component {
           </tr>
         </thead>
         <tbody>
-          { expenses.length !== 0 && (
-            expenses.map((expense) => this.renderTable(expense))
-          ) }
+          {expenses.length !== 0
+          && expenses.map((expense) => this.renderTable(expense))}
         </tbody>
       </table>
     );
@@ -58,8 +87,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(Table);
+const mapDispatchToProps = (dispatch) => ({
+  removeExpenses: (expense, convValue) => dispatch(removeExpense(expense, convValue)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
 
 Table.propTypes = {
   expenses: PropTypes.objectOf().isRequired,
+  removeExpenses: PropTypes.func.isRequired,
 };
