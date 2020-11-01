@@ -39,11 +39,11 @@ class Login extends React.Component {
         this.setState({ isValid: false });
       } else if (password.length < MIN_PASSWORD_LENGTH) {
         validationPasswordText.innerHTML = 'senha inválida!';
-        validationEmailText.style.color = 'red';
+        validationPasswordText.style.color = 'red';
         this.setState({ isValid: false });
       } else {
         validationPasswordText.innerHTML = 'senha válida!';
-        validationEmailText.style.color = 'green';
+        validationPasswordText.style.color = 'green';
         this.setState({ isValid: true });
       }
     } else {
