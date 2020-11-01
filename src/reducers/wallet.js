@@ -10,7 +10,7 @@ export default function (state = INITIAL_STATE, action) {
   case CURRENCIES_FETCH:
     return {
       ...state.currencies,
-      currencies: Object.keys(action.currencies),
+      currencies: Object.keys(action.currencies).filter(currency => currency !== 'USDT'),
     };
   default:
     return state;
