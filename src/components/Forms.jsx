@@ -18,7 +18,7 @@ class Forms extends Component {
         description: '',
         currency: 'USD',
         method: 'Dinheiro',
-        tag: 'Alimentação',
+        tag: 'Lazer',
       },
     };
   }
@@ -70,11 +70,11 @@ class Forms extends Component {
       <form id="myForm">
         <label htmlFor="value-input" >
           Valor:
-          <input type="number" data-testid="value-input" name="value" onChange={ handleChange } />
+          <input id="value-input" data-testid="value-input" name="value" placeholder="0" onChange={ handleChange } />
         </label>
         <label htmlFor="currency-input" >
           Moeda:
-          <select data-testid="currency-input" name="currency" onChange={ handleChange }>
+          <select id="currency-input" data-testid="currency-input" name="currency" onChange={ handleChange }>
             { currencieState.map((currency, index) => (
               <option key={index} data-testid={currency} value={currency}>{currency}</option>
             ))}
@@ -82,7 +82,7 @@ class Forms extends Component {
         </label>
         <label htmlFor="method-input" >
           Método de Pagamento:
-          <select data-testid="method-input" name="method" onChange={ handleChange }>
+          <select id="method-input" data-testid="method-input" name="method" onChange={ handleChange }>
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
             <option value="Cartão de débito">Cartão de débito</option>
@@ -90,7 +90,7 @@ class Forms extends Component {
         </label>
         <label htmlFor="tag-input" >
           Tag:
-          <select data-testid="tag-input" name="tag" onChange={ handleChange }>
+          <select id="tag-input" data-testid="tag-input" name="tag" onChange={ handleChange }>
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer ">Lazer</option>
             <option value="Trabalho">Trabalho</option>
@@ -100,7 +100,7 @@ class Forms extends Component {
         </label>
         <label htmlFor="description-input" >
           Descrição:
-          <input data-testid="description-input" name="description" onChange={ handleChange } />
+          <input id="description-input" data-testid="description-input" name="description" onChange={ handleChange } />
         </label>
         <button type="button" onClick={this.handleClick}>Adicionar despesa</button>
       </form>

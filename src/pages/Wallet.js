@@ -5,6 +5,7 @@ import { getCurrencies } from '../actions';
 import Forms from '../components/Forms';
 import Header from '../components/Header';
 import fetchApi from '../services';
+import Table from '../components/Table';
 
 class Wallet extends Component {
   async componentDidMount() {
@@ -22,6 +23,7 @@ class Wallet extends Component {
       <section>
         <Header />
         <Forms />
+        <Table />
       </section>
     );
   }
