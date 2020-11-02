@@ -44,17 +44,17 @@ class Wallet extends React.Component {
     const totalValue = expenses.length ? Math.round(expenses
       .reduce((acc, cur) => acc + cur.value
       * cur.exchangeRates[cur.currency].ask, 0) * 100) / 100 : 0;
-      // const fields = [
-      //   'Descrição',
-      //   'Tag',
-      //   'Método de pagamento',
-      //   'Valor',
-      //   'Moeda',
-      //   'Câmbio utilizado',
-      //   'Valor convertido',
-      //   'Moeda de conversão',
-      //   'Editar/Excluir'
-      // ];
+    const fields = [
+      'Descrição',
+      'Tag',
+      'Método de pagamento',
+      'Valor',
+      'Moeda',
+      'Câmbio utilizado',
+      'Valor convertido',
+      'Moeda de conversão',
+      'Editar/Excluir',
+    ];
     return (
       <div className="wallet-container" onSubmit={ this.handleNewExpense }>
         <header>
@@ -136,7 +136,7 @@ class Wallet extends React.Component {
             </select>
           </label>
           <label htmlFor="description">
-            Descrição
+            Descricão
             <input
               required="required"
               name="description"
@@ -147,6 +147,32 @@ class Wallet extends React.Component {
           </label>
           <button type="submit">Adicionar Despesa</button>
         </form>
+        <div>
+          <table>
+            <thead>
+              <tr>
+                {fields.map((element) => <th key={ element }>{element}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {expenses.map((element) => {
+                const askValue = Number(element.exchangeRates[element.currency].ask);
+                return (
+                  <tr key={ element.id }>
+                    <td>{ element.description }</td>
+                    <td>{ element.tag }</td>
+                    <td>{ element.method }</td>
+                    <td>{ element.value }</td>
+                    <td>{ element.exchangeRates[element.currency].name }</td>
+                    <td>{ askValue.toFixed(2) }</td>
+                    <td>{element.value * askValue }</td>
+                    <td>Real</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
