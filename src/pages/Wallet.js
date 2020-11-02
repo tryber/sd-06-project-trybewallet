@@ -19,7 +19,7 @@ class Wallet extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleRemoveExpense = this.handleRemoveExpense.bind(this);
     this.handleEditExpense = this.handleEditExpense.bind(this);
-    this.sendEditedExpense = this.sendEditedExpense.bind(this);
+    this.handleSubmitEditedExpense = this.handleSubmitEditedExpense.bind(this);
   }
 
   componentDidMount() {
@@ -38,7 +38,7 @@ class Wallet extends React.Component {
     saveExpensesInfo(expense);
   }
 
-  submitEditedExpenseToForm(event) {
+  handleSubmitEditedExpense(event) {
     event.preventDefault();
     const { editExpenseAction } = this.props;
     const { value, description, currency, method, tag, editedId: id } = this.state;
@@ -80,7 +80,7 @@ class Wallet extends React.Component {
           </span>
         </header>
         <form
-          onSubmit={ isEditing ? this.sendEditedExpense : this.handleAddNewExpense }
+          onSubmit={ isEditing ? this.handleSubmitEditedExpense : this.handleAddNewExpense }
         >
           <label htmlFor="value">
             Valor:
