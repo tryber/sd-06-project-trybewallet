@@ -19,8 +19,8 @@ export default function (state = initialState, action) {
   case DEL_ITEM:
     return {
       ...state,
-      expenses: [...state.expenses, state.expenses.filter((item, index) => index !== action.id) ]
-    }
+      expenses: state.expenses.filter((item, index) => index !== action.id),
+    };
   default:
     return state;
   }

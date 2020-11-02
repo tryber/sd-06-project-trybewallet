@@ -11,36 +11,58 @@ class ExpensesTable extends React.Component {
   }
 
   handleListItems() {
-    const { description, tag, method, value, currency, askRate, expensesArr, deleteItem } = this.props;
+    const { expensesArr, deleteItem } = this.props;
     if (expensesArr.length > 0) {
+      const askRate = expensesArr.map((value) => parseFloat(value.exchangeRates[value.currency].ask));
+      const currency = expensesArr.map((value) => value.exchangeRates[value.currency].name);
+      const value = expensesArr.map((coin) => coin.value);
+      const method = expensesArr.map((value) => value.method);
+      const tag = expensesArr.map((value) => value.tag);
+      const description = expensesArr.map((value) => value.description);
+
       return (
         <tbody>
         <tr>
-          {description.map((value) => <td key={value}>{value}</td>)}
+          {description.map((value, index) => <td key={`desc${index}`}>{value}</td>)}
         </tr>
         <tr>
-          {tag.map((value) => <td key={value}>{value}</td>)}
+          {tag.map((value, index) => <td key={`tag${index}`}>{value}</td>)}
         </tr>
         <tr>
-          {method.map((value) => <td key={value}>{value}</td>)}
+          {method.map((value, index) => <td key={`meth${index}`}>{value}</td>)}
         </tr>
         <tr>
-          {value.map((value) => <td key={value}>{value}</td>)}
+          {value.map((value, index) => <td key={`vaç${index}`}>{value}</td>)}
         </tr>
         <tr>
-          {currency.map((value) => <td key={value}>{value}</td>)}
+          {currency.map((value, index) => <td key={`curr${index}`}>{value}</td>)}
         </tr>
         <tr>
-          {askRate.map((value) => <td key={value}>{value.toFixed(2)}</td>)}
+          {askRate.map((value, index) => <td key={`ask${index}`}>{value.toFixed(2)}</td>)}
         </tr>
         <tr>
-          {value.map((each, index) => <td key={each}>{(each * askRate[index]).toFixed(2)}</td>)}
+          {value.map((each, index) => <td key={`conv${index}`}>{(each * askRate[index]).toFixed(2)}</td>)}
         </tr>
         <tr>
-          {expensesArr.map((value) => <td key={value}>{'Real'}</td>)}
+          {expensesArr.map((value, index) => <td key={`brl${index}`}>{'Real'}</td>)}
         </tr>
         <tr>
-          {expensesArr.map((value, index) => <td><button key={`edit${index}`}>{'EDIT'}</button><button onClick={ ({ target }) => deleteItem(target.id) } id={index} key={`del${index}`}>{'DEL'}</button></td>)}
+          {expensesArr.map((value, index) => (
+            <td key={`td${index}`}>
+              <button 
+                key={`edit${index}`}
+              >
+                {'EDIT'}
+              </button>
+              <button 
+                data-testid="delete-btn" 
+                onClick={ ({ target }) => deleteItem(parseInt(target.id)) }
+                id={index}
+                key={`del${index}`}
+              >
+                {'DEL'}
+              </button>
+            </td>))}
         </tr>
       </tbody>
       )
@@ -74,13 +96,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-  expensesArr: state.wallet.expenses, 
-  description: state.wallet.expenses.map((value) => value.description),
-  tag: state.wallet.expenses.map((value) => value.tag),
-  method: state.wallet.expenses.map((value) => value.method),
-  value: state.wallet.expenses.map((coin) => coin.value),
-  currency: state.wallet.expenses.map((value) => value.exchangeRates[value.currency].name),
-  askRate: state.wallet.expenses.map((value) => parseFloat(value.exchangeRates[value.currency].ask)),
+  expensesArr: state.wallet.expenses,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
