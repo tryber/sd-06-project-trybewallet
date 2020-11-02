@@ -1,16 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { thunkCurrencies } from '../actions';
+import { thunkCurrencies, thunkExpenses } from '../actions';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      totalValue: 0,
+      value: 0,
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      description: '',
+    };
+    this.handleInput = this.handleInput.bind(this);
+    this.addExpense = this.addExpense.bind(this);
+  }
+
   componentDidMount() {
     const { thunkCurrency } = this.props;
     thunkCurrency();
   }
 
+  // getExchangeRates() {
+  //   fetch()
+  // }
+
+  handleInput({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  }
+
+  addExpense(event) {
+    event.preventDefault()
+    const { thunkExpense } = this.props;
+    const { value, currency, method, tag, description } = this.state;
+    const newExpense = {
+      value: value,
+      currency: currency,
+      method: method,
+      tag: tag,
+      description: description,
+    }
+    thunkExpense(newExpense);
+  }
+
   render() {
     const { userEmail, currenciesAPI } = this.props;
+    const { value, currency, method, tag, description } = this.state;
     return (
       <div>
         <header>
@@ -32,6 +70,9 @@ class Wallet extends React.Component {
                 data-testid="value-input"
                 id="input-value"
                 min="0"
+                name="value"
+                value = { value }
+                onChange={ this.handleInput }
               />
             </label>
             <label htmlFor="input-description">
@@ -40,6 +81,9 @@ class Wallet extends React.Component {
                 type="text"
                 data-testid="description-input"
                 id="input-description"
+                name="description"
+                value = { description }
+                onChange={ this.handleInput }
               />
             </label>
             <label htmlFor="input-currency">
@@ -47,6 +91,9 @@ class Wallet extends React.Component {
               <select
                 data-testid="currency-input"
                 id="input-currency"
+                name="currency"
+                value = { currency }
+                onChange={ this.handleInput }
               >
                 { currenciesAPI.map((currency) => (
                   <option
@@ -64,6 +111,9 @@ class Wallet extends React.Component {
               <select
                 data-testid="method-input"
                 id="input-method"
+                name="method"
+                value = { method }
+                onChange={ this.handleInput }
               >
                 <option>Dinheiro</option>
                 <option>Cartão de crédito</option>
@@ -75,6 +125,9 @@ class Wallet extends React.Component {
               <select
                 data-testid="tag-input"
                 id="input-tag"
+                name="tag"
+                value = { tag }
+                onChange={ this.handleInput }
               >
                 <option>Alimentação</option>
                 <option>Lazer</option>
@@ -83,6 +136,7 @@ class Wallet extends React.Component {
                 <option>Saúde</option>
               </select>
             </label>
+            <button type="submit" onClick={ this.addExpense }>Adicionar despesa</button>
           </fieldset>
         </form>
       </div>
@@ -93,10 +147,12 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   userEmail: state.user,
   currenciesAPI: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   thunkCurrency: () => dispatch(thunkCurrencies()),
+  thunkExpense: (expenses) => dispatch(thunkExpenses(expenses)),
 });
 
 Wallet.propTypes = {
@@ -104,7 +160,9 @@ Wallet.propTypes = {
     email: PropTypes.string.isRequired,
   }).isRequired,
   currenciesAPI: PropTypes.arrayOf(Object).isRequired,
+  expenses: PropTypes.arrayOf(Object).isRequired,
   thunkCurrency: PropTypes.func.isRequired,
+  thunkExpenses: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

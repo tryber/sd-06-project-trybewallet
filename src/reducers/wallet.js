@@ -10,6 +10,11 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       currencies: Object.keys(action.payload).filter((currency) => currency !== 'USDT'),
     };
+  case 'SAVE_EXPENSE':
+    return {
+      ...state,
+      expenses: [...state.expenses, action.expenses],
+    }
   default:
     return state;
   }
