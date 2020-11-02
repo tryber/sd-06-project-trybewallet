@@ -71,7 +71,7 @@ class Login extends React.Component {
         <Link
           to="/carteira"
         >
-          <button 
+          <button
             type="button"
             disabled={ disabled }
             // Clicking at button disparates dispatch function to save state email at /actions/index
