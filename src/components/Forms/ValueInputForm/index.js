@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './style.css';
 
@@ -23,5 +24,9 @@ class ValueInputForm extends React.Component {
     );
   }
 }
+
+ValueInputForm.propTypes = {
+  genericHandleChange: PropTypes.func.isRequired,
+};
 
 export default ValueInputForm;

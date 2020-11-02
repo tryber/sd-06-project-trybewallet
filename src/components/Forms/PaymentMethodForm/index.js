@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class PaymentMethodForm extends React.Component {
   render() {
@@ -23,5 +24,9 @@ class PaymentMethodForm extends React.Component {
     );
   }
 }
+
+PaymentMethodForm.propTypes = {
+  genericHandleChange: PropTypes.func.isRequired,
+};
 
 export default PaymentMethodForm;

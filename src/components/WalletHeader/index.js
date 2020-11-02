@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import PropTypes from 'prop-types';
 import { currenciesThunk } from '../../actions';
 
 import WalletWelcome from '../WalletWelcome';
@@ -36,5 +36,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getCurrency: () => dispatch(currenciesThunk()),
 });
+
+WalletHeader.propTypes = {
+  getCurrency: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletHeader);

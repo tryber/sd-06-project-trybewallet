@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { expensesThunk } from '../../actions';
 
@@ -67,5 +68,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getExpenses: (expenses) => dispatch(expensesThunk(expenses)),
 });
+
+WalletTable.propTypes = {
+  getExpenses: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletTable);

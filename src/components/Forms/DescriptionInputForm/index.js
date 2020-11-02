@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class DescriptionInputForm extends React.Component {
   render() {
@@ -17,5 +18,9 @@ class DescriptionInputForm extends React.Component {
     );
   }
 }
+
+DescriptionInputForm.propTypes = {
+  genericHandleChange: PropTypes.func.isRequired,
+};
 
 export default DescriptionInputForm;

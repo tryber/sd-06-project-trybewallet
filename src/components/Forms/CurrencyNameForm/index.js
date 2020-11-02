@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import './style.css';
 
@@ -34,5 +35,10 @@ class CurrencyNameForm extends React.Component {
 const mapStateToProps = (state) => ({
   allCurrencies: state.wallet.currencies,
 });
+
+CurrencyNameForm.propTypes = {
+  genericHandleChange: PropTypes.func.isRequired,
+  allCurrencies: PropTypes.objectOf(PropTypes.object).isRequired,
+};
 
 export default connect(mapStateToProps)(CurrencyNameForm);

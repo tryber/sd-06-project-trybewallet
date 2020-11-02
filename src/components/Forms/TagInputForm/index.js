@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class TagInputForm extends React.Component {
   render() {
@@ -22,5 +23,9 @@ class TagInputForm extends React.Component {
     );
   }
 }
+
+TagInputForm.propTypes = {
+  genericHandleChange: PropTypes.func.isRequired,
+};
 
 export default TagInputForm;
