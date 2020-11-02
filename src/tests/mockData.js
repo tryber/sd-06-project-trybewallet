@@ -222,7 +222,7 @@ export const initialStateHeader = {
   },
 };
 
-export const initialStateWithExpenses = {
+export const initialStateWithexpenses = {
   user: {
     email: 'alguem@email.com',
   },

@@ -1,4 +1,4 @@
-import { ADD_EXPENSE } from '../actions';
+import { ADD_EXPENSES } from '../actions';
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INITIAL_STATE = {
   currencies: [],
@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 // O que é o reducer? O reducer é uma função que retorna um novo estado baseado no type da action.
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
-  case ADD_EXPENSE:
+  case ADD_EXPENSES:
     return {
       ...state,
       expenses: [

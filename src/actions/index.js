@@ -1,15 +1,15 @@
 // Coloque aqui suas actions
 export const LOGIN = 'LOGIN';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
-export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const ADD_EXPENSES = 'ADD_EXPENSES';
 
 export const login = (email) => ({
   type: LOGIN,
   email,
 });
 
-export const addExpense = (expenses) => ({
-  type: ADD_EXPENSE,
+export const addexpenses = (expenses) => ({
+  type: ADD_EXPENSES,
   expenses,
 });
 
