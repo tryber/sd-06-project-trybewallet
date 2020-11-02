@@ -1,11 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import './style.css';
 
 class CurrencyNameForm extends React.Component {
   render() {
-    const { currencyOnChange } = this.props;
-    const moedas = ['BRL', 'USD', 'CAD'];
+    const { currencyOnChange, allCurrencies } = this.props;
     return (
       <label htmlFor="currency-options">
         Moeda:
@@ -16,13 +16,13 @@ class CurrencyNameForm extends React.Component {
           className="currency-options"
           onChange={ ({ target }) => currencyOnChange(target.value) }
         >
-          {moedas.map((moeda) => (
+          {Object.keys(allCurrencies).filter((currency) => currency !== 'USDT').map((currency) => (
             <option
-              key={ `${moeda}` }
-              data-testid={ `${moeda}` }
-              value={ `${moeda}` }
+              key={ `${currency}` }
+              data-testid={ `${currency}` }
+              value={ `${currency}` }
             >
-              {moeda}
+              {currency}
             </option>))}
         </select>
       </label>
@@ -30,4 +30,8 @@ class CurrencyNameForm extends React.Component {
   }
 }
 
-export default CurrencyNameForm;
+const mapStateToProps = (state) => ({
+  allCurrencies: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps)(CurrencyNameForm);

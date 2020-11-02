@@ -1,3 +1,5 @@
+import { RECEIVE_CURRENCY_OK } from '../actions';
+
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
@@ -5,8 +7,8 @@ const INITIAL_STATE = {
 
 export default function usosCarteira(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case '':
-    return;
+  case RECEIVE_CURRENCY_OK:
+    return { ...state, currencies: action.currencies };
   default:
     return state;
   }
