@@ -28,3 +28,9 @@ export function thunkCurrency() {
       })
   );
 }
+
+export function thunkAddExpenses(expenses) {
+  return (dispatch) => {
+    dispatch(sucessExpenses(expenses));
+  };
+}

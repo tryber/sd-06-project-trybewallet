@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { thunkCurrency } from '../actions';
+import { thunkCurrency, thunkAddExpenses } from '../actions';
 import fetchCurrencyApi from '../services/fetchApi';
 import './form.css';
 
@@ -21,8 +21,10 @@ class Form extends React.Component {
     const comboCurrencies = document.getElementById('currencies');
     const comboMetodoPgto = document.getElementById('metodoPgto');
     const comboCatDespesa = document.getElementById('categoriaDespesa');
+    const { wallet, addExpenses } = this.props;
+    const arrayExpense = wallet.expenses;
     const expense = {
-      id: 0,
+      id: arrayExpense.length,
       value: document.getElementById('valorDespesa').value,
       description: document.getElementById('descricaoDespesa').value,
       currency: comboCurrencies.options[comboCurrencies.selectedIndex].value,
@@ -31,7 +33,8 @@ class Form extends React.Component {
       exchangeRates: await this.tratarApi(comboCurrencies
         .options[comboCurrencies.selectedIndex].value),
     };
-    console.log(expense);
+    arrayExpense.push(expense);
+    addExpenses(arrayExpense);
   }
 
   async tratarApi(currency) {
@@ -41,16 +44,9 @@ class Form extends React.Component {
     });
     return value;
   }
-  // tratarApi(currency) {
-  //   let api = {}
-  //   fetchCurrencyApi()
-  //     .then((data) => api = data[currency])
-  //     console.log(api)
-  //   return api
-  // };
 
   render() {
-    const { listOfcurrencies } = this.props;
+    const { wallet } = this.props;
     return (
       <form className="form-container">
         <label
@@ -81,7 +77,7 @@ class Form extends React.Component {
             name="currencies"
             id="currencies"
           >
-            { listOfcurrencies.currencies.map((curr) => (
+            { wallet.currencies.map((curr) => (
               <option
                 key={ curr }
                 data-testid={ curr }
@@ -122,7 +118,7 @@ class Form extends React.Component {
         </label>
         <button
           type="button"
-          onClick={ () => this.add() }
+          onClick={ () => this.add(wallet.expenses) }
         >
           Adicionar despesa
         </button>
@@ -133,11 +129,12 @@ class Form extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  listOfcurrencies: state.wallet,
+  wallet: state.wallet,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(thunkCurrency()),
+  addExpenses: (data) => dispatch(thunkAddExpenses(data)),
 });
 
 export default connect(
