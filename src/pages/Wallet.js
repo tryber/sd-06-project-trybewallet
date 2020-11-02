@@ -70,8 +70,19 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencies } = this.props;
+    const { email, currencies, expenses } = this.props;
     const { value } = this.state;
+    const tableHeaders = [
+      'Descrição',
+      'Tag',
+      'Método de pagamento',
+      'Valor',
+      'Moeda',
+      'Câmbio utilizado',
+      'Valor convertido',
+      'Moeda de conversão',
+      'Editar/Excluir',
+    ];
 
     return (
       <>
@@ -83,7 +94,7 @@ class Wallet extends React.Component {
         <hr />
         <form>
           <label htmlFor="value">
-            Valor
+            Valor:
             <input
               type="number"
               name="value"
@@ -93,7 +104,7 @@ class Wallet extends React.Component {
             />
           </label>
           <label htmlFor="description">
-            Descrição
+            Descrição:
             <input
               type="text"
               name="description"
@@ -102,14 +113,14 @@ class Wallet extends React.Component {
             />
           </label>
           <label htmlFor="currency">
-            Moeda
+            Moeda:
             <select
               name="currency"
               id="currency"
               onChange={ this.handleChange }
               data-testid="currency-input"
             >
-              <option>Moeda</option>
+              <option>Moeda:</option>
               {
                 currencies.map((currency) => (
                   <option
@@ -122,7 +133,7 @@ class Wallet extends React.Component {
             </select>
           </label>
           <label htmlFor="method">
-            Método de pagamento
+            Método de pagamento:
             <select
               name="method"
               id="method"
@@ -135,7 +146,7 @@ class Wallet extends React.Component {
             </select>
           </label>
           <label htmlFor="tag">
-            Tag
+            Tag:
             <select
               name="tag"
               id="tag"
@@ -151,6 +162,41 @@ class Wallet extends React.Component {
           </label>
           <button type="submit" onClick={ this.handleClick }>Adicionar despesa</button>
         </form>
+        <hr />
+        <table>
+          <thead>
+            <tr>
+              {
+                tableHeaders.map((header) => <th key={ header }>{ header }</th>)
+              }
+            </tr>
+          </thead>
+          <tbody>
+            {
+              expenses.map((expense) => (
+                <tr key={ expense.id }>
+                  <td>{ expense.description }</td>
+                  <td>{ expense.tag }</td>
+                  <td>{ expense.method }</td>
+                  <td>{ expense.value }</td>
+                  <td>{ expense.exchangeRates[expense.currency].name }</td>
+                  <td>
+                    {
+                      parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)
+                    }
+                  </td>
+                  <td>
+                    {
+                      (
+                        expense.value * expense.exchangeRates[expense.currency].ask
+                      ).toFixed(2)
+                    }
+                  </td>
+                  <td>Real</td>
+                </tr>))
+            }
+          </tbody>
+        </table>
       </>
     );
   }
