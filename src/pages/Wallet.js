@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import apiMoney, { expenses } from '../actions';
+import apiMoney, { expenses as valores } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -20,8 +20,8 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
-    const { myMoney } = this.props;
-    myMoney();
+    const { myMoney, currencies } = this.props;
+    myMoney(currencies);
   }
 
   onSubmit(event) {
@@ -36,7 +36,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencies } = this.props;
+    const { email, currencies, expenses } = this.props;
     const pagamento = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     /* totalValue feito com a ajuda do colega William pelo SLACK */
@@ -85,7 +85,6 @@ class Wallet extends React.Component {
               name="currency"
               onChange={ this.handleChange }
             >
-              <option value="" key="selecione" selected>Selecione</option>
               { currencies.map((m) => (
                 <option key={ m } value={ m } data-testid={ m }>{ m }</option>
               ))}
@@ -149,7 +148,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   myMoney: (cotacaoMoeda) => dispatch(apiMoney(cotacaoMoeda)),
-  myExpenses: (payload) => dispatch(expenses(payload)),
+  myExpenses: (payload) => dispatch(valores(payload)),
 });
 
 Wallet.propTypes = {
@@ -157,6 +156,7 @@ Wallet.propTypes = {
   currencies: PropTypes.arrayOf(Object).isRequired,
   myMoney: PropTypes.func.isRequired,
   myExpenses: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
