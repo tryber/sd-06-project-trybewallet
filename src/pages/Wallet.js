@@ -76,17 +76,28 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
         </form>
-        <header className="header-expenses">
-          <span>Descrição</span>
-          <span>Tag</span>
-          <span>Método de pagamento</span>
-          <span>Valor</span>
-          <span>Moeda</span>
-          <span>Câmbio utilizado</span>
-          <span>Valor convertido</span>
-          <span>Moeda de conversão</span>
-          <span>Editar/Excluir</span>
-        </header>
+        <table className="header-expenses">
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
+            </tr>
+          </thead>
+        </table>
+        <table>
+          <tbody>
+            <tr>
+              {/* fazer um map das expenses e exibir aqui! */}
+            </tr>
+          </tbody>
+        </table>
       </div>
     );
   }
