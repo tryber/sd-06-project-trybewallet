@@ -40,7 +40,6 @@ class WalletTable extends React.Component {
   async addDataToExpenses(event) {
     event.preventDefault();
     const { getExpenses } = this.props;
-    this.setState((prevState) => ({ id: prevState.id + 1 }));
     getExpenses(this.state);
   }
 

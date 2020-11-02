@@ -25,9 +25,16 @@ export const currenciesThunk = () => (dispatch) => {
 };
 
 // como visto no plantão do Ícaro (30/10/2020):
-export const expensesThunk = (expense) => async (dispatch) => {
+export const expensesThunk = (expense) => async (dispatch, getState) => {
   const apiResponse = await getAllCurrencies();
-  const upExpense = { ...expense, exchangeRates: apiResponse };
+  const itemExpenses = getState().wallet.expenses;
+  let idItem = 0;
+  if (itemExpenses.length === 0) {
+    idItem = 0;
+  } else {
+    idItem = itemExpenses[itemExpenses.length - 1].id + 1;
+  }
+  const upExpense = { ...expense, id: idItem, exchangeRates: apiResponse };
   dispatch(addExpenses(upExpense));
 };
 
