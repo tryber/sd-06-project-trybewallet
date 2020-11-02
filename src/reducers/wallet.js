@@ -1,24 +1,15 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-// Esse reducer será responsável por tratar as informações da pessoa usuária
-const initialState = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+const INITIAL_STATE = {
+  currencies: [],
+  expenses: [],
 };
 
-const walletsReducer = function walletRedux(state = initialState, action) {
+function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'CHANGE_WALLET':
-    return {
-      ...state,
-      email: action.payload,
-    };
+  case 'USER_WALLET':
+    return { ...state };
   default:
     return state;
   }
-};
-export default walletsReducer;
+}
+
+export default wallet;

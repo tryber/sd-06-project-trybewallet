@@ -1,14 +1,6 @@
-// Coloque aqui suas actions
+const userLogin = (userEmail) => ({
+  type: 'USER_EMAIL',
+  payload: userEmail,
+});
 
-export function changeUser(newUser) {
-  return {
-    type: 'CHANGE_EMAIL',
-    payload: newUser,
-  };
-}
-export function changeWallet(newWallet) {
-  return {
-    type: 'CHANGE_WALLET',
-    payload: newWallet,
-  };
-}
+export default userLogin;
