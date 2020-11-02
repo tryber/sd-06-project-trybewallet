@@ -9,6 +9,7 @@ class Expenses extends Component {
     this.state = {
       expenseValue: '',
       description: '',
+      currency: '',
       payment: '',
       tagSelected: '',
     };
@@ -21,9 +22,9 @@ class Expenses extends Component {
     setCurrency();
   }
 
-  handleInput({ target }) {
+  handleInput(event) {
     this.setState({
-      [target.name]: target.value,
+      [event.target.name]: event.target.value,
     });
   }
 
@@ -31,6 +32,7 @@ class Expenses extends Component {
     const {
       expenseValue,
       description,
+      currency,
       payment,
       tagSelected } = this.state;
     const { currenciesApi } = this.props;
@@ -60,18 +62,19 @@ class Expenses extends Component {
           <label htmlFor="currency">
             Moeda:
             <select
-              name="currencySelected"
+              name="currency"
               id="currency"
+              value={ currency }
               data-testid="currency-input"
               onChange={ this.handleInput }
             >
-              {currenciesApi.map((currency) => (
+              {currenciesApi.map((eachCurrency) => (
                 <option
-                  key={ currency }
-                  value={ currency }
-                  data-testid={ currency }
+                  key={ eachCurrency }
+                  value={ eachCurrency }
+                  data-testid={ eachCurrency }
                 >
-                  { currency }
+                  { eachCurrency }
                 </option>
               ))}
             </select>
@@ -107,8 +110,7 @@ class Expenses extends Component {
             </select>
           </label>
           <button
-            type="button"
-            onClick={ () => console.log('click') }
+            type="submit"
           >
             Adicionar despesa
           </button>
