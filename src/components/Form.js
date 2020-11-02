@@ -57,6 +57,7 @@ class Form extends React.Component {
             data-testid="value-input"
             type="text"
             id="valorDespesa"
+            value={ wallet.expenses.value }
           />
         </label>
         <label
