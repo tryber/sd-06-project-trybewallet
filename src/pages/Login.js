@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { login } from '../actions';
 
 class Login extends Component {
@@ -33,9 +33,9 @@ class Login extends Component {
   }
 
   handleLogin() {
-    // const { login } = this.props;
+    const { saveEmail } = this.props;
     const { email } = this.state;
-    login({ email });
+    saveEmail({ email });
   }
 
   render() {
@@ -72,13 +72,13 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (e) => dispatch(login(e)),
+  saveEmail: (e) => dispatch(login(e)),
   // fetchCurrencies: () => dispatch(fetchCurrencies()),
   // fetchCurrencies: () => dispatch(fetchCurrencies()),
 });
 
-// Login.propTypes = {
-//   login: PropTypes.func.isRequired,
-// };
+Login.propTypes = {
+  saveEmail: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);
