@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { thunkCurrencies, thunkAddANewCurrency, deleteExpense } from '../actions';
+import { thunkCurrencies, thunkAddANewCurrency, deleteExpense,
+  editExpense } from '../actions';
 import './Wallet.css';
 
 class Wallet extends React.Component {
@@ -14,9 +15,11 @@ class Wallet extends React.Component {
       method: 'Dinheiro',
       tag: 'Alimentação',
     };
-    this.handleNewExpense = this.handleNewExpense.bind(this);
+    this.handleAddNewExpense = this.handleAddNewExpense.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleRemoveExpense = this.handleRemoveExpense.bind(this);
+    this.handleEditExpense = this.handleEditExpense.bind(this);
+    this.handleWithEditedExpense = this.handleWithEditedExpense.bind(this);
   }
 
   componentDidMount() {
@@ -28,11 +31,21 @@ class Wallet extends React.Component {
     this.setState({ [target.name]: target.value });
   }
 
-  handleNewExpense(event) {
+  handleAddNewExpense(event) {
+    event.preventDefault();
     const { saveExpensesInfo } = this.props;
     const { ...expense } = this.state;
-    event.preventDefault();
     saveExpensesInfo(expense);
+  }
+
+  handleWithEditedExpense(event) {
+    event.preventDefault();
+    const { editExpenseAction } = this.props;
+    const { value, description, currency, method, tag, editedId: id } = this.state;
+    editExpenseAction({ value, description, currency, method, tag, id });
+    this.setState({
+      isEditing: false,
+    });
   }
 
   handleRemoveExpense(id) {
@@ -40,14 +53,19 @@ class Wallet extends React.Component {
     removeExpense(id);
   }
 
+  handleEditExpense(id) {
+    this.setState({ editedId: id, isEditing: true });
+  }
+
   render() {
-    const { value, description, currency, method, tag } = this.state;
+    const { value, description, currency, method, tag, isEditing } = this.state;
     const { email, currencies, expenses } = this.props;
     const totalValue = expenses.length ? Math.round(expenses
       .reduce((acc, cur) => acc + cur.value
        * cur.exchangeRates[cur.currency].ask, 0) * 100) / 100 : 0;
     const fields = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
       'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
+    console.log(expenses);
     return (
       <main>
         <header>
@@ -61,7 +79,9 @@ class Wallet extends React.Component {
             <span data-testid="header-currency-field">BRL</span>
           </span>
         </header>
-        <form onSubmit={ this.handleNewExpense }>
+        <form
+          onSubmit={ isEditing ? this.handleWithEditedExpense : this.handleAddNewExpense }
+        >
           <label htmlFor="value">
             Valor:
             <input
@@ -133,7 +153,7 @@ class Wallet extends React.Component {
           <button
             type="submit"
           >
-            Adicionar despesa
+            { isEditing ? 'Editar despesa' : 'Adicionar despesa' }
           </button>
         </form>
         <table id="tbl" border="1">
@@ -158,7 +178,13 @@ class Wallet extends React.Component {
                   <td>{ convertedValue.toFixed(2) }</td>
                   <td>Real</td>
                   <td>
-                    <button type="button" data-testid="edit-btn">Editar</button>
+                    <button
+                      type="button"
+                      data-testid="edit-btn"
+                      onClick={ () => this.handleEditExpense(expen.id) }
+                    >
+                      Editar
+                    </button>
                     <button
                       type="button"
                       data-testid="delete-btn"
@@ -187,6 +213,7 @@ const mapDispatchToProps = (dispatch) => ({
   currenciesFetchSucess: () => dispatch(thunkCurrencies()),
   saveExpensesInfo: (expense) => dispatch(thunkAddANewCurrency(expense)),
   removeExpense: (id) => dispatch(deleteExpense(id)),
+  editExpenseAction: (expense) => dispatch(editExpense(expense)),
 });
 
 Wallet.propTypes = {
@@ -196,6 +223,7 @@ Wallet.propTypes = {
   saveExpensesInfo: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(Object).isRequired,
   removeExpense: PropTypes.func.isRequired,
+  editExpenseAction: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
