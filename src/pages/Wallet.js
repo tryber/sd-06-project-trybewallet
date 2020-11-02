@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import AddExpenses from '../components/AddExpenses';
+// import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 
 class Wallet extends React.Component {
@@ -8,9 +9,9 @@ class Wallet extends React.Component {
     const { loggedIn, email } = this.props;
     return (
       <div>
-        {(!loggedIn) ? <Redirect to="/" /> : null }
+        {/* {(!loggedIn) ? <Redirect to="/" /> : null } */}
         <Header />
-        TrybeWallet
+        <AddExpenses />
       </div>);
   }
 }
