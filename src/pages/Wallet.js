@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addExpense } from '../actions';
 import fetchApi from '../services';
@@ -118,7 +119,12 @@ class Wallet extends React.Component {
               <option key={ category }>{ category }</option>
             ))}
           </select>
-          <button type="button" onClick={ () => saveExpense(this.state) }>Adicionar despesa</button>
+          <button
+            type="button"
+            onClick={ () => saveExpense(this.state) }
+          >
+            Adicionar despesa
+          </button>
         </form>
       </div>
     );
@@ -133,5 +139,11 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   saveExpense: (state) => dispatch(addExpense(state)),
 });
+
+Wallet.propTypes = {
+  saveExpense: PropTypes.func.isRequired,
+  email: PropTypes.string.isRequired,
+  expenses: PropTypes.string.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

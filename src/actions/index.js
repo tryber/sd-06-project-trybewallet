@@ -1,6 +1,5 @@
-import fetchApi from "../services";
+import fetchApi from '../services';
 
-// Coloque aqui suas actions
 export const CADASTRO_SAVE_EMAIL = 'CADASTRO_SAVE_EMAIL';
 export const saveEmail = (email) => ({
   type: CADASTRO_SAVE_EMAIL,

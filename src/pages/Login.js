@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { saveEmail } from '../actions';
 
@@ -19,7 +20,8 @@ class Login extends React.Component {
     const { email, password } = this.state;
     const caracterCentralEmail = '@';
     const usuario = email.substring(0, email.indexOf(caracterCentralEmail));
-    const dominio = email.substring(email.indexOf(caracterCentralEmail) + 1, email.length);
+    const dominio = email
+      .substring(email.indexOf(caracterCentralEmail) + 1, email.length);
 
     const caracterNaoExiste = -1;
     const tamanhoMinimoDominio = 3;
@@ -98,5 +100,14 @@ const mapDispatchToProps = (dispatch) => ({
 //   aleatorioText: state.listReducer.aleatorioText,
 //   cadastrados: state.listReducer.cadastrados,
 // });
+Login.propTypes = {
+  saveEmail2: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }),
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);
