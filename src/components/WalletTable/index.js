@@ -1,5 +1,7 @@
 import React from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
+
+import { expensesThunk } from '../../actions';
 
 import './style.css';
 
@@ -13,53 +15,62 @@ class WalletTable extends React.Component {
   constructor() {
     super();
     this.state = {
-      valueBRL: 0,
-      currencyName: '',
-      paymentType: '',
-      tagType: '',
+      id: 0,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: {},
       isValid: false,
     };
 
-    this.valueBRLOnChange = this.valueBRLOnChange.bind(this);
-    this.currencyOnChange = this.currencyOnChange.bind(this);
-    this.paymentOnChange = this.paymentOnChange.bind(this);
-    this.tagOnChange = this.tagOnChange.bind(this);
-    this.descriptionOnChange = this.descriptionOnChange.bind(this);
+    this.genericHandleChange = this.genericHandleChange.bind(this);
+    this.addDataToExpenses = this.addDataToExpenses.bind(this);
   }
 
-  valueBRLOnChange(value) {
-    console.log('o valor é:', value);
+  genericHandleChange({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+    if (value !== '') this.setState({ isValid: true });
   }
 
-  currencyOnChange(value) {
-    console.log('a moeda é:', value);
-  }
-
-  paymentOnChange(value) {
-    console.log('O modo é:', value);
-  }
-
-  tagOnChange(value) {
-    console.log('A categoria é:', value);
-  }
-
-  descriptionOnChange(value) {
-    console.log('A descrição é', value);
+  async addDataToExpenses(event) {
+    event.preventDefault();
+    const { getExpenses } = this.props;
+    this.setState((prevState) => ({ id: prevState.id + 1 }));
+    getExpenses(this.state);
   }
 
   render() {
     const { isValid } = this.state;
     return (
       <form>
-        <ValueInputForm valueBRLOnChange={ this.valueBRLOnChange } />
-        <CurrencyNameForm currencyOnChange={ this.currencyOnChange } />
-        <PaymentMethodForm paymentOnChange={ this.paymentOnChange } />
-        <TagInputForm tagOnChange={ this.tagOnChange } />
-        <DescriptionInputForm descriptionOnChange={ this.descriptionOnChange } />
-        <button type="submit" disabled={ !isValid }>Adicionar despesa</button>
+        <ValueInputForm genericHandleChange={ this.genericHandleChange } />
+        <CurrencyNameForm genericHandleChange={ this.genericHandleChange } />
+        <PaymentMethodForm genericHandleChange={ this.genericHandleChange } />
+        <TagInputForm genericHandleChange={ this.genericHandleChange } />
+        <DescriptionInputForm genericHandleChange={ this.genericHandleChange } />
+        <button
+          type="submit"
+          disabled={ !isValid }
+          onClick={ this.addDataToExpenses }
+        >
+          Adicionar despesa
+        </button>
       </form>
     );
   }
 }
 
-export default WalletTable;
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getExpenses: (expenses) => dispatch(expensesThunk(expenses)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(WalletTable);

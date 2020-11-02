@@ -5,25 +5,26 @@ import './style.css';
 
 class CurrencyNameForm extends React.Component {
   render() {
-    const { currencyOnChange, allCurrencies } = this.props;
+    const { genericHandleChange, allCurrencies } = this.props;
     return (
-      <label htmlFor="currency-options">
+      <label htmlFor="currency">
         Moeda:
         <select
           data-testid="currency-input"
-          id="currency-options"
-          name="currency-options"
-          className="currency-options"
-          onChange={ ({ target }) => currencyOnChange(target.value) }
+          id="currency"
+          name="currency"
+          className="currency"
+          onChange={ (event) => genericHandleChange(event) }
         >
-          {Object.keys(allCurrencies).filter((currency) => currency !== 'USDT').map((currency) => (
-            <option
-              key={ `${currency}` }
-              data-testid={ `${currency}` }
-              value={ `${currency}` }
-            >
-              {currency}
-            </option>))}
+          {Object.keys(allCurrencies)
+            .filter((currency) => currency !== 'USDT').map((currency) => (
+              <option
+                key={ `${currency}` }
+                data-testid={ `${currency}` }
+                value={ `${currency}` }
+              >
+                {currency}
+              </option>))}
         </select>
       </label>
     );

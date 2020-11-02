@@ -4,19 +4,20 @@ import './style.css';
 
 class ValueInputForm extends React.Component {
   render() {
-    const { valueBRLOnChange } = this.props;
+    const { genericHandleChange } = this.props;
     return (
-      <label htmlFor="expense">
+      <label htmlFor="value">
         Valor:
         <input
           data-testid="value-input"
-          id="expense"
+          id="value"
+          name="value"
           type="number"
-          className="expense"
+          className="value"
           placeholder="$"
           min="0"
           step="0.01"
-          onChange={ ({ target }) => valueBRLOnChange(target.value) }
+          onChange={ (event) => genericHandleChange(event) }
         />
       </label>
     );
