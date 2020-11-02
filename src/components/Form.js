@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { thunkCurrency, thunkAddExpenses } from '../actions';
 import fetchCurrencyApi from '../services/fetchApi';
@@ -25,7 +26,7 @@ class Form extends React.Component {
     const arrayExpense = wallet.expenses;
     const expense = {
       id: arrayExpense.length,
-      value: parseFloat(document.getElementById('valorDespesa').value),
+      value: document.getElementById('valorDespesa').value,
       description: document.getElementById('descricaoDespesa').value,
       currency: comboCurrencies.options[comboCurrencies.selectedIndex].value,
       method: comboMetodoPgto.options[comboMetodoPgto.selectedIndex].value,
@@ -136,6 +137,15 @@ const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(thunkCurrency()),
   addExpenses: (data) => dispatch(thunkAddExpenses(data)),
 });
+
+Form.propTypes = {
+  fetchCurrencies: PropTypes.func.isRequired,
+  addExpenses: PropTypes.func.isRequired,
+  wallet: PropTypes.shape({
+    currencies: PropTypes.arrayOf.isRequired,
+    expenses: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+};
 
 export default connect(
   mapStateToProps,

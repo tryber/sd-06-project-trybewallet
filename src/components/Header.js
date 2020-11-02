@@ -5,22 +5,28 @@ import './header.css';
 import logo from '../images/logo.png';
 
 class Header extends React.Component {
+  totalExpenses(listOfExpense) {
+    if (listOfExpense != null && listOfExpense.length === 0) {
+      return 0;
+    }
+    let sumExpenses = 0;
+    listOfExpense.forEach((expense) => {
+      sumExpenses += parseFloat(expense.value);
+    });
+    return sumExpenses;
+  }
+
   render() {
-    const { email, expenses } = this.props;
+    const { email, wallet } = this.props;
     return (
       <header className="form-header">
         <img src={ logo } alt="logo-trybe" />
         <span>E-mail:</span>
         <span data-testid="email-field">{ email }</span>
         <span>Despesa Total:</span>
-        <span data-testid="total-field">{
-          expenses.reduce((acc, expense) => {
-            const { currency, exchangeRates, value } = expense;
-            const exchangeRate = exchangeRates[currency].ask;
-            const brlValue = exchangeRate * value;
-            return acc + parseFloat(brlValue);
-          }, 0)
-        }</span>
+        <span data-testid="total-field">
+          { this.totalExpenses(wallet.expenses) }
+        </span>
         <span>Câmbio utilizado:</span>
         <span data-testid="header-currency-field">BRL</span>
       </header>
@@ -30,11 +36,14 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
-  expenses: state.wallet.expenses,
+  wallet: state.wallet,
 });
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  wallet: PropTypes.shape({
+    expenses: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
 };
 
 export default connect(
