@@ -1,0 +1,19 @@
+.table-wrap {
+  display: flex;
+  justify-content: center;
+  font-size: 11pt;
+  color: rgb(20, 41, 43);
+}
+
+.table-wrap table {
+  width: 95%;
+}
+
+.th_items {
+  padding: 8px;
+}
+
+.tr_items{
+  height: 30px;
+  text-align: center;
+}

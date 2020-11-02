@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import AddExpenses from '../components/AddExpenses';
-import { Expenses } from '../components/Expenses';
+import Expenses from '../components/Expenses';
 // import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import { Loading } from '../components/Loading';
@@ -16,7 +16,8 @@ class Wallet extends React.Component {
         {/* {(!loggedIn) ? <Redirect to="/" /> : null } */}
         <Header />
         <AddExpenses />
-        {(isFetching) ? <Loading /> : <Expenses />}
+        <Expenses />
+        {/* {(isFetching) ? <Loading /> : <Expenses />} */}
       </div>);
   }
 }
