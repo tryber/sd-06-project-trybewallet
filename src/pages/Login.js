@@ -50,23 +50,26 @@ class Login extends React.Component {
 
     return (
       <div>
-        <input 
+        <input
           data-testid="email-input"
           type="text"
           placeholder="Enter Email"
           name="email"
           value={ email }
-          onChange={ this.handleOnChange } />
+          onChange={ this.handleOnChange }
+        />
         <br />
-        <input 
+        <input
           data-testid="password-input"
           type="text"
           placeholder="Enter Password"
           name="password"
           value={ password }
-          onChange={ this.handleOnChange } />
+          onChange={ this.handleOnChange }
+        />
         <br />
-        <Link to="/carteira">
+        <Link
+          to="/carteira">
           <button type="button"
             disabled={ disabled }
             // Clicking at button disparates dispatch function to save state email at /actions/index

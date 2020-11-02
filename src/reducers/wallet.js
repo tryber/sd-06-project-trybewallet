@@ -9,6 +9,6 @@ export default function (state = INITIAL_STATE, action) {
   case '':
     return;
   default:
-    return state;  
+    return state;
   }
 }
