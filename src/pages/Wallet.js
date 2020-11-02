@@ -6,14 +6,69 @@ import { saveExpense, fetchData } from '../actions';
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
+    this.addExpense = this.addExpense.bind(this);
     this.state = {
       total: 0,
+      value: 0,
+      currency: 'USD',
+      method: 'dinheiro',
+      tag: 'alimentação',
+      description: '',
     };
   }
 
+  componentDidMount() {
+    const { fetch } = this.props;
+    fetch();
+  }
+
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
+
+  addExpense() {
+    const { fetch, dataFetch, globalExpenses, expenseToGlobal } = this.props;
+    fetch();
+    const {
+      total,
+      value,
+      currency,
+      method,
+      tag,
+      description,
+    } = this.state;
+
+    const newExpense = {
+      id: globalExpenses.length,
+      value,
+      currency,
+      method,
+      tag,
+      description,
+      exchangeRates: { ...dataFetch },
+    };
+
+    expenseToGlobal(newExpense);
+
+    const totValue = total + (Number(value) * Number(dataFetch[currency].ask));
+
+    this.setState({
+      total: totValue,
+      value: 0,
+      currency: 'USD',
+      method: 'dinheiro',
+      tag: 'alimentação',
+      description: '',
+    });
+  }
+
   render() {
-    const { total } = this.state;
-    const { user } = this.props;
+    const { total, value } = this.state;
+    const { user, dataFetch } = this.props;
+    const currencies = (dataFetch)
+      ? Object.keys(dataFetch).filter((curr) => curr !== 'USDT')
+      : ['USD'];
     return (
       <div>
         <header>
@@ -29,42 +84,54 @@ class Wallet extends React.Component {
         </header>
         <form>
           <input
+            name="value"
+            value={ value }
             type="text"
             data-testid="value-input"
+            onChange={ (e) => this.handleChange(e) }
           />
           <input
+            name="description"
             type="text"
             data-testid="description-input"
+            onChange={ (e) => this.handleChange(e) }
           />
-          <select data-testid="currency-input">
-            <option data-testid="USD" value="USD">USD</option>
-            <option data-testid="CAD" value="CAD">CAD</option>
-            <option data-testid="EUR" value="EUR">EUR</option>
-            <option data-testid="GBP" value="GBP">GBP</option>
-            <option data-testid="ARS" value="ARS">ARS</option>
-            <option data-testid="BTC" value="BTC">BTC</option>
-            <option data-testid="LTC" value="LTC">LTC</option>
-            <option data-testid="JPY" value="JPY">JPY</option>
-            <option data-testid="CHF" value="CHF">CHF</option>
-            <option data-testid="AUD" value="AUD">AUD</option>
-            <option data-testid="CNY" value="CNY">CNY</option>
-            <option data-testid="ILS" value="ILS">ILS</option>
-            <option data-testid="ETH" value="ETH">ETH</option>
-            <option data-testid="XRP" value="XRP">XRP</option>
+          <select
+            data-testid="currency-input"
+            name="currency"
+            onChange={ (e) => this.handleChange(e) }
+          >
+            { currencies.map((curr) => (
+              <option
+                key={ curr }
+                data-testid={ curr }
+                value={ curr }
+              >
+                { curr }
+              </option>
+            )) }
           </select>
-          <select data-testid="method-input">
-            <option value="dinheiro">Dinheiro</option>
-            <option value="credito">Cartão de crédito</option>
-            <option value="debito">Cartão de débito</option>
+          <select
+            data-testid="method-input"
+            name="method"
+            onChange={ (e) => this.handleChange(e) }
+          >
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
-          <select data-testid="tag-input">
-            <option value="alimentação">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saude">Saúde</option>
+          <select
+            data-testid="tag-input"
+            name="tag"
+            onChange={ (e) => this.handleChange(e) }
+          >
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
-          <button type="button">Adicionar despesa</button>
+          <button onClick={ this.addExpense } type="button">Adicionar despesa</button>
         </form>
       </div>
     );
@@ -74,17 +141,21 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   user: state.user.email,
   loading: state.wallet.loading,
-  expenses: state.wallet.expenses,
-  data: state.wallet.data,
+  globalExpenses: state.wallet.expenses,
+  dataFetch: state.wallet.data,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchData: () => dispatch(fetchData),
-  saveExpense: (expenses) => dispatch(saveExpense(expenses)),
+  fetch: () => dispatch(fetchData),
+  expenseToGlobal: (expenses) => dispatch(saveExpense(expenses)),
 });
 
 Wallet.propTypes = {
   user: PropTypes.string.isRequired,
+  fetch: PropTypes.func.isRequired,
+  dataFetch: PropTypes.objectOf(String).isRequired,
+  globalExpenses: PropTypes.arrayOf(Object).isRequired,
+  expenseToGlobal: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
