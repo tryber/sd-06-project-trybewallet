@@ -80,7 +80,8 @@ class Wallet extends React.Component {
           </span>
         </header>
         <form
-          onSubmit={ isEditing ? this.handleSubmitEditedExpense : this.handleAddNewExpense }
+          onSubmit={ isEditing ? this.handleSubmitEditedExpense 
+            : this.handleAddNewExpense }
         >
           <label htmlFor="value">
             Valor:
