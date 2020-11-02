@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import { green } from '@material-ui/core/colors';
 
-const ColorButton = withStyles((theme) => ({
+const ColorButton = withStyles(() => ({
   root: {
     color: '#ffff',
     backgroundColor: green[500],
@@ -30,7 +30,7 @@ export class Login extends Component {
                 className="mt-3 font-weight-normal"
                 component="h1"
                 variant="h6"
-              ></Typography>
+              />
             </div>
           </div>
           <div className="mt-4">
@@ -85,8 +85,8 @@ export class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = () => ({});
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = () => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
