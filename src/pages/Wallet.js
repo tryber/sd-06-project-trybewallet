@@ -43,7 +43,10 @@ class Wallet extends React.Component {
     const { userEmail, currencyKey, expensesToSum } = this.props;
     const sumExpenses = expensesToSum
       .reduce(((acc, curr) => acc + parseFloat((curr
-        .exchangeRates[curr.currency].ask * curr.value).toFixed(2))), 0);
+        .exchangeRates[curr.currency].ask * curr.value))), 0);
+    const tableTags = ['Descrição', 'Tag', 'Método de pagamento', 'Valor',
+      'Moeda', 'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão',
+      'Editar/Excluir'];
     return (
       <div>
         <header>
@@ -51,7 +54,7 @@ class Wallet extends React.Component {
           <p data-testid="email-field">{`Email: ${userEmail}`}</p>
           <p>
             Despeza Total:
-            <span data-testid="total-field">{sumExpenses}</span>
+            <span data-testid="total-field">{Math.round((sumExpenses) * 100) / 100}</span>
           </p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
@@ -124,6 +127,31 @@ class Wallet extends React.Component {
           </label>
           <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
         </div>
+        <table>
+          <tr>
+            {tableTags.map((tableHeader) => <th key={ tableHeader }>{tableHeader}</th>)}
+          </tr>
+          <tbody>
+            { expensesToSum.map((expenses) => (
+              <tr key={ expenses.id }>
+                <td>{ expenses.description }</td>
+                <td>{ expenses.tag }</td>
+                <td>{ expenses.method }</td>
+                <td>{ expenses.value }</td>
+                <td>{ expenses.exchangeRates[expenses.currency].name }</td>
+                <td>
+                  { (Math.round(parseFloat(expenses.exchangeRates[expenses.currency]
+                    .ask) * 100) / 100) }
+                </td>
+                <td>
+                  { ((Math.round((expenses.exchangeRates[expenses.currency]
+                    .ask * expenses.value) * 100) / 100)) }
+                </td>
+                <td>Real</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   }
