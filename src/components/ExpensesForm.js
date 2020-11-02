@@ -11,6 +11,7 @@ class ExpensesForm extends React.Component {
     super();
     this.state = {
       currencies: [],
+      selectedCurrency: '',
     };
   }
 
@@ -27,9 +28,9 @@ class ExpensesForm extends React.Component {
     const withoutUSDTCurrencies = currencies.filter((currency) => (
       currency !== 'USDT'
     ));
-    this.setState({
+    await this.setState({
       currencies: withoutUSDTCurrencies,
-      selectedCurrency: '',
+      selectedCurrency: currencies[0],
     });
   }
 
