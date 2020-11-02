@@ -19,7 +19,7 @@ class Header extends React.Component {
             const exchangeRate = exchangeRates[currency].ask;
             const brlValue = exchangeRate * value;
             return acc + parseFloat(brlValue);
-          }, 0).toFixed(2)
+          }, 0)
         }</span>
         <span>Câmbio utilizado:</span>
         <span data-testid="header-currency-field">BRL</span>
