@@ -1,19 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../css/Login.css';
+import { Link } from 'react-router-dom';
 import logo from '../images/logo.png';
 import { actionCreators } from '../store/index';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  // constructor() {
+  //   super();
 
-    this.state = {
-    };
-  }
+  //   this.checkInputsValidity = this.checkInputsValidity.bind(this);
+  // }
+
+  // checkInputsValidity() {
+  //   const form = document.getElementById('form');
+  //   const submitBtn = document.getElementById('submitBtn');
+  //   if (!form.checkValidity()) {
+  //     return submitBtn.disabled;
+  //   }
+  // }
 
   render() {
-    const { history } = this.props;
     return (
       <div className="login">
         <div className="login-container">
@@ -22,13 +29,15 @@ class Login extends React.Component {
             alt="Logo"
             className="img-logo"
           />
+          {/* <form id="form"> */}
           <input
             name="email"
             id="email"
             type="email"
-            pattern="/^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/g"
+            pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+            placeholder="email address"
             data-testid="email-input"
-            onChange={ (e) => actionCreators.login(e.target.value) }
+            // onChange={ (e) => actionCreators.login(e.target.value) }
             required
           />
           Login
@@ -38,15 +47,27 @@ class Login extends React.Component {
             type="password"
             minLength="6"
             data-testid="password-input"
+            placeholder="password"
             required
           />
           Password
-          <button
-            type="submit"
-            onClick={ () => history.push('/carteira') }
-          >
-            Entrar
-          </button>
+          <br />
+          <Link to="/carteira">
+            <button
+              id="submitBtn"
+              type="submit"
+              // onChange={ this.checkInputsValidity() }
+              onClick={ () => {
+                const emailInput = document.getElementById('email');
+                actionCreators.login(emailInput.value);
+              } }
+            >
+              Entrar
+            </button>
+          </Link>
+
+          {/* </form> */}
+
         </div>
       </div>
     );

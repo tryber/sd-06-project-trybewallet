@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { actionCreators } from '../store/index';
 import '../css/Wallet.css';
 import logo from '../images/logo.png';
 
@@ -34,17 +35,34 @@ class Wallet extends React.Component {
           </span>
         </header>
         <form className="form">
-          <input data-testid="value-input" placeholder="Valor" />
-          <input data-testid="description-input" placeholder="Descrição" />
-          <select data-testid="currency-input">
+          <input
+            onChange={ (e) => actionCreators.addExpense(e.target.value) }
+            placeholder="Valor"
+            data-testid="value-input"
+          />
+          <input
+            onChange={ (e) => actionCreators.addExpense(e.target.value) }
+            placeholder="Descrição"
+            data-testid="description-input"
+          />
+          <select
+            onChange={ (e) => actionCreators.addExpense(e.target.value) }
+            data-testid="currency-input"
+          >
             <option value="BRL">BRL</option>
           </select>
-          <select data-testid="method-input">
+          <select
+            onChange={ (e) => actionCreators.addExpense(e.target.value) }
+            data-testid="method-input"
+          >
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de Crédito">Cartão de crédito</option>
             <option value="Cartão de Débito">Cartão de débito</option>
           </select>
-          <select data-testid="tag-input">
+          <select
+            onChange={ (e) => actionCreators.addExpense(e.target.value) }
+            data-testid="tag-input"
+          >
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
             <option value="Trabalho">Trabalho</option>

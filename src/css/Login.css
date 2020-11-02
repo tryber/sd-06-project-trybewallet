@@ -17,7 +17,7 @@
     color: #616161;
 }
 
-.login button {
+/* .login button {
     box-shadow:inset 0px 1px 0px 0px #ffffff;
     background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
     background-color:#f9f9f9;
@@ -36,9 +36,9 @@
 }
 
 .login button:hover {
-    background:linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%);
+    background:linear-gradient(to bottom, #e9e9e9 20%, #f9f9f9 100%);
     background-color:#e9e9e9;
-}
+} */
 
 .login button:active {
     position:relative;

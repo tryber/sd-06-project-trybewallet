@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose, bindActionCreators } from 'redux';
 import thunk from 'redux-thunk';
-import { login } from '../actions/index';
+import { login, addExpense } from '../actions/index';
 import rootReducer from '../reducers';
 
 const store = createStore(
@@ -16,6 +16,7 @@ const store = createStore(
 export const actionCreators = bindActionCreators(
   {
     login,
+    addExpense,
   },
   store.dispatch,
 );
