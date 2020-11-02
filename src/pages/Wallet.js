@@ -65,7 +65,7 @@ class Wallet extends React.Component {
 
   render() {
     const { total, value } = this.state;
-    const { user, dataFetch } = this.props;
+    const { user, dataFetch, globalExpenses, loading } = this.props;
     const currencies = (dataFetch)
       ? Object.keys(dataFetch).filter((curr) => curr !== 'USDT')
       : ['USD'];
@@ -133,6 +133,44 @@ class Wallet extends React.Component {
           </select>
           <button onClick={ this.addExpense } type="button">Adicionar despesa</button>
         </form>
+        <p>{ loading ? 'Loading' : '' }</p>
+        <table border="1">
+          <thead className="cabecalho">
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            { (globalExpenses.length > 0)
+              ? globalExpenses.map((expense) => (
+                <tr key={ expense.id }>
+                  <td>{ expense.description }</td>
+                  <td>{ expense.tag }</td>
+                  <td>{ expense.method }</td>
+                  <td>{ expense.value }</td>
+                  <td>{ expense.exchangeRates[expense.currency].name }</td>
+                  <td>
+                    { Number(expense.exchangeRates[expense.currency].ask)
+                      .toFixed(2) }
+                  </td>
+                  <td>
+                    { (Number(expense.exchangeRates[expense.currency].ask)
+                      * Number(expense.value)).toFixed(2) }
+                  </td>
+                  <td>Real</td>
+                </tr>
+              ))
+              : '' }
+          </tbody>
+        </table>
       </div>
     );
   }
@@ -156,6 +194,7 @@ Wallet.propTypes = {
   dataFetch: PropTypes.objectOf(String).isRequired,
   globalExpenses: PropTypes.arrayOf(Object).isRequired,
   expenseToGlobal: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
