@@ -22,7 +22,6 @@ class WalletTable extends React.Component {
       method: 'Dinheiro',
       tag: 'Alimentação',
       exchangeRates: {},
-      isValid: false,
     };
 
     this.genericHandleChange = this.genericHandleChange.bind(this);
@@ -34,17 +33,15 @@ class WalletTable extends React.Component {
     this.setState({
       [name]: value,
     });
-    if (value !== '') this.setState({ isValid: true });
   }
 
-  async addDataToExpenses(event) {
+  addDataToExpenses(event) {
     event.preventDefault();
     const { getExpenses } = this.props;
     getExpenses(this.state);
   }
 
   render() {
-    const { isValid } = this.state;
     return (
       <form>
         <ValueInputForm genericHandleChange={ this.genericHandleChange } />
@@ -54,7 +51,6 @@ class WalletTable extends React.Component {
         <DescriptionInputForm genericHandleChange={ this.genericHandleChange } />
         <button
           type="submit"
-          disabled={ !isValid }
           onClick={ this.addDataToExpenses }
         >
           Adicionar despesa
