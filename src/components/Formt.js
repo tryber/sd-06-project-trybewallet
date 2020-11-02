@@ -9,15 +9,16 @@ class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-      id: 0,
-      value: '0',
-      description: '',
-      currency: '',
-      method: '',
-      tag: '',
-      exchangeRates: {}
+      // id: 0,
+      // value: '0',
+      // description: '',
+      // currency: '',
+      // method: '',
+      // tag: '',
+      // exchangeRates: {}
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.tratarApi = this.tratarApi.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -25,16 +26,45 @@ class Form extends React.Component {
     fetchCurrencies();
   }
 
-  handleChange({ target }) {
-    const { name, value } = target;
-    this.setState({
-      [name]: value,
+  // handleChange({ target }) {
+  //   const { name, value } = target;
+  //   this.setState({
+  //     [name]: value,
+  //   });
+  // }
+
+  async add() {
+    // http://devfuria.com.br/javascript/manipulando-combobox-select-com-javascript/
+    const comboCurrencies = document.getElementById('currencies');
+    const comboMetodoPgto = document.getElementById('metodoPgto');
+    const comboCatDespesa = document.getElementById('categoriaDespesa');
+    const { wallet, addExpenses } = this.props;
+    const arrayExpense = wallet.expenses;
+    const expense = {
+      id: arrayExpense.length,
+      value: document.getElementById('valorDespesa').value,
+      description: document.getElementById('descricaoDespesa').value,
+      currency: comboCurrencies.options[comboCurrencies.selectedIndex].value,
+      method: comboMetodoPgto.options[comboMetodoPgto.selectedIndex].value,
+      tag: comboCatDespesa.options[comboCatDespesa.selectedIndex].value,
+      exchangeRates: await this.tratarApi(comboCurrencies
+        .options[comboCurrencies.selectedIndex].value),
+    };
+    arrayExpense.push(expense);
+    addExpenses(arrayExpense);
+  }
+
+  async tratarApi(currency) {
+    let value = {};
+    await fetchCurrencyApi().then((data) => {
+      value = data[currency];
     });
+    return value;
   }
 
   render() {
     const { wallet } = this.props;
-    const { value, description, currency, method, tag } = this.state;
+    // const { value, description, currency, method, tag } = this.state;
     return (
       <form className="form-container">
         <label
@@ -45,9 +75,6 @@ class Form extends React.Component {
             data-testid="value-input"
             type="text"
             id="valorDespesa"
-            name="value"
-            value={ value }
-            onChange={ this.handleChange }
           />
         </label>
         <label
@@ -58,9 +85,6 @@ class Form extends React.Component {
             data-testid="description-input"
             type="text"
             id="descricaoDespesa"
-            name="description"
-            value={ description }
-            onChange={ this.handleChange }
           />
         </label>
         <label
@@ -70,9 +94,6 @@ class Form extends React.Component {
             data-testid="currency-input"
             name="currencies"
             id="currencies"
-            name="currency"
-            value={ currency }
-            onChange={ this.handleChange }
           >
             { wallet.currencies.map((curr) => (
               <option
@@ -92,9 +113,6 @@ class Form extends React.Component {
             data-testid="method-input"
             name="metodoPgto"
             id="metodoPgto"
-            name="method"
-            value={ method }
-            onChange={ this.handleChange }
           >
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
@@ -108,9 +126,6 @@ class Form extends React.Component {
             data-testid="tag-input"
             name="categoriaDespesa"
             id="categoriaDespesa"
-            name="tag"
-            value={ tag }
-            onChange={ this.handleChange }
           >
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
@@ -121,7 +136,7 @@ class Form extends React.Component {
         </label>
         <button
           type="button"
-          // onClick={ () => this.add(wallet.expenses) }
+          onClick={ () => this.add(wallet.expenses) }
         >
           Adicionar despesa
         </button>
@@ -137,7 +152,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(thunkCurrency()),
-  // addExpenses: (data) => dispatch(thunkAddExpenses(data)),
+  addExpenses: (data) => dispatch(thunkAddExpenses(data)),
 });
 
 Form.propTypes = {
