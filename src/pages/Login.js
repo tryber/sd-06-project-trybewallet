@@ -69,7 +69,8 @@ class Login extends React.Component {
         />
         <br />
         <Link
-          to="/carteira">
+          to="/carteira"
+        >
           <button type="button"
             disabled={ disabled }
             // Clicking at button disparates dispatch function to save state email at /actions/index
@@ -89,7 +90,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired
+  login: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
