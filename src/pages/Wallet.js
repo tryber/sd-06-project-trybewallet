@@ -6,10 +6,29 @@ import '../css/Wallet.css';
 import logo from '../images/logo.png';
 
 class Wallet extends React.Component {
-  // componentDidMount {
+  // constructor() {
+  //   super();
+
+  //   this.state = {
+  //     expenses: {
+  //       value: '',
+  //       description: '',
+  //       currency: '',
+  //       method: '',
+  //       tag: '',
+  //     },
+  //   };
   // }
+
+  // componentDidMount() {
+  //   const { requestAPI } = this.props;
+  //   requestAPI();
+  // }
+
   render() {
     const { email } = this.props;
+    // const { expenses } = this.state;
+    // const { value, description, method, currency, tag } = expenses;
     return (
       <div>
         <header className="header-wallet">

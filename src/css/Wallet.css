@@ -65,9 +65,10 @@ span {
     justify-content: space-between;
     border: 1px solid black;
     background-color: whitesmoke;
+
 }
 
-.header-expenses span {
-    margin: 10px;
-    font-size: 1.5vw;
+.header-expenses th {
+    font-size: 1.8vw;
+    padding-left: 10px;
 }

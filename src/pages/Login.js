@@ -6,21 +6,38 @@ import logo from '../images/logo.png';
 import { actionCreators } from '../store/index';
 
 class Login extends React.Component {
-  // constructor() {
-  //   super();
+  constructor() {
+    super();
 
-  //   this.checkInputsValidity = this.checkInputsValidity.bind(this);
-  // }
+    this.state = {
+      email: '',
+      password: '',
+      disabled: true,
+    };
 
-  // checkInputsValidity() {
-  //   const form = document.getElementById('form');
-  //   const submitBtn = document.getElementById('submitBtn');
-  //   if (!form.checkValidity()) {
-  //     return submitBtn.disabled;
-  //   }
-  // }
+    this.checkInputsValidity = this.checkInputsValidity.bind(this);
+  }
+
+  // Function to validate email and password with regex and length,
+  // based on saving state and setting it.
+  checkInputsValidity({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    }, () => {
+      const { email, password } = this.state;
+      // regex patter found at stackoverflow
+      const emailValidation = (/\S+@\S+\.\S+/).test(email);
+      const passwordValidation = 6;
+      if (emailValidation && passwordValidation <= password.length) {
+        return this.setState({ disabled: false });
+      }
+      return this.setState({ disabled: true });
+    });
+  }
 
   render() {
+    const { email, password, disabled } = this.state;
     return (
       <div className="login">
         <div className="login-container">
@@ -29,7 +46,6 @@ class Login extends React.Component {
             alt="Logo"
             className="img-logo"
           />
-          {/* <form id="form"> */}
           <input
             name="email"
             id="email"
@@ -37,7 +53,8 @@ class Login extends React.Component {
             pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
             placeholder="email address"
             data-testid="email-input"
-            // onChange={ (e) => actionCreators.login(e.target.value) }
+            value={ email }
+            onChange={ this.checkInputsValidity }
             required
           />
           Login
@@ -48,6 +65,8 @@ class Login extends React.Component {
             minLength="6"
             data-testid="password-input"
             placeholder="password"
+            value={ password }
+            onChange={ this.checkInputsValidity }
             required
           />
           Password
@@ -56,7 +75,7 @@ class Login extends React.Component {
             <button
               id="submitBtn"
               type="submit"
-              // onChange={ this.checkInputsValidity() }
+              disabled={ disabled }
               onClick={ () => {
                 const emailInput = document.getElementById('email');
                 actionCreators.login(emailInput.value);
@@ -65,9 +84,6 @@ class Login extends React.Component {
               Entrar
             </button>
           </Link>
-
-          {/* </form> */}
-
         </div>
       </div>
     );
