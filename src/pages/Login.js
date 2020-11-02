@@ -75,7 +75,9 @@ class Login extends React.Component {
           />
           Password
           <br />
-          <Link to="/carteira">
+          <Link
+            to="/carteira"
+          >
             <button
               id="submitBtn"
               type="submit"
