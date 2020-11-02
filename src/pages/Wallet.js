@@ -1,23 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { getCurrencies } from '../actions';
 import Forms from '../components/Forms';
 import Header from '../components/Header';
-import fetchApi from '../services';
 import Table from '../components/Table';
 
 class Wallet extends Component {
-  async componentDidMount() {
-    const { dispatchCurrency } = this.props;
-
-    const fetchCurrencies = await fetchApi();
-    const currenciesKeys = Object.keys(fetchCurrencies);
-    const currencies = currenciesKeys.filter((currency) => (currency !== 'USDT'));
-
-    dispatchCurrency(currencies);
-  }
-
   render() {
     return (
       <section>
@@ -29,12 +15,4 @@ class Wallet extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  dispatchCurrency: (expenses) => dispatch(getCurrencies(expenses)),
-});
-
-Wallet.propTypes = {
-  dispatchCurrency: PropTypes.func.isRequired,
-};
-
-export default connect(null, mapDispatchToProps)(Wallet);
+export default Wallet;

@@ -14,9 +14,15 @@ export const catchInputEntries = (expenses) => ({
   },
 });
 
-export const getCurrencies = (currencies) => ({
+const currenciesFetch = (currencies) => ({
   type: GET_CURRENCY,
   payload: {
     currencies,
   },
 });
+
+export const getCurrencies = () => async (dispatch) => {
+  const responseFromAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const currencies = await responseFromAPI.json();
+  dispatch(currenciesFetch(currencies));
+};

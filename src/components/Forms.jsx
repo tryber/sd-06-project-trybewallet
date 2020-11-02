@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { catchInputEntries } from '../actions';
+import { catchInputEntries, getCurrencies } from '../actions';
 import PropTypes from 'prop-types';
 import fetchApi from '../services';
 
@@ -21,6 +21,12 @@ class Forms extends Component {
         tag: 'Lazer',
       },
     };
+  }
+
+  async componentDidMount() {
+    const { dispatchCurrency } = this.props;
+
+    dispatchCurrency();
   }
 
   handleChange({ target }) {
@@ -59,15 +65,14 @@ class Forms extends Component {
 
     dispachExpenses(forms);
 
-    this.setState({
+    this.setState((prevState) => ({
       forms: {
-        value: '',
-        description: '',
+        ...prevState.forms,
         currency: 'USD',
         method: 'Dinheiro',
         tag: 'Lazer',
       }
-    });
+    }));
 
     document.getElementById('myForm').reset();
   }
@@ -120,6 +125,7 @@ class Forms extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   dispachExpenses: (expenses) => dispatch(catchInputEntries(expenses)),
+  dispatchCurrency: (currencie) => dispatch(getCurrencies(currencie)),
 });
 
 const mapStateToProps = (state) => ({
@@ -129,6 +135,7 @@ const mapStateToProps = (state) => ({
 
 Forms.propTypes = {
   dispachExpenses: PropTypes.func.isRequired,
+  dispatchCurrency: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Forms);
