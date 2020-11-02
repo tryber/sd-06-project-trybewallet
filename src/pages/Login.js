@@ -46,7 +46,7 @@ class Login extends React.Component {
   render() {
     const { email, password, disabled } = this.state;
     // Destruturate my login action as a props
-    const { login } = this.props;
+    const { saveUserEmail } = this.props;
 
     return (
       <div>
@@ -71,10 +71,11 @@ class Login extends React.Component {
         <Link
           to="/carteira"
         >
-          <button type="button"
+          <button 
+            type="button"
             disabled={ disabled }
             // Clicking at button disparates dispatch function to save state email at /actions/index
-            onClick={ () => login(email) }
+            onClick={ () => saveUserEmail(email) }
           >
             Entrar
           </button>
@@ -86,11 +87,11 @@ class Login extends React.Component {
 
 // Function that make dispatch to my /actions/index
 const mapDispatchToProps = (dispatch) => ({
-  login: (inputedEmail) => dispatch(login(inputedEmail)),
+  saveUserEmail: (inputedEmail) => dispatch(login(inputedEmail)),
 });
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired,
+  saveUserEmail: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
