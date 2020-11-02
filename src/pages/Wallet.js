@@ -1,25 +1,14 @@
 import React from 'react';
+import ExpenseAddForm from '../components/ExpenseAddForm';
+import Header from '../components/Header';
 
 class Wallet extends React.Component {
   render() {
     return (
       <div>
-        <header>
-          <span data-testid="email-field">Aqui vai o email da pessoa</span>
-          <input data-testid="total-field" />
-          <input data-testid="header-currency-field" />
-        </header>
-        <br />
-        <br />
-        <br />
-        <br />
+        <Header />
         <section>
-          <form>
-            <fieldset>
-              <input data-testid="value-input" />
-              <input data-testid="description-input" />
-            </fieldset>
-          </form>
+          <ExpenseAddForm />
         </section>
       </div>
     );
