@@ -9,14 +9,14 @@ import * as serviceWorker from './serviceWorker';
 import store from './store';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      <Provider store={ store }>
-        <Route exact path="/" component={ App } />
+  <Provider store={ store }>
+    <BrowserRouter>
+      <Switch>
         <Route path="/carteira" component={ Wallet } />
-      </Provider>
-    </Switch>
-  </BrowserRouter>,
+        <Route exact path="/" component={ App } />
+      </Switch>
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root'),
 );
 

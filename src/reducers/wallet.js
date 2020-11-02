@@ -1,10 +1,13 @@
-const INITIAL_STATE = { emailA: '' };
-const LOGIN = 'LOGINA';
+const INITIAL_STATE = { currencyToExchange: 'BRL', expenses: [] };
+const WALLET = 'WALLET';
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case LOGIN:
-    return ({ email: action.email });
+  case WALLET:
+    return ({
+      expenses: action.expenses,
+      currencyToExchange: action.currencyToExchange,
+    });
   default:
     return state;
   }

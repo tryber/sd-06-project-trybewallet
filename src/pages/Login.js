@@ -13,7 +13,7 @@ class Login extends React.Component {
       password: '',
       emailValidation: false,
       passwordValidation: false,
-      buttonDisabled: true,
+      buttonActived: false,
     };
     this.handleState = this.handleState.bind(this);
     this.handleButton = this.handleButton.bind(this);
@@ -32,14 +32,14 @@ class Login extends React.Component {
 
   handleButton() {
     const { emailValidation, passwordValidation } = this.state;
-    const buttonDisabled = (!emailValidation && !passwordValidation);
-    this.setState({ buttonDisabled });
+    const buttonActived = (emailValidation && passwordValidation);
+    this.setState({ buttonActived });
   }
 
   render() {
     const { loggin } = this.props;
-    const { email, buttonDisabled } = this.state;
-    const walletPath = buttonDisabled ? '#' : '/carteira';
+    const { email, buttonActived } = this.state;
+    const walletPath = buttonActived ? '/carteira' : '#';
     return (
       <div>
         <form className="form-login-page">
@@ -63,7 +63,7 @@ class Login extends React.Component {
             <button
               type="button"
               className="button-box"
-              disabled={ buttonDisabled }
+              disabled={ !buttonActived }
               onClick={ () => loggin(email) }
             >
               Entrar
@@ -83,5 +83,5 @@ Login.defaultProps = {
 };
 
 Login.propTypes = {
-  loggin: PropTypes.objectOf(PropTypes.func),
+  loggin: PropTypes.objectOf(PropTypes.string),
 };
