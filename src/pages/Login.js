@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { addEmail } from '../actions/index';
 
 class Login extends React.Component {
@@ -24,7 +25,7 @@ class Login extends React.Component {
   checkInput() {
     const { email, senha } = this.state;
     const check = email.split('@');
-    console.log(check);
+    // console.log(check);
     const num = 6;
     if (check.length === 2 && check[1].endsWith('.com')) {
       if (senha.split('').length >= num) {
@@ -53,13 +54,15 @@ class Login extends React.Component {
           name="senha"
           onChange={ this.handleChange }
         />
-        <button
-          type="button"
-          onClick={ () => handleLogin(email) }
-          disabled={ disableButton }
-        >
-          Entrar
-        </button>
+        <Link to="/carteira">
+          <button
+            type="button"
+            onClick={ () => handleLogin(email) }
+            disabled={ disableButton }
+          >
+            Entrar
+          </button>
+        </Link>
       </form>
     );
   }
