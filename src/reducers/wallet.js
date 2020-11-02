@@ -1,17 +1,16 @@
-import { REQUEST_CURRENCY } from '../actions';
+import { CURRENCY_SUCCESS } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  isFetching: false,
 };
 
 const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case REQUEST_CURRENCY:
+  case CURRENCY_SUCCESS:
     return {
       ...state,
-      isFetching: true,
+      currencies: action.currencies,
     };
   default:
     return state;
