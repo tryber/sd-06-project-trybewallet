@@ -14,10 +14,10 @@ export const sucessCurrencies = (currencies) => ({
   currencies,
 });
 
-// export const sucessExpenses = (expenses) => ({
-//   type: SUCESS_EXPENSES,
-//   expenses: [],
-// });
+export const sucessExpenses = (expenses) => ({
+  type: SUCESS_EXPENSES,
+  expenses,
+});
 
 export function thunkCurrency() {
   return (dispatch) => (

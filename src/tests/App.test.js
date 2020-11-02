@@ -142,21 +142,21 @@ describe('3 - [PÁGINA DA CARTEIRA] Crie um header para a página de carteira co
 });
 
 describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
-  test.only('Um campo para adicionar o valor da despesa', async () => {
+  test('Um campo para adicionar o valor da despesa', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const valueInput = await screen.findByTestId('value-input');
 
     expect(valueInput).toBeInTheDocument();
   });
 
-  test.only('Um campo para adicionar a descrição da despesa', async () => {
+  test('Um campo para adicionar a descrição da despesa', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const descriptionInput = await screen.findByTestId('description-input');
 
     expect(descriptionInput).toBeInTheDocument();
   });
 
-  test.only('Um campo para selecionar em qual moeda será registrada a despesa', async () => {
+  test('Um campo para selecionar em qual moeda será registrada a despesa', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const currencyInput = await screen.findByTestId('currency-input');
     const USD = screen.getByTestId('USD');
@@ -195,7 +195,7 @@ describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma
     expect(USDT).not.toBeInTheDocument();
   });
 
-  test.only('Um campo para selecionar qual método de pagamento será utilizado', async () => {
+  test('Um campo para selecionar qual método de pagamento será utilizado', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const methodInput = await screen.findByTestId('method-input');
     const moneyOption = screen.getByText(/Dinheiro/);
@@ -208,7 +208,7 @@ describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma
     expect(debitOption).toBeInTheDocument();
   });
 
-  test.only('Um campo para selecionar uma categoria (tag) para a despesa.', async () => {
+  test('Um campo para selecionar uma categoria (tag) para a despesa.', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const tagInput = await screen.findByTestId('tag-input');
     const foodOption = screen.getByText(/Alimentação/);

@@ -1,13 +1,53 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { thunkCurrency } from '../actions';
+import fetchCurrencyApi from '../services/fetchApi';
 import './form.css';
 
 class Form extends React.Component {
+  constructor() {
+    super();
+    this.state = {};
+    this.tratarApi = this.tratarApi.bind(this);
+  }
+
   componentDidMount() {
     const { fetchCurrencies } = this.props;
     fetchCurrencies();
   }
+
+  async add() {
+    // http://devfuria.com.br/javascript/manipulando-combobox-select-com-javascript/
+    const comboCurrencies = document.getElementById('currencies');
+    const comboMetodoPgto = document.getElementById('metodoPgto');
+    const comboCatDespesa = document.getElementById('categoriaDespesa');
+    const expense = {
+      id: 0,
+      value: document.getElementById('valorDespesa').value,
+      description: document.getElementById('descricaoDespesa').value,
+      currency: comboCurrencies.options[comboCurrencies.selectedIndex].value,
+      method: comboMetodoPgto.options[comboMetodoPgto.selectedIndex].value,
+      tag: comboCatDespesa.options[comboCatDespesa.selectedIndex].value,
+      exchangeRates: await this.tratarApi(comboCurrencies
+        .options[comboCurrencies.selectedIndex].value),
+    };
+    console.log(expense);
+  }
+
+  async tratarApi(currency) {
+    let value = {};
+    await fetchCurrencyApi().then((data) => {
+      value = data[currency];
+    });
+    return value;
+  }
+  // tratarApi(currency) {
+  //   let api = {}
+  //   fetchCurrencyApi()
+  //     .then((data) => api = data[currency])
+  //     console.log(api)
+  //   return api
+  // };
 
   render() {
     const { listOfcurrencies } = this.props;
@@ -45,6 +85,7 @@ class Form extends React.Component {
               <option
                 key={ curr }
                 data-testid={ curr }
+                value={ curr }
               >
                 { curr }
               </option>
@@ -80,7 +121,8 @@ class Form extends React.Component {
           </select>
         </label>
         <button
-          type="submit"
+          type="button"
+          onClick={ () => this.add() }
         >
           Adicionar despesa
         </button>
