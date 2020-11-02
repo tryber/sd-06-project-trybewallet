@@ -7,7 +7,6 @@ class Wallet extends React.Component {
   constructor() {
     super();
     this.state = {
-      totalValue: 0,
       value: 0,
       currency: 'USD',
       method: 'Dinheiro',
@@ -33,16 +32,16 @@ class Wallet extends React.Component {
   }
 
   addExpense(event) {
-    event.preventDefault()
+    event.preventDefault();
     const { thunkExpense } = this.props;
     const { value, currency, method, tag, description } = this.state;
     const newExpense = {
-      value: value,
-      currency: currency,
-      method: method,
-      tag: tag,
-      description: description,
-    }
+      value,
+      currency,
+      method,
+      tag,
+      description,
+    };
     thunkExpense(newExpense);
   }
 
@@ -71,7 +70,7 @@ class Wallet extends React.Component {
                 id="input-value"
                 min="0"
                 name="value"
-                value = { value }
+                value={ value }
                 onChange={ this.handleInput }
               />
             </label>
@@ -82,7 +81,7 @@ class Wallet extends React.Component {
                 data-testid="description-input"
                 id="input-description"
                 name="description"
-                value = { description }
+                value={ description }
                 onChange={ this.handleInput }
               />
             </label>
@@ -92,16 +91,16 @@ class Wallet extends React.Component {
                 data-testid="currency-input"
                 id="input-currency"
                 name="currency"
-                value = { currency }
+                value={ currency }
                 onChange={ this.handleInput }
               >
-                { currenciesAPI.map((currency) => (
+                { currenciesAPI.map((cur) => (
                   <option
-                    key={ currency }
-                    data-testid={ currency }
-                    value={ currency }
+                    key={ cur }
+                    data-testid={ cur }
+                    value={ cur }
                   >
-                    { currency }
+                    { cur }
                   </option>
                 ))}
               </select>
@@ -112,7 +111,7 @@ class Wallet extends React.Component {
                 data-testid="method-input"
                 id="input-method"
                 name="method"
-                value = { method }
+                value={ method }
                 onChange={ this.handleInput }
               >
                 <option>Dinheiro</option>
@@ -126,7 +125,7 @@ class Wallet extends React.Component {
                 data-testid="tag-input"
                 id="input-tag"
                 name="tag"
-                value = { tag }
+                value={ tag }
                 onChange={ this.handleInput }
               >
                 <option>Alimentação</option>
@@ -147,7 +146,6 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   userEmail: state.user,
   currenciesAPI: state.wallet.currencies,
-  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -162,7 +160,7 @@ Wallet.propTypes = {
   currenciesAPI: PropTypes.arrayOf(Object).isRequired,
   expenses: PropTypes.arrayOf(Object).isRequired,
   thunkCurrency: PropTypes.func.isRequired,
-  thunkExpenses: PropTypes.func.isRequired,
+  thunkExpense: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

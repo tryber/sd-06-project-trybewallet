@@ -15,7 +15,7 @@ export const saveCurrency = (currencies) => ({
 export const saveExpense = (expenses) => ({
   type: 'SAVE_EXPENSE',
   expenses,
-})
+});
 
 // export function fetchApi() {
 //   const responseFromAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
