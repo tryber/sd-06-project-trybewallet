@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { addExpenseToRecord } from '../actions'; 
+import Table from './Table';
 
 class Form extends React.Component {
   constructor() {
@@ -20,7 +23,7 @@ class Form extends React.Component {
     const currencies = Object.keys(currencyJson).filter((cur) => cur !== 'USDT');
     currencies.forEach((cur) => {
       const option = document.createElement('option');
-      option.innerText = cur;
+      option.innerHTML = cur;
       option.setAttribute('data-testid', cur);
       const select = document.querySelectorAll('select')[0];
       select.appendChild(option);
@@ -31,7 +34,7 @@ class Form extends React.Component {
     const paymentMethod = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     paymentMethod.forEach((payment) => {
       const option = document.createElement('option');
-      option.innerText = payment;
+      option.innerHTML = payment;
       const select = document.querySelectorAll('select')[1];
       select.appendChild(option);
     });
@@ -41,32 +44,70 @@ class Form extends React.Component {
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     tags.forEach((tag) => {
       const option = document.createElement('option');
-      option.innerText = tag;
+      option.innerHTML = tag;
       const select = document.querySelectorAll('select')[2];
       select.appendChild(option);
     });
   }
 
+  async checkInfo(event) {
+    event.preventDefault();
+    event.persist();
+    const obj = {};
+    Object.values(event.target).forEach((input) => {
+      if (input.name !== undefined && input.name !== '') {
+        obj[input.name] = input.value;
+      }
+    });
+
+    const currencyFetch = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const currencyJson = await currencyFetch.json();
+    const exchangesArray = Object.values(currencyJson)
+      .filter((item) => item.codein !== 'BRLT');
+    const exchangesObj = {};
+    exchangesArray.forEach((cur) => {
+      exchangesObj[cur.code] = cur;
+    });
+    obj.exchangeRates = exchangesObj;
+
+    const { registerExpense, expenses } = this.props;
+    obj.id = expenses.length;
+    registerExpense(obj);
+  }
+
   render() {
     return (
       <div>
-        <form>
-          <input data-testid="value-input" type="number" />
-          <input data-testid="description-input" type="text" />
-          <select data-testid="currency-input">
+        <form onSubmit={ (e) => this.checkInfo(e) }>
+          <input data-testid="value-input" type="number" name="value" placeholder="0" />
+          <input data-testid="description-input" type="text" name="description" />
+          <select data-testid="currency-input" name="currency">
             {' '}
           </select>
-          <select data-testid="method-input">
+          <select data-testid="method-input" name="method">
             {' '}
           </select>
-          <select data-testid="tag-input">
+          <select data-testid="tag-input" name="tag">
             {' '}
           </select>
-          <button type="button">Adicionar Despesa</button>
+          <button type="submit">Adicionar Despesa</button>
         </form>
+        <Table />
       </div>
     );
   }
 }
 
-export default Form;
+function mapDispatchToProps(dispatch) {
+  return {
+    registerExpense: (expense) => dispatch(addExpenseToRecord(expense)),
+  };
+}
+
+function mapStateToProps(state) {
+  return {
+    expenses: state.wallet.expenses,
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

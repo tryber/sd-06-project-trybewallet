@@ -6,4 +6,14 @@ const addEmailToRecord = (email) => ({
   },
 });
 
-export default addEmailToRecord;
+const addExpenseToRecord = (expense) => ({
+  type: 'addExpense',
+  payload: {
+    expense,
+  },
+});
+
+export {
+  addEmailToRecord,
+  addExpenseToRecord,
+};
