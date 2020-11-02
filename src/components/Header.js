@@ -4,7 +4,7 @@ import './Header.css';
 
 class Header extends React.Component {
   render() {
-    const { email, totalExpenses } = this.props;
+    const { email, totalExpenses = 0 } = this.props;
     return (
       <header>
         <div className="logo-vbwallet logo-small">
@@ -21,10 +21,9 @@ class Header extends React.Component {
             Despesas totais:
             {' '}
             {totalExpenses}
-            {' '}
-            <span data-testid="header-currency-field">
-              BRL
-            </span>
+          </span>
+          <span data-testid="header-currency-field">
+            BRL
           </span>
         </div>
       </header>);

@@ -11,10 +11,11 @@ export const addEmailToState = (email, loggedIn) => (
     loggedIn,
   });
 
-export const addExpensesToState = (expense) => (
+export const addExpensesToState = (payload, totalExpenses) => (
   {
     type: ADD_EXPENSES,
-    expense,
+    payload,
+    totalExpenses,
   });
 
 export const requestPrices = () => (
@@ -32,5 +33,6 @@ export const fetchCurrenciesPrice = () => async (dispatch) => {
   dispatch(requestPrices());
   const fetchPrices = await fetch(API_CURRENCIES_PRICE);
   const jsonPrices = await fetchPrices.json();
+  delete jsonPrices.USDT;
   return dispatch(receivePrices(jsonPrices));
 };
