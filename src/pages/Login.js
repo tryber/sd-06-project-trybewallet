@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../css/Login.css';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import logo from '../images/logo.png';
-import { actionCreators } from '../store/index';
+// import { actionCreators } from '../store/index';
+import { login } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -38,6 +40,8 @@ class Login extends React.Component {
 
   render() {
     const { email, password, disabled } = this.state;
+    const { emailSaving } = this.props;
+
     return (
       <div className="login">
         <div className="login-container">
@@ -76,10 +80,7 @@ class Login extends React.Component {
               id="submitBtn"
               type="submit"
               disabled={ disabled }
-              onClick={ () => {
-                const emailInput = document.getElementById('email');
-                actionCreators.login(emailInput.value);
-              } }
+              onClick={ () => emailSaving(email) }
             >
               Entrar
             </button>
@@ -90,13 +91,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  emailSaving: (email) => dispatch(login(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
 
 // mapStateToProps é equivalente a um getState()
 // mapDispatchToProps é equivalente a um setState()
 
 Login.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+  emailSaving: PropTypes.func.isRequired,
 };
