@@ -14,7 +14,7 @@ class Login extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.goingToWallet = this.goingToWallet.bind(this);
+    this.toWallet = this.toWallet.bind(this);
   }
 
   handleChange({ target }) {

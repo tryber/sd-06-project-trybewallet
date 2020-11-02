@@ -39,43 +39,64 @@ class Wallet extends React.Component {
     const { email, currencies, expenses } = this.props;
     const pagamento = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-  //totalValue feito com a ajuda do colega William pelo SLACK
+    /* totalValue feito com a ajuda do colega William pelo SLACK */
     const totalValue = expenses.length ? Math.round(expenses
       .reduce((acc, cur) => acc + cur.value * cur.exchangeRates[cur.currency]
-      .ask, 0) * 100) / 100 : 0;
+        .ask, 0) * 100) / 100 : 0;
     const tH = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda', 'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão'];
     return (
       <div>
         <header>
           <p data-testid="email-field">
-          Email:
-          { email }
+            Email:
+            { email }
           </p>
           <p data-testid="total-field">
-          Despesas totais:
-          { totalValue }
+            Despesas totais:
+            { totalValue }
           </p>
           <p data-testid="header-currency-field">Câmbio: BRL</p>
         </header>
         <form>
           <label htmlFor="value" />
           Valor:
-          <input type="number" id="value" name="value" onChange={ this.handleChange } data-testid="value-input" />
+          <input
+            type="number"
+            id="value"
+            name="value"
+            onChange={ this.handleChange }
+            data-testid="value-input"
+          />
           <label htmlFor="description" />
           Descrição:
-          <input type="text" id="description" name="description" onChange={ this.handleChange } data-testid="description-input" />
+          <input
+            type="text"
+            id="description"
+            name="description"
+            onChange={ this.handleChange }
+            data-testid="description-input"
+          />
           <label id="moeda" />
           Moeda:
-          {/* buscar atraves da api, Remova das informações trazidas pela API a opção 'USDT' (Dólar Turismo).  */}
-          <select data-testid="currency-input" id="moeda" name="currency" onChange={ this.handleChange }>
+          <select
+            data-testid="currency-input"
+            id="moeda"
+            name="currency"
+            onChange={ this.handleChange }
+          >
             <option value="" key="selecione" selected>Selecione</option>
             { currencies.map((m) => (
-            <option key={ m } value={ m } data-testid={ m }>{ m }</option>
+              <option key={ m } value={ m } data-testid={ m }>{ m }</option>
             ))}
           </select>
           <label htmlFor="method" />
           Método de Pagamento:
-          <select data-testid="method-input" id="method" name="method" onChange={ this.handleChange }>
+          <select
+            data-testid="method-input"
+            id="method"
+            name="method"
+            onChange={ this.handleChange }
+          >
             <option value="" key="selecione" selected>Selecione</option>
             { pagamento.map((p) => (
               <option key={ p } value={ p }>{ p }</option>
@@ -83,18 +104,22 @@ class Wallet extends React.Component {
           </select>
           <label htmlFor="tag" />
           Tag:
-          <select data-testid="tag-input" id="tag" name="tag" onChange={ this.handleChange }>
+          <select
+            data-testid="tag-input"
+            id="tag"
+            name="tag"
+            onChange={ this.handleChange }
+          >
             <option value="" key="selecione" selected>Selecione</option>
             { tag.map((t) => (
               <option key={ t } value={ t }>{ t }</option>
             ))}
           </select>
-          {/* Ao ser clicado, o botão deve fazer uma requisição à API para trazer o câmbio mais atualizado possível. */}
           <button type="submit" onClick={ this.onSubmit }>Adicionar despesa</button>
         </form>
         <table>
           {tH.map((e) => <th key={ e }>{ e }</th>)}
-{/*           <tr>
+          {/*           <tr>
             {expenses.map()}
           </tr> */}
         </table>
