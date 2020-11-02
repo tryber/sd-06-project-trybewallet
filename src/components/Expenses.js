@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { currencyThunk } from '../actions';
+import { currencyThunk, addThunk } from '../actions';
 
 class Expenses extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expenseValue: '',
+      id: 0,
+      value: 0,
       description: '',
       currency: '',
-      payment: '',
-      tagSelected: '',
+      method: '',
+      tag: '',
+      exchangeRates: {},
     };
 
     this.handleInput = this.handleInput.bind(this);
+    this.saveExpense = this.saveExpense.bind(this);
   }
 
   componentDidMount() {
@@ -28,23 +31,29 @@ class Expenses extends Component {
     });
   }
 
+  async saveExpense(event) {
+    event.preventDefault();
+    const { sendExpense } = this.props;
+    sendExpense(this.state);
+  }
+
   render() {
     const {
-      expenseValue,
+      value,
       description,
       currency,
-      payment,
-      tagSelected } = this.state;
+      method,
+      tag } = this.state;
     const { currenciesApi } = this.props;
     return (
       <div className="expenses-container">
-        <form>
+        <form onSubmit={ this.saveExpense }>
           <label htmlFor="expense-value">
             Valor:
             <input
-              name="expenseValue"
+              name="value"
               id="expense-value"
-              value={ expenseValue }
+              value={ value }
               data-testid="value-input"
               onChange={ this.handleInput }
             />
@@ -79,34 +88,34 @@ class Expenses extends Component {
               ))}
             </select>
           </label>
-          <label htmlFor="payment">
+          <label htmlFor="method">
             Pagamento:
             <select
-              name="payment"
-              id="payment"
-              value={ payment }
+              name="method"
+              id="method"
+              value={ method }
               data-testid="method-input"
               onChange={ this.handleInput }
             >
-              <option value="cash">Dinheiro</option>
-              <option value="debit">Cartão de débito</option>
-              <option value="credit">Cartão de crédito</option>
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Cartão de débito">Cartão de débito</option>
+              <option value="Cartão de crédito">Cartão de crédito</option>
             </select>
           </label>
           <label htmlFor="tag">
             Tag:
             <select
-              name="tagSelected"
+              name="tag"
               id="tag"
-              value={ tagSelected }
+              value={ tag }
               data-testid="tag-input"
               onChange={ this.handleInput }
             >
-              <option value="meal">Alimentação</option>
-              <option value="leisure">Lazer</option>
-              <option value="work">Trabalho</option>
-              <option value="transport">Transporte</option>
-              <option value="health">Saúde</option>
+              <option value="Alimentação">Alimentação</option>
+              <option value="Lazer">Lazer</option>
+              <option value="Trabalho">Trabalho</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Saúde">Saúde</option>
             </select>
           </label>
           <button
@@ -122,14 +131,17 @@ class Expenses extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrency: () => dispatch(currencyThunk()),
+  sendExpense: (expense) => dispatch(addThunk(expense)),
 });
 
 const mapStateToProps = (state) => ({
   currenciesApi: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 Expenses.propTypes = {
   setCurrency: propTypes.func.isRequired,
+  sendExpense: propTypes.func.isRequired,
   currenciesApi: propTypes.arrayOf(propTypes.object).isRequired,
 };
 

@@ -24,9 +24,9 @@ export function currencyThunk() {
 }
 
 export const HANDLE_EXPENSE = 'HANDLE_EXPENSE';
-export const addExpense = (expenses) => ({
+export const addExpense = (expense) => ({
   type: HANDLE_EXPENSE,
-  expenses,
+  expense,
 });
 
 export function addThunk(inputExpense) {
@@ -34,16 +34,16 @@ export function addThunk(inputExpense) {
     const apiRequest = await fetchApi();
     const { expenses } = getState().wallet;
     let expenseId = 0;
-    if (expenseId.length === 0) {
+    if (expenses.length === 0) {
       expenseId = 0;
     } else {
       expenseId = expenses[expenses.length - 1].id + 1;
     }
-    const expense = {
+    const newExpense = {
       ...inputExpense,
       id: expenseId,
-      rate: apiRequest,
+      exchangeRates: apiRequest,
     };
-    dispatch(addThunk(expense));
+    return (dispatch(addExpense(newExpense)));
   };
 }
