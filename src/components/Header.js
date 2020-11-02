@@ -1,6 +1,7 @@
 import React from 'react';
-import trybeLogo from '../images/trybeLogo.png';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import trybeLogo from '../images/trybeLogo.png';
 
 class Header extends React.Component {
   render() {
@@ -42,5 +43,9 @@ function mapStateToProps(state) {
   };
   return mappedProps;
 }
+
+Header.propTypes = {
+  userLogin: PropTypes.string.isRequired,
+};
 
 export default connect(mapStateToProps)(Header);

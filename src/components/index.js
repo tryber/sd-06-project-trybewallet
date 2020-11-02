@@ -1,3 +1,4 @@
 import Header from './Header';
+import ExpensesForm from './ExpensesForm';
 
-export default Header;
+export { Header, ExpensesForm };
