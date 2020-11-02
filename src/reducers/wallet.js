@@ -1,5 +1,5 @@
 const INITIAL_STATE_WALLET = {
-  currencies: [1, 2, 3],
+  currencies: [1, 2],
   expenses: [],
 };
 
