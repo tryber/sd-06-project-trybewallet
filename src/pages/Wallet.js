@@ -158,7 +158,6 @@ Wallet.propTypes = {
     email: PropTypes.string.isRequired,
   }).isRequired,
   currenciesAPI: PropTypes.arrayOf(Object).isRequired,
-  expenses: PropTypes.arrayOf(Object).isRequired,
   thunkCurrency: PropTypes.func.isRequired,
   thunkExpense: PropTypes.func.isRequired,
 };
