@@ -1,23 +1,24 @@
 import React from 'react';
-import { saveData } from '../actions';
+import { storeEmail } from '../actions';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.checkBtnValidity = this.checkBtnValidity.bind(this);
 
-    this.state = { email: '', password: '', isBtnDisabled: true };
+    this.state = { email: '', password: '', isBtnDisabled: true, redirect: false };
   }
 
   handleClick() {
-    const { save, history } = this.props;
+    const { saveEmail } = this.props;
     const { email } = this.state;
-    save(email);
-    history.push('./carteira');
+    saveEmail(email);
+    this.setState({ redirect: true });
   }
 
   checkBtnValidity() {
@@ -41,7 +42,8 @@ class Login extends React.Component {
   }
 
   render() {
-    const { isBtnDisabled } = this.state;
+    const { isBtnDisabled, redirect } = this.state;
+    if (redirect) return <Redirect to='/carteira' />
     return (
       <form>
         <label htmlFor='email'>
@@ -79,7 +81,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  save: (email) => dispatch(saveData(email)),
+  saveEmail: (email) => dispatch(storeEmail(email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);

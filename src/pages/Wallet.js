@@ -2,10 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 class Wallet extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
-    this.state = { currencies: [] };
+    this.handleChange = this.handleChange.bind(this);
+
+    this.state = {
+      currencies: [],
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: {},
+    };
+  }
+
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
   }
 
   async componentDidMount() {
@@ -32,21 +47,45 @@ class Wallet extends React.Component {
         <form>
           <label htmlFor='value'>
             Despesa:
-            <input type='number' id='value' data-testid='value-input' />
+            <input
+              type='number'
+              id='value'
+              data-testid='value-input'
+              name='value'
+              onChange={this.handleChange}
+            />
           </label>
           <label htmlFor='description'>
             Descricão:
-            <input type='number' id='description' data-testid='description-input' />
+            <input
+              type='number'
+              id='description'
+              data-testid='description-input'
+              name='description'
+              onChange={this.handleChange}
+            />
           </label>
-          <select data-testid='currency-input'>
+          <select
+            data-testid='currency-input'
+            name='currency'
+            onChange={this.handleChange}
+          >
             {currencies.map((item) => {
               return <option key={item} data-testid={item}>{item}</option>
             })}
           </select>
-          <select data-testid='method-input'>
+          <select
+            data-testid='method-input'
+            name='method'
+            onChange={this.handleChange}
+          >
             {methods.map((item) => <option key={item}>{item}</option>)}
           </select>
-          <select data-testid='tag-input'>
+          <select
+            data-testid='tag-input'
+            name='tag'
+            onChange={this.handleChange}
+          >
             {tags.map((item) => <option key={item}>{item}</option>)}
           </select>
           <button>Adicionar despesa</button>

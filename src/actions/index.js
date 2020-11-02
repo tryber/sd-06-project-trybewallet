@@ -1,6 +1,6 @@
 export const LOGIN = 'LOGIN';
 
-export const saveData = (email) => ({
+export const storeEmail = (email) => ({
   type: LOGIN,
   email,
 });
