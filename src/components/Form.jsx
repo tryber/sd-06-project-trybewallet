@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchCurrency from '../actions';
-import { addExpenses } from '../actions/expensesAction';
+import { addExpenses, editExpense } from '../actions/expensesAction';
 
 class Form extends Component {
   constructor() {
@@ -10,7 +10,7 @@ class Form extends Component {
 
     this.handleForm = this.handleForm.bind(this);
     this.handleInput = this.handleInput.bind(this);
-    this.handleOptions = this.handleOptions.bind(this);
+    this.renderOptions = this.renderOptions.bind(this);
 
     this.state = {
       total: 0,
@@ -37,7 +37,30 @@ class Form extends Component {
     }));
   }
 
-  handleOptions() {
+  handleForm() {
+    const {
+      id, sendExpense, sendEditedExpense, fetchWallet, currencies, expenses,
+    } = this.props;
+    const { expenses: stateExpe, total } = this.state;
+    const exchangeRate = currencies[stateExpe.currency].ask;
+    const sum = total + parseFloat(stateExpe.value * exchangeRate);
+    fetchWallet();
+
+    if (id === undefined) {
+      this.setState((previous) => ({
+        ...previous,
+        expenses: { ...previous.expenses, exchangeRates: { ...currencies } },
+        total: sum,
+      }), () => sendExpense(this.state));
+    } else {
+      /* const sum = total + parseFloat((value - expenses[id].value) * exchangeRate); */
+
+      expenses[id] = { id, ...stateExpe };
+      sendEditedExpense(expenses);
+    }
+  }
+
+  renderOptions() {
     const { currencies } = this.props;
     const filteredCurrencies = Object.keys(currencies).filter((key) => key !== 'USDT');
 
@@ -48,21 +71,9 @@ class Form extends Component {
     );
   }
 
-  handleForm() {
-    const { sendExpense, fetchWallet, currencies } = this.props;
-    const { expenses: { value, currency }, total } = this.state;
-    const sum = total + parseFloat(value * currencies[currency].ask);
-
-    fetchWallet();
-    this.setState((previous) => ({
-      ...previous,
-      expenses: { ...previous.expenses, exchangeRates: { ...currencies } },
-      total: sum,
-    }), () => sendExpense(this.state));
-  }
-
   render() {
     const { expenses: { value, description, currency, method, tag } } = this.state;
+    const { id } = this.props;
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
     return (
@@ -104,7 +115,7 @@ class Form extends Component {
                 value={ currency }
                 onChange={ this.handleInput }
               >
-                { this.handleOptions() }
+                { this.renderOptions() }
               </select>
             </label>
           </div>
@@ -149,7 +160,7 @@ class Form extends Component {
               type="button"
               onClick={ this.handleForm }
             >
-              Adicionar despesa
+              {id === undefined ? 'Adicionar despesa' : 'Editar despesa'}
             </button>
           </div>
         </fieldset>
@@ -159,18 +170,24 @@ class Form extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
   currencies: state.wallet.currencies,
+  id: state.wallet.id,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchWallet: () => dispatch(fetchCurrency()),
   sendExpense: (state) => dispatch(addExpenses(state)),
+  sendEditedExpense: (expense) => dispatch(editExpense(expense)),
 });
 
 Form.propTypes = {
   fetchWallet: PropTypes.func.isRequired,
   sendExpense: PropTypes.func.isRequired,
+  sendEditedExpense: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
   currencies: PropTypes.objectOf().isRequired,
+  expenses: PropTypes.objectOf().isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

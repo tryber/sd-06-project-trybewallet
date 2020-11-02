@@ -2,28 +2,23 @@ const initialState = {
   currencies: [],
   expenses: [],
   total: 0,
-  isFetching: false,
-  error: '',
+  id: undefined,
 };
 
 function wallet(state = initialState, { type, payload }) {
-  const id = state.expenses.length;
-
   switch (type) {
-  case 'REQUEST_CURRENCY':
-    return { ...state, isFetching: true };
   case 'GET_CURRENCY':
     return {
       ...state,
       currencies: payload,
-      isFetching: false,
     };
-  case 'FAILED_REQUEST':
-    return { ...state, error: payload, isFetching: false };
   case 'ADD_EXPENSE':
     return {
       ...state,
-      expenses: [...state.expenses, { id, ...payload.expenses }],
+      expenses: [...state.expenses, {
+        id: state.expenses.length,
+        ...payload.expenses,
+      }],
       total: payload.total,
     };
   case 'REMOVE_EXPENSE':
@@ -31,6 +26,17 @@ function wallet(state = initialState, { type, payload }) {
       ...state,
       expenses: [...payload.expenses],
       total: state.total + payload.total,
+    };
+  case 'ADD_ID':
+    return {
+      ...state,
+      id: payload,
+    };
+  case 'EDIT_EXPENSE':
+    return {
+      ...state,
+      expenses: payload,
+      id: undefined,
     };
   default:
     return state;

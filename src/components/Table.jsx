@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { removeExpense } from '../actions/expensesAction';
+import { removeExpense, idToEdit } from '../actions/expensesAction';
 import './styles/table.css';
 
 class Table extends Component {
@@ -9,11 +9,19 @@ class Table extends Component {
     super();
 
     this.renderTableBody = this.renderTableBody.bind(this);
-    this.deletedExpense = this.deletedExpense.bind(this);
+    this.deleteExpense = this.deleteExpense.bind(this);
+    this.getExpenseId = this.getExpenseId.bind(this);
   }
 
-  deletedExpense({ target }) {
-    const { expenses, sendExpense } = this.props;
+  getExpenseId({ target }) {
+    const { sendId } = this.props;
+    const targetID = Number(target.parentNode.parentNode.id);
+
+    sendId(targetID);
+  }
+
+  deleteExpense({ target }) {
+    const { wallet: { expenses }, sendExpense } = this.props;
     const targetID = Number(target.parentNode.parentNode.id);
     const newExpenses = expenses.filter((item) => item.id !== targetID);
     const minusValue = -Number(document.querySelector('.converted').innerHTML);
@@ -28,6 +36,7 @@ class Table extends Component {
 
   renderTableBody(expense) {
     const { id, description, tag, method, currency, value, exchangeRates } = expense;
+    /* console.log(exchangeRates.length); */
     const currencyName = Object.keys(exchangeRates).reduce((acc, key) => {
       if (key === currency) {
         Object.assign(acc, { ...exchangeRates[key] });
@@ -36,24 +45,31 @@ class Table extends Component {
     }, {});
 
     const { name, ask } = currencyName;
-    const convertedValue = (value * ask).toFixed(2);
+    const convertedValue = parseFloat(value * ask).toFixed(2);
+    const exchange = (ask * 1).toFixed(2);
 
     return (
-      <tr id={ id }>
+      <tr key={ id } id={ id }>
         <td>{ description }</td>
         <td>{ tag }</td>
         <td>{ method }</td>
         <td>{ value }</td>
         <td>{ name }</td>
-        <td>{ (ask * 1).toFixed(2) }</td>
+        <td>{ exchange }</td>
         <td className="converted">{ convertedValue }</td>
         <td>Real</td>
         <td>
-          <button data-testid="edit-btn" type="button">Editar despesa</button>
+          <button
+            data-testid="edit-btn"
+            type="button"
+            onClick={ this.getExpenseId }
+          >
+            Editar
+          </button>
           <button
             type="button"
             data-testid="delete-btn"
-            onClick={ this.deletedExpense }
+            onClick={ this.deleteExpense }
           >
             Excluir
           </button>
@@ -63,7 +79,7 @@ class Table extends Component {
   }
 
   render() {
-    const { expenses } = this.props;
+    const { wallet: { expenses } } = this.props;
     return (
       <table>
         <thead>
@@ -80,8 +96,8 @@ class Table extends Component {
           </tr>
         </thead>
         <tbody>
-          { expenses.length === 0 ? null
-            : expenses.map((item) => this.renderTableBody(item)) }
+          {expenses[0] === undefined ? null
+            : expenses.map((item) => this.renderTableBody(item))}
         </tbody>
       </table>
     );
@@ -89,16 +105,18 @@ class Table extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  expenses: state.wallet.expenses,
+  wallet: state.wallet,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   sendExpense: (expenses) => dispatch(removeExpense(expenses)),
+  sendId: (id) => dispatch(idToEdit(id)),
 });
 
 Table.propTypes = {
-  expenses: PropTypes.objectOf().isRequired,
+  wallet: PropTypes.objectOf().isRequired,
   sendExpense: PropTypes.func.isRequired,
+  sendId: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
