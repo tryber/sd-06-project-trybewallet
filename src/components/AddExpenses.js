@@ -31,20 +31,21 @@ class AddExpenses extends React.Component {
   }
 
   convertValue() {
-    const { currenciesPrice, expenses } = this.props;
+    const { currenciesPrice, expenses, totalExpenses } = this.props;
     const { currency, value } = this.state;
     const currPrice = parseFloat(currenciesPrice[0][currency].ask);
     const totalValue = currPrice * parseFloat(value);
-    let totalExpenses = 0;
+    let totalCost = 0;
     if (expenses.length === 0) {
-      totalExpenses = totalValue;
+      totalCost = totalValue;
     } else {
-      const previousExpenses = expenses
-        .map((expense) => parseFloat(expense.exchangeRates[currency].ask) * parseFloat(expense.value))
-        .reduce((result, eachValue) => result + eachValue);
-      totalExpenses = previousExpenses + totalValue;
+      totalCost = totalExpenses + totalValue;
+      // const previousExpenses = expenses
+      //   .map((expense) => parseFloat(expense.exchangeRates[currency].ask) * parseFloat(expense.value))
+      //   .reduce((result, eachValue) => result + eachValue);
+      // totalExpenses = previousExpenses + totalValue;
     }
-    return totalExpenses;
+    return totalCost;
   }
 
   async addExpensesToReduxState() {
@@ -165,6 +166,7 @@ const mapStateToProps = (state) => ({
   currenciesPrice: state.wallet.currencies,
   isFetching: state.wallet.isFetching,
   expenses: state.wallet.expenses,
+  totalExpenses: state.wallet.totalExpenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
