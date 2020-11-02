@@ -18,4 +18,4 @@ export const currenciesThunk = () => async (dispatch) => {
   const currencies = await response.json();
 
   dispatch(currenciesFetch(currencies));
-}
+};
