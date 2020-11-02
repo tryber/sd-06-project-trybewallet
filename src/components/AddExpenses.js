@@ -1,19 +1,48 @@
 import React from 'react';
 import './AddExpenses.css';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
+import { connect } from 'react-redux';
+import { fetchCurrenciesPrice } from '../actions';
 
 class AddExpenses extends React.Component {
+  componentDidMount() {
+    const { fetchPrices } = this.props;
+    fetchPrices();
+  }
+
   render() {
+    const currencies = ['USD', 'CAD', 'EUR', 'GBP', 'ARS', 'BTC',
+      'LTC', 'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP'];
+    const { currenciesPrice } = this.props;
+    console.log(currenciesPrice);
     return (
       <form className="add-expense">
         <label htmlFor="value">
           Valor:
-          <input id="value" type="text" className="inputs size1" />
+          <input
+            id="value"
+            type="number"
+            className="inputs size1"
+            data-testid="value-input"
+          />
         </label>
         <label htmlFor="currencie">
           Moeda:
-          <select id="currencie" type="text" className="inputs size1">
-            <option value="aaa">aaa</option>
+          <select
+            id="currencie"
+            type="text"
+            className="inputs size1"
+            data-testid="currency-input"
+          >
+            {currencies.map((currencie) => (
+              <option
+                key={ currencie }
+                value={ currencie }
+                data-testid={ currencie }
+              >
+                {currencie}
+              </option>
+            ))}
           </select>
         </label>
         <label htmlFor="payment">
@@ -36,7 +65,12 @@ class AddExpenses extends React.Component {
         </label>
         <label htmlFor="description">
           Descrição:
-          <input id="description" type="text" className="inputs size4" />
+          <input
+            id="description"
+            type="text"
+            className="inputs size4"
+            data-testid="description-input"
+          />
         </label>
         <button type="button">
           <AiOutlinePlusCircle className="bt-icon-plus" size="35" />
@@ -51,4 +85,12 @@ class AddExpenses extends React.Component {
   }
 }
 
-export default AddExpenses;
+const mapStateToProps = (state) => ({
+  currenciesPrice: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchPrices: () => dispatch(fetchCurrenciesPrice()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddExpenses);

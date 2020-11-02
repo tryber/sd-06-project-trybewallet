@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import './Login.css';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { addEmailToState } from '../actions';
 
 class Login extends React.Component {
@@ -118,6 +119,11 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  loggedIn: PropTypes.bool.isRequired,
+  addEmail: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   loggedIn: state.user.loggedIn,

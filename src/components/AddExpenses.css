@@ -44,9 +44,10 @@ button:active {
 
 .inputs {
   background: transparent;
+  background-color: rgba(255, 255, 255, 0.060);
   border: 1px solid rgb(68, 92, 92);
   border-radius: 5px;
-  color: rgb(138, 243, 234);
+  color: rgb(178, 240, 235);
   padding: 8px;
   margin-left: 5px;
   font-size: 10pt;
@@ -55,8 +56,8 @@ button:active {
   margin-top: 5px;
 }
 
-.inputs:enabled {
-  background-color: rgba(255, 255, 255, 0.082);
+.inputs:focus {
+  background-color: rgba(255, 255, 255, 0.100);
 }
 
 option {
