@@ -10,12 +10,12 @@ export const delEmail = (value) => ({
 
 export const expenses = (payload) => ({
   type: 'NEW_EXPENSES',
-  payload
+  payload,
 });
 
-export const fetchCurrencies = (cotacaoMoeda) => ({
+export const fetchCurrencies = (coin) => ({
   type: 'FETCH_CURRENCIES_SUCCESS',
-  cotacaoMoeda,
+  coin,
 });
 
 export default function apiMoney() {

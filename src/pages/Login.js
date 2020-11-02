@@ -30,7 +30,7 @@ class Login extends React.Component {
     });
   }
 
-  goingToWallet(event) {
+  toWallet(event) {
     const { history, myEmail } = this.props;
     const { email } = this.state;
     event.preventDefault();
@@ -42,9 +42,9 @@ class Login extends React.Component {
     const { disabled, email, password } = this.state;
     return (
       <div>
-        <form onSubmit={ this.goingToWallet }>
-          <label htmlFor="email">
-            E-mail:
+        <form onSubmit={ this.toWallet }>
+          <label htmlFor="email" />
+          E-mail:
           <input
             id="email"
             type="email"
@@ -54,30 +54,29 @@ class Login extends React.Component {
             onChange={ this.handleChange }
             required
           />
-          </label>
-          <label>Password
-          <input type="password"
+          <label htmlFor="password" />
+          Password
+          <input
+            id="password"
+            type="password"
             value={ password }
             name="password"
             data-testid="password-input"
             minLength="6"
-            onChange={ this.handleChange } required
+            onChange={ this.handleChange }
+            required
           />
-          </label>
         </form>
-        <button
-          type="button"
-          disabled={ disabled }
-          onClick={ this.goingToWallet }
-        >Entrar
+        <button type="button" disabled={ disabled } onClick={ this.toWallet }>
+        Entrar
         </button>
       </div>
     );
-  };
-};
+  }
+}
 
 const mapDispatchToProps = (dispatch) => ({
-  myEmail: (value) => dispatch(newEmail(value))
+  myEmail: (value) => dispatch(newEmail(value)),
 });
 
 Login.propTypes = {

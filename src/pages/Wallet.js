@@ -25,10 +25,6 @@ class Wallet extends React.Component {
     myMoney();
   }
 
-  handleChange({ target }) {
-    this.setState({ [target.name]: target.value });
-  }
-
   onSubmit(event) {
     event.preventDefault();
     const { myExpenses } = this.props;
@@ -36,64 +32,72 @@ class Wallet extends React.Component {
     myExpenses({ value, description, currency, method, tag });
   }
 
+  handleChange({ target }) {
+    this.setState({ [target.name]: target.value });
+  }
+
   render() {
     const { email, currencies, expenses } = this.props;
     const pagamento = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-    //totalValue feito com a ajuda do colega William pelo SLACK
+//totalValue feito com a ajuda do colega William pelo SLACK
     const totalValue = expenses.length ? Math.round(expenses
       .reduce((acc, cur) => acc + cur.value * cur.exchangeRates[cur.currency]
       .ask, 0) * 100) / 100 : 0;
+    const tableHead = [ 'Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda', 'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão'];
     return (
       <div>
         <header>
-          <p data-testid="email-field">Email: { email }</p>
-          <p data-testid="total-field">Despesas totais: { totalValue }</p>
+          <p data-testid="email-field">
+            Email:
+            { email }
+          </p>
+          <p data-testid="total-field">
+            Despesas totais:
+            { totalValue }
+          </p>
           <p data-testid="header-currency-field">Câmbio: BRL</p>
         </header>
         <form>
-          <label>
+          <label htmlFor="value" />
             Valor:
-            <input type="number" name="value" onChange={ this.handleChange } data-testid="value-input" />
-          </label>
-          <label>
+            <input type="number" id="value" name="value" onChange={ this.handleChange } data-testid="value-input" />
+          <label htmlFor="description" />
             Descrição:
-            <input type="text" name="description" onChange={ this.handleChange } data-testid="description-input" />
-          </label>
-          <label>
+            <input type="text" id="description" name="description" onChange={ this.handleChange } data-testid="description-input" />
+          <label id="moeda" />
             Moeda:{' '}
             {/* buscar atraves da api, Remova das informações trazidas pela API a opção 'USDT' (Dólar Turismo).  */}
-            <select data-testid="currency-input" name="currency" onChange={ this.handleChange }>
+            <select data-testid="currency-input" id="moeda" name="currency" onChange={ this.handleChange }>
               <option value="" selected>Selecione</option>
-              { currencies.map((moeda) => (
-                <option value={ moeda } data-testid={ moeda }>
-                  { moeda }
+              { currencies.map((m) => (
+                <option value={ m } data-testid={ m }>
+                  { m }
                 </option>
               ))}
             </select>
-          </label>
-          <label>
+          <label htmlFor="method" />
             Método de Pagamento:
-            <select data-testid="method-input" name="method" onChange={ this.handleChange }>
+            <select data-testid="method-input" id="method" name="method" onChange={ this.handleChange }>
               <option value="" selected>Selecione</option>
-              { pagamento.map((pagamento) => (
-                <option value={ pagamento }>{ pagamento }</option>
+              { pagamento.map((p) => (
+                <option value={ p }>{ p }</option>
               ))}
             </select>
-          </label>
-          <label>
+          <label htmlFor="tag" />
             Tag:    
-            <select data-testid="tag-input" name="tag" onChange={ this.handleChange }>
+            <select data-testid="tag-input" id="tag" name="tag" onChange={ this.handleChange }>
               <option value="" selected>Selecione</option>
-              { tag.map((tag) => (
-                <option value={ tag }>{ tag }</option>
+              { tag.map((t) => (
+                <option value={ t }>{ t }</option>
               ))}
             </select>
-          </label>
           {/* Ao ser clicado, o botão deve fazer uma requisição à API para trazer o câmbio mais atualizado possível. */}
           <button type="submit" onClick={ this.onSubmit }>Adicionar despesa</button>
         </form>
-        {/* {Tabela} */}
+        <table>
+          {tableHead.map((e) => <th key={ e }>{ e }</th>)};
+        </table>
       </div>
     );
   }

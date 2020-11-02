@@ -9,8 +9,7 @@ function wallet(state = INITIAL_STATE, action) {
   case 'NEW_EXPENSES':
     return { ...state, expenses: [...state.expenses, action.payload] };
   case 'FETCH_CURRENCIES_SUCCESS':
-    return { ...state, currencies: Object.keys(action.cotacaoMoeda)
-      .filter((element) => element !== 'USDT') };
+    return { ...state, currencies: Object.keys(action.coin).filter((e) => e !== 'USDT') };
   default:
     return state;
   }
