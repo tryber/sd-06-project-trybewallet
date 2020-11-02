@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { deleteExpenseToRecord } from '../actions';
 
 class Table extends React.Component {
 
@@ -8,7 +9,7 @@ class Table extends React.Component {
   }
 
   createRow() {
-    const { expenses } = this.props;
+    const { expenses, deleteRecord } = this.props;
 
     const rowNumber = expenses.length;
     if (rowNumber !== 0) {
@@ -42,6 +43,15 @@ class Table extends React.Component {
       tdCurrencyToConvert.innerHTML = 'Real';
       tr.appendChild(tdCurrencyToConvert);
 
+      const tdDeleteButton = document.createElement('td');
+      const deleteButton = document.createElement('button');
+      deleteButton.innerHTML = 'delete';
+      deleteButton.setAttribute('type', 'button');
+      // deleteButton.setAttribute('onCLick');
+      deleteButton.setAttribute('data-testid', 'delete-btn');
+      tdDeleteButton.appendChild(deleteButton);
+      tr.appendChild(tdDeleteButton);
+
       const table = document.querySelector('table');
       table.insertBefore(tr, table.lastChild.nextSibling);
     }
@@ -73,6 +83,12 @@ class Table extends React.Component {
 function mapStateToProps(state) {
   return {
     expenses: state.wallet.expenses,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    deleteRecord: (expense) => dispatch(deleteExpenseToRecord(expense)),
   };
 }
 

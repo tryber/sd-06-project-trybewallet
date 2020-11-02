@@ -13,7 +13,15 @@ const addExpenseToRecord = (expense) => ({
   },
 });
 
+const deleteExpenseToRecord = (expense) => ({
+  type: 'deleteExpense',
+  payload: {
+    expense,
+  },
+});
+
 export {
   addEmailToRecord,
   addExpenseToRecord,
+  deleteExpenseToRecord,
 };

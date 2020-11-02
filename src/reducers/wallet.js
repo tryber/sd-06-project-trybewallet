@@ -11,6 +11,12 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       expenses: [...state.expenses, action.payload.expense],
     };
+  case 'deleteExpense':
+    return {
+      ...state,
+      expenses: [...state.expenses]
+        .splice(state.expenses.indexOf(action.payload.expense), action.payload.expense),
+    };
   default:
     return state;
   }
