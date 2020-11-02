@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { currenciesThunk } from '../actions';
+
 class Wallet extends React.Component {
   componentDidMount() {
     const { currencyFetch } = this.props;
@@ -18,48 +19,50 @@ class Wallet extends React.Component {
           <p data-testid="total-field">0</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
-        <hr/>
+        <hr />
         <form>
-          <label>
+          <label htmlFor="value">
             Valor
-            <input type="number" data-testid="value-input" />
+            <input type="number" name="value" data-testid="value-input" />
           </label>
-          <label>
+          <label htmlFor="description">
             Descrição
-            <input type="text" data-testid="description-input" />
+            <input type="text" name="description" data-testid="description-input" />
           </label>
-          <label>
+          <label htmlFor="currency">
             Moeda
-            <select data-testid="currency-input">
+            <select name="currency" data-testid="currency-input">
               {
-                currencies.map(currency => <option
-                  key={currency}
-                  value={currency}
-                  data-testid={currency}>
-                    {currency}
-                  </option>)
+                currencies.map((currency) => (
+                  <option
+                    key={ currency }
+                    value={ currency }
+                    data-testid={ currency }
+                  >
+                    { currency }
+                  </option>))
               }
             </select>
           </label>
-          <label>
+          <label htmlFor="payment-method">
             Método de pagamento
-            <select data-testid="method-input">
-              <option value="bill">Dinheiro</option>  
-              <option value="credit">Cartão de crédito</option>  
-              <option value="debt">Cartão de débito</option>  
+            <select name="payment-method" data-testid="method-input">
+              <option value="bill">Dinheiro</option>
+              <option value="credit">Cartão de crédito</option>
+              <option value="debt">Cartão de débito</option>
             </select>
           </label>
-          <label>
+          <label htmlFor="tag">
             Tag
-            <select data-testid="tag-input">
-              <option value="food">Alimentação</option>  
-              <option value="leisure">Lazer</option>  
-              <option value="work">Trabalho</option>  
-              <option value="transportation">Transporte</option>  
-              <option value="health">Saúde</option>  
+            <select name="tag" data-testid="tag-input">
+              <option value="food">Alimentação</option>
+              <option value="leisure">Lazer</option>
+              <option value="work">Trabalho</option>
+              <option value="transportation">Transporte</option>
+              <option value="health">Saúde</option>
             </select>
           </label>
-          <button>Adicionar despesa</button>
+          <button type="submit">Adicionar despesa</button>
         </form>
       </>
     );
@@ -77,6 +80,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  currencyFetch: PropTypes.func.isRequired,
+  currencies: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
