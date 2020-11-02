@@ -40,7 +40,6 @@ class Login extends React.Component {
     const { email, disabledButton } = this.state;
     const { history, login } = this.props;
     if (disabledButton) {
-      console.log('state atual disableButton:', disabledButton);
       history.push('/carteira');
       return login(email);
     }
