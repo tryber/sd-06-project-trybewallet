@@ -81,6 +81,7 @@ class FormularioDespesa extends React.Component {
             onChange={ (e) => this.handleChange('currency', e) }
             value={ currency }
           >
+            <option value="">Selecionar</option>
             {this.generateOptions(currencies)}
           </select>
         </label>

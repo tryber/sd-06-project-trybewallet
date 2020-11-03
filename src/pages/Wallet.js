@@ -7,6 +7,7 @@ import { updateExchangeInfo } from '../actions';
 import Header from './Wallet_components/Header';
 import FormularioDespesa from './Wallet_components/FormularioDespesa';
 import fetchApi from '../services/api';
+import Table from './Wallet_components/Table';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -20,6 +21,7 @@ class Wallet extends React.Component {
         <div>TrybeWallet</div>
         <Header />
         <FormularioDespesa />
+        <Table />
       </div>
     );
   }
