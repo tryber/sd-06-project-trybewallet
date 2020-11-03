@@ -30,17 +30,10 @@ export const thunkCurrencies = () => async (dispatch) => {
 };
 
 export function thunkExpenses(userExpense) {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     const responseFromAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
     const currencies = await responseFromAPI.json();
-    const { expenses } = getState().wallet;
-    let idExpense = 0;
-    if (expenses.length === 0) {
-      idExpense = 0;
-    } else {
-      idExpense = expenses[expenses.length - 1].id + 1;
-    }
-    const newExpense = { ...userExpense, id: idExpense, exchangeRates: currencies };
+    const newExpense = { ...userExpense, exchangeRates: currencies };
     return (dispatch(saveExpense(newExpense)));
   };
 }

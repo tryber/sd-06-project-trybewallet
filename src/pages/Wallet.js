@@ -35,20 +35,25 @@ class Wallet extends React.Component {
   addExpense(event) {
     event.preventDefault();
     const { thunkExpense } = this.props;
-    const { value, currency, method, tag, description } = this.state;
+    const { value, currency, method, tag, description, id } = this.state;
     const newExpense = {
+      id,
       value,
       currency,
       method,
       tag,
       description,
     };
+    this.setState((previous) => ({ id: previous.id + 1 }));
     thunkExpense(newExpense);
   }
 
   render() {
-    const { userEmail, currenciesAPI } = this.props;
+    const { userEmail, currenciesAPI, expensesValue } = this.props;
     const { value, currency, method, tag, description } = this.state;
+    const sumExpenses = expensesValue
+      .reduce(((acc, curr) => acc + parseFloat((curr
+        .exchangeRates[curr.currency].ask * curr.value).toFixed(2))), 0);
     return (
       <div>
         <header>
@@ -57,7 +62,7 @@ class Wallet extends React.Component {
               Email:
               {userEmail.email}
             </p>
-            <p data-testid="total-field">0</p>
+            <p data-testid="total-field">{sumExpenses}</p>
             <p data-testid="header-currency-field">BRL</p>
           </div>
         </header>
@@ -147,6 +152,7 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   userEmail: state.user,
   currenciesAPI: state.wallet.currencies,
+  expensesValue: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -159,6 +165,7 @@ Wallet.propTypes = {
     email: PropTypes.string.isRequired,
   }).isRequired,
   currenciesAPI: PropTypes.arrayOf(Object).isRequired,
+  expensesValue: PropTypes.arrayOf(Object).isRequired,
   thunkCurrency: PropTypes.func.isRequired,
   thunkExpense: PropTypes.func.isRequired,
 };
