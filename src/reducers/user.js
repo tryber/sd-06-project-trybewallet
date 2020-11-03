@@ -1,30 +1,30 @@
-import { } from 'actions';
-const INITIAL_STATE = {
-  email: '',
+// import { } from 'actions';
+// const INITIAL_STATE = {
+//   email: '',
   // userFetch: false,
-};
+// };
 
 // Esse reducer será responsável por tratar as informações da pessoa usuária
-const userReducer = (state = INITIAL_STATE, action) => {
-  switch (actio.type) {
-  case USER_REQUEST:
-    return {
-      ...state,
-      email: action.email.value,
+// const userReducer = (state = INITIAL_STATE, action) => {
+//   switch (actio.type) {
+//   case USER_REQUEST:
+//     return {
+//       ...state,
+//       email: action.email.value,
       // userFetch: false,
-    };
+    // };
   // case USER_RECEIVE:
   // return {
   //   ...state,
   //   email: action.email.value,
   //   userFetch: false,
   // };
-  case USER_RECEIVE_SUCESS:
-    return {
-      ...state,
-      email: action.email.value,
+  // case USER_RECEIVE_SUCESS:
+  //   return {
+  //     ...state,
+  //     email: action.email.value,
       // userFetch: false,
-    };
+    // };
     // case USER_RECEIVE_FAIL:
     //   return {
     //     ...state,
@@ -32,9 +32,9 @@ const userReducer = (state = INITIAL_STATE, action) => {
     //     userFetch: false,
     //   };
 
-  default:
-    return state;
-  }
-};
+//   default:
+//     return state;
+//   }
+// };
 
-export default userReducer;
+// export default userReducer;
