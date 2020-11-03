@@ -1,10 +1,16 @@
-export const FILL_CURRENCIES = 'FILL_CURRENCIES';
-export const FILL_EXPENSES = 'FILL_EXPENSES';
+export const ADD_CURRENCIES = 'ADD_CURRENCIES';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 
-export const fillCurrencies = (currency) => (
-  { type: FILL_CURRENCIES, currency }
+export const addCurrencies = (currencies) => (
+  { type: ADD_CURRENCIES, currencies }
 );
 
-export const fillExpenses = (expense) => (
-  { type: FILL_EXPENSES, expense }
+export const addExpenses = (expense) => (
+  { type: ADD_EXPENSE, expense }
 );
+
+export const fetchAPI = () => async (dispatch) => {
+  const url = 'https://economia.awesomeapi.com.br/json/all';
+  const response = await (await (await fetch(url)).json());
+  dispatch(addCurrencies(response));
+};

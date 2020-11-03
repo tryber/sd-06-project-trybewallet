@@ -299,7 +299,7 @@ describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma
     expect(totalField).toContainHTML('187.12')
   });
 });
-/*
+
 describe('5 - [PÁGINA DA CARTEIRA] Desenvolva uma tabela com os gastos contendo as seguintes características:', () => {
   const initial = initialStateWithExpenses;
 
@@ -451,4 +451,4 @@ describe('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela contendo
     expect(store.getState().wallet.expenses).toStrictEqual(newExpenses);
   });
 });
-*/
+
