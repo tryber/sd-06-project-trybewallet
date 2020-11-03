@@ -18,17 +18,17 @@ export const addExpense = (data) => ({ type: ADD_EXPENSE, expenseData: data });
 
 export const updateTotal = (total) => ({ type: UPDATE_TOTAL, total });
 
-export const deleteExpense = (expenseId) =>({ type: DELETE_EXPENSE, expenseId });
+export const deleteExpense = (data) => ({ type: DELETE_EXPENSE, expenseData: data });
 
 export function fetchAPI() {
   return async (dispatch) => {
     try {
-      dispatch(requestAPI()); // tirar se der bug
+      dispatch(requestAPI());
       const response = await fetch('https://economia.awesomeapi.com.br/json/all');
       const json = await response.json();
       dispatch(getCurrencies(json));
     } catch (err) {
-      dispatch(failedRequest(err)); // tirar se der bug
+      dispatch(failedRequest(err));
     }
   };
 }

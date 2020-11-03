@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { deleteExpense } from '../actions/index'
 import PropTypes from 'prop-types';
+import { deleteExpense } from '../actions/index';
 
 class WalletTableBody extends Component {
   render() {
-    const { expenses, sendExpenseId } = this.props;
+    const { expenses, deleteExpenseReq } = this.props;
 
     return (
       <tbody>
@@ -26,13 +26,13 @@ class WalletTableBody extends Component {
                 </td>
                 <td> Real </td>
                 <td>
-                <button
-                  type="button"
-                  data-testid="delete-btn"
-                  onClick={ () => sendExpenseId(exp.id) }
-                >
-                  Deletar
-                </button>
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    onClick={ () => deleteExpenseReq(exp) }
+                  >
+                    Deletar
+                  </button>
                 </td>
               </tr>
             ))
@@ -44,11 +44,12 @@ class WalletTableBody extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  sendExpenseId: (id) => dispatch(deleteExpense(id)),
+  deleteExpenseReq: (data) => dispatch(deleteExpense(data)),
 });
 
 WalletTableBody.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteExpenseReq: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(WalletTableBody);

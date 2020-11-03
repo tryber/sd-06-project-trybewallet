@@ -14,7 +14,7 @@ const INITIAL_STATE = {
   data: {},
 };
 
-function wallet(state = INITIAL_STATE, { type, data, error, expenseData, total, expenseId }) {
+function wallet(state = INITIAL_STATE, { type, data, error, expenseData, total }) {
   switch (type) {
   case REQUEST_API:
     return { ...state, isLoading: true };
@@ -43,11 +43,14 @@ function wallet(state = INITIAL_STATE, { type, data, error, expenseData, total, 
       ...state,
       total: state.total + total,
     };
-  case DELETE_EXPENSE:
+  case DELETE_EXPENSE: {
+    const { id, exchangeRates, currency, value } = expenseData;
     return {
       ...state,
-      expenses: state.expenses.filter((exp) => exp.id !== expenseId),
-    }
+      expenses: state.expenses.filter((exp) => exp.id !== id),
+      total: state.total - (exchangeRates[currency].ask * value),
+    };
+  }
   default:
     return state;
   }
