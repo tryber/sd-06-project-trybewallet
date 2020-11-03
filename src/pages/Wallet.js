@@ -10,8 +10,8 @@ import fetchApi from '../services/api';
 
 class Wallet extends React.Component {
   componentDidMount() {
-    const { updateExchangeInfo } = this.props;
-    fetchApi().then((exchangeRates) => updateExchangeInfo(exchangeRates));
+    const { updateExchangeInfo0 } = this.props;
+    fetchApi().then((exchangeRates) => updateExchangeInfo0(exchangeRates));
   }
 
   render() {
@@ -26,15 +26,15 @@ class Wallet extends React.Component {
 }
 
 Wallet.defaultProps = {
-  updateExchangeInfo: () => {},
+  updateExchangeInfo0: () => {},
 };
 
 Wallet.propTypes = {
-  updateExchangeInfo: PropTypes.func,
+  updateExchangeInfo0: PropTypes.func,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  updateExchangeInfo: (exchangeInfo) => dispatch(updateExchangeInfo(exchangeInfo)),
+  updateExchangeInfo0: (exchangeInfo) => dispatch(updateExchangeInfo(exchangeInfo)),
 });
 
 export default connect(null, mapDispatchToProps)(Wallet);
