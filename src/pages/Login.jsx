@@ -3,7 +3,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { salvarUsuario } from '../actions';
-
 import propType from 'prop-types';
 
 import '../css/login.css';
@@ -25,6 +24,7 @@ class Login extends React.Component {
       checkPassword: true,
       btnEntrar: false,
     }
+
   }
 
   checkEmail(event) {
