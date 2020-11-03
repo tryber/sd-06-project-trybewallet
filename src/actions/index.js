@@ -28,9 +28,7 @@ export const getCurrencies = () => async (dispatch) => {
   dispatch(currenciesFetch(currencies));
 };
 
-export const removeItem = (index) => {
-  return {
-    type: REMOVE_ITEM,
-    payload: index,
-  }
-}
+export const removeItem = (index) => ({
+  type: REMOVE_ITEM,
+  payload: index,
+});

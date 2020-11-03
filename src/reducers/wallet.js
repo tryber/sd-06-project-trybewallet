@@ -21,9 +21,9 @@ const wallet = (state = WALLET_INITIAL_STATE, action) => {
   case REMOVE_ITEM:
     return ({
       ...state,
-      expenses: [ ...state.expenses.slice(0, action.payload),
-        ...state.expenses.slice(action.payload + 1, state.expenses.length) ]
-    })
+      expenses: [...state.expenses.slice(0, action.payload),
+        ...state.expenses.slice(action.payload + 1, state.expenses.length)],
+    });
   default:
     return state;
   }
