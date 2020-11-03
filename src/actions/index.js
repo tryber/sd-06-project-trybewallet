@@ -1,11 +1,31 @@
-// Coloque aqui suas actions
-// action: obj propriedade type
-// as actions creators são as funções que retornam esses objetos
+import fetchCurrency from '../services/fetchCurrency';
+import fetchCurrencyStore from '../services/fetchCurrencyStore';
 
-// action que vai salvar o email
-const login = (email) => ({
+export const login = (email) => ({
   type: 'LOGIN',
   email,
 });
 
-export default login;
+export const currencies = (currenciesAPI) => ({
+  type: 'FETCH_CURRENCY',
+  currenciesAPI,
+});
+
+export const currenciesStore = (currenciesAPI) => ({
+  type: 'FETCH_CURRENCY_STORE',
+  currenciesAPI,
+})
+
+export function requestCurrency() {
+  return (dispatch) => {
+    fetchCurrency()
+      .then((currencyResponse) => dispatch(currencies(currencyResponse)));
+  };
+}
+
+export function requestCurrencyStore() {
+  return (dispatch) => {
+    fetchCurrencyStore()
+      .then((currStoreResponse) => dispatch(currenciesStore(currStoreResponse)));
+  }
+}
