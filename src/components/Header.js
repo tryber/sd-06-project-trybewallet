@@ -12,16 +12,25 @@ class Header extends React.Component {
 
   totalExpenses(listOfExpense) {
     // console.log('chamei a função')
-    const { value, currency, exchangeRates } = listOfExpense
-    if (listOfExpense != null && listOfExpense.length === 0) {
+    if(listOfExpense != null && listOfExpense.length === 0) {
       return 0;
     }
     let sumExpenses = 0;
     listOfExpense.forEach((expense) => {
-      sumExpenses += parseFloat(expense.value * (exchangeRates[currency].ask));
-    });
-    return sumExpenses;
+    sumExpenses += parseFloat(expense.value);
+  });
   }
+
+  // const { value, currency, exchangeRates } = listOfExpense
+  // if (listOfExpense != null && listOfExpense.length === 0) {
+  //   return 0;
+  // }
+  // let sumExpenses = 0;
+  // listOfExpense.forEach((expense) => {
+  //   sumExpenses += parseFloat(expense.value * (exchangeRates[currency].ask));
+  // });
+  // return sumExpenses;
+
 
   render() {
     const { email, expenses } = this.props;
