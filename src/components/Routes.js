@@ -6,15 +6,13 @@ import Wallet from '../pages/Wallet';
 
 import history from '../history';
 
-const Routes = () => {
-  return (
-    <Router history={history}>
-      <Switch>
-        <Route component={Login} exact path="/" />
-        <Route component={Wallet} exact path="/carteira" />
-      </Switch>
-    </Router>
-  )
-};
+const Routes = () => (
+  <Router history={ history }>
+    <Switch>
+      <Route component={ Login } exact path="/" />
+      <Route component={ Wallet } exact path="/carteira" />
+    </Switch>
+  </Router>
+);
 
 export default Routes;
