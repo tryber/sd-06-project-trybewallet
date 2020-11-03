@@ -12,7 +12,7 @@ class Header extends React.Component {
   }
 
   render() {
-    const { email } = this.props;
+    const { email, expenses } = this.props;
     return (
       <nav className="header-nav">
         <Link className="header-link" to="/">
@@ -20,10 +20,17 @@ class Header extends React.Component {
         </Link>
         <section data-testid="email-field">{ email }</section>
         <section data-testid="total-field">
-          {`${'Despesa Total: R$ '}
-              ${'0,00'}`}
+          Despesa Total: R$
+          {expenses.reduce((acc, cur) => {
+            const { currency, exchangeRates, value } = cur;
+
+            const exchangeRate = exchangeRates[currency].ask;
+            const BRL = exchangeRate * value;
+
+            return acc + parseFloat(BRL);
+          }, 0).toFixed(2)}
+          <span data-testid="header-currency-field">{`${'BRL'}`}</span>
         </section>
-        <section data-testid="header-currency-field">{`${'BRL'}`}</section>
       </nav>
     );
   }
@@ -31,10 +38,12 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, null)(Header);

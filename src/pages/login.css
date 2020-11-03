@@ -31,7 +31,3 @@ button {
   width: 200px;
   border-radius: 3px;
 }
-
-a :hover {
-  background-color: rgb(44, 121, 76)
-}

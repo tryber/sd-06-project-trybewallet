@@ -10,7 +10,11 @@ function wallet(state = INITIAL_STATE, action) {
   case ADD_EXPENSES:
     return [...state, action.expenses];
   case SELECT_CURRENCY:
-    return [...state, action.currencies];
+    return {
+      ...state,
+      currencies: Object.keys(action.currencies)
+        .filter((currency) => currency !== 'USDT'),
+    };
   default:
     return state;
   }
