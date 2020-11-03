@@ -2,10 +2,12 @@
   background-color: var(--main-bkgrdcolor);
   border: none;
   border-radius: 0 8px 0 0;
+  min-height: 51px;
   padding: 0 10px 0 0;
+  min-width: 78%;
 }
 
-.expense-form legend {
+.expense-form legend, .edit-expense-form legend {
   background-color: white;
   border-radius: 8px;
   color: rgb(0, 103, 46);
@@ -16,7 +18,7 @@
   margin: 0 0 0 17px;
 }
 
-.expense-form label {
+.expense-form label, .edit-expense-form label {
   color: rgb(100, 203, 146);
   display: inline-block;
   font-size: 1.1em;
@@ -24,7 +26,7 @@
   margin: 0 20px;
 }
 
-.expense-form input, select {
+.expense-form input, .expense-form select, .edit-expense-form input, .edit-expense-form select {
   background-color: rgb(230, 247, 220);
   border: none;
   border-radius: 8px;
@@ -35,12 +37,12 @@
   width: 100px;
 }
 
-.expense-form input[ type = text ] {
+.expense-form input[ type = text ], .edit-expense-form input[ type = text ] {
   font-size: 0.8em;
   width: 320px;
 }
 
-.expense-form select {
+.expense-form select, .edit-expense-form select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -57,7 +59,7 @@
   width: auto;
 }
 
-.expense-form button {
+.expense-form button, .edit-expense-form button {
   background-color: rgb(7, 161, 107);
   border: 0;
   border-radius: 8px;
@@ -67,10 +69,19 @@
   padding: 8px 16px;
 }
 
-.expense-form button:hover {
+.expense-form button:hover, .edit-expense-form button:hover {
   background-color: rgb(7, 184, 122);
 }
 
-.expense-form button:active {
+.expense-form button:active, .edit-expense-form button:active {
   background-color: rgb(10, 131, 89);
+}
+
+.edit-expense-form {
+  background-color: var(--main-bkgrdcolor);
+  border-radius: 8px;
+  height: 63px;
+  margin: 0;
+  padding: 0 10px 0 0;
+  width: 78%;
 }

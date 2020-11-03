@@ -4,4 +4,5 @@
 
 body {
   background-color: var(--main-bkgrdcolor);
+  margin: 0;
 }

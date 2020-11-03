@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import fetchApi from '../services/fetchApi';
-import { storeExpense, removeExpense, toogleEdit } from '../actions';
+import { removeExpense, toogleEdit } from '../actions';
 import { AddExpense } from '.';
 
 import { response as mockResponse } from '../tests/mockData';
@@ -16,72 +15,20 @@ class ExpenseTable extends React.Component {
     super(props);
 
     this.state = {
-      editMode: false,
+      expenseEditId: 0,
     };
 
-    this.handleAddExpense = this.handleAddExpense.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.editHandler = this.editHandler.bind(this);
   }
 
-  async editHandler(action, { id, description } = {}) {
+  async editHandler(action, expense = {}) {
     const { dispatchEditMode } = this.props;
-    dispatchEditMode(true);
 
     if (action === 'edit') {
-      await this.setState({
-        editMode: true,
-        expenseEditId: id,
-        expenseEditDescription: description });
+      await dispatchEditMode('on', expense);
     } else if (action === 'close') {
-      await dispatchEditMode(false);
-      this.setState({ editMode: false });
+      await dispatchEditMode('off');
     }
-  }
-
-  async handleAddExpense(event) {
-    event.preventDefault();
-    const { expenses, dispatchExpense } = this.props;
-    const { value, currency, method, tag, description } = this.state;
-    const validForm = (value > 0 && description !== '');
-    if (validForm) {
-      const currentCurrencies = await fetchApi();
-      const currencies = Object.keys(currentCurrencies);
-      const exchangeRates = currencies.reduce((obj, current) => {
-        const currentObj = { ...obj,
-          [current]: { ...currentCurrencies[current] },
-        };
-
-        return currentObj;
-      }, {});
-
-      const newExpense = {
-        id: expenses.length,
-        currency,
-        value,
-        method,
-        tag,
-        description,
-        exchangeRates,
-      };
-
-      dispatchExpense(newExpense);
-
-      document.getElementById('expense-form').reset();
-      this.setState({
-        currency: 'USD',
-        method: 'Dinheiro',
-        tag: 'Alimentação',
-        value: 0,
-        description: '',
-      });
-    } else {
-      console.log('form não preenchido.');
-    }
-  }
-
-  handleChange({ target }) {
-    this.setState({ [target.id]: target.value });
   }
 
   calculateExpense(value, exchangeRate) {
@@ -89,12 +36,12 @@ class ExpenseTable extends React.Component {
   }
 
   render() {
-    const { deleteExpense, expenses } = this.props;
-    const { editMode, expenseEditId, expenseEditDescription } = this.state;
-    const { editHandler } = this;
+    const { deleteExpense, expenses, editMode } = this.props;
+    const { expenseEditId } = this.state;
+
     return (
-      <div>
-        <table id="expenses-table">
+      <div className="expenses-table-wrapper">
+        <table id="expenses-table" className="expenses-table">
           <thead>
             <tr>
               <th>Descrição</th>
@@ -105,7 +52,7 @@ class ExpenseTable extends React.Component {
               <th>Câmbio utilizado</th>
               <th>Valor convertido</th>
               <th>Moeda de conversão</th>
-              <th>Editar/Excluir</th>
+              <th className="edit-btns">Editar/Excluir</th>
             </tr>
           </thead>
           <tbody>
@@ -140,12 +87,7 @@ class ExpenseTable extends React.Component {
                 <td>
                   <button
                     type="button"
-                    onClick={
-                      () => (editHandler(
-                        'edit',
-                        { id: expense.id, description: expense.description },
-                      ))
-                    }
+                    onClick={ () => (this.editHandler('edit', expense)) }
                     data-testid="edit-btn"
                   >
                     Editar
@@ -163,13 +105,13 @@ class ExpenseTable extends React.Component {
           </tbody>
         </table>
         { (
-          (editMode)
+          (editMode === 'on')
             ? (
-              <div className="edit-expense">
+              <div className="edit-expense-wrapper">
                 <AddExpense
                   editMode={ editMode }
-                  editExpense={ { expenseEditId, expenseEditDescription } }
-                  editHandler={ () => editHandler('edit') }
+                  editExpenseId={ expenseEditId }
+                  expenseFormClassName="edit-expense-form"
                 />
               </div>
             )
@@ -183,19 +125,19 @@ class ExpenseTable extends React.Component {
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  editMode: state.wallet.editMode,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchExpense: (expense) => dispatch(storeExpense(expense)),
   deleteExpense: (expense) => dispatch(removeExpense(expense)),
-  dispatchEditMode: (editMode) => dispatch(toogleEdit(editMode)),
+  dispatchEditMode: (editMode, expense = {}) => dispatch(toogleEdit(editMode, expense)),
 });
 
 ExpenseTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.any),
-  dispatchExpense: PropTypes.func.isRequired,
   deleteExpense: PropTypes.func.isRequired,
   dispatchEditMode: PropTypes.func.isRequired,
+  editMode: PropTypes.string.isRequired,
 };
 
 ExpenseTable.defaultProps = {

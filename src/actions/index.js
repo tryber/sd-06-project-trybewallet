@@ -4,6 +4,7 @@ export const ADD_EXPENSE = 'ADD_EXPENSE';
 export { ADD_USER_EMAIL, loginUser } from './ADD_USER_EMAIL';
 export { REMOVE_EXPENSE, removeExpense } from './REMOVE_EXPENSE';
 export { TOOGLE_EDIT_MODE, toogleEdit } from './TOOGLE_EDIT_MODE';
+export { SAVE_EDITED_EXPENSE, saveEdited } from './SAVE_EDITED_EXPENSE';
 
 const addCurrencies = (currencies) => ({
   type: ADD_CURRENCIES,

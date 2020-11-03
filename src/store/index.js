@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   wallet: {
     currencies: [],
     expenses: [],
-    editMode: false,
+    editMode: 'off',
   },
 };
 

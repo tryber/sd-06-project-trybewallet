@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import fetchApi from '../services/fetchApi';
-import { storeExpense, removeExpense } from '../actions';
+import { storeExpense, saveEdited } from '../actions';
 
 import { response as mockResponse } from '../tests/mockData';
 
@@ -14,12 +14,11 @@ class AddExpense extends React.Component {
   constructor(props) {
     super(props);
 
-    const { editMode, editExpense, expenses } = this.props;
+    const { editMode, editExpenseId, expenses } = this.props;
 
-    if (editMode) {
+    if (editMode === 'on') {
       const currExpense = expenses.filter((expense) => (
-        expense.id === editExpense.expenseEditId
-        && expense.description === editExpense.expenseEditDescription
+        expense.id === editExpenseId
       ))[0];
 
       this.state = {
@@ -29,16 +28,14 @@ class AddExpense extends React.Component {
         tag: currExpense.tag,
         value: currExpense.value,
         description: currExpense.description,
-        editMode,
       };
     } else {
       this.state = {
         currency: 'USD',
-        method: 'cash',
-        tag: 'food',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
         value: 0,
         description: '',
-        editMode: false,
         prevExpense: {},
       };
     }
@@ -51,6 +48,7 @@ class AddExpense extends React.Component {
   async handleAddExpense(event) {
     event.preventDefault();
     const { expenses, dispatchExpense } = this.props;
+    console.log('addExpense', expenses.length);
     const { value, currency, method, tag, description } = this.state;
     const validForm = (value > 0 && description !== '');
     if (validForm) {
@@ -91,8 +89,8 @@ class AddExpense extends React.Component {
 
   async handleEditExpense(event) {
     event.preventDefault();
-    const { expenses, dispatchExpense, editHandler, deleteExpense } = this.props;
-    const { prevExpense, value, description, tag, method, currency } = this.state;
+    const { dispatchSaveEdited } = this.props;
+    const { value, description, tag, method, currency, prevExpense } = this.state;
     const validForm = (value > 0 && description !== '');
     if (validForm) {
       const currentCurrencies = await fetchApi();
@@ -106,7 +104,7 @@ class AddExpense extends React.Component {
       }, {});
 
       const newExpense = {
-        id: expenses.length,
+        id: prevExpense.id,
         currency,
         value,
         method,
@@ -115,10 +113,7 @@ class AddExpense extends React.Component {
         exchangeRates,
       };
 
-      await deleteExpense(prevExpense.description);
-      await dispatchExpense(newExpense);
-
-      editHandler('close');
+      await dispatchSaveEdited(newExpense);
     } else {
       console.log('form não preenchido.');
     }
@@ -129,12 +124,12 @@ class AddExpense extends React.Component {
   }
 
   render() {
-    const { currencies } = this.props;
-    const { prevExpense, editMode } = this.state;
+    const { currencies, editMode, expenseFormClassName } = this.props;
+    const { prevExpense } = this.state;
     const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 
     return (
-      <form className="expense-form" id="expense-form">
+      <form className={ expenseFormClassName } id="expense-form">
         <label htmlFor="value">
           $
           <input
@@ -166,7 +161,7 @@ class AddExpense extends React.Component {
           onChange={ this.handleChange }
           defaultValue={ prevExpense.currency }
           data-testid="currency-input"
-          disabled={ editMode }
+          disabled={ (editMode === 'on') && true }
         >
           {
             currencies.map((curr) => (
@@ -211,7 +206,7 @@ class AddExpense extends React.Component {
           <option value="Saúde">Saúde</option>
         </select>
         {
-          (!editMode)
+          (editMode !== 'on')
             ? (
               <button type="submit" onClick={ this.handleAddExpense }>
                 Adicionar despesa
@@ -231,29 +226,29 @@ class AddExpense extends React.Component {
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  editMode: state.wallet.editMode,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchExpense: (expense) => dispatch(storeExpense(expense)),
-  deleteExpense: (expense) => dispatch(removeExpense(expense)),
+  dispatchSaveEdited: (expense = {}) => dispatch(saveEdited(expense)),
 });
 
 AddExpense.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string),
   expenses: PropTypes.arrayOf(PropTypes.any),
   dispatchExpense: PropTypes.func.isRequired,
-  editMode: PropTypes.bool,
-  editHandler: PropTypes.func,
-  editExpense: PropTypes.objectOf(PropTypes.any),
-  deleteExpense: PropTypes.func.isRequired,
+  editMode: PropTypes.string,
+  editExpenseId: PropTypes.number,
+  dispatchSaveEdited: PropTypes.func.isRequired,
+  expenseFormClassName: PropTypes.string.isRequired,
 };
 
 AddExpense.defaultProps = {
   currencies: [],
   expenses: [],
-  editMode: false,
-  editHandler: () => {},
-  editExpense: {},
+  editMode: 'off',
+  editExpenseId: 0,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddExpense);

@@ -75,13 +75,13 @@ class Wallet extends React.Component {
             </section>
           </section>
           <section className="header-form">
-            { (editMode)
-              ? <div />
-              : <AddExpense /> }
+            { (editMode === 'on')
+              ? <div className="expense-form" />
+              : <AddExpense expenseFormClassName="expense-form" /> }
           </section>
         </header>
         { (expenses.length > 0)
-          ? <ExpenseTable />
+          ? <div className="table-wrapper"><ExpenseTable /></div>
           : <p>Você não tem gastos</p> }
       </div>
     );
@@ -102,7 +102,7 @@ Wallet.propTypes = {
   dispatchCurrencies: PropTypes.func.isRequired,
   user: PropTypes.string.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
-  editMode: PropTypes.bool.isRequired,
+  editMode: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
