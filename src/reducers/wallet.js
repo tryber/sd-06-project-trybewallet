@@ -7,7 +7,7 @@ const ESTADO_INICIAL = {
 };
 
 function wallet(state = ESTADO_INICIAL, action) {
-switch (action.type) {
+  switch (action.type) {
   case SALVAR_CARTEIRA:
     return { ...state, currencies: action.payload };
   default:
