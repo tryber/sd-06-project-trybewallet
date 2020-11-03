@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Logo from './images/logo-trybe.png';
+import '../styles/Wallet.css';
 
 class Wallet extends React.Component {
   render() {
@@ -11,17 +12,19 @@ class Wallet extends React.Component {
 
     return (
       <div>
-        <header>
+        <header className="header-wallet">
           <img src={ Logo } alt="logomarca trybe" width="100px" />
-          <p>
-            Email:
-            <span data-testid="email-field">{ email }</span>
-          </p>
-          <p>
-            despesa total:
-            <span data-testid="total-field">{ INITIAL_VALUE }</span>
-            <span data-testid="header-currency-field">BRL</span>
-          </p>
+          <div className="info-box">
+            <p>
+              Email:
+              <span data-testid="email-field">{ email }</span>
+            </p>
+            <p>
+              despesa total:
+              <span data-testid="total-field">{ INITIAL_VALUE }</span>
+              <span data-testid="header-currency-field">BRL</span>
+            </p>
+          </div>
         </header>
       </div>);
   }

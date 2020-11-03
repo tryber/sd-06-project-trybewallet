@@ -80,7 +80,7 @@ class Login extends React.Component {
           placeholder="Digite aqui a sua senha"
           onChange={ this.handleChange }
         />
-        <Link to="/carteira" onClick={() => sendEmail(email)}>
+        <Link to="/carteira" onClick={ () => sendEmail(email) }>
           <button type="button" disabled={ this.verifyStatusButton() }>
             Entrar
           </button>
