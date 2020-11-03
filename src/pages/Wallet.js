@@ -1,8 +1,18 @@
 import React from 'react';
 
+/* IMG */
+// import navLogo from '../img/trybe-logo.png';
+
+/* COMPONENTES */
+// import Table from '../components/Table';
+
 class Wallet extends React.Component {
   render() {
-    return <div>TrybeWallet</div>;
+    return (
+      <section>
+        wallet
+      </section>
+    );
   }
 }
 
