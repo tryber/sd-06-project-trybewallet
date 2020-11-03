@@ -57,25 +57,44 @@ class Wallet extends React.Component {
             {/* <label htmlFor="value">Valor</label> */}
             <input
               onChange={ this.handleChange }
-              id="value" name="value"
+              id="value"
+              name="value"
               data-testid="value-input"
             />
             {/* <label htmlFor="description">Descrição</label> */}
-            <input onChange={ this.handleChange } id="description" name="description" data-testid="description-input" />
+            <input
+            onChange={ this.handleChange }
+            id="description" name="description" data-testid="description-input"
+            />
             {/* <label htmlFor="currency">Moedas</label> */}
-            <select onChange={ this.handleChange } id="currency" name="currency" data-testid="currency-input">
+            <select
+            onChange={ this.handleChange }
+            id="currency"
+            name="currency"
+            data-testid="currency-input"
+            >
               {currencies !== undefined ? currencies.map((currency) => (
                 <option data-testid={ currency } key={ currency }>{currency}</option>
               )) : <p>Error</p>}
             </select>
             {/* <label htmlFor="method">Pagamento</label> */}
-            <select onChange={ this.handleChange } id="method" name="method" data-testid="method-input">
+            <select
+            onChange={ this.handleChange }
+            id="method"
+            name="method"
+            data-testid="method-input"
+            >
               <option>Dinheiro</option>
               <option>Cartão de crédito</option>
               <option>Cartão de débito</option>
             </select>
             {/* <label htmlFor="tag">Categoria</label> */}
-            <select onChange={ this.handleChange } id="tag" name="tag" data-testid="tag-input">
+            <select
+            onChange={ this.handleChange }
+            id="tag"
+            name="tag"
+            data-testid="tag-input"
+            >
               <option>Alimentação</option>
               <option>Lazer</option>
               <option>Trabalho</option>
