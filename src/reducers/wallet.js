@@ -4,17 +4,17 @@ const INITIAL_STATE = { currencyValues: [], currencies: [], currencyValuesLoadin
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case LOADING_CURRENCIES:
-      return { ...state, currencyValuesLoading: true }
-    case GET_CURRENCY_VALUES_SUCCESS:
-      return {
-        ...state,
-        currencyValues: Object.keys(action.currencies).filter((currency) => currency !== 'USDT'),
-        currencies: Object.values(action.currencies),
-        currencyValuesLoading: false }
-    default:
-      return state;
+  case LOADING_CURRENCIES:
+    return { ...state, currencyValuesLoading: true };
+  case GET_CURRENCY_VALUES_SUCCESS:
+    return {
+      ...state,
+      currencyValues: Object.keys(action.currencies).filter((currency) => currency !== 'USDT'),
+      currencies: Object.values(action.currencies),
+      currencyValuesLoading: false };
+  default:
+    return state;
   }
-}
+};
 
 export default wallet;

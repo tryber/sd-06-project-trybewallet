@@ -10,7 +10,10 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { user: { email }, wallet: { currencyValues, currencyValuesLoading }} = this.props;
+    const {
+      user: { email },
+      wallet: { currencyValues, currencyValuesLoading }
+    } = this.props;
     const methodOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
@@ -44,11 +47,13 @@ class Wallet extends React.Component {
               id="currency-input-id"
             >
               {
-                currencyValuesLoading ? <option> - </option> :
-                currencyValues.map((currency) => <option
-                  data-testid={ currency }
-                  key={ currency }
-                >{ currency }</option>)
+                currencyValuesLoading ? <option> - </option>
+                  : currencyValues.map((currency) => (<option
+                    data-testid={ currency }
+                    key={ currency }
+                  >
+                    { currency }
+                  </option>))
               }
             </select>
           </label>
@@ -60,10 +65,12 @@ class Wallet extends React.Component {
             >
               {
                 methodOptions
-                .map((method) => <option
-                  data-testid={ method }
-                  key={ method }
-                >{ method }</option>)
+                  .map((method) => (<option
+                    data-testid={ method }
+                    key={ method }
+                  >
+                    { method }
+                  </option>))
               }
             </select>
           </label>
@@ -75,12 +82,14 @@ class Wallet extends React.Component {
             >
               {
                 tagOptions
-                .map((tag) => <option
-                  data-testid={ tag }
-                  key={ tag }
-                >{ tag }</option>)
+                  .map((tag) => (<option
+                    data-testid={ tag }
+                    key={ tag }
+                  >
+                    { tag }
+                  </option>))
               }
-            </select>      
+            </select>
           </label>
           <label htmlFor="description-input-id">
             Descrição:
@@ -118,6 +127,7 @@ Wallet.propTypes = {
     currencyValues: PropTypes.arrayOf(PropTypes.string).isRequired,
     currencyValuesLoading: PropTypes.bool.isRequired,
   }).isRequired,
+  fetchCurrencyValues: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
