@@ -17,6 +17,8 @@ class ExpensesForm extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleID = this.handleID.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleEdition = this.handleEdition.bind(this);
   }
 
   handleChange({ target }) {
@@ -34,28 +36,50 @@ class ExpensesForm extends React.Component {
     });
   }
 
+  handleClick(array) {
+    const { fetchRates } = this.props;
+    const { id } = this.state;
+    const updateId = id + 1;
 
-  componentDidUpdate(prevProps) {
+    this.setState({
+      id: updateId,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    })
+
+    fetchRates(array);
+  }
+
+  handleEdition() {
     const { editItem } = this.props;
-    if (prevProps.editItem.length !== editItem.length) {
-      this.setState({
-        id: editItem[0].id,
-        value: editItem[0].value,
-        description: editItem[0].description,
-        currency: editItem[0].currency,
-        method: editItem[0].method,
-        tag: editItem[0].tag,
-      })
+
+    if (editItem.length > 0) {
+      return editItem[0].value;
+    } else {
+      return 0
     }
-  } // -----> Desta forma é possível jogar as props vindas do redux para o state
+  }
+
+  // componentDidUpdate(prevProps) {
+  //   const { editItem } = this.props;
+  //   if (prevProps.editItem.length !== editItem.length) {
+  //     this.setState({
+  //       id: editItem[0].id,
+  //     })
+  //   }
+  // } -----> Desta forma é possível jogar as props vindas do redux para o state
 
 
   render() {
 
-    const { currencyProp, fetchRates, editItem } = this.props;
+    const { currencyProp } = this.props;
     const { value, description, currency, method, tag, id } = this.state
     const localExpenseArray = { id, value, description, currency, method, tag };
 
+    const testAgain = this.handleEdition();
     return(
       <form className="expenses">
         <fieldset>
@@ -68,7 +92,7 @@ class ExpensesForm extends React.Component {
               name="value"
               type="number"
               data-testid="value-input"
-              value={value}
+              value={testAgain === 0 ? value : testAgain}
             />
           </label>
 
@@ -124,7 +148,7 @@ class ExpensesForm extends React.Component {
             </select>
           </label>
           <button
-            onClick={ () => fetchRates(localExpenseArray, this.handleID) }
+            onClick={ () => this.handleClick(localExpenseArray) }
             type="button"
           >
             Adicionar despesa
@@ -141,7 +165,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchRates: (expenseArray, callback) => dispatch(fetchExchangeRates(expenseArray, callback)),
+  fetchRates: (expenseArray) => dispatch(fetchExchangeRates(expenseArray)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);

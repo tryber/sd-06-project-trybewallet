@@ -23,8 +23,7 @@ export const fetchData = () => async (dispatch) => {
   dispatch(receiveCurrenciesSuccess(currencies));
 };
 
-export const setNewExpense = (expenseArray, callback, rates) => ({
-  callback: callback(),
+export const setNewExpense = (expenseArray, rates) => ({
   type: ADD_EXPENSE,
   expenseArray,
   rates,
@@ -38,10 +37,10 @@ export const setNewExpense = (expenseArray, callback, rates) => ({
 //   type: RATES_REQUEST,
 // });
 
-export const fetchExchangeRates = (expenseArray, callback) => async (dispatch) => {
+export const fetchExchangeRates = (expenseArray) => async (dispatch) => {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const exchangeRates = await response.json();
-  dispatch(setNewExpense(expenseArray, callback, exchangeRates));
+  dispatch(setNewExpense(expenseArray, exchangeRates));
 };
 
 export const deleteListItem = (id) => ({
