@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { apiMoney, newFetch } from '../actions/index';
+import { apiMoney, newFetch, deleteExpenses } from '../actions/index';
 
 class Wallet extends React.Component {
   constructor() {
@@ -18,6 +18,7 @@ class Wallet extends React.Component {
 
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.deleteButton = this.deleteButton.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +37,11 @@ class Wallet extends React.Component {
 
   handleChange({ target }) {
     this.setState({ [target.name]: target.value });
+  }
+
+  deleteButton() {
+    /* const { myDeleteExpenses } = this.props;
+    myDeleteExpenses() */
   }
 
   render() {
@@ -153,7 +159,13 @@ class Wallet extends React.Component {
                 <td>{(e.value * e.exchangeRates[e.currency].ask).toFixed(2)}</td>
                 <td>Real</td>
                 <td>{e.id}</td>
-                <button type="button" data-testid="delete-btn">Deletar</button>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ this.deleteButton }
+                >
+                  Deletar
+                </button>
               </tr>
             ))}
           </tbody>
@@ -172,7 +184,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   myMoney: (cotacaoMoeda) => dispatch(apiMoney(cotacaoMoeda)),
   myNewFetch: (allState) => dispatch(newFetch(allState)),
-/*   myDeleteExpenses: (despesa) => dispatch(deleteExpenses(despesa)), */
+  myDeleteExpenses: (despesa) => dispatch(deleteExpenses(despesa)),
 });
 
 Wallet.propTypes = {
