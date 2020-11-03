@@ -46,6 +46,9 @@ class Wallet extends React.Component {
 
     const methodArray = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagArray = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const fieldArray = ['Descrição', 'Tag', 'Método de pagamento', 'Valor',
+      'Moeda', 'Câmbio utilizado', 'Valor convertido',
+      'Moeda de conversão', 'Editar/Excluir'];
 
     return (
       <div>
@@ -86,9 +89,6 @@ class Wallet extends React.Component {
                   value={ currency }
                   onChange={ this.handleChange }
                 >
-                  <option disabled value="">
-                    Moeda
-                  </option>
                   {currencies.map((option, index) => (
                     <option key={ index } data-testid={ option }>
                       {option}
@@ -102,7 +102,7 @@ class Wallet extends React.Component {
                   onChange={ this.handleChange }
                 >
                   <option disabled value="">
-                    Método de pagamento
+                    Forma de Pagamento
                   </option>
                   {methodArray.map((option, index) => (
                     <option value={ option } key={ index }>
@@ -134,6 +134,44 @@ class Wallet extends React.Component {
               </div>
             </fieldset>
           </form>
+          <table id="tbl" border="1">
+            <thead>
+              <tr>
+                {fieldArray.map((header, index) => <td key={ index }>{ header }</td>)}
+              </tr>
+            </thead>
+            <tbody>
+              {expenses.map((element) => {
+                const exchangeValue = Number(element.exchangeRates[element.currency].ask);
+                const currencyName = element.exchangeRates[element.currency].name;
+                const convertedValue = exchangeValue * element.value;
+                return (
+                  <tr key={ element.id }>
+                    <td>{ element.description }</td>
+                    <td>{ element.tag }</td>
+                    <td>{ element.method }</td>
+                    <td>{ `${currency} ${element.value}` }</td>
+                    <td>{ currencyName }</td>
+                    <td>{ exchangeValue.toFixed(2)}</td>
+                    <td>{ convertedValue.toFixed(2)}</td>
+                    <td>Real</td>
+                    <td>
+                      <button
+                        type="button"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        type="button"
+                      >
+                        Excluir
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </main>
       </div>
     );
