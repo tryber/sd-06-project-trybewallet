@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { addExpense, fetchCurrencies } from '../actions/index';
 
 class Wallet extends React.Component {
@@ -110,7 +111,7 @@ const mapDispatchToProps = (dispatch) => ({
 Wallet.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
   wallet: PropTypes.shape({
-    currencies: PropTypes.shape(PropTypes.object()).isRequired,
+    currencies: PropTypes.shape(PropTypes.any).isRequired,
     expenses: PropTypes.arrayOf(PropTypes.number).isRequired,
   }).isRequired,
   user: PropTypes.shape({
