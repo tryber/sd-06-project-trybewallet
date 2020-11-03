@@ -36,6 +36,7 @@ class Wallet extends React.Component {
   }
 
   render() {
+    const { value } = this.state;
     const { email, currencies, expenses } = this.props;
     return (
       <div>
@@ -59,7 +60,7 @@ class Wallet extends React.Component {
               <input
                 onChange={ this.handleChange }
                 id="value"
-                value={ this.state.value }
+                value={ value }
                 name="value"
                 data-testid="value-input"
               />
