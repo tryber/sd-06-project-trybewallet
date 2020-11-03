@@ -16,7 +16,7 @@ export function addExpense({
 }) {
   return async (dispatch, getState) => {
     const obj = await fetchApi();
-    console.log('getState', getState());
+    // console.log('getState', getState());
     return dispatch({
       type: SAVE_EXPENSE,
       id: getState().wallet.expenses.length,

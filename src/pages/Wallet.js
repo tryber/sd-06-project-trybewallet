@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addExpense } from '../actions';
 import fetchApi from '../services';
-import { arrayPaymentMethods, arrayPaymentCategorys } from './arraysWalletOptionsInput';
+import {
+  arrayPaymentMethods,
+  arrayPaymentCategorys,
+} from './arraysWallet';
+import FormWallet from './FormWallet';
 
 class Wallet extends React.Component {
   constructor() {
@@ -44,7 +48,6 @@ class Wallet extends React.Component {
 
   render() {
     const { email, saveExpense, expenses } = this.props;
-    // console.log('o redux completo', reduxCompleto);
     const {
       coins,
       value,
@@ -126,6 +129,7 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
         </form>
+        <FormWallet />
       </div>
     );
   }
@@ -140,10 +144,24 @@ const mapDispatchToProps = (dispatch) => ({
   saveExpense: (state) => dispatch(addExpense(state)),
 });
 
+const arrayCoins = ['USD', 'CAD', 'EUR', 'GBP', 'ARS', 'BTC', 'LTC', 'JPY', 'CHF',
+  'AUD', 'CNY', 'ILS', 'ETH', 'XRP'];
 Wallet.propTypes = {
   saveExpense: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
-  expenses: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.shape({
+    exchangeRates: PropTypes.shape(
+      arrayCoins.reduce((total, coin) => (
+        { ...total,
+          [coin]: PropTypes.shape({
+            ask: PropTypes.string.isRequired,
+          }),
+        }
+      ), {}),
+    ),
+    currency: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
