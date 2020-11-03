@@ -12,7 +12,7 @@ export default function (state = INITIAL_STATE, action) {
       ...state,
       expenses: [
         ...state.expenses,
-        action.expenses,
+        action.expense,
       ],
     };
   case GET_CURRENCIES:

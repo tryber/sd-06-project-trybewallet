@@ -9,15 +9,20 @@ export const login = (email) => ({
   email,
 });
 
-export const addexpenses = (expenses) => ({
+export const addexpenses = (expense) => ({
   type: ADD_EXPENSES,
-  expenses,
+  expense,
 });
 
 export const getCurrencies = (currencies) => ({
   type: GET_CURRENCIES,
   currencies,
 });
+
+export const addExpenseThunk = (expense) => async (dispatch) => {
+  const response = await fetchAPI();
+  dispatch(addexpenses(({ ...expense, exchangeRates: response })));
+};
 
 export function fetchCurrencies() {
   return async (dispatch) => {
