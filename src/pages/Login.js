@@ -53,21 +53,31 @@ class Login extends React.Component {
     const { validEmail, validPassword } = this.state;
     return (
       <div className="login-container">
-        <div className="login-div">
-          <div>
+        <div className="container">
+          <div className="img-div">
             <img src={ trybeWallet } alt="trybe-logo" />
           </div>
-          <input data-testid="email-input" onChange={ this.handleChange } />
-          <input data-testid="password-input" onChange={ this.handlePassword } />
-          <Link to="/carteira">
-            <button
-              type="button"
-              disabled={ !(validEmail && validPassword) }
-              onClick={ this.handleClick }
-            >
-              Entrar
-            </button>
-          </Link>
+          <div className="login-div">
+            <input
+              data-testid="email-input"
+              placeholder="Email"
+              onChange={ this.handleChange }
+            />
+            <input
+              data-testid="password-input"
+              placeholder="Senha"
+              onChange={ this.handlePassword }
+            />
+            <Link to="/carteira">
+              <button
+                type="button"
+                disabled={ !(validEmail && validPassword) }
+                onClick={ this.handleClick }
+              >
+                Entrar
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     );

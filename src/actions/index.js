@@ -1,6 +1,7 @@
 export const LOGIN = 'LOGIN';
 export const CURRENCY = 'CURRENCY';
 export const EXPENSES = 'EXPENSES';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 // Coloque aqui suas actions
 // Funções que retornam objetos
@@ -18,6 +19,11 @@ export const currencyAction = (currency) => ({
 export const addExpense = (expense) => ({
   type: EXPENSES,
   expense,
+});
+
+export const deleteExpense = (id) => ({
+  type: DELETE_EXPENSE,
+  payload: id,
 });
 
 export const newCurrency = (expense) => async (dispatch, getState) => {

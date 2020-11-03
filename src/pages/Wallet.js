@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TrybeLogo from '../img/trybe-logo.png';
-import { fetchCurrency, newCurrency } from '../actions';
+import trashcan from '../img/trashcan.png';
+import { fetchCurrency, newCurrency, deleteExpense } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -39,7 +40,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { user, currencies, expenses } = this.props;
+    const { user, currencies, expenses, deleteExp } = this.props;
     const { value, currency, method, tag, description } = this.state;
     const totalValue = expenses.length ? Math.round(expenses
       .reduce((acc, cur) => acc + cur.value
@@ -66,11 +67,13 @@ class Wallet extends React.Component {
               Email:
               { user }
             </p>
-            <p data-testid="total-field">
-              Despesa Total:
-              { totalValue }
-              <span data-testid="header-currency-field">BRL</span>
-            </p>
+            <div className="despesa-total">
+              <p>Despesa Total:</p>
+              <p className="despesa-total-2" data-testid="total-field">
+                { totalValue }
+                <p className="currency" data-testid="header-currency-field">BRL</p>
+              </p>
+            </div>
           </div>
         </header>
         <form className="despesas-container">
@@ -145,34 +148,46 @@ class Wallet extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
-          <button type="submit">Adicionar Despesa</button>
+          <button type="submit" className="submit-button">Adicionar Despesa</button>
         </form>
-        <div>
-          <table>
-            <thead>
-              <tr>
-                {fields.map((element) => <th key={ element }>{element}</th>)}
-              </tr>
-            </thead>
-            <tbody>
-              {expenses.map((element) => {
-                const askValue = Number(element.exchangeRates[element.currency].ask);
-                return (
-                  <tr key={ element.id }>
-                    <td>{ element.description }</td>
-                    <td>{ element.tag }</td>
-                    <td>{ element.method }</td>
-                    <td>{ element.value }</td>
-                    <td>{ element.exchangeRates[element.currency].name }</td>
-                    <td>{ askValue.toFixed(2) }</td>
-                    <td>{element.value * askValue }</td>
-                    <td>Real</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <table cellSpacing="0" cellPadding="0">
+          <thead>
+            <tr>
+              {fields.map((element) => <th scope="col" key={ element }>{element}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {expenses.map((element, index) => {
+              const askValue = Number(element.exchangeRates[element.currency].ask);
+              return (
+                <tr key={ element.id } id={ element.id }>
+                  <td>{ element.description }</td>
+                  <td>{ element.tag }</td>
+                  <td>{ element.method }</td>
+                  <td>{ element.value }</td>
+                  <td>{ element.exchangeRates[element.currency].name }</td>
+                  <td>{ askValue.toFixed(2) }</td>
+                  <td>{(element.value * askValue).toFixed(2) }</td>
+                  <td>Real</td>
+                  <td>
+                    <button
+                      onClick={ () => deleteExp(index) }
+                      type="button"
+                      data-testid="delete-btn"
+                      className="trashcan"
+                    >
+                      <img
+                        src={ trashcan }
+                        width="27"
+                        alt="trashcan"
+                      />
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     );
   }
@@ -181,6 +196,7 @@ class Wallet extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   currencyFunction: () => dispatch(fetchCurrency()),
   newApiFunction: (expense) => dispatch(newCurrency(expense)),
+  deleteExp: (id) => dispatch(deleteExpense(id)),
 });
 
 const mapStateToProps = (state) => ({
@@ -193,6 +209,7 @@ Wallet.propTypes = {
   user: PropTypes.string.isRequired,
   newApiFunction: PropTypes.func.isRequired,
   currencyFunction: PropTypes.func.isRequired,
+  deleteExp: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

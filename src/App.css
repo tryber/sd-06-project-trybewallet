@@ -4,34 +4,11 @@ body {
 }
 
 header {
-  background-color: rgb(235, 235, 235);
+  background-color: rgb(255, 255, 255);
   height: 100px;
-}
-
-.login-container {
   display: flex;
-  justify-content: center;
-  height: 700px;
   align-items: center;
-}
-
-.login-div {
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-}
-
-.login-div input {
-  height: 23.5px;
-  margin-bottom: 15px;
-}
-
-.login-div button {
-  height: 26.5px;
-}
-
-.wallet-container {
-  
+  justify-content: center;
 }
 
 .wallet-container header {
@@ -48,9 +25,101 @@ header {
 .wallet-info-div {
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   width: 30%;
   margin: 20px 50px 0 0;
+}
+
+.login-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+p {
+  font-weight: 500;
+}
+
+.currency {
+  margin-left: 5px;
+}
+
+.despesa-total{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 250px;
+}
+
+.despesa-total-2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  background-color: rgb(243, 240, 240);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 3px;
+  height: 380px;
+  width: 400px;
+}
+
+.img-div {
+  margin-bottom: 20px;
+}
+
+.login-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-div input {
+  height: 27.5px;
+  width: 230px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(10, 10, 10, 0.325);;
+  border-radius: 3px;
+}
+
+.login-div input:hover{
+  border: 1px solid rgb(80, 79, 79);
+}
+
+input:focus-within {
+  transform: scale(1.0075); 
+}
+
+.login-div input:focus{
+  border: 1px solid rgb(80, 79, 79);
+  border-radius: 1px;
+  outline: 1px solid black;
+  box-shadow: 0 0 3px #ddd;
+}
+
+.login-div button {
+  height: 30px;
+  margin-top: 15px;
+  border-radius: 4px;
+  background-color: #10be1e;
+  color: white;
+  width: 200px;
+  height: 33px;
+  font-weight: 700;
+  font-size: 15.5px;
+  text-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
+  border: 1px solid rgba(10, 10, 10, 0.325);
+}
+
+.login-div button:hover {
+  background: linear-gradient(#18a824, #149b1f);
 }
 
 .despesas-container {
@@ -77,14 +146,57 @@ header {
   background-color: white;
 }
 
-.despesas-container button {
+.submit-button {
   height: 30px;
   margin: 5px;
   border-radius: 4px;
-  background: linear-gradient(rgb(31, 107, 207), rgb(50, 83, 185));
+  background: rgb(27, 97, 189);
   color: white;
   width: 150px;
   height: 35px;
   font: 600 13.5px Arial , Helvetica , sans-serif;
+  text-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
+  border: 1px solid rgb(80, 79, 79);
 }
 
+.submit-button:hover {
+  background: linear-gradient(rgb(26, 84, 160), rgb(39, 69, 156));
+}
+
+.submit-button:focus {
+  outline: 1px dotted #212121;
+  outline: 5px auto -webkit-focus-ring-color;
+}
+
+table {
+  background: rgb(70, 68, 68);
+  width: 100%;
+}
+
+thead {
+  color: white;
+  border: none;
+}
+
+td {
+  text-align: center;
+  padding: 20px 0;
+}
+
+th {
+  padding: 15px 10px;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: white;
+}
+
+tbody tr:nth-child(even) {
+  background-color: white;
+}
+
+.trashcan {
+  background-color: #ff2014;
+  border: 0 solid rgba(10, 10, 10, 0.325);
+  border-radius: 4px;
+}
