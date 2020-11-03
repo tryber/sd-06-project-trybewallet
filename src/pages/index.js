@@ -1,2 +1,2 @@
-export default Wallet;
-export default Login;
+export { default as Wallet } from '/Wallet';
+export { default as Login } from '.Login';
