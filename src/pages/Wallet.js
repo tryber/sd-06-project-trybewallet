@@ -14,9 +14,9 @@ class Wallet extends React.Component {
       id: 0,
       value: 0,
       description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
   }
 
@@ -71,6 +71,17 @@ class Wallet extends React.Component {
        * cur.exchangeRates[cur.currency].ask, 0) * 100) / 100 : 0;
     const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const tableHeaders = [
+      'Descrição',
+      'Tag',
+      'Método de pagamento',
+      'Valor',
+      'Moeda',
+      'Câmbio utilizado',
+      'Valor convertido',
+      'Moeda de conversão',
+      'Editar/Excluir',
+    ];
 
     return (
       <div>
@@ -133,6 +144,39 @@ class Wallet extends React.Component {
           </select>
           <button type="submit" onClick={ this.handleClick }>Adicionar despesa</button>
         </form>
+        <table>
+          <thead>
+            <tr>
+              {tableHeaders.map((header) => <th key={ header }>{ header }</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {
+              expenses.map((expense) => (
+                <tr key={ expense.id }>
+                  <td>{ expense.description }</td>
+                  <td>{ expense.tag }</td>
+                  <td>{ expense.method }</td>
+                  <td>{ expense.value }</td>
+                  <td>{ expense.exchangeRates[expense.currency].name }</td>
+                  <td>
+                    {
+                      parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)
+                    }
+                  </td>
+                  <td>
+                    {
+                      (
+                        expense.value * expense.exchangeRates[expense.currency].ask
+                      ).toFixed(2)
+                    }
+                  </td>
+                  <td>Real</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
       </div>
     );
   }
