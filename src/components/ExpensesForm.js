@@ -9,11 +9,13 @@ class ExpensesForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      expenses: 0,
+      expenses: [
+        { expense: 0 },
+        { descriptionExpenses: '' },
+        { method: '' },
+        { category: '' },
+      ],
       currencies: '',
-      descriptionExpenses: '',
-      method: '',
-      category: '',
     };
   }
 
@@ -38,6 +40,7 @@ class ExpensesForm extends Component {
   render() {
     const { expenses, currencies, descriptionExpenses, method, category } = this.state;
     const { fetchCurrencyAPI } = this.props;
+    console.log(fetchCurrencyAPI);
     return (
       <div>
         <form>
@@ -71,7 +74,7 @@ class ExpensesForm extends Component {
               onChange={ this.handleChange }
             >
               { fetchCurrencyAPI.map((currency) => (
-                <option key={ currency }>{currency}</option>
+                <option key={ currency } data-testid={ currency }>{currency}</option>
               )) }
             </select>
           </label>
@@ -85,7 +88,7 @@ class ExpensesForm extends Component {
             >
               <option value="dinheiro">Dinheiro</option>
               <option value="credito">Cartão de crédito</option>
-              <option value="credito">Cartão de débito</option>
+              <option value="debito">Cartão de débito</option>
             </select>
           </label>
           <label htmlFor="category">
@@ -122,8 +125,8 @@ const mapDispatchToProps = (dispatch) => ({
 ExpensesForm.propTypes = {
   userCurrency: PropTypes.func.isRequired,
   userExpenses: PropTypes.func.isRequired,
-  fetchCurrency: PropTypes.arrayOf(Object).isRequired,
-  fetchCurrencyAPI: PropTypes.arrayOf(Object).isRequired,
+  fetchCurrency: PropTypes.func.isRequired,
+  fetchCurrencyAPI: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);
