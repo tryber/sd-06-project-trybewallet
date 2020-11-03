@@ -18,8 +18,8 @@ class Header extends React.Component {
     let sumExpenses = 0;
     listOfExpense.forEach((expense) => {
     sumExpenses += parseFloat(expense.value);
-    return sumExpenses;
   });
+  return sumExpenses;
   }
 
   // const { value, currency, exchangeRates } = listOfExpense

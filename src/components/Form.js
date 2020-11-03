@@ -44,8 +44,8 @@ class Form extends React.Component {
       tag,
       exchangeRates: await this.getCurrencies(),
     };
-    arrayExpense.push(expense);
-    addExpenses(arrayExpense);
+    const newExpense = [...arrayExpense, expense]
+    addExpenses(newExpense);
   }
 
   handleChange({ target }) {
