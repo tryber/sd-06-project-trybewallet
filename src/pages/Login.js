@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { LoginUser } from '../actions';
+import '../styles/Login/style.css'
 
 class Login extends React.Component {
   constructor() {
@@ -20,7 +21,7 @@ class Login extends React.Component {
     const MAGIC_NUMBER = 5;
     const em = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     const { email, password } = this.state;
-    if (em.test(email) && password.length > MAGIC_NUMBER) {
+    if (em.test(email) && password.length >= MAGIC_NUMBER) {
       this.setState({ disabled: false });
     } else {
       this.setState({ disabled: true });
@@ -43,31 +44,34 @@ class Login extends React.Component {
   render() {
     const { email, password, disabled } = this.state;
     return (
-      <form className="login">
-        <input
-          type="email"
-          value={ email }
-          onChange={ this.handleChange }
-          name="email"
-          placeholder="E-mail"
-          data-testid="email-input"
-        />
-        <input
-          type="password"
-          value={ password }
-          onChange={ this.handleChange }
-          placeholder="Senha"
-          name="password"
-          data-testid="password-input"
-        />
-        <button
-          type="button"
-          onClick={ this.handleSubmit }
-          disabled={ disabled }
-        >
-          Entrar
-        </button>
-      </form>
+      <div className="login">
+        <form>
+          <img src="http://phellipecode.me/landingpage/images/logo.png" alt="logotipo" />
+          <input
+            type="email"
+            value={ email }
+            onChange={ this.handleChange }
+            name="email"
+            placeholder="E-mail"
+            data-testid="email-input"
+          />
+          <input
+            type="password"
+            value={ password }
+            onChange={ this.handleChange }
+            placeholder="Senha"
+            name="password"
+            data-testid="password-input"
+          />
+          <button
+            type="button"
+            onClick={ this.handleSubmit }
+            disabled={ disabled }
+          >
+            Entrar
+          </button>
+        </form>
+      </div>
     );
   }
 }
@@ -80,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   dispatchData: PropTypes.func,
-  history: PropTypes.string,
+  history: PropTypes.object,
 };
 
 Login.defaultProps = {

@@ -1,0 +1,49 @@
+@import "../Wallet/inputs";
+
+.login {
+  background-color: rgb(36, 36, 36);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    align-items: center;
+    padding: 30px;
+    border-radius: 30px;
+
+    img {
+      width: 250px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      margin: 20px;
+      height: 35px;
+      border-radius: 8px;
+      border: none;
+      width: 85%;
+      padding-left: 15px;
+      outline: none;
+    }
+
+    button {
+      width: 70%;
+      height: 45px;
+      cursor: pointer;
+      border: none;
+      border-radius: 15px;
+      font-weight: 600;
+      @include buttons;
+
+      &:disabled {
+        background-color: #ccc;
+        color: grey;
+        cursor: default;
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+@mixin buttons {
+  cursor: pointer;
+  padding: 10px;
+  transition: ease-in-out;
+  color: blueviolet;
+  transition: 650ms;
+
+  &:hover {
+    background-color: blueviolet;
+    color: white;
+  }
+}
+
+.input-section {
+  color: rgb(211, 206, 206);
+  background-color: rgb(12, 12, 12);
+  display: flex;
+  padding: 20px;
+  width: 100%;
+  justify-content: space-evenly;
+  font-weight: 600;
+  align-items: center;
+
+  input, select, button {
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    margin-left: 10px;
+    outline: none;
+  }
+
+  .value {
+    input {
+      width: 50px;
+      text-align: center;
+    }
+  }
+
+  button {
+    @include buttons;
+  }
+}
