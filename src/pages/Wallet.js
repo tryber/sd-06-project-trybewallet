@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 
 class Wallet extends React.Component {
   render() {
-    const { email } = this.props;
+    const { email, total } = this.props;
     return (
       <header>
         {/* <img src="" alt="trybe-logo" /> */}
@@ -19,6 +19,7 @@ class Wallet extends React.Component {
         <span>
           <p data-testid="total-field">
             Total de despesas:
+            {total }
             <p data-testid="header-currency-field" />
           </p>
         </span>
@@ -33,6 +34,7 @@ const mapStateToProps = (state) => ({
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  total: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Wallet);
