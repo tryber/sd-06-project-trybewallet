@@ -2,15 +2,15 @@ import React from 'react';
 import Logo from './images/logo-trybe.png';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  // constructor() {
+  //   super();
 
-    this.state = {
-      email: '',
-      password: '',
-      disableButton: true,
-    };
-  }
+  //   this.state = {
+  //     email: '',
+  //     password: '',
+  //     disableButton: true,
+  //   };
+  // }
 
   render() {
     return (
