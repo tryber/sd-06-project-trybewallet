@@ -9,7 +9,6 @@ import './App.css';
 //   render() {
 //     return (
 //       <div className="App">
-//         {/* <App {pathname="/"} /> */}
 //       </div>
 //     );
 //   }

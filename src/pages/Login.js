@@ -9,23 +9,6 @@ class Login extends React.Component {
       isValid: false,
     };
 
-    emailOK() {
-      const MIN_LENGTH = 6;
-      const { email, password } = this.state;
-      this.setState({
-        isValid: /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(email)
-          && password.length >= MIN_LENGTH,
-      });
-    }
-
-    handleChange({ target }) {
-      this.setState({ [target.name]: target.value }, () => {
-        this.emailOK();
-      });
-    }
-
-    handleChange
-  }
     render() {
       const { email, password, isValid } = this.state;
       return
@@ -38,7 +21,7 @@ class Login extends React.Component {
             name="email-input"
             id="email-input"
             required
-          onChange={ this.handleChange }
+          // onChange={ this.handleChangeEmail }
           />
         </label>
         <label htmlFor="password">
@@ -50,14 +33,14 @@ class Login extends React.Component {
             id="password-input"
             // minLength="6"
             required
-          // onChange={ this.handleChange }
+          // onChange={ this.handleChangePass }
           />
         </label>
         <button
           type="button"
           id="button-login"
-        // disabled={ isDisable }
-        // onClick={ this.handleClick }
+        disabled={ isDisable }
+        // onClick={ this.handleSubmit }
         >
           Entrar
         </button>
