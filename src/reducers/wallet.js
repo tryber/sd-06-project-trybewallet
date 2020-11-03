@@ -1,3 +1,5 @@
+import { SUCCESS, ADD_EXPENSES } from '../actions';
+
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
@@ -5,14 +7,20 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case 'BUY':
+  case SUCCESS:
     return (
       {
         ...state,
-        currencies: action.currencies,
-        expenses: action.expenses,
+        currencies: [...Object.keys(action.payload).filter(currency => currency !== 'USDT')],
       }
     );
+    case ADD_EXPENSES:
+      return (
+        {
+          ...state,
+          expenses: [...state.expenses, action.payload],  
+        }
+      )
   default:
     return state;
   }
