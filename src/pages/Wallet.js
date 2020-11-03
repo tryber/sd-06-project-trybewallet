@@ -10,20 +10,19 @@ class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
-    const { expenses } = this.props;
-
     this.state = {
       expense: {
-        id: expenses.length,
-        value: '',
+        id: 0,
+        value: '0',
         description: '',
-        currency: '',
-        method: '',
-        tag: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
       },
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.calculateTotal = this.calculateTotal.bind(this);
   }
 
   componentDidMount() {
@@ -31,10 +30,31 @@ class Wallet extends React.Component {
     getCurrencies();
   }
 
-  // componentDidUpdate() {
-  //   const { expenses } = this.props;
-  //   console.log((expenses));
-  // }
+  componentDidUpdate(prevProps) {
+    const { expenses } = this.props;
+    const { expense } = this.state;
+    const updateID = () => {
+      this.setState({
+        expense: {
+          ...expense,
+          id: expenses.length,
+        },
+      });
+    };
+    if (prevProps.expenses.length !== expenses.length) {
+      updateID();
+    }
+  }
+
+  calculateTotal() {
+    const { expenses } = this.props;
+    // modelo de reduce encontrado no seguinte PR: https://github.com/tryber/sd-06-project-trybewallet/blob/marioduartedev/src/pages/Wallet.js
+    const total = expenses
+      .reduce((accumulator, current) => accumulator + parseFloat((current
+        .exchangeRates[current.currency].ask * current.value)), 0);
+
+    return total;
+  }
 
   handleChange(e) {
     const { name, value } = e.target;
@@ -70,7 +90,7 @@ class Wallet extends React.Component {
           <span
             data-testid="total-field"
           >
-            0
+            {this.calculateTotal()}
           </span>
           <span
             data-testid="header-currency-field"
@@ -192,4 +212,5 @@ Wallet.propTypes = {
   addExpenseThunk: PropTypes.func.isRequired,
   getCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
+  expenses: PropTypes.arrayOf(Object).isRequired,
 };
