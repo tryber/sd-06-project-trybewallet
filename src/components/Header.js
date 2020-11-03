@@ -11,20 +11,21 @@ class Header extends React.Component {
   }
 
   totalExpenses(listOfExpense) {
-    console.log('chemai a função')
+    // console.log('chamei a função')
+    const { value, currency, exchangeRates } = listOfExpense
     if (listOfExpense != null && listOfExpense.length === 0) {
       return 0;
     }
     let sumExpenses = 0;
     listOfExpense.forEach((expense) => {
-      sumExpenses += parseFloat(expense.value);
+      sumExpenses += parseFloat(expense.value * (exchangeRates[currency].ask));
     });
     return sumExpenses;
   }
 
   render() {
     const { email, expenses } = this.props;
-    console.log(expenses.length)
+    // console.log(expenses.length)
     return (
       <header className="form-header">
         <img src={ logo } alt="logo-trybe" />
