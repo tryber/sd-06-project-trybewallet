@@ -1,10 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class Table extends React.Component {
 
   render() {
     const headerTable = [ 'Descrição', 'Tag', 'Método de pagamento', 'Valor',
-      'Moeda', 'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir' ]
+      'Moeda', 'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir' ];
+    const { expenses } = this.props;
     return (
       <table>
         <thead>
@@ -12,9 +14,24 @@ class Table extends React.Component {
             { headerTable.map((hTable) => <th key={hTable}>{ hTable }</th>) }
           </tr>
         </thead>
+        <thead>
+          <tr>
+            { expenses.map((expense) => {
+              return (
+                <td key={ expense.description }>{ expense.description }</td>
+              )
+            })}
+          </tr>
+        </thead>
       </table>
     );
   }
 }
 
-export default Table;
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+})
+
+export default connect(
+  mapStateToProps,
+)(Table);
