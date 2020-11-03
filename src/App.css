@@ -1,3 +1,7 @@
 label, button {
   margin: 10px;
 }
+
+td, tr {
+  border: 2px black solid
+}
