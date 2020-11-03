@@ -1,5 +1,5 @@
 import React from 'react';
-import propType from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchCurrencies, fetchExchangeRates } from '../actions';
 
@@ -150,7 +150,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Wallet.propTypes = {
-  email: propType.string.isRequired,
+  email: PropTypes.string.isRequired,
   criateCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)).isRequired,
