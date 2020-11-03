@@ -66,16 +66,16 @@ class Wallet extends React.Component {
     });
   }
 
-  editExpense({ target }) {
-    // let elementosTD = event.target.parentNode.parentNode.firstChild;
-    // const array = [];
-    // for (let indice = 0 ; indice < 8; indice += 1 ) {
-    //   array.push(elementosTD.innerText);
-    //   console.log(elementosTD.innerText);
-    //   elementosTD = elementosTD.nextSibling;
-    // }
-    // console.log("Array = " + array);
-  }
+  // editExpense({ target }) {
+  // let elementosTD = event.target.parentNode.parentNode.firstChild;
+  // const array = [];
+  // for (let indice = 0 ; indice < 8; indice += 1 ) {
+  //   array.push(elementosTD.innerText);
+  //   console.log(elementosTD.innerText);
+  //   elementosTD = elementosTD.nextSibling;
+  // }
+  // console.log("Array = " + array);
+  // }
 
   excludeExpense(index) {
     const { expenses, deleteState } = this.props;
@@ -224,12 +224,23 @@ class Wallet extends React.Component {
                     * Number(expense.value)).toFixed(2) }
                   </td>
                   <td>Real</td>
-                  <td><img data-testid="edit-btn" width="50px" onClick={(event) => this.editExpense(event)}  src="https://img2.gratispng.com/20180319/ysw/kisspng-computer-icons-editing-vector-graphics-editor-edit-pen-write-icon-5ab06a2456fa55.3095970115215109483563.jpg" alt="Editar"/>
-                  <img data-testid="delete-btn" onClick={() => this.excludeExpense(index)} width="30px"src="https://e7.pngegg.com/pngimages/953/119/png-clipart-computer-icons-delete-icon-cdr-angle.png" alt="Excluir"/></td>
+                  <td>
+                    {/* onClick={(event) => this.editExpense(event)} */ }
+                    <button type="button" data-testid="edit-btn">
+                      <img width="25px" height="25px" src="https://img2.gratispng.com/20180319/ysw/kisspng-computer-icons-editing-vector-graphics-editor-edit-pen-write-icon-5ab06a2456fa55.3095970115215109483563.jpg" alt="Editar" />
+                    </button>
+                    <button
+                      type="button"
+                      data-testid="delete-btn"
+                      onClick={ () => this.excludeExpense(index) }
+                    >
+                      <img width="25px" height="25px" src="https://e7.pngegg.com/pngimages/953/119/png-clipart-computer-icons-delete-icon-cdr-angle.png" alt="Excluir" />
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             ))
-            : <tbody></tbody>}
+            : <tbody />}
         </table>
         <p>{ isFetching ? 'Loading' : '' }</p>
 
@@ -259,6 +270,7 @@ Wallet.propTypes = {
   coinsOptions: PropTypes.objectOf(String).isRequired,
   search: PropTypes.func.isRequired,
   saveState: PropTypes.func.isRequired,
+  deleteState: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
