@@ -1,15 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { addExpense, fetchCurrencies } from '../actions/index';
 
 class Wallet extends React.Component {
+  constructor(props) {
+    super(props);
+    // this.fetchCurrencies = this.fetchCurrencies.bind(this);
+    this.addExpenseForm = this.addExpenseForm.bind(this);
+  }
+
+  componentDidMount() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
+  }
+
   handleSubmit(event) {
     return console.log(event.target.value);
   }
 
   // Formulário para adicionar despesa
-  addExpenseForm() {
-    const currencies = ['BRL', 'USD', 'CAD', 'EUR', 'GBP',
-      'ARS', 'BTC', 'LTC', 'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP'];
-    const currenciesList = currencies.map((currency, index) => (
+  addExpenseForm(currencies) {
+    console.log(currencies);
+    const currencyCodes = Object.keys(currencies).filter((curr) => curr !== 'USDT');
+    const currenciesList = currencyCodes.map((currency, index) => (
       <option
         key={ index }
         data-testid={ currency }
@@ -33,7 +46,6 @@ class Wallet extends React.Component {
       >
         {category}
       </option>));
-
     return (
       <form onSubmit={ this.handleSubmit }>
         <label htmlFor="value-input">
@@ -68,19 +80,42 @@ class Wallet extends React.Component {
   }
 
   render() {
+    const { wallet: { currencies, expenses } } = this.props;
+    const { user: { email } } = this.props;
     return (
       <main>
         <header>
-          <h1 data-testid="email-field">User email here</h1>
+          <h1 data-testid="email-field">{email}</h1>
           <data data-testid="total-field">
-            Total value here
+            {(expenses.length === 0) ? 0 : expenses}
             <span data-testid="header-currency-field">BRL</span>
           </data>
         </header>
-        {this.addExpenseForm()}
+        {this.addExpenseForm(currencies)}
       </main>
     );
   }
 }
 
-export default Wallet;
+const mapStateToProps = (state) => ({
+  user: state.user,
+  wallet: state.wallet,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addExpense: (e) => dispatch(addExpense(e)),
+  getCurrencies: (currency) => dispatch(fetchCurrencies(currency)),
+});
+
+Wallet.propTypes = {
+  getCurrencies: PropTypes.func.isRequired,
+  wallet: PropTypes.shape({
+    currencies: PropTypes.shape(PropTypes.object()).isRequired,
+    expenses: PropTypes.arrayOf(PropTypes.number).isRequired,
+  }).isRequired,
+  user: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
