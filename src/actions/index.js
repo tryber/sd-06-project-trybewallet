@@ -1,8 +1,7 @@
 // Coloque aqui suas actions
-export const inputAction = (name, value) => {
+export const inputAction = (email) => {
   return {
-    name,
-    value,
-    type: 'SAVE_LOGIN'
+    type: 'LOGIN',
+    email
   }
 }

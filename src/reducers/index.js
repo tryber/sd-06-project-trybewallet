@@ -6,15 +6,14 @@
 
 const INITIAL_STATE = {
   email: '',
-  pass: '',
 };
 
 const stateReducer = (state = INITIAL_STATE, action) => {
   switch(action.type) {
-    case 'SAVE_LOGIN':
+    case 'LOGIN':
       return {
         ...state,
-        [action.name]: action.value,
+        email: action.email,
       }
 
       default:
