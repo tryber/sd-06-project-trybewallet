@@ -46,8 +46,9 @@ class Wallet extends React.Component {
 
   render() {
     const { email, currencies, expensesValue } = this.props;
+    const { value, description, currency, method, tag } = this.state;
     const pagamento = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-    const tag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const taggers = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const tableHeaders = [
       'Descrição',
       'Tag',
@@ -76,11 +77,12 @@ class Wallet extends React.Component {
           </p>
           <p data-testid="header-currency-field">Câmbio: BRL</p>
         </header>
-        <form>
+        <form onSubmit={ this.onSubmit }>
           <label htmlFor="value">
             Valor:
             <input
               type="number"
+              value={ value }
               id="value"
               name="value"
               onChange={ this.handleChange }
@@ -91,6 +93,7 @@ class Wallet extends React.Component {
             Descrição:
             <input
               type="text"
+              value={ description }
               id="description"
               name="description"
               onChange={ this.handleChange }
@@ -100,6 +103,7 @@ class Wallet extends React.Component {
           <label htmlFor="moeda">
             Moeda:
             <select
+              value={ currency }
               data-testid="currency-input"
               id="moeda"
               name="currency"
@@ -114,6 +118,7 @@ class Wallet extends React.Component {
           <label htmlFor="method">
             Método de Pagamento:
             <select
+              value={ method }
               data-testid="method-input"
               id="method"
               name="method"
@@ -128,18 +133,19 @@ class Wallet extends React.Component {
           <label htmlFor="tag">
             Tag:
             <select
+              value={ tag }
               data-testid="tag-input"
               id="tag"
               name="tag"
               onChange={ this.handleChange }
             >
               <option value="" key="selecione" selected>Selecione</option>
-              { tag.map((t) => (
+              { taggers.map((t) => (
                 <option key={ t } value={ t }>{ t }</option>
               ))}
             </select>
           </label>
-          <button type="submit" onClick={ this.onSubmit }>Adicionar despesa</button>
+          <button type="submit">Adicionar despesa</button>
         </form>
         <table>
           <thead>
