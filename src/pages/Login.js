@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { actionLogin } from '../actions';
 import Input from '../components/Input';
 import './login.css';
@@ -13,36 +13,48 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      disabled: true,
+      isValid: false,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target }) {
     const { name, value } = target;
-    this.setState({
-      [name]: value,
-    }, () => {
-      this.verifyEmailAndPassword();
-    });
+    this.setState(
+      {
+        [name]: value,
+      },
+      () => {
+        this.verifyEmailAndPassword();
+      },
+    );
   }
 
   verifyEmailAndPassword() {
     const { email, password } = this.state;
     const passMinLength = 6;
-    const emailFormat = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
-    this.setState({ disabled: !(password.length >= passMinLength && emailFormat) });
+    const emailFormat = /^\w+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$/;
+    if (password.length >= passMinLength && emailFormat.test(email)) {
+      return this.setState({
+        isValid: true,
+      });
+    }
+    return this.setState({
+      isValid: false,
+    });
   }
+  // Alterando conforme explicação do Thaydds na thread do forna no slack(usar withrouter pois link aninhado em button não é um html válido)
 
-  handleClick(event) {
-    const { login } = this.props;
+  handleClick() {
+    const { login, history } = this.props;
     const { email } = this.state;
-    event.preventDefault();
     login(email);
+    history.push('/carteira');
   }
 
   render() {
-    const { email, password, disabled } = this.state;
+    const { isValid } = this.state;
     return (
       <div className="container">
         <form className="login">
@@ -51,25 +63,19 @@ class Login extends React.Component {
             testId="email-input"
             name="email"
             type="email"
-            value={ email }
+            placeholder="Digite seu email"
             onChange={ this.handleChange }
           />
           <Input
             testId="password-input"
             name="password"
             type="password"
-            value={ password }
+            placeholder="Digite sua senha"
             onChange={ this.handleChange }
           />
-          <Link to="/carteira">
-            <button
-              type="submit"
-              disabled={ disabled }
-              onClick={ this.handleClick }
-            >
-              Entrar
-            </button>
-          </Link>
+          <button type="button" disabled={ !isValid } onClick={ this.handleClick }>
+            Entrar
+          </button>
         </form>
       </div>
     );
@@ -82,6 +88,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  history: PropTypes.string.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default withRouter(connect(null, mapDispatchToProps)(Login));
