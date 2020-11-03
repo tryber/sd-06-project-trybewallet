@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { salvarUsuario } from '../actions';
 
-// import propType from 'prop-types';
+import propType from 'prop-types';
 
 import '../css/login.css';
 
@@ -21,8 +21,8 @@ class Login extends React.Component {
       password: '',
       emailError: '',
       passwordError: '',
-      checkEmail: false,
-      checkPassword: false,
+      checkEmail: true,
+      checkPassword: true,
       btnEntrar: false,
     }
   }
@@ -33,24 +33,20 @@ class Login extends React.Component {
     const validator = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,64}/;
     const validate = email.match(validator);
     if (validate !== null) {
-      this.setState({ checkEmail: true, email });
-      console.log(this.state.checkEmail);
-    } else {
       this.setState({ checkEmail: false, email });
-      console.log(this.state.checkEmail);
+    } else {
+      this.setState({ checkEmail: true, email });
     }
   }
 
   checkPassword(event) {
     const password = event.target.value;
     // verificar o erro do diley 5 -> 6
-    const validator = 5;
+    const validator = 6;
     if (password.length < validator) {
-      this.setState({ checkPassword: false, password });
-      console.log(this.state.checkPassword)
-    } else {
       this.setState({ checkPassword: true, password });
-      console.log(this.state.checkPassword)
+    } else {
+      this.setState({ checkPassword: false, password });
     }
   }
 
@@ -58,21 +54,16 @@ class Login extends React.Component {
     const { checkEmail, checkPassword } = this.state;
 
     if (input === 'email') {
-      if (!checkEmail) {
+      if (checkEmail) {
         this.setState({ emailError: 'email invalido' });
       } else {
         this.setState({ emailError: '' });
       }
     } else {
-      if (!checkPassword) {
+      if (checkPassword) {
         this.setState({ passwordError: 'A Senha dever ter mais de 5 caracteres' });
       } else {
         this.setState({ passwordError: '' });
-        if (checkEmail) {
-          this.setState({ btnEntrar: true });
-        } else {
-          this.setState({ btnEntrar: false });
-        }
       }
     }
   }
@@ -82,49 +73,65 @@ class Login extends React.Component {
     const { dispatchUserEmail } = this.props;
     const { email } = this.state;
     dispatchUserEmail(email);
+    this.setState({ btnEntrar: true });
   }
 
   render() {
-    const { checkEmail, checkPassword, btnEntrar } = this.state;
+    const {
+      email,
+      password,
+      emailError,
+      passwordError,
+      checkEmail,
+      checkPassword,
+      btnEntrar,
+    } = this.state;
     return (
       <form className="loginForm">
         <div className="loginInput">
           <input
             type="text"
             name="email"
-            value= { this.state.email }
+            value= { email }
             data-testid="email-input"
             placeholder="Informe o seu email"
             autoFocus
             onChange={ this.checkEmail }
             onBlur={ () => this.checkValid('email') }
           />
-          <div className="erroMessage">{this.state.emailError}</div>
+          <div className="erroMessage">{emailError}</div>
           <br />
           <input
             type="password"
             name="password"
-            value={ this.state.password }
+            value={ password }
             data-testid="password-input"
             placeholder="Informe sua Senha"
             onChange={ this.checkPassword }
             onBlur={ () => this.checkValid('password')}
             />
-          <div className="erroMessage">{this.state.passwordError}</div>
+          <div className="erroMessage">{passwordError}</div>
           <br />
           <button
             type='button'
-            disabled={ btnEntrar }
-            { ...console.log('estado do btn entrar ' + btnEntrar) }
+            disabled={ checkEmail + checkPassword }
             onClick={ this.handleClick }
           >
             Entrar
           </button>
-          {this.state.btnEntrar ? <Redirect to="/carteira" /> : null}
+          {btnEntrar ? <Redirect to="/carteira" /> : null}
         </div>
       </form>
     )
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchUserEmail: (userEmail) => dispatch(salvarUsuario(userEmail)),
+});
+
+Login.propTypes = {
+  dispatchUserEmail: propType.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
