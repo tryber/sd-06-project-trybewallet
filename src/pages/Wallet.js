@@ -12,8 +12,8 @@ class Wallet extends React.Component {
       value: '',
       description: '',
       currency: 'USD',
-      payment: 'Dinheiro',
-      category: 'Alimentação',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -26,7 +26,7 @@ class Wallet extends React.Component {
   }
 
   handleChange({ target }) {
-    this.setState({ [target.name]: target.value });
+    this.setState({ [target.id]: target.value });
   }
 
   handleSubmit(event) {
@@ -42,49 +42,42 @@ class Wallet extends React.Component {
         <header>
           <h2 data-testid="email-field">{email}</h2>
           <h3 data-testid="total-field">
-            { expenses.length !== 0 ?
-            expenses.reduce((sum, expense) => expense.value + sum) :
-            <p data-testid="total-field">0</p> }
-            { console.log(expenses) }
+          { expenses.length !== 0
+              ? (Math.round(expenses.reduce((sum, expense) => (
+                Number(sum) + (Number(expense.value)
+                  * (Object.values(expense.exchangeRates)
+                    .find((accCurrency) => accCurrency.code === expense.currency)
+                    .ask))
+              ), 0) * 100) / 100).toFixed(2) : 0.00 }
           </h3>
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <form onSubmit={ this.handleSubmit }>
           <fieldset>
-            <label htmlFor="value">
-              Valor:
-              <input onChange={ this.handleChange } name="value" data-testid="value-input" />
-            </label>
-            <label htmlFor="description">
-              Descrição
-              <input onChange={ this.handleChange } name="description" data-testid="description-input" />
-            </label>
-            <label htmlFor="currency">
-              Moedas
-              <select onChange={ this.handleChange } name="currency" data-testid="currency-input">
+            {/* <label htmlFor="value">Valor</label> */}
+              <input onChange={ this.handleChange } id="value" name="value" data-testid="value-input" />
+            {/* <label htmlFor="description">Descrição</label> */}
+              <input onChange={ this.handleChange } id="description" name="description" data-testid="description-input" />
+            {/* <label htmlFor="currency">Moedas</label> */}
+              <select onChange={ this.handleChange } id="currency" name="currency" data-testid="currency-input">
                 {currencies !== undefined ? currencies.map((currency) => (
                   <option data-testid={ currency } key={ currency }>{currency}</option>
                 )) : <p>Error</p>}
               </select>
-            </label>
-            <label htmlFor="payment">
-              Pagamento
-              <select onChange={ this.handleChange } name="payment" data-testid="method-input">
+            {/* <label htmlFor="method">Pagamento</label> */}
+              <select onChange={ this.handleChange } id="method" name="method" data-testid="method-input">
                 <option>Dinheiro</option>
                 <option>Cartão de crédito</option>
                 <option>Cartão de débito</option>
               </select>
-            </label>
-            <label htmlFor="category">
-              Categoria
-              <select onChange={ this.handleChange } name="category" data-testid="tag-input">
+            {/* <label htmlFor="tag">Categoria</label> */}
+              <select onChange={ this.handleChange } id="tag" name="tag" data-testid="tag-input">
                 <option>Alimentação</option>
                 <option>Lazer</option>
                 <option>Trabalho</option>
                 <option>Transporte</option>
                 <option>Saúde</option>
               </select>
-            </label>
             <button type="submit">Adicionar despesa</button>
           </fieldset>
         </form>

@@ -37,6 +37,6 @@ export const thunkExpenses = (expenseObj) => async (dispatch, getState) => {
     idUser = expenses[expenses.length - 1].id + 1;
   }
 
-  const exp = { ...expenseObj, id: idUser, currency: response };
+  const exp = { ...expenseObj, id: idUser, exchangeRates: response };
   dispatch(addAction(exp));
 };
