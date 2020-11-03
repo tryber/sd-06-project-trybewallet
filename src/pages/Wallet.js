@@ -9,16 +9,20 @@ class Wallet extends React.Component {
     super();
 
     this.state = {
+      id: 0,
       totalValue: 0,
       value: 0,
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
       description: '',
+      edit: false,
+      indexEdit: 0,
     };
 
     this.addExpense = this.addExpense.bind(this);
     this.excludeExpense = this.excludeExpense.bind(this);
+    this.editExpense = this.editExpense.bind(this);
   }
 
   componentDidMount() {
@@ -31,9 +35,10 @@ class Wallet extends React.Component {
   }
 
   addExpense() {
-    const { saveState, coinsOptions, search, expenses } = this.props;
+    const { saveState, coinsOptions, search } = this.props;
     search();
     const {
+      id,
       totalValue,
       value,
       currency,
@@ -43,7 +48,7 @@ class Wallet extends React.Component {
     } = this.state;
 
     const newExpenses = {
-      id: expenses.length,
+      id,
       value,
       currency,
       method,
@@ -57,6 +62,7 @@ class Wallet extends React.Component {
     const total = totalValue + (Number(value) * Number(coinsOptions[currency].ask));
 
     this.setState({
+      id: id + 1,
       totalValue: total,
       value: 0,
       currency: 'USD',
@@ -66,16 +72,46 @@ class Wallet extends React.Component {
     });
   }
 
-  // editExpense({ target }) {
-  // let elementosTD = event.target.parentNode.parentNode.firstChild;
-  // const array = [];
-  // for (let indice = 0 ; indice < 8; indice += 1 ) {
-  //   array.push(elementosTD.innerText);
-  //   console.log(elementosTD.innerText);
-  //   elementosTD = elementosTD.nextSibling;
-  // }
-  // console.log("Array = " + array);
-  // }
+  edit(expense, index) {
+    this.setState({
+      edit: true,
+      indexEdit: index,
+      value: expense.value,
+      currency: expense.currency,
+      method: expense.method,
+      tag: expense.tag,
+      description: expense.description,
+    });
+  }
+
+  editExpense() {
+    const { expenses, deleteState } = this.props;
+    const {
+      value,
+      currency,
+      method,
+      tag,
+      description,
+      indexEdit,
+    } = this.state;
+
+    expenses[indexEdit].value = value;
+    expenses[indexEdit].currency = currency;
+    expenses[indexEdit].method = method;
+    expenses[indexEdit].tag = tag;
+    expenses[indexEdit].description = description;
+
+    deleteState(expenses);
+    console.log(expenses);
+    this.setState({
+      edit: false,
+      value: 0,
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      description: '',
+    });
+  }
 
   excludeExpense(index) {
     const { expenses, deleteState } = this.props;
@@ -86,7 +122,8 @@ class Wallet extends React.Component {
 
   render() {
     const { email, isFetching, coinsOptions, expenses } = this.props;
-    const { value, currency, method, tag, description, totalValue } = this.state;
+    const {
+      value, currency, method, tag, description, totalValue, edit } = this.state;
     const optionsCoins = (coinsOptions)
       ? Object.keys(coinsOptions).filter((coins) => coins !== 'USDT')
       : ['USD'];
@@ -113,6 +150,7 @@ class Wallet extends React.Component {
             </div>
           </nav>
         </header>
+
         <form className="form-expense">
           <label htmlFor="value">
             Valor:
@@ -190,8 +228,14 @@ class Wallet extends React.Component {
               id="description"
             />
           </label>
-          <button onClick={ this.addExpense } type="button">Adicionar despesa</button>
+          <button
+            onClick={ !edit ? this.addExpense : this.editExpense }
+            type="button"
+          >
+            { !edit ? 'Adicionar despesa' : 'Editar despesa' }
+          </button>
         </form>
+
         <table border="1">
           <thead className="cabecalho">
             <tr>
@@ -210,9 +254,9 @@ class Wallet extends React.Component {
             ? expenses.map((expense, index) => (
               <tbody key={ expense.id }>
                 <tr>
-                  <td>{expense.description}</td>
-                  <td>{expense.tag}</td>
-                  <td>{expense.method}</td>
+                  <td>{ expense.description }</td>
+                  <td>{ expense.tag }</td>
+                  <td>{ expense.method }</td>
                   <td>{ expense.value }</td>
                   <td>{ expense.exchangeRates[expense.currency].name }</td>
                   <td>
@@ -221,12 +265,15 @@ class Wallet extends React.Component {
                   </td>
                   <td>
                     { (Number(expense.exchangeRates[expense.currency].ask)
-                    * Number(expense.value)).toFixed(2) }
+                      * Number(expense.value)).toFixed(2) }
                   </td>
                   <td>Real</td>
                   <td>
-                    {/* onClick={(event) => this.editExpense(event)} */ }
-                    <button type="button" data-testid="edit-btn">
+                    <button
+                      type="button"
+                      data-testid="edit-btn"
+                      onClick={ () => this.edit(expense, index) }
+                    >
                       <img width="25px" height="25px" src="https://img2.gratispng.com/20180319/ysw/kisspng-computer-icons-editing-vector-graphics-editor-edit-pen-write-icon-5ab06a2456fa55.3095970115215109483563.jpg" alt="Editar" />
                     </button>
                     <button
@@ -240,7 +287,7 @@ class Wallet extends React.Component {
                 </tr>
               </tbody>
             ))
-            : <tbody />}
+            : <tbody /> }
         </table>
         <p>{ isFetching ? 'Loading' : '' }</p>
 

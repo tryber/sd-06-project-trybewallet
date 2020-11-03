@@ -33,15 +33,9 @@ export const deleteExpense = (expenses) => ({
 //   type: ERROR,
 // });
 
-// window.fetch = async () => ({ json: () => Promise.resolve(response) });
-
 export async function fetchAPI(dispatch) {
   dispatch(isFetching);
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const data = await response.json();
   dispatch(successFetch(data));
-  // const endpoint = 'https://economia.awesomeapi.com.br/json/all';
-  // const resp = await fetch(endpoint);
-  // const data = await resp.json();
-  // const data = await Promise.resolve(response);
 }
