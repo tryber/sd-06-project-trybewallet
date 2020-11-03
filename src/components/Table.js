@@ -28,7 +28,7 @@ class Table extends React.Component {
               .name;
             const valorMultiplicado = valorMoedaSelecionada * expense.value;
             return (
-              <tr key= { index }>
+              <tr key={ index }>
                 <td>{ expense.description }</td>
                 <td>{ expense.tag }</td>
                 <td>{ expense.method }</td>
