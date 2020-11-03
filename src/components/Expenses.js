@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Expenses.css';
+import { removeExpense } from '../actions';
 
 class Expenses extends Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, deleteExpense } = this.props;
     const header = [
       'Descrição',
       'Tag',
@@ -41,7 +42,23 @@ class Expenses extends Component {
                   ) / 100}
                 </td>
                 <td>Real</td>
-                <td>editar excluir</td>
+                <td>
+                  <button
+                    type="button"
+                    data-testid="edit-btn"
+                  >
+                    editar
+
+                  </button>
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    onClick={ () => deleteExpense(index) }
+                  >
+                    excluir
+
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -55,4 +72,8 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(Expenses);
+const mapDispatchToProps = (dispatch) => ({
+  deleteExpense: (index) => dispatch(removeExpense(index)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Expenses);

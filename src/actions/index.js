@@ -1,5 +1,6 @@
 export const ADD_EMAIL = 'ADD_EMAIL';
 export const ADD_EXPENSES = 'ADD_EXPENSES';
+export const REMOVE_EXPENSES = 'REMOVE_EXPENSES';
 export const REQUEST_CURRENCIES_PRICE = 'REQUEST_CURRENCIES_PRICE';
 export const RECEIVE_CURRENCIES_PRICE = 'RECEIVE_CURRENCIES_PRICE';
 const API_CURRENCIES_PRICE = 'https://economia.awesomeapi.com.br/json/all';
@@ -16,6 +17,12 @@ export const addExpensesToState = (payload, totalExpenses) => (
     type: ADD_EXPENSES,
     payload,
     totalExpenses,
+  });
+
+export const removeExpense = (index) => (
+  {
+    type: REMOVE_EXPENSES,
+    index,
   });
 
 export const requestPrices = () => (

@@ -2,6 +2,7 @@ import {
   ADD_EXPENSES,
   REQUEST_CURRENCIES_PRICE,
   RECEIVE_CURRENCIES_PRICE,
+  REMOVE_EXPENSES,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -25,6 +26,12 @@ export default function wallet(state = INITIAL_STATE, action) {
         },
       ],
       totalExpenses: action.totalExpenses,
+    };
+  case REMOVE_EXPENSES:
+    return {
+      ...state,
+      expenses: state.expenses.filter((_, indexExpense) => indexExpense !== action.index),
+      // totalExpenses: action.totalExpenses,
     };
   case REQUEST_CURRENCIES_PRICE:
     return {

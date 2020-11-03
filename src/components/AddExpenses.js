@@ -40,10 +40,6 @@ class AddExpenses extends React.Component {
       totalCost = totalValue;
     } else {
       totalCost = totalExpenses + totalValue;
-      // const previousExpenses = expenses
-      //   .map((expense) => parseFloat(expense.exchangeRates[currency].ask) * parseFloat(expense.value))
-      //   .reduce((result, eachValue) => result + eachValue);
-      // totalExpenses = previousExpenses + totalValue;
     }
     return totalCost;
   }
