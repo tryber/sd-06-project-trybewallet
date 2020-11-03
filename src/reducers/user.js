@@ -7,11 +7,11 @@ const ESTADO_INICIAL = {
 
 function user(state = ESTADO_INICIAL, action) {
   switch (action.type) {
-    case SALVAR_USUARIO:
-      return { ...state, email: action.payload };
-    default:
-      return state;
-  };
-};
+  case SALVAR_USUARIO:
+    return { ...state, email: action.payload };
+  default:
+    return state;
+  }
+}
 
 export default user;
