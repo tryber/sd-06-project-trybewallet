@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import setEmailForm from '../actions';
-// import trybeWallet from '../img/trybeWallet';
+import trybeWallet from '../img/trybeWallet.png';
+import './Login.css';
 
 class Login extends Component {
   constructor() {
@@ -48,8 +49,12 @@ class Login extends Component {
     const { email, password, isDisabled } = this.state;
     return (
       <div className="login">
-        <form onSubmit={ this.handleLogin }>
+        <div className="image-container">
+          <img src={ trybeWallet } alt="trybe-wallet logo" />
+        </div>
+        <form className="form-container" onSubmit={ this.handleLogin }>
           <input
+            className="form-input"
             type="email"
             value={ email }
             name="email"
@@ -59,6 +64,7 @@ class Login extends Component {
             required
           />
           <input
+            className="form-input"
             type="password"
             value={ password }
             name="password"
@@ -68,6 +74,7 @@ class Login extends Component {
             required
           />
           <button
+            className="btn-login"
             type="submit"
             disabled={ isDisabled }
           >

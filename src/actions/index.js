@@ -47,3 +47,9 @@ export function addThunk(inputExpense) {
     return (dispatch(addExpense(newExpense)));
   };
 }
+
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const deleteSelected = (id) => ({
+  type: DELETE_EXPENSE,
+  id,
+});
