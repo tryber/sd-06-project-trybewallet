@@ -3,6 +3,7 @@ const ADD_USER = 'ADD_USER';
 const REQUEST_DATA = 'REQUEST_DATA';
 const SUCCESS = 'SUCCESS';
 const SAVE_EXPENSE = 'SAVE_EXPENSE';
+const DEL_EXPENSE = 'DEL_EXPENSE';
 
 export function addUser(email) {
   return { type: ADD_USER, payload: email };
@@ -18,6 +19,10 @@ function success(data) {
 
 export function saveExpense(expenses) {
   return { type: SAVE_EXPENSE, expenses };
+}
+
+export function delExpense(expenses) {
+  return { type: DEL_EXPENSE, expenses };
 }
 
 export async function fetchData(dispatch) {

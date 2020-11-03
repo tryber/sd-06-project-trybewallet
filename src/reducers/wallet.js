@@ -14,6 +14,10 @@ export default function wallet(state = INTIAL_STATE, action) {
     return { ...state, data: action.data, loading: false };
   case 'SAVE_EXPENSE':
     return { ...state, expenses: [...state.expenses, action.expenses] };
+  case 'DEL_EXPENSE':
+    return { ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== action.expenses.id),
+    };
   default:
     return state;
   }

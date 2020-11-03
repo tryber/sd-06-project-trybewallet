@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { saveExpense, fetchData } from '../actions';
+import { saveExpense, fetchData, delExpense } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.addExpense = this.addExpense.bind(this);
+    this.removeExpense = this.removeExpense.bind(this);
     this.state = {
       total: 0,
       value: 0,
@@ -60,6 +61,19 @@ class Wallet extends React.Component {
       method: 'dinheiro',
       tag: 'alimentação',
       description: '',
+    });
+  }
+
+  removeExpense(expense) {
+    const { total } = this.state;
+    const { delExpenseGlobal } = this.props;
+    delExpenseGlobal(expense);
+
+    const totValue = total - (Number(expense.exchangeRates[expense.currency].ask)
+      * Number(expense.value)).toFixed(2);
+
+    this.setState({
+      total: totValue,
     });
   }
 
@@ -166,6 +180,15 @@ class Wallet extends React.Component {
                       * Number(expense.value)).toFixed(2) }
                   </td>
                   <td>Real</td>
+                  <td>
+                    <button
+                      type="button"
+                      onClick={ () => this.removeExpense(expense) }
+                      data-testid="delete-btn"
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))
               : '' }
@@ -186,6 +209,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetch: () => dispatch(fetchData),
   expenseToGlobal: (expenses) => dispatch(saveExpense(expenses)),
+  delExpenseGlobal: (expense) => dispatch(delExpense(expense)),
 });
 
 Wallet.propTypes = {
@@ -195,6 +219,7 @@ Wallet.propTypes = {
   globalExpenses: PropTypes.arrayOf(Object).isRequired,
   expenseToGlobal: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  delExpenseGlobal: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
