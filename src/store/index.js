@@ -1,9 +1,7 @@
-import { createStore, combineReducers } from 'redux';
-import user from '../reducers/user';
-import wallet from '../reducers/wallet';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import rootReducer from '../reducers';
 
-const rootReducers = combineReducers({ user, wallet });
-
-const store = createStore(rootReducers);
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default store;
