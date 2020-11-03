@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Table extends React.Component {
-
   render() {
     const { expenses } = this.props;
 

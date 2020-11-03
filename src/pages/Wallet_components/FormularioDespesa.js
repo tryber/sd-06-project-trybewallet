@@ -94,6 +94,7 @@ class FormularioDespesa extends React.Component {
             onChange={ (e) => this.handleChange('method', e) }
             value={ method }
           >
+            <option value="">Selecionar</option>
             {this.generateOptions(paymentMethods)}
           </select>
         </label>
@@ -106,6 +107,7 @@ class FormularioDespesa extends React.Component {
             onChange={ (e) => this.handleChange('tag', e) }
             value={ tag }
           >
+            <option value="">Selecionar</option>
             {this.generateOptions(tagOptions)}
           </select>
         </label>
