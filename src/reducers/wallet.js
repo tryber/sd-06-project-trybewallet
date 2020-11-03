@@ -4,6 +4,7 @@ import {
   REQUEST_CURRENCIES,
   FAILED_REQUEST,
   SAVE_EXPENCES,
+  REMOVE_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -25,7 +26,15 @@ export default function (state = INITIAL_STATE, action) {
   case FAILED_REQUEST:
     return { ...state, error: action.currencies, isFetching: false };
   case SAVE_EXPENCES:
-    return { ...state, expenses: [...state.expenses, action.expenses] };
+    return {
+      ...state,
+      expenses: [...state.expenses, action.expense],
+    };
+  case REMOVE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== action.id),
+    };
   default:
     return state;
   }

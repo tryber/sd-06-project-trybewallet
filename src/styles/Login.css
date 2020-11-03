@@ -84,6 +84,8 @@
 .btn-login {
   background-color: #50fa7bff;
   border: none;
+  border-bottom: 3px solid #1b9239;
+  border-left: 2px solid #1b9239;
   border-radius: 4px;
   color: #282a36ff;
   cursor: pointer;
@@ -93,6 +95,15 @@
   outline: none;
   padding: 8px;
   width: 150px;
+}
+
+.btn-login:active {
+  background-color: #50fa7bff;
+  border: none;
+  border-bottom: 1px solid #3fd163;
+  border-left: 1px solid #3fd163;
+  color: #555555;
+  transform: translateY(2px);
 }
 
 .btn-login button:disabled,

@@ -6,6 +6,7 @@ import Wallet from './pages/Wallet';
 import './App.css';
 import './styles/Login.css';
 import './styles/Wallet.css';
+import './styles/Table.css';
 
 function App() {
   return (

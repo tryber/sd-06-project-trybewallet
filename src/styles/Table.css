@@ -1,0 +1,59 @@
+.wallet-table {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.table-container {
+  align-items: baseline;
+  border: 3px solid #44475aff;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  width: 99%;
+}
+
+thead {
+  border-collapse: collapse;
+  display: flex;
+  width: 100%;
+}
+
+thead td {
+  border-bottom: 2px solid #44475aff;
+  border-collapse: collapse;
+  border-right: 1px solid #44475aff;
+  box-sizing: border-box;
+  font-size: 18px;
+  font-weight: bold;
+  height: 70px;
+  padding: 0 8px;
+  text-align: center;
+  width: 148px;
+}
+
+tbody {
+  background-color: #f8f8f2ff;
+  border-collapse: collapse;
+  border-left: 2px solid #44475aff;
+  border-right: 2px solid #44475aff;
+  color: #282a36ff;
+  height: 400px;
+  overflow: scroll;
+  width: 99.8%;
+}
+
+tbody td {
+  border-bottom: 2px solid #44475aff;
+  border-collapse: collapse;
+  border-right: 1px solid #44475aff;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: bold;
+  height: 60px;
+  padding: 0 8px;
+  text-align: center;
+  width: 148px;
+}

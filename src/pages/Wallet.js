@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import { fetchCurrency, actionExpenses } from '../actions';
-import Header from '../components/Header';
-import Fieldset from '../components/Fieldset';
+import { fetchCurrency, actionExpenseThunk } from '../actions';
+import { Fieldset, Header, Table } from '../components';
 
 class Wallet extends React.Component {
   constructor() {
@@ -11,7 +10,7 @@ class Wallet extends React.Component {
 
     this.state = {
       value: [],
-      coin: 'USD',
+      currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
       description: [],
@@ -24,7 +23,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { allCoins, actionSave } = this.props;
+    const { allCoins, actionThunk } = this.props;
     const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const allTags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
@@ -35,7 +34,7 @@ class Wallet extends React.Component {
         <fieldset className="wallet-fieldset">
           <Fieldset
             changeValue={ (e) => this.setState({ value: e.target.value }) }
-            changeCoin={ (e) => this.setState({ coin: e.target.value }) }
+            changeCoin={ (e) => this.setState({ currency: e.target.value }) }
             changeMethod={ (e) => this.setState({ method: e.target.value }) }
             changeTag={ (e) => this.setState({ tag: e.target.value }) }
             changeDescription={ (e) => this.setState({ description: e.target.value }) }
@@ -46,17 +45,24 @@ class Wallet extends React.Component {
                 </option>
               ))
             }
-            methods={ methods.map((method) => <option key={ method }>{method}</option>) }
-            allTags={ allTags.map((tag) => <option key={ tag }>{tag}</option>) }
+            methods={
+              methods.map((met) => <option value={ met } key={ met }>{met}</option>)
+            }
+            allTags={
+              allTags.map((tag) => <option value={ tag } key={ tag }>{tag}</option>)
+            }
           />
           <button
             className="btn-wallet"
-            onClick={ () => actionSave(this.state) }
+            onClick={ () => actionThunk(this.state) }
             type="button"
           >
             Adicionar despesa
           </button>
         </fieldset>
+        <section className="wallet-table">
+          <Table />
+        </section>
       </main>
     );
   }
@@ -65,7 +71,7 @@ class Wallet extends React.Component {
 Wallet.propTypes = {
   allCoins: propTypes.oneOfType([propTypes.shape(), propTypes.array]).isRequired,
   actionFetch: propTypes.func.isRequired,
-  actionSave: propTypes.func.isRequired,
+  actionThunk: propTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -75,7 +81,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   actionFetch: () => dispatch(fetchCurrency()),
-  actionSave: (expenses) => dispatch(actionExpenses(expenses)),
+  actionThunk: (expense) => dispatch(actionExpenseThunk(expense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

@@ -19,6 +19,7 @@ export default class Fieldset extends Component {
           Valor:
           <input
             onChange={ changeValue }
+            className="quantity"
             id="quantity"
             type="text"
             data-testid="value-input"
@@ -26,7 +27,11 @@ export default class Fieldset extends Component {
         </label>
         <label htmlFor="currency">
           Moeda:
-          <select onChange={ changeCoin } id="currency" data-testid="currency-input">
+          <select
+            onChange={ changeCoin }
+            id="currency"
+            data-testid="currency-input"
+          >
             { coins }
           </select>
         </label>

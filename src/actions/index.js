@@ -11,6 +11,7 @@ export const GET_CURRENCIES = 'GET_CURRENCIES';
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
 export const SAVE_EXPENCES = 'SAVE_EXPENCES';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const actionLogin = (email) => ({
   type: LOGIN,
@@ -41,7 +42,19 @@ export function fetchCurrency() {
   };
 }
 
-export const actionExpenses = (expenses) => ({
-  type: SAVE_EXPENCES,
-  expenses,
+export function actionExpense(expense) {
+  return { type: SAVE_EXPENCES, expense };
+}
+
+export function actionExpenseThunk(expense) {
+  return async (dispatch) => {
+    const r = await fetch('https://economia.awesomeapi.com.br/json/all');
+    return r.json()
+      .then((json) => dispatch(actionExpense({ ...expense, exchangeRates: json })));
+  };
+}
+
+export const actionRemoveExpense = (id) => ({
+  type: REMOVE_EXPENSE,
+  id,
 });

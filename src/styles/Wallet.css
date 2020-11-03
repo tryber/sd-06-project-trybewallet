@@ -42,8 +42,8 @@
 .header-expenses {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  width: 210px;
+  justify-content: flex-start;
+  width: 230px;
 }
 
 /* WALLET BODY */
@@ -66,6 +66,28 @@
   flex-direction: row;
   justify-content: space-between;
   width: 80%;
+}
+
+.wallet-forms input, select {
+  box-shadow: 1px 1px 3px #44475a80;
+  border: none;
+  border-radius: 3px;
+  color: #282a36ff;
+  font-size: 13px;
+  font-weight: bold;
+  margin: 0 6px;
+  outline: none;
+  padding: 4px 8px;
+}
+
+.quantity {
+  width: 60px;
+}
+
+.wallet-forms label {
+  color: #282a36ff;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .btn-wallet {

@@ -7,34 +7,19 @@ class Header extends Component {
   constructor(props) {
     super(props);
 
-    this.handleState = this.handleState.bind(this);
-
-    this.state = {
-      // allExpenses: [],
-    };
+    this.handleSun = this.handleSun.bind(this);
   }
 
-  componentDidMount() {
+  handleSun() {
     const { expenses } = this.props;
-    this.handleState(expenses);
-  }
-
-  // componentDidUpdate(_previouState, newState) {
-  //   const { expenses } = this.props;
-  //   const { objExpenses } = this.state;
-  //   if (newState !== objExpenses) {
-  //     this.handleState(expenses);
-  //   }
-  // }
-
-  handleState() {
-    // this.setState({ allExpenses: state });
+    const askedValue = Math.round(expenses
+      .reduce((acc, cur) => Number(acc) + Number(cur.value)
+       * Number(cur.exchangeRates[cur.currency].ask), 0) * 100) / 100;
+    return (askedValue).toFixed(2);
   }
 
   render() {
-    const { userEmail, expenses } = this.props;
-    // const { allExpenses } = this.state;
-    console.log(expenses);
+    const { userEmail } = this.props;
     return (
       <nav className="header-nav">
         <Link className="header-link" to="/"><h3>WALLET</h3></Link>
@@ -43,7 +28,7 @@ class Header extends Component {
           <section className="header-expenses">
             <section data-testid="total-field">
               {`${'Despesa Total: R$ '}
-              ${'0,00'}`}
+              ${this.handleSun()}`}
             </section>
             <section data-testid="header-currency-field">{`${'BRL'}`}</section>
           </section>
@@ -64,12 +49,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, null)(Header);
-
-// const { expenses } = this.props;
-// const onlyValues = expenses.map((each) => Number(each.value));
-// console.log(onlyValues);
-// onlyValues.reduce((acc, cur) => {
-//   cur = newState;
-//   return acc + cur;
-// }, 0);
-// this.setState({ values: onlyValues });
