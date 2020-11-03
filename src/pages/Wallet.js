@@ -5,14 +5,14 @@ import { fetchCurrencyValues } from '../actions';
 
 class Wallet extends React.Component {
   componentDidMount() {
-    const { fetchCurrencyValues } = this.props;
-    fetchCurrencyValues();
+    const { fetchCurrencyValue } = this.props;
+    fetchCurrencyValue();
   }
 
   render() {
     const {
       user: { email },
-      wallet: { currencyValues, currencyValuesLoading }
+      wallet: { currencyValues, currencyValuesLoading },
     } = this.props;
     const methodOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -48,12 +48,14 @@ class Wallet extends React.Component {
             >
               {
                 currencyValuesLoading ? <option> - </option>
-                  : currencyValues.map((currency) => (<option
-                    data-testid={ currency }
-                    key={ currency }
-                  >
-                    { currency }
-                  </option>))
+                  : currencyValues.map((currency) => (
+                    <option
+                      data-testid={ currency }
+                      key={ currency }
+                    >
+                      { currency }
+                    </option>
+                  ))
               }
             </select>
           </label>
@@ -65,12 +67,14 @@ class Wallet extends React.Component {
             >
               {
                 methodOptions
-                  .map((method) => (<option
-                    data-testid={ method }
-                    key={ method }
-                  >
-                    { method }
-                  </option>))
+                  .map((method) => (
+                    <option
+                      data-testid={ method }
+                      key={ method }
+                    >
+                      { method }
+                    </option>
+                  ))
               }
             </select>
           </label>
@@ -82,12 +86,14 @@ class Wallet extends React.Component {
             >
               {
                 tagOptions
-                  .map((tag) => (<option
-                    data-testid={ tag }
-                    key={ tag }
-                  >
-                    { tag }
-                  </option>))
+                  .map((tag) => (
+                    <option
+                      data-testid={ tag }
+                      key={ tag }
+                    >
+                      { tag }
+                    </option>
+                  ))
               }
             </select>
           </label>
@@ -115,7 +121,7 @@ const mapStateToProps = ({ user, wallet }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchCurrencyValues: (currencyData) => dispatch(fetchCurrencyValues(currencyData)),
+  fetchCurrencyValue: (currencyData) => dispatch(fetchCurrencyValues(currencyData)),
 });
 
 Wallet.propTypes = {

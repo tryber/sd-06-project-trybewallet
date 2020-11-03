@@ -4,7 +4,6 @@ export const GET_CURRENCY_VALUES_SUCCESS = 'GET_CURRENCY_VALUES_SUCCESS';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const LOADING_CURRENCIES = 'LOADING_CURRENCIES';
 
-
 export const emailUpdate = (email) => ({
   type: EMAIL_UPDATE,
   email,
@@ -18,7 +17,6 @@ export const passwordUpdate = (password) => ({
 const isLoadingCurrencies = () => ({
   type: LOADING_CURRENCIES,
 });
-
 
 const getCurrencyValues = (currencies) => ({
   type: GET_CURRENCY_VALUES_SUCCESS,
