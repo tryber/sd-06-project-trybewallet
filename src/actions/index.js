@@ -17,6 +17,11 @@ export const saveExpense = (expenses) => ({
   expenses,
 });
 
+export const deleteExpense = (expense) => ({
+  type: 'DEL_EXPENSE',
+  expense,
+});
+
 // export function fetchApi() {
 //   const responseFromAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
 //   const currencies = await responseFromAPI.json();

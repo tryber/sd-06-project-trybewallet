@@ -24,10 +24,6 @@ class Wallet extends React.Component {
     thunkCurrency();
   }
 
-  // getExchangeRates() {
-  //   fetch()
-  // }
-
   handleInput({ target }) {
     const { name, value } = target;
     this.setState({ [name]: value });
