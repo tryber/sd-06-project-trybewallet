@@ -14,14 +14,14 @@ export const fetchAction = (currencies) => ({
 
 export const addAction = (expenses) => ({
   type: ADD_EXPENSE,
-  expenses
+  expenses,
 });
 
 export const thunkCurrencyAPI = () => async (dispatch) => {
   const fetchAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
   const response = await fetchAPI.json();
   const currency = Object.keys(response);
-  const filteredCurrencies = currency.filter((cur) => cur !== 'USDT') 
+  const filteredCurrencies = currency.filter((cur) => cur !== 'USDT');
   dispatch(fetchAction(filteredCurrencies));
 };
 

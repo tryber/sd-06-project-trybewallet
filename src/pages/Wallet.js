@@ -42,7 +42,7 @@ class Wallet extends React.Component {
         <header>
           <h2 data-testid="email-field">{email}</h2>
           <h3 data-testid="total-field">
-          { expenses.length !== 0
+            { expenses.length !== 0
               ? (Math.round(expenses.reduce((sum, expense) => (
                 Number(sum) + (Number(expense.value)
                   * (Object.values(expense.exchangeRates)
@@ -55,7 +55,11 @@ class Wallet extends React.Component {
         <form onSubmit={ this.handleSubmit }>
           <fieldset>
             {/* <label htmlFor="value">Valor</label> */}
-              <input onChange={ this.handleChange } id="value" name="value" data-testid="value-input" />
+              <input
+                onChange={ this.handleChange }
+                id="value" name="value"
+                data-testid="value-input"
+              />
             {/* <label htmlFor="description">Descrição</label> */}
               <input onChange={ this.handleChange } id="description" name="description" data-testid="description-input" />
             {/* <label htmlFor="currency">Moedas</label> */}
@@ -100,6 +104,9 @@ const mapDispatchToProps = (dispatch) => ({
 Wallet.propTypes = {
   fetchCurrency: propTypes.func.isRequired,
   addExpUser: propTypes.func.isRequired,
+  email: propTypes.string.isRequired,
+  currencies: propTypes.array.isRequired,
+  expenses: propTypes.array.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
