@@ -1,5 +1,6 @@
 import React from 'react';
 import ExpenseForm from '../components/ExpenseForm';
+import ExpensesTable from '../components/ExpensesTable';
 import Header from '../components/Header';
 // import {  } from 'react-icons/fa';
 // import { connect } from 'react-redux';
@@ -10,6 +11,7 @@ class Wallet extends React.Component {
       <div>
         <Header />
         <ExpenseForm />
+        <ExpensesTable />
       </div>
     );
   }
