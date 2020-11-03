@@ -1,4 +1,4 @@
-import { WALLET_CHANGES, GET_CURRENCY } from '../actions';
+import { WALLET_CHANGES, GET_CURRENCY, REMOVE_ITEM } from '../actions';
 
 const WALLET_INITIAL_STATE = {
   currencies: [],
@@ -18,6 +18,12 @@ const wallet = (state = WALLET_INITIAL_STATE, action) => {
       currencies: Object.keys(action.payload.currencies)
         .filter((currency) => currency !== 'USDT'),
     });
+  case REMOVE_ITEM:
+    return ({
+      ...state,
+      expenses: [ ...state.expenses.slice(0, action.payload),
+        ...state.expenses.slice(action.payload + 1, state.expenses.length) ]
+    })
   default:
     return state;
   }

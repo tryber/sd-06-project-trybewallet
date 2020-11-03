@@ -42,6 +42,7 @@ class Forms extends Component {
 
   async handleClick() {
     const { expenseState, dispachExpenses } = this.props;
+
     const currentCurrencies = await fetchApi();
     const currencies = Object.keys(currentCurrencies);
     const exchangeRates = currencies.reduce((obj, current) => {
