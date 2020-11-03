@@ -1,25 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import './Header.css';
 
 class Header extends React.Component {
   render() {
     const { email, expenses } = this.props;
     return (
       <header>
-        <p data-testid="email-field">{ email }</p>
-        <p data-testid="total-field">
-          {expenses.reduce((acc, expense) => {
-            const { currency, exchangeRates, value } = expense;
-
-            const exchangeRate = exchangeRates[currency].ask;
-            const costInBRL = exchangeRate * value;
-
-            return acc + parseFloat(costInBRL);
-          }, 0).toFixed(2)}
+        <p data-testid="email-field">
+          Email:
+          {' '}
+          { email }
         </p>
-        <p data-testid="header-currency-field">BRL</p>
-        <button type="button" data-testid="edit-btn">Editar despesa</button>
+        <div className="total-field">
+          <p data-testid="total-field">
+            Despesa Total: R$
+            {' '}
+            {expenses.reduce((acc, expense) => {
+              const { currency, exchangeRates, value } = expense;
+
+              const exchangeRate = exchangeRates[currency].ask;
+              const costInBRL = exchangeRate * value;
+
+              return acc + parseFloat(costInBRL);
+            }, 0).toFixed(2)}
+          </p>
+          <p data-testid="header-currency-field">BRL</p>
+        </div>
       </header>
     );
   }

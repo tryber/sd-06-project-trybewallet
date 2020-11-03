@@ -1,4 +1,4 @@
-import { CURRENCIES, ADD_EXPENSE } from '../actions';
+import { CURRENCIES, ADD_EXPENSE, FILTERED_EXPENSES } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -11,6 +11,8 @@ export default function (state = INITIAL_STATE, action) {
     return { ...state, currencies: action.currencies };
   case ADD_EXPENSE:
     return { ...state, expenses: [...state.expenses, action.expense] };
+  case FILTERED_EXPENSES:
+    return { ...state, expenses: action.expensesFiltered };
   default:
     return state;
   }
