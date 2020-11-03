@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 class WalletDisplay extends React.Component {
   render() {
@@ -36,8 +36,8 @@ class WalletDisplay extends React.Component {
                 <td>Real</td>
                 <td>{finalBRLValue}</td>
                 <td>
-                  <button>Editar</button>
-                  <button>Excluir</button>
+                  <button type="button">Editar</button>
+                  <button type="button">Excluir</button>
                 </td>
               </tr>
             );
@@ -51,5 +51,11 @@ class WalletDisplay extends React.Component {
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
+
+WalletDisplay.propTypes = {
+  expenses: PropTypes.shape({
+    map: PropTypes.func,
+  }).isRequired,
+};
 
 export default connect(mapStateToProps)(WalletDisplay);
