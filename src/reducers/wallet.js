@@ -10,6 +10,8 @@ function wallet(state = INITIAL_STATE, action) {
     return { ...state, expenses: [...state.expenses, action.payload] };
   case 'FETCH_CURRENCIES_SUCCESS':
     return { ...state, currencies: Object.keys(action.coin).filter((e) => e !== 'USDT') };
+  /*   case 'DELETE_EXPENSE':
+    return { ...state, expenses: expenses.filter((e) => e !== (expenses.length -1))} */
   default:
     return state;
   }
