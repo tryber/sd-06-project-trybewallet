@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { thunkCurrencyAPI, thunkExpenses } from '../actions';
-import Table from '../components/Table'
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -56,33 +56,36 @@ class Wallet extends React.Component {
         </header>
         <form>
           <fieldset>
-            <label htmlFor="value">Value</label>
+            <label htmlFor="value">Value
             <input
-              onChange={this.handleChange}
+              onChange={ this.handleChange }
               id="value"
               name="value"
               value= { value }
               data-testid="value-input"
             />
-            <label htmlFor="description">Description</label>
+            </label>
+            <label htmlFor="description">Description
             <input
-              onChange={this.handleChange}
+              onChange={ this.handleChange }
               id="description"
               name="description"
               data-testid="description-input"
             />
-            <label htmlFor="currency">Currency</label>
+            </label>
+            <label htmlFor="currency">Currency
             <select
-              onChange={this.handleChange}
+              onChange={ this.handleChange }
               id="currency"
               name="currency"
               data-testid="currency-input"
             >
               {currencies !== undefined ? currencies.map((currency) => (
-                <option data-testid={currency} key={currency}>{currency}</option>
+                <option data-testid={ currency } key={ currency }>{currency}</option>
               )) : <p>Error</p>}
             </select>
-            <label htmlFor="method">Payment</label>
+            </label>
+            <label htmlFor="method">Payment
             <select
               onChange={this.handleChange}
               id="method"
@@ -93,9 +96,10 @@ class Wallet extends React.Component {
               <option>Cartão de crédito</option>
               <option>Cartão de débito</option>
             </select>
-            <label htmlFor="tag">Categories</label>
+            </label>
+            <label htmlFor="tag">Categories
             <select
-              onChange={this.handleChange}
+              onChange={ this.handleChange }
               id="tag"
               name="tag"
               data-testid="tag-input"
@@ -106,6 +110,7 @@ class Wallet extends React.Component {
               <option>Transporte</option>
               <option>Saúde</option>
             </select>
+            </label>
             <button type="button" onClick={this.handleSubmit}>Adicionar despesa</button>
           </fieldset>
         </form>
@@ -114,7 +119,7 @@ class Wallet extends React.Component {
     );
   }
 }
-
+//comentário
 const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,

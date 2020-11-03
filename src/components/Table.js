@@ -22,14 +22,16 @@ class Table extends React.Component {
         </thead>
         <tbody>
           {expenses.map((expense, index) => {
-            const total = parseFloat(expense.exchangeRates[expense.currency].ask) * expense.value;
+            const total = parseFloat(expense
+              .exchangeRates[expense.currency].ask) * expense.value;
             return (
               <tr key={index}>
                 <td>{expense.description}</td>
                 <td>{expense.tag}</td>
                 <td>{expense.method}</td>
                 <td>{expense.value}</td>
-                <td>{parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)}</td>
+                <td>{parseFloat(expense.exchangeRates[expense.currency].ask)
+                  .toFixed(2)}</td>
                 <td>{expense.exchangeRates[expense.currency].name}</td>
                 <td>{total.toFixed(2)}</td>
                 <td>Real</td>
