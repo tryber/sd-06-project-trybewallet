@@ -39,9 +39,9 @@ class Wallet extends React.Component {
     this.setState({ [target.name]: target.value });
   }
 
-  deleteButton() {
-    /* const { myDeleteExpenses } = this.props;
-    myDeleteExpenses() */
+  deleteButton(id) {
+    const { myDeleteExpenses } = this.props;
+    myDeleteExpenses(id);
   }
 
   render() {
@@ -168,7 +168,7 @@ class Wallet extends React.Component {
                 <button
                   type="button"
                   data-testid="delete-btn"
-                  onClick={ this.deleteButton }
+                  onClick={ () => this.deleteButton(e.id) }
                 >
                   Deletar
                 </button>
@@ -199,6 +199,7 @@ Wallet.propTypes = {
   expensesValue: PropTypes.arrayOf(Object).isRequired,
   myMoney: PropTypes.func.isRequired,
   myNewFetch: PropTypes.arrayOf(Object).isRequired,
+  myDeleteExpenses: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
