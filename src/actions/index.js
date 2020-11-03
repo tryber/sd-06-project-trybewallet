@@ -1,7 +1,7 @@
 // Coloque aqui suas actions
-export const inputAction = (email) => {
-  return {
-    type: 'LOGIN',
-    email
-  }
-}
+export const LOGIN = 'LOGIN';
+
+export const inputAction = (email) => ({
+  type: LOGIN,
+  email,
+});

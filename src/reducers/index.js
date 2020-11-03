@@ -3,6 +3,7 @@
 
 // Configure os seus reducers.
 // ATENÇÃO: você obrigatoriamente tem que utilizar as chaves "user" e "wallet" no seu estado global
+import { LOGIN } from '../actions/index';
 
 const INITIAL_STATE = {
   email: '',
@@ -10,7 +11,7 @@ const INITIAL_STATE = {
 
 const stateReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case 'LOGIN':
+  case LOGIN:
     return {
       ...state,
       email: action.email,
