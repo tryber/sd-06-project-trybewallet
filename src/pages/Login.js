@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propType from 'prop-types';
 import { Link } from 'react-router-dom';
-import login from '../actions';
+import { login } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -14,7 +14,6 @@ class Login extends React.Component {
 
     this.state = {
       email: '',
-      // password: '',
       isEmail: true,
       isPassword: true,
     };

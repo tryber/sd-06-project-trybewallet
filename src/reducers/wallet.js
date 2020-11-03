@@ -5,8 +5,13 @@ const INITIAL_STATE = {
 
 function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case '':
-    return;
+  case 'SAVE_CURRENCIES':
+    return { ...state, currencies: action.currencies };
+  case 'SAVE_EXPENSES':
+    return {
+      ...state,
+      expenses: [...state.expenses, action.expense],
+    };
   default:
     return state;
   }
