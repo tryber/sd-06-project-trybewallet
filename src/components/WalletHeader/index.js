@@ -5,6 +5,7 @@ import { currenciesThunk } from '../../actions';
 
 import WalletWelcome from '../WalletWelcome';
 import WalletTable from '../WalletTable';
+import WalletDisplay from '../WalletDisplay';
 
 class WalletHeader extends React.Component {
   componentDidMount() {
@@ -22,7 +23,7 @@ class WalletHeader extends React.Component {
           <WalletTable />
         </div>
         <div className="display-wallet">
-          Aqui os valores inseridos pelo usuário e transformados pela API
+          <WalletDisplay />
         </div>
       </main>
     );
