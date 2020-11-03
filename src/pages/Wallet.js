@@ -56,7 +56,8 @@ class Wallet extends React.Component {
         </header>
         <form>
           <fieldset>
-            <label htmlFor="value">Value
+            <label htmlFor="value">
+              Value
             <input
                 onChange={this.handleChange}
                 id="value"
@@ -65,7 +66,8 @@ class Wallet extends React.Component {
                 data-testid="value-input"
               />
             </label>
-            <label htmlFor="description">Description
+            <label htmlFor="description">
+              Description
             <input
                 onChange={this.handleChange}
                 id="description"
@@ -73,7 +75,8 @@ class Wallet extends React.Component {
                 data-testid="description-input"
               />
             </label>
-            <label htmlFor="currency">Currency
+            <label htmlFor="currency">
+              Currency
             <select
                 onChange={this.handleChange}
                 id="currency"
@@ -85,7 +88,8 @@ class Wallet extends React.Component {
                 )) : <p>Error</p>}
               </select>
             </label>
-            <label htmlFor="method">Payment
+            <label htmlFor="method">
+              Payment
             <select
                 onChange={this.handleChange}
                 id="method"
@@ -97,7 +101,8 @@ class Wallet extends React.Component {
                 <option>Cartão de débito</option>
               </select>
             </label>
-            <label htmlFor="tag">Categories
+            <label htmlFor="tag">
+              Categories
             <select
                 onChange={this.handleChange}
                 id="tag"
