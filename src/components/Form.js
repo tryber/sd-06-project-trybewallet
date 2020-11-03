@@ -1,19 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { getRates, sendExpenseToGlobalState } from '../actions'
 
 const localState = {
   id: 0,
   value: '',
   description: '',
-  currency: '',
+  currency: 'USD',
   method: '',
   tag: '',
   exchangeRates: '',
 }
 
-function Form({ handleChange }) {
+function Form({ sendExpenseToGlobalState, isFetching, getRates, ratesJson, expenses }) {
   let moedas = ['USD', 'CAD', 'EUR', 'GBP', 'ARS', 'BTC',
     'LTC', 'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP'];
+
+  // pegar o estado local e disparar uma action pra alterar o estado global
+  function handleClick() {
+    getRates()
+    sendExpenseToGlobalState(localState);
+    console.log(expenses);
+    // console.log(localState)
+  }
+  
+  localState.exchangeRates = ratesJson[localState.currency]; // VOLTAR!!!
+  console.log(localState.exchangeRates)
+  // console.log(ratesJson)
+
+  // console.log(expenses)
+  // console.log(isFetching)
 
   return (
     <div className="formComponent" >
@@ -102,18 +118,25 @@ function Form({ handleChange }) {
       </label>
       <button
         type="button"
-        onClick={ () => { console.log(localState) } }
+        onClick={ handleClick }
       >
         Adicionar despesa
       </button>
+      {isFetching ? <p>Loading...</p>
+        : <p>Completely loaded!</p> }
     </div>
   )
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  handleChange: () => {
-    console.log('oi')
-  }
+const mapStateToProps = (state) => ({
+  isFetching: state.wallet.isFetching,
+  ratesJson: state.wallet.ratesJson,
+  expenses: state.wallet.expenses,
 })
 
-export default connect(null, mapDispatchToProps)(Form);
+const mapDispatchToProps = (dispatch) => ({
+  getRates: () => dispatch(getRates()),
+  sendExpenseToGlobalState: (object) => dispatch(sendExpenseToGlobalState(object)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

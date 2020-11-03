@@ -1,14 +1,24 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+import { REQUEST_RATES, GET_RATES, FAILED_REQUEST, SEND_TO_GLOBAL_STATE } from '../actions';
+
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  isFetching: false,
+  ratesJson: [],
+  error: '',
 };
 
-export default function walletReducer(state = INITIAL_STATE, action) {
+export default function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'WALLET':
-    return;
-  default:
-    return state;
+    case REQUEST_RATES:
+      return { ...state, isFetching: true };
+    case GET_RATES:
+      return { ...state, ratesJson: action.payload, isFetching: false };
+    case FAILED_REQUEST:
+      return { ...state, error: action.payload, isFetching: false };
+    case SEND_TO_GLOBAL_STATE:
+      return { ...state, expenses: [...state.expenses, action.payload] }
+    default:
+      return state;
   }
 }
