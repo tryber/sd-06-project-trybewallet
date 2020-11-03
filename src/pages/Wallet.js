@@ -14,9 +14,7 @@ class Wallet extends React.Component {
     return (
       <header>
         {/* <img src="" alt="trybe-logo" /> */}
-        <span>
-          <p data-testid="email-field">{email}</p>
-        </span>
+        <p data-testid="email-field">{email}</p>
 
         <span>
           <p data-testid="total-field">

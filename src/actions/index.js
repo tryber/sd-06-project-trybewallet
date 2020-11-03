@@ -2,7 +2,7 @@
 
 const userLogin = (email) => ({
   type: 'USER_LOGIN',
-  email,
+  payload: email,
 });
 
 export default userLogin;

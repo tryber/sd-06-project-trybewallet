@@ -30,12 +30,14 @@ class Login extends Component {
     const { email, senha } = this.state;
     const regex = /^\w+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$/;
     const magicNumber = 6;
-
     if (senha.length >= magicNumber && regex.test(email)) {
-      this.setState({
+      return this.setState({
         isValid: true,
       });
     }
+    return this.setState({
+      isValid: false,
+    });
   }
 
   handleLogin() {
