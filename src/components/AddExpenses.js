@@ -156,6 +156,8 @@ AddExpenses.propTypes = {
   fetchPrices: PropTypes.func.isRequired,
   addExpense: PropTypes.func.isRequired,
   currenciesPrice: PropTypes.objectOf(PropTypes.object).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  totalExpenses: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -167,7 +169,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchPrices: () => dispatch(fetchCurrenciesPrice()),
-  addExpense: (payload, totalExpenses) => dispatch(addExpensesToState(payload, totalExpenses)),
+  addExpense: (payload, totalExpenses) => (
+    dispatch(addExpensesToState(payload, totalExpenses))
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddExpenses);

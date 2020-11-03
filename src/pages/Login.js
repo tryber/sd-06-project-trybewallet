@@ -37,8 +37,7 @@ class Login extends React.Component {
   }
 
   emailCheck(email, password) {
-    // Font: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-    const emailCheck = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailCheck = (/\S+@\S+\.\S+/);
     const MIN_CHARACTERS = 6;
     if (password.length < MIN_CHARACTERS) {
       this.setState({ passwordWarning: false });

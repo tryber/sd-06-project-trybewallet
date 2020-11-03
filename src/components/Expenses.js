@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Expenses.css';
+import PropTypes from 'prop-types';
 import { removeExpense } from '../actions';
 
 class Expenses extends Component {
@@ -22,7 +23,9 @@ class Expenses extends Component {
         <table>
           <thead>
             <tr className="tr_items">
-              {header.map((item, index) => <th key={ index } className="th_items">{item}</th>)}
+              {header.map((item, index) => (
+                <th key={ index } className="th_items">{item}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -67,6 +70,11 @@ class Expenses extends Component {
     );
   }
 }
+
+Expenses.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteExpense: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
