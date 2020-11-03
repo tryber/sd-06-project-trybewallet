@@ -8,15 +8,6 @@ import { salvarUsuario } from '../actions';
 
 import '../css/login.css';
 
-const defaultState ={
-  email: '',
-  password: '',
-  emailError: '',
-  passwordError: '',
-  checkEmail: false,
-  checkPassword: false,
-  btnEntrar: false,
-}
 
 class Login extends React.Component {
   constructor() {
@@ -25,7 +16,15 @@ class Login extends React.Component {
     this.checkPassword = this.checkPassword.bind(this);
     this.checkValid = this.checkValid.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.state = defaultState;
+    this.state = {
+      email: '',
+      password: '',
+      emailError: '',
+      passwordError: '',
+      checkEmail: false,
+      checkPassword: false,
+      btnEntrar: false,
+    }
   }
 
   checkEmail(event) {
@@ -35,19 +34,23 @@ class Login extends React.Component {
     const validate = email.match(validator);
     if (validate !== null) {
       this.setState({ checkEmail: true, email });
+      console.log(this.state.checkEmail);
     } else {
       this.setState({ checkEmail: false, email });
+      console.log(this.state.checkEmail);
     }
   }
 
   checkPassword(event) {
     const password = event.target.value;
-
-    const validator = 6;
+    // verificar o erro do diley 5 -> 6
+    const validator = 5;
     if (password.length < validator) {
       this.setState({ checkPassword: false, password });
+      console.log(this.state.checkPassword)
     } else {
       this.setState({ checkPassword: true, password });
+      console.log(this.state.checkPassword)
     }
   }
 
@@ -55,16 +58,21 @@ class Login extends React.Component {
     const { checkEmail, checkPassword } = this.state;
 
     if (input === 'email') {
-      if (checkEmail) {
+      if (!checkEmail) {
         this.setState({ emailError: 'email invalido' });
       } else {
         this.setState({ emailError: '' });
       }
     } else {
-      if (checkPassword) {
+      if (!checkPassword) {
         this.setState({ passwordError: 'A Senha dever ter mais de 5 caracteres' });
       } else {
         this.setState({ passwordError: '' });
+        if (checkEmail) {
+          this.setState({ btnEntrar: true });
+        } else {
+          this.setState({ btnEntrar: false });
+        }
       }
     }
   }
@@ -74,10 +82,10 @@ class Login extends React.Component {
     const { dispatchUserEmail } = this.props;
     const { email } = this.state;
     dispatchUserEmail(email);
-    this.setState({ btnEntrar: true });
   }
 
   render() {
+    const { checkEmail, checkPassword, btnEntrar } = this.state;
     return (
       <form className="loginForm">
         <div className="loginInput">
@@ -105,7 +113,9 @@ class Login extends React.Component {
           <div className="erroMessage">{this.state.passwordError}</div>
           <br />
           <button
-            disabled={ this.state.btnEntrar }
+            type='button'
+            disabled={ btnEntrar }
+            { ...console.log('estado do btn entrar ' + btnEntrar) }
             onClick={ this.handleClick }
           >
             Entrar
