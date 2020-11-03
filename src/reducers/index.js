@@ -9,15 +9,15 @@ const INITIAL_STATE = {
 };
 
 const stateReducer = (state = INITIAL_STATE, action) => {
-  switch(action.type) {
-    case 'LOGIN':
-      return {
-        ...state,
-        email: action.email,
-      }
+  switch (action.type) {
+  case 'LOGIN':
+    return {
+      ...state,
+      email: action.email,
+    };
 
-      default:
-        return state;
+  default:
+    return state;
   }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { inputAction } from '../actions';
 import PropTypes from 'prop-types';
+import { inputAction } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class Login extends React.Component {
       email: '',
       pass: '',
       disable: true,
-    }
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -20,11 +20,11 @@ class Login extends React.Component {
 
   handleChange({ target }) {
     const { name } = target;
-    const value = target.value;
+    const { value } = target.value;
 
     this.setState({
       [name]: value,
-    })
+    });
   }
 
   handleSubmit() {
@@ -32,17 +32,17 @@ class Login extends React.Component {
     const { email } = this.state;
 
     login(email);
-     history.push('/carteira');
+    history.push('/carteira');
   }
 
   handleLogin() {
     const { email, pass } = this.state;
     const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/;
 
-    if(pass.length > 5 && regex.test(email)) {
+    if (pass.length > 5 && regex.test(email)) {
       this.setState({
         disable: false,
-      })
+      });
     }
   }
 
@@ -57,9 +57,9 @@ class Login extends React.Component {
         <div className="row justify-content-center">
           <form onSubmit={ this.handleSubmit }>
             <div className="form-group">
-              <input 
+              <input
                 type="email"
-                value={this.state.email}
+                value={ this.state.email }
                 placeholder="email"
                 data-testid="email-input"
                 name="email"
@@ -71,7 +71,7 @@ class Login extends React.Component {
             <div className="form-group">
               <input
                 type="password"
-                value={this.state.pass}
+                value={ this.state.pass }
                 placeholder="senha"
                 data-testid="password-input"
                 name="pass"
@@ -81,7 +81,13 @@ class Login extends React.Component {
               />
             </div>
 
-            <button className="btn btn-primary" type="submit" disabled={ disable }>Entrar</button>
+            <button
+              className="btn btn-primary"
+              type="submit"
+              disabled={ disable }
+            >
+              Entrar
+            </button>
           </form>
         </div>
       </div>
