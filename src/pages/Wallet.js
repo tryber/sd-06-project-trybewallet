@@ -16,13 +16,9 @@ class Wallet extends React.Component {
         {/* <img src="" alt="trybe-logo" /> */}
         <p data-testid="email-field">{email}</p>
 
-        <span>
-          <p data-testid="total-field">
-            Total de despesas:
-            {total }
-            <p data-testid="header-currency-field" />
-          </p>
-        </span>
+        <span> Despesa total: </span>
+        <p data-testid="total-field" value="0">{total}</p>
+        <p data-testid="header-currency-field"> BRL </p>
       </header>
     );
   }
@@ -30,6 +26,7 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  total: state.wallet.total,
 });
 
 Wallet.propTypes = {
