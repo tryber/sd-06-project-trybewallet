@@ -15,7 +15,7 @@ class Login extends React.Component {
       <div>
         <div>
           <label>
-            Login
+            Email:
             <input
               type="email"
               onChange={(e) => this.setState({ email: e.target.value })}
@@ -24,6 +24,7 @@ class Login extends React.Component {
             />
           </label>
           <label>
+            Senha:
             <input
               type="password"
               data-testid="password-input"
