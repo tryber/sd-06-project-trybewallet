@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Expenses.css';
 import PropTypes from 'prop-types';
+import { FaTrash, FaEdit } from 'react-icons/fa';
 import { removeExpense } from '../actions';
 
 class Expenses extends Component {
@@ -49,17 +50,17 @@ class Expenses extends Component {
                   <button
                     type="button"
                     data-testid="edit-btn"
+                    className="edit-button"
                   >
-                    editar
-
+                    <FaEdit size="20" />
                   </button>
                   <button
                     type="button"
                     data-testid="delete-btn"
+                    className="del-button"
                     onClick={ () => deleteExpense(index) }
                   >
-                    excluir
-
+                    <FaTrash size="20" />
                   </button>
                 </td>
               </tr>

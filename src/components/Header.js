@@ -21,7 +21,7 @@ class Header extends React.Component {
           <span className="header-info" data-testid="total-field">
             Despesas totais:
             {' '}
-            {totalExpenses}
+            {Math.ceil(totalExpenses * 100) / 100}
           </span>
           <span data-testid="header-currency-field">
             BRL

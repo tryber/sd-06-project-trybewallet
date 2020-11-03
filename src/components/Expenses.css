@@ -17,3 +17,25 @@
   height: 30px;
   text-align: center;
 }
+
+.edit-button, .del-button {
+  background-color: rgb(223, 190, 2);
+  border: none;
+  border-radius: 3px;
+  color: white;
+  padding: 5px 8px;
+  outline: none;
+  margin-right: 5px;
+}
+
+.del-button {
+  background-color: rgb(223, 2, 2);
+}
+
+.del-button:hover {
+  background-color: rgb(150, 0, 0);
+}
+
+.edit-button:hover {
+  background-color: rgb(190, 163, 6);
+}
