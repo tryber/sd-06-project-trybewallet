@@ -1,80 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import awesomeAPI from '../services/awesomeAPI';
-import { storeExpenses } from '../actions';
 import Form from '../components/Form';
 
 class Wallet extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      currencyList: [],
-      expenses: {
-        id: 0,
-        value: 0,
-        description: '',
-        currency: '',
-        method: '',
-        tag: '',
-        exchangeRates: {},
-      },
-    };
-
-    this.getCurrencies = this.getCurrencies.bind(this);
-    this.saveToState = this.saveToState.bind(this);
-    this.saveExpensesToStore = this.saveExpensesToStore.bind(this);
-  }
-
-  componentDidMount() {
-    this.getCurrencies();
-  }
-
-  async getCurrencies() {
-    const data = await awesomeAPI();
-    const currencyList = Object.keys(data);
-    const { expenses } = this.state;
-    this.setState({
-      currencyList,
-      expenses: { ...expenses, exchangeRates: data } });
-  }
-
-  saveToState(target) {
-    const { expenses } = this.state;
-    this.setState({
-      expenses: { ...expenses, [target.name]: target.value },
+  updateTotalValue() {
+    const { expenses } = this.props;
+    console.log(expenses);
+    let totalValue = 0;
+    expenses.forEach((expense) => {
+      const exchangeRatesKey = Object.keys(expense.exchangeRates)
+        .find((key) => key === expense.currency);
+      const floatValue = parseFloat(expense.value);
+      const floatExchangeRate = parseFloat(expense.exchangeRates[exchangeRatesKey].ask);
+      totalValue += floatValue * floatExchangeRate;
     });
-  }
-
-  saveExpensesToStore(data) {
-    const { saveExpenses } = this.props;
-    saveExpenses(data);
-    this.setState((prevState) => ({
-      expenses: {
-        ...prevState.expenses,
-        id: prevState.expenses.id + 1,
-      },
-    }));
+    return totalValue.toFixed(2);
   }
 
   render() {
-    const { currencyList, expenses } = this.state;
     const { email } = this.props;
+    const totalValue = this.updateTotalValue();
 
     return (
       <div>
         <header>
           <p data-testid="email-field">{`Email:  ${email}`}</p>
-          <span data-testid="total-field">{'Despesa Total: 0 '}</span>
+          <span data-testid="total-field">{`Despesa Total: ${totalValue} `}</span>
           <span data-testid="header-currency-field">BRL</span>
         </header>
         <div>
-          <Form
-            saveToState={ this.saveToState }
-            saveExpensesToStore={ this.saveExpensesToStore }
-            currencyList={ currencyList }
-            expenses={ expenses }
-          />
+          <Form />
         </div>
       </div>);
   }
@@ -82,14 +38,12 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  saveExpenses: (expenses) => dispatch(storeExpenses(expenses)) });
-
-export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
+export default connect(mapStateToProps)(Wallet);
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  saveExpenses: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
