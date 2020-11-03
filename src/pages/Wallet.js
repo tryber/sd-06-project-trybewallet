@@ -114,7 +114,7 @@ class Wallet extends React.Component {
 
   excludeExpense(index) {
     const { expenses, changeState } = this.props;
-    const newExpense = expenses.filter((_, indexExpense) => indexExpense !== [index]);
+    const newExpense = expenses.filter((_, indexExpense) => indexExpense !== index);
     changeState(newExpense);
     this.setState({ value: 0 });
   }
