@@ -139,8 +139,8 @@ WalletForm.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
   sendExpense: PropTypes.func.isRequired,
   sendTotal: PropTypes.func.isRequired,
-  data: PropTypes.objectOf().isRequired,
-  currencies: PropTypes.objectOf().isRequired,
+  data: PropTypes.objectOf(PropTypes.object).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
