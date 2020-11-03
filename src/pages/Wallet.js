@@ -58,58 +58,58 @@ class Wallet extends React.Component {
           <fieldset>
             <label htmlFor="value">Value
             <input
-              onChange={ this.handleChange }
-              id="value"
-              name="value"
-              value= { value }
-              data-testid="value-input"
-            />
+                onChange={this.handleChange}
+                id="value"
+                name="value"
+                value={value}
+                data-testid="value-input"
+              />
             </label>
             <label htmlFor="description">Description
             <input
-              onChange={ this.handleChange }
-              id="description"
-              name="description"
-              data-testid="description-input"
-            />
+                onChange={this.handleChange}
+                id="description"
+                name="description"
+                data-testid="description-input"
+              />
             </label>
             <label htmlFor="currency">Currency
             <select
-              onChange={ this.handleChange }
-              id="currency"
-              name="currency"
-              data-testid="currency-input"
-            >
-              {currencies !== undefined ? currencies.map((currency) => (
-                <option data-testid={ currency } key={ currency }>{currency}</option>
-              )) : <p>Error</p>}
-            </select>
+                onChange={this.handleChange}
+                id="currency"
+                name="currency"
+                data-testid="currency-input"
+              >
+                {currencies !== undefined ? currencies.map((currency) => (
+                  <option data-testid={currency} key={currency}>{currency}</option>
+                )) : <p>Error</p>}
+              </select>
             </label>
             <label htmlFor="method">Payment
             <select
-              onChange={this.handleChange}
-              id="method"
-              name="method"
-              data-testid="method-input"
-            >
-              <option>Dinheiro</option>
-              <option>Cartão de crédito</option>
-              <option>Cartão de débito</option>
-            </select>
+                onChange={this.handleChange}
+                id="method"
+                name="method"
+                data-testid="method-input"
+              >
+                <option>Dinheiro</option>
+                <option>Cartão de crédito</option>
+                <option>Cartão de débito</option>
+              </select>
             </label>
             <label htmlFor="tag">Categories
             <select
-              onChange={ this.handleChange }
-              id="tag"
-              name="tag"
-              data-testid="tag-input"
-            >
-              <option>Alimentação</option>
-              <option>Lazer</option>
-              <option>Trabalho</option>
-              <option>Transporte</option>
-              <option>Saúde</option>
-            </select>
+                onChange={this.handleChange}
+                id="tag"
+                name="tag"
+                data-testid="tag-input"
+              >
+                <option>Alimentação</option>
+                <option>Lazer</option>
+                <option>Trabalho</option>
+                <option>Transporte</option>
+                <option>Saúde</option>
+              </select>
             </label>
             <button type="button" onClick={this.handleSubmit}>Adicionar despesa</button>
           </fieldset>
@@ -119,7 +119,7 @@ class Wallet extends React.Component {
     );
   }
 }
-//comentário
+
 const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,

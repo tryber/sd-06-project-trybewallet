@@ -8,9 +8,6 @@ import user from './user';
 import wallet from './wallet';
 
 
-const comb = combineReducers({
-  user,
-  wallet,
-});
+const comb = combineReducers({ user, wallet });
 
 export default comb;
