@@ -30,3 +30,8 @@ input {
   justify-content: stretch;
   align-items: center;
 }
+
+.erroMessage {
+  color: red;
+  font-size: 12px;
+}
