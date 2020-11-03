@@ -1,15 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { addExpense, fetchCurrencies } from '../actions';
+import WalletTable from '../components/WalletTable';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.mountForm = this.mountForm.bind(this);
 
     this.state = {
       currencies: [],
-      value: '',
+      value: 0,
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
@@ -23,42 +27,80 @@ class Wallet extends React.Component {
     this.setState({ [name]: value });
   }
 
+  mountForm(total) {
+    const { addData, expenses } = this.props;
+    const {
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates,
+    } = this.state;
+    const id = expenses.length;
+    const output = {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates,
+    };
+    addData(output, total);
+  }
+
+  async handleSubmit() {
+    const { fetch, rates, total } = this.props;
+    const { currency, value } = this.state;
+    await fetch();
+    let bid = 0;
+    // Learned how to iterate through objects here:
+    // https://masteringjs.io/tutorials/fundamentals/foreach-object
+    Object.keys(rates).forEach((item) => {
+      if (currency === item) {
+        bid = rates[item].ask;
+      }
+    });
+    // Two decimals round:
+    // https://learnersbucket.com/examples/javascript/
+    // learn-how-to-round-to-2-decimal-places-in-javascript/
+    this.setState({ exchangeRates: rates });
+    const newTotal = total + (value * bid);
+    this.mountForm(newTotal);
+  }
+
   async componentDidMount() {
-    const endpoint = 'https://economia.awesomeapi.com.br/json/all';
-    const response = await fetch(endpoint);
-    const data = await response.json();
-    const currencyKeys = Object.keys(data);
-    const list = currencyKeys.filter((item) => item !== 'USDT');
-    this.setState({ currencies: list });
+    const { fetch } = this.props;
+    await fetch();
   }
 
   render() {
-    const { email } = this.props;
-    const { currencies } = this.state;
+    const { email, rates, total } = this.props;
     const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <div>
         <header>
           <h3 data-testid='email-field'>{email}</h3>
-          <p data-testid='total-field'>0</p>
+          <p data-testid='total-field' value='0'>{total}</p>
           <p data-testid='header-currency-field'>BRL</p>
         </header>
         <form>
           <label htmlFor='value'>
-            Despesa:
+            Despesa
             <input
               type='number'
               id='value'
               data-testid='value-input'
               name='value'
               onChange={this.handleChange}
+              defaultValue='0'
             />
           </label>
           <label htmlFor='description'>
-            Descricão:
             <input
-              type='number'
+              type='text'
               id='description'
               data-testid='description-input'
               name='description'
@@ -70,7 +112,9 @@ class Wallet extends React.Component {
             name='currency'
             onChange={this.handleChange}
           >
-            {currencies.map((item) => {
+            {Object.keys(rates)
+            .filter((item) => item !== 'USDT')
+            .map((item) => {
               return <option key={item} data-testid={item}>{item}</option>
             })}
           </select>
@@ -88,8 +132,14 @@ class Wallet extends React.Component {
           >
             {tags.map((item) => <option key={item}>{item}</option>)}
           </select>
-          <button>Adicionar despesa</button>
+          <button
+            type='button'
+            onClick={() => this.handleSubmit()}
+          >
+            Adicionar despesa
+          </button>
         </form>
+        <WalletTable />
       </div>
     );
   }
@@ -97,6 +147,14 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  rates: state.wallet.currencies,
+  expenses: state.wallet.expenses,
+  total: state.wallet.total,
 });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  fetch: () => dispatch(fetchCurrencies()),
+  addData: (expense, total) => dispatch(addExpense(expense, total)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
