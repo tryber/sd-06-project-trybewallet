@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCurrenciesAPI, fetchAddExpenses } from '../actions';
+import { fetchCurrenciesAPI, fetchAddExpenses, removeItem } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -17,11 +17,17 @@ class Wallet extends React.Component {
       },
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleRemoval = this.handleRemoval.bind(this);
   }
 
   componentDidMount() {
     const { fetchCurrencies } = this.props;
     fetchCurrencies();
+  }
+
+  handleRemoval(id) {
+    const { deleteExpense } = this.props;
+    deleteExpense(id);
   }
 
   handleChange({ target: { name, value } }) {
@@ -89,6 +95,9 @@ class Wallet extends React.Component {
                   value={ currency }
                   onChange={ this.handleChange }
                 >
+                  <option disabled value="">
+                    Câmbio
+                  </option>
                   {currencies.map((option, index) => (
                     <option key={ index } data-testid={ option }>
                       {option}
@@ -150,19 +159,23 @@ class Wallet extends React.Component {
                     <td>{ element.description }</td>
                     <td>{ element.tag }</td>
                     <td>{ element.method }</td>
-                    <td>{ `${currency} ${element.value}` }</td>
+                    <td>{ element.value }</td>
                     <td>{ currencyName }</td>
                     <td>{ exchangeValue.toFixed(2)}</td>
                     <td>{ convertedValue.toFixed(2)}</td>
                     <td>Real</td>
                     <td>
                       <button
+                        data-testid="edit-btn"
                         type="button"
+                        disabled
                       >
                         Editar
                       </button>
                       <button
+                        data-testid="delete-btn"
                         type="button"
+                        onClick={ () => this.handleRemoval(element.id) }
                       >
                         Excluir
                       </button>
@@ -187,9 +200,11 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(fetchCurrenciesAPI()),
   callbackExpenses: (value) => dispatch(fetchAddExpenses(value)),
+  deleteExpense: (id) => dispatch(removeItem(id)),
 });
 
 Wallet.propTypes = {
+  deleteExpense: PropTypes.func.isRequired,
   callbackExpenses: PropTypes.func.isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
