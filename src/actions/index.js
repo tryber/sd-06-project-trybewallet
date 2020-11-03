@@ -13,13 +13,13 @@ export const addCurrency = (value) => ({ type: ADD_CURRENCY, value });
 
 export const fetchingList = () => ({ type: FETCHING_LIST });
 
-export const fetchCurrencyList = () => {
-  return async (dispatch) => {
+export const fetchCurrencyList = () => (
+  async (dispatch) => {
     dispatch(fetchingList());
 
     const currencyList = await getCurrencyList();
     Object.keys(currencyList).forEach((currency) => (
       dispatch(addCurrency(currencyList[`${currency}`]))
     ));
-  };
-};
+  }
+);

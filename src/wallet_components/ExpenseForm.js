@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import getCurrencyList from '../services/currencyAPI';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { addExpense, fetchCurrencyList } from '../actions';
 
 class ExpenseForm extends React.Component {
@@ -30,7 +29,10 @@ class ExpenseForm extends React.Component {
 
   render() {
     const { expense, description, selectedCurrency } = this.state;
-    const currencyList = getCurrencyList('USDT');
+    const { currencyList, isFetching } = this.props;
+    if (isFetching) {
+      return <h1>LOADING INFORMATION...</h1>;
+    }
     return (
       <form>
         <label htmlFor="expense">
@@ -62,8 +64,9 @@ class ExpenseForm extends React.Component {
             value={ selectedCurrency }
             onChange={ this.handleChange }
           >
-            { Object.keys(currencyList).map((currency) => {
+            { currencyList.forEach((currency) => {
               const { code } = currency;
+              console.log(currency);
               return (
                 <option
                   key={ code }
@@ -81,12 +84,18 @@ class ExpenseForm extends React.Component {
   }
 }
 
-// const mapStateToProps = (state) => ({
+ExpenseForm.propTypes = {
+  currencyList: PropTypes.arrayOf(PropTypes.shape()),
+  isFetching: PropTypes.bool,
+}.isRequired;
 
-// });
+const mapStateToProps = (state) => ({
+  currencyList: state.wallet.currencies,
+  isFetching: state.wallet.fetchingList,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   expense: (object) => dispatch(addExpense(object)),
 });
 
-export default connect(null, mapDispatchToProps)(ExpenseForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
