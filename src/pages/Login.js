@@ -20,7 +20,7 @@ class Login extends React.Component {
 
   handleChange({ target }) {
     const { name } = target;
-    const { value } = target.value;
+    const value = target.value;
 
     this.setState({
       [name]: value,
@@ -52,7 +52,7 @@ class Login extends React.Component {
     return (
       <div>
         <div className="text-center">
-          <h1>Wallet</h1>
+          <h1>Welcome</h1>
         </div>
 
         <div className="row justify-content-center">
