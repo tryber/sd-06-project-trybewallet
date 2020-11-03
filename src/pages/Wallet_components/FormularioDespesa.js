@@ -32,11 +32,11 @@ class FormularioDespesa extends React.Component {
   }
 
   submitForm() {
-    const { updateExchangeInfo, addExpense } = this.props;
+    const { updateExchangeInfo0, addExpense0 } = this.props;
 
     fetchApi().then((exchangeRates) => {
-      updateExchangeInfo(exchangeRates);
-      addExpense({ ...this.state, exchangeRates });
+      updateExchangeInfo0(exchangeRates);
+      addExpense0({ ...this.state, exchangeRates });
     });
   }
 
@@ -64,50 +64,50 @@ class FormularioDespesa extends React.Component {
 
         <label htmlFor="description-input">
           Descrição:
+          <input
+            id="description-input"
+            data-testid="description-input"
+            onChange={ (e) => this.handleChange('description', e) }
+            value={ description }
+          />
         </label>
-        <input
-          id="description-input"
-          data-testid="description-input"
-          onChange={ (e) => this.handleChange('description', e) }
-          value={ description }
-        />
 
         <label htmlFor="currency-input">
           Moeda:
+          <select
+            id="currency-input"
+            name="currency-input"
+            data-testid="currency-input"
+            onChange={ (e) => this.handleChange('currency', e) }
+            value={ currency }
+          >
+            {this.generateOptions(currencies)}
+          </select>
         </label>
-        <select
-          id="currency-input"
-          name="currency-input"
-          data-testid="currency-input"
-          onChange={ (e) => this.handleChange('currency', e) }
-          value={ currency }
-        >
-          {this.generateOptions(currencies)}
-        </select>
 
         <label htmlFor="method-input">
           Forma de pagamento:
+          <select
+            id="method-input"
+            data-testid="method-input"
+            onChange={ (e) => this.handleChange('method', e) }
+            value={ method }
+          >
+            {this.generateOptions(paymentMethods)}
+          </select>
         </label>
-        <select
-          id="method-input"
-          data-testid="method-input"
-          onChange={ (e) => this.handleChange('method', e) }
-          value={ method }
-        >
-          {this.generateOptions(paymentMethods)}
-        </select>
 
         <label htmlFor="tag-input">
           Categoria:
+          <select
+            id="tag-input"
+            data-testid="tag-input"
+            onChange={ (e) => this.handleChange('tag', e) }
+            value={ tag }
+          >
+            {this.generateOptions(tagOptions)}
+          </select>
         </label>
-        <select
-          id="tag-input"
-          data-testid="tag-input"
-          onChange={ (e) => this.handleChange('tag', e) }
-          value={ tag }
-        >
-          {this.generateOptions(tagOptions)}
-        </select>
 
         <AddButton onClick={ this.submitForm } />
       </div>
@@ -121,14 +121,14 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  addExpense: (expense) => dispatch(addExpense(expense)),
-  updateExchangeInfo: (exchangeInfo) => dispatch(updateExchangeInfo(exchangeInfo)),
+  addExpense0: (expense) => dispatch(addExpense(expense)),
+  updateExchangeInfo0: (exchangeInfo) => dispatch(updateExchangeInfo(exchangeInfo)),
 });
 
 FormularioDespesa.propTypes = {
-  addExpense: PropTypes.func.isRequired,
+  addExpense0: PropTypes.func.isRequired,
   currencies: PropTypes.string.isRequired,
-  updateExchangeInfo: PropTypes.func.isRequired,
+  updateExchangeInfo0: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormularioDespesa);
