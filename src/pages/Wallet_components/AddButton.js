@@ -17,12 +17,10 @@ class AddButton extends React.Component {
 }
 
 AddButton.defaultProps = {
-  disabled: false,
   onClick: () => {},
 };
 
 AddButton.propTypes = {
-  disabled: PropTypes.bool,
   onClick: PropTypes.func,
 };
 

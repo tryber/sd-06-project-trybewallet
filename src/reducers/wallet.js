@@ -18,7 +18,9 @@ export default function (state = initialState, action) {
       exchangeInfo: action.value,
       currencies: Object.keys(action.value).filter((c) => c !== 'USDT') };
   case ADD_EXPENSE:
-    return { ...state, expenses: [...expenses, { id: expenses.length, ...action.value }] };
+    return { ...state,
+      expenses: [...expenses, { id: expenses.length,
+        ...action.value }] };
   default:
     return state;
   }

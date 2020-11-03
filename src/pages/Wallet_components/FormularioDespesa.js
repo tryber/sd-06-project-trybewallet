@@ -36,7 +36,7 @@ class FormularioDespesa extends React.Component {
 
     fetchApi().then((exchangeRates) => {
       updateExchangeInfo(exchangeRates);
-      addExpense({ ...this.state, exchangeRates: exchangeRates });
+      addExpense({ ...this.state, exchangeRates });
     });
   }
 
@@ -66,6 +66,7 @@ class FormularioDespesa extends React.Component {
           Descrição:
         </label>
         <input
+          id="description-input"
           data-testid="description-input"
           onChange={ (e) => this.handleChange('description', e) }
           value={ description }
@@ -75,8 +76,8 @@ class FormularioDespesa extends React.Component {
           Moeda:
         </label>
         <select
-          id="currency"
-          name="currency"
+          id="currency-input"
+          name="currency-input"
           data-testid="currency-input"
           onChange={ (e) => this.handleChange('currency', e) }
           value={ currency }
@@ -88,6 +89,7 @@ class FormularioDespesa extends React.Component {
           Forma de pagamento:
         </label>
         <select
+          id="method-input"
           data-testid="method-input"
           onChange={ (e) => this.handleChange('method', e) }
           value={ method }
@@ -99,6 +101,7 @@ class FormularioDespesa extends React.Component {
           Categoria:
         </label>
         <select
+          id="tag-input"
           data-testid="tag-input"
           onChange={ (e) => this.handleChange('tag', e) }
           value={ tag }
@@ -125,6 +128,7 @@ const mapDispatchToProps = (dispatch) => ({
 FormularioDespesa.propTypes = {
   addExpense: PropTypes.func.isRequired,
   currencies: PropTypes.string.isRequired,
+  updateExchangeInfo: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormularioDespesa);
