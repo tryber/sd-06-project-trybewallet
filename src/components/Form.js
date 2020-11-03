@@ -41,7 +41,7 @@ class Form extends Component {
     const { currencies } = this.props;
     const { value, description, currency, method, tag } = this.state;
     const methods = [
-      'Método de pagamento',
+      'Método de Pagamento',
       'Dinheiro',
       'Cartão de crédito',
       'Cartão de débito',

@@ -26,14 +26,17 @@ class Table extends React.Component {
 
   render() {
     const headTable = [
-      'Valor',
       'Descrição',
-      'Método',
       'Tag',
+      'Método de pagamento',
+      'Valor',
       'Moeda',
+      'Câmbio utilizado',
       'Valor convertido',
+      'Moeda de conversão',
       'Editar/Excluir',
     ];
+
     const { expenses } = this.props;
 
     return (
@@ -41,20 +44,24 @@ class Table extends React.Component {
         <table>
           <thead>
             <tr>
-              {headTable.map((title) => (
-                <td key={ title } className="celula-table">{ title }</td>
+              {headTable.map((title, id) => (
+                <td key={ id } className="celula-table">{ title }</td>
               ))}
             </tr>
           </thead>
           <tbody>
             {expenses.map((exp, id) => (
               <tr key={ id }>
-                <td className="celula-table">{exp.value}</td>
-                <td className="celula-table">{exp.description}</td>
-                <td className="celula-table">{exp.method}</td>
-                <td className="celula-table">{exp.tag}</td>
-                <td className="celula-table">{exp.currency}</td>
-                <td className="celula-table">{ this.conversionMethod(exp)}</td>
+                <td className="celula-table">{ exp.description }</td>
+                <td className="celula-table">{ exp.tag }</td>
+                <td className="celula-table">{ exp.method }</td>
+                <td className="celula-table">{ exp.value }</td>
+                <td className="celula-table">{ exp.exchangeRates[exp.currency].name }</td>
+                <td className="celula-table">
+                  { (Math.round((exp.exchangeRates[exp.currency].ask) * 100)) / 100 }
+                </td>
+                <td className="celula-table">{ this.conversionMethod(exp) }</td>
+                <td className="celula-table">Real</td>
                 <td className="celula-table">
                   <button type="button">Editar</button>
                   <button type="button">Excluir</button>
