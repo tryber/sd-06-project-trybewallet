@@ -1,7 +1,11 @@
-const currencyCode = (code) => ({ type: 'CURRENCY', code });
+export const EMAIL = 'EMAIL';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const CURRENCY = 'CURRENCY';
+
+const currencyCode = (code) => ({ type: CURRENCY, code });
 
 export const expenseAction = (expense) => ({
-  type: 'EXPENSES',
+  type: ADD_EXPENSE,
   expense,
 });
 
@@ -14,4 +18,4 @@ export function fetchApi() {
   };
 }
 
-export const action = (value) => ({ type: 'EMAIL', value });
+export const action = (value) => ({ type: EMAIL, value });
