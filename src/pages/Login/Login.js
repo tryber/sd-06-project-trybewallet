@@ -7,7 +7,7 @@ const Login = () => {
       Login
       <LoginForm />
     </div>
-  )
-}
+  );
+};
 
 export default Login;
