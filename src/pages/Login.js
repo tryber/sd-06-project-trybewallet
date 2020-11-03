@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 /* ACTIONS */
@@ -39,10 +39,11 @@ class Login extends Component {
   }
 
   handleLogin() {
-    const { login } = this.props;
+    const { login, history } = this.props;
     const { email } = this.state;
 
     login(email);
+    history.push('/carteira');
   }
 
   render() {
@@ -50,35 +51,35 @@ class Login extends Component {
 
     return (
       <div>
-        <label htmlFor="email">
-          E-mail
-          <input
-            type="text"
-            name="email"
-            placeholder="Digite seu email"
-            data-testid="email-input"
-            onChange={ this.handleInput }
-          />
-        </label>
-        <label htmlFor="senha">
-          Senha
-          <input
-            type="password"
-            name="senha"
-            placeholder="Digite sua senha"
-            data-testid="password-input"
-            onChange={ this.handleInput }
-          />
-        </label>
-        <button
-          disabled={ isValid }
-          onClick={ this.handleLogin }
-          type="submit"
-        >
-          <Link to="/carteira">
+        <form>
+          <label htmlFor="email">
+            E-mail
+            <input
+              type="text"
+              name="email"
+              placeholder="Digite seu email"
+              data-testid="email-input"
+              onChange={ this.handleInput }
+            />
+          </label>
+          <label htmlFor="senha">
+            Senha
+            <input
+              type="password"
+              name="senha"
+              placeholder="Digite sua senha"
+              data-testid="password-input"
+              onChange={ this.handleInput }
+            />
+          </label>
+          <button
+            disabled={ !isValid }
+            onClick={ this.handleLogin }
+            type="button"
+          >
             Entrar
-          </Link>
-        </button>
+          </button>
+        </form>
       </div>
     );
   }
@@ -92,4 +93,4 @@ Login.propTypes = {
   login: PropTypes.func.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default withRouter(connect(null, mapDispatchToProps)(Login));
