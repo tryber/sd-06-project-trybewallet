@@ -11,13 +11,13 @@ class Header extends Component {
   handleExpenses() {
     const { totalExpenses } = this.props;
     let total = 0;
-  
+
     totalExpenses.forEach((expense) => {
-      let conversion = expense.exchangeRates[expense.currency].ask;
+      const conversion = expense.exchangeRates[expense.currency].ask;
       total += (Math.round(Number(expense.value * conversion) * 100)) / 100;
-      });
-    
-    return (<p data-testid="total-field">{ total }</p>);    
+    });
+
+    return (<p data-testid="total-field">{ total }</p>);
   }
 
   render() {

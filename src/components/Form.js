@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import { addExpensesThunk } from '../actions';
-// import Table from './Table.js';
 
 class Form extends Component {
   constructor() {
@@ -12,7 +13,7 @@ class Form extends Component {
       currency: 'USD',
       method: '',
       tag: '',
-    }
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -33,80 +34,110 @@ class Form extends Component {
       currency: 'USD',
       method: '',
       tag: '',
-    })
+    });
   }
 
   render() {
-    const { currency } = this.props;
-    const methods = ["Método de pagamento", "Dinheiro", "Cartão de crédito", "Cartão de débito"];
-    const categories = ["Categorias", "Alimentação", "Lazer", "Trabalho", "Transporte", "Saúde"];
+    const { currencies } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    const methods = [
+      'Método de pagamento',
+      'Dinheiro',
+      'Cartão de crédito',
+      'Cartão de débito',
+    ];
 
-    return(
+    const categories = [
+      'Categorias',
+      'Alimentação',
+      'Lazer',
+      'Trabalho',
+      'Transporte',
+      'Saúde',
+    ];
+
+    return (
       <div>
         <div>
           <input
             data-testid="value-input"
             type="number"
             name="value"
-            value={this.state.value}
+            value={ value }
             placeholder="Digite sua despesa"
-            onChange = {this.handleChange}
+            onChange={ this.handleChange }
           />
           <input
             data-testid="description-input"
             type="text"
             name="description"
             placeholder="Descrição"
-            value={this.state.description}
-            onChange = {this.handleChange}
+            value={ description }
+            onChange={ this.handleChange }
           />
           <select
             data-testid="currency-input"
             name="currency"
-            onChange = {this.handleChange}
-            value={this.state.currency}
+            onChange={ this.handleChange }
+            value={ currency }
           >
-            {currency.map(moeda =>
-              <option value={ moeda } data-testid={`${moeda}`}>{moeda}</option>
-            )}
+            {currencies.map((moeda) => (
+              <option
+                key={ moeda }
+                value={ moeda }
+                data-testid={ `${moeda}` }
+              >
+                { moeda }
+              </option>
+            ))}
           </select>
           <select
             data-testid="method-input"
             name="method"
-            value={this.state.method}
-            onChange = {this.handleChange}
+            value={ method }
+            onChange={ this.handleChange }
           >
-            {methods.map(method =>
-              <option>{method}</option>
-            )}
+            {methods.map((item) => (
+              <option key={ item }>
+                { item }
+              </option>
+            ))}
           </select>
           <select
             data-testid="tag-input"
             name="tag"
-            value={this.state.tag}
-            onChange = {this.handleChange}
+            value={ tag }
+            onChange={ this.handleChange }
           >
-            {categories.map(category =>
-              <option>{category}</option>
-            )}
+            {categories.map((category) => (
+              <option key={ category }>
+                { category }
+              </option>
+            ))}
           </select>
           <button
-            type='button'
-            onClick={ this.handleClick }>
+            type="button"
+            onClick={ this.handleClick }
+          >
             Adicionar despesa
           </button>
         </div>
       </div>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state) => ({
-  currency: state.wallet.currencies,
+  currencies: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addMoney: (state) => dispatch(addExpensesThunk(state)),
 });
+
+Form.propTypes = {
+  currencies: PropTypes.arrayOf().isRequired,
+  addMoney: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

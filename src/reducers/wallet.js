@@ -11,16 +11,19 @@ export default (state = INITIAL_STATE, action) => {
     return (
       {
         ...state,
-        currencies: [...Object.keys(action.payload).filter(currency => currency !== 'USDT')],
+        currencies: [
+          ...Object.keys(action.payload)
+            .filter((currency) => currency !== 'USDT'),
+        ],
       }
     );
-    case ADD_EXPENSES:
-      return (
-        {
-          ...state,
-          expenses: [...state.expenses, action.payload],  
-        }
-      )
+  case ADD_EXPENSES:
+    return (
+      {
+        ...state,
+        expenses: [...state.expenses, action.payload],
+      }
+    );
   default:
     return state;
   }
