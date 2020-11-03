@@ -1,27 +1,28 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Table extends React.Component {
-
   render() {
-    const headerTable = [ 'Descrição', 'Tag', 'Método de pagamento', 'Valor',
-      'Moeda', 'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir' ];
+    const headerTable = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
+      'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
     const { expenses } = this.props;
     return (
       <table>
         <thead>
           <tr>
-            { headerTable.map((hTable) => <th key={hTable}>{ hTable }</th>) }
+            { headerTable.map((hTable) => <th key={ hTable }>{ hTable }</th>) }
           </tr>
         </thead>
         <thead>
-          <tr>
-            { expenses.map((expense) => {
-              return (
-                <td key={ expense.description }>{ expense.description }</td>
-              )
-            })}
-          </tr>
+          { expenses.map((expense) => {
+            return (
+              <tr key={ expense.id }>
+                <td>{ expense.description }</td>
+                <td>{ expense.tag }</td>
+              </tr>
+            );
+          })}
         </thead>
       </table>
     );
@@ -30,7 +31,11 @@ class Table extends React.Component {
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
-})
+});
+
+Table.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default connect(
   mapStateToProps,

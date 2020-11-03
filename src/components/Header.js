@@ -5,37 +5,8 @@ import './header.css';
 import logo from '../images/logo.png';
 
 class Header extends React.Component {
-  constructor() {
-    super();
-    this.totalExpenses = this.totalExpenses.bind(this);
-  }
-
-  totalExpenses(listOfExpense) {
-    // console.log('chamei a função')
-    if(listOfExpense != null && listOfExpense.length === 0) {
-      return 0;
-    }
-    let sumExpenses = 0;
-    listOfExpense.forEach((expense) => {
-    sumExpenses += parseFloat(expense.value);
-  });
-  return sumExpenses;
-  }
-
-  // const { value, currency, exchangeRates } = listOfExpense
-  // if (listOfExpense != null && listOfExpense.length === 0) {
-  //   return 0;
-  // }
-  // let sumExpenses = 0;
-  // listOfExpense.forEach((expense) => {
-  //   sumExpenses += parseFloat(expense.value * (exchangeRates[currency].ask));
-  // });
-  // return sumExpenses;
-
-
   render() {
     const { email, expenses } = this.props;
-    // console.log(expenses.length)
     return (
       <header className="form-header">
         <img src={ logo } alt="logo-trybe" />
@@ -43,7 +14,12 @@ class Header extends React.Component {
         <span data-testid="email-field">{ email }</span>
         <span>Despesa Total:</span>
         <span data-testid="total-field">
-          { this.totalExpenses(expenses) }
+          { expenses.reduce((acc, expense) => {
+            const { value, currency, exchangeRates } = expense;
+            const exchange = exchangeRates[currency].ask;
+            const totalValueBrl = exchange * value;
+            return acc + parseFloat(totalValueBrl);
+          }, 0).toFixed(2) }
         </span>
         <span>Câmbio utilizado:</span>
         <span data-testid="header-currency-field">BRL</span>
@@ -57,12 +33,10 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-// Header.propTypes = {
-//   email: PropTypes.string.isRequired,
-//   wallet: PropTypes.shape({
-//     expenses: PropTypes.arrayOf(PropTypes.object),
-//   }).isRequired,
-// };
+Header.propTypes = {
+  email: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default connect(
   mapStateToProps,

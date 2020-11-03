@@ -25,13 +25,13 @@ class Form extends React.Component {
     fetchCurrencies();
   }
 
-    async getCurrencies() {
+  async getCurrencies() {
     let value = {};
     value = await fetchCurrencyApi();
     return value;
   }
 
-    async insertExpenses() {
+  async insertExpenses() {
     const { value, description, currency, method, tag } = this.state;
     const { addExpenses, wallet } = this.props;
     const arrayExpense = wallet.expenses;
@@ -44,7 +44,7 @@ class Form extends React.Component {
       tag,
       exchangeRates: await this.getCurrencies(),
     };
-    const newExpense = [...arrayExpense, expense]
+    const newExpense = [...arrayExpense, expense];
     addExpenses(newExpense);
   }
 
