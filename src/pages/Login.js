@@ -91,6 +91,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  history: PropTypes.string.isRequired,
 };
 
 export default withRouter(connect(null, mapDispatchToProps)(Login));
