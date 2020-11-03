@@ -36,8 +36,7 @@ export function fetchCurrenciesAPI() {
 export const fetchAddExpenses = (expense) => async (dispatch, getState) => {
   const { wallet: { expenses } } = getState();
   const exchangeRates = await fetchAPI();
-
-  const teste = expenses.length ? expenses[expenses.length - 1].id + 1 : 0;
-  const addExpense = { id: teste, ...expense, exchangeRates };
+  const idNumber = expenses.length ? expenses[expenses.length - 1].id + 1 : 0;
+  const addExpense = { id: idNumber, ...expense, exchangeRates };
   dispatch(addExpenses(addExpense));
 };
