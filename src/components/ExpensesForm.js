@@ -9,13 +9,11 @@ class ExpensesForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      expenses: [
-        { expense: 0 },
-        { descriptionExpenses: '' },
-        { method: '' },
-        { category: '' },
-      ],
+      expenses: '',
       currencies: '',
+      descriptionExpenses: '',
+      method: '',
+      category: '',
     };
   }
 
