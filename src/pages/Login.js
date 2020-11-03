@@ -1,60 +1,115 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import handleLogin, { updateForm } from '../actions/Login';
+import handleLogin from '../actions/Login';
+import loginData from '../assets/dummyLogin';
 
-function Login({ email, password, handleClick, status, handleChange }) {
-  return (
-    <div>
-      <input
-        type="text"
-        data-testid="email-input"
-        name="email"
-        onChange={ (e) => handleChange(e) }
-        value={ email }
-      />
-      <input
-        type="text"
-        name="password"
-        onChange={ (e) => handleChange(e) }
-        data-testid="password-input"
-        value={ password }
-      />
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isValid: false,
+      email: '',
+      password: '',
 
-      <button type="button" onClick={ () => handleClick(email, status) }>
-        Entrar
-      </button>
-    </div>
-  );
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.validateInputs = this.validateInputs.bind(this);
+    this.login = this.login.bind(this);
+  }
+
+  componentDidUpdate(_prevprops, prevState) {
+    const { email, password } = this.state;
+    if (prevState.password !== password) this.validateInputs(password, email);
+  }
+
+  handleChange({ value, name }) {
+    this.setState({ [name]: value });
+  }
+
+  validateEmail(emailInput) {
+    const emailMatcher = (/^[a-z0-9]+@[a-z0-9]+\.+[a-z]+(\.[a-z]+)?$/i);
+    return emailMatcher.test(emailInput);
+  }
+
+  validateInputs(passInput, emailInput) {
+    const minPassLength = 6;
+    if (passInput.length >= minPassLength
+       && (this.validateEmail(emailInput))) {
+      this.setState({ isValid: true });
+    } else {
+      this.setState({ isValid: false });
+    }
+  }
+
+  login(userPass, userEmail) {
+    const { handleClick } = this.props;
+    if (userEmail === loginData.email
+      && userPass === loginData.password) {
+      handleClick(userEmail);
+
+      return true;
+    }
+
+    return false;
+  }
+
+  render() {
+    const { email, password, isValid } = this.state;
+
+    return (
+      <div>
+        <form>
+          <input
+            data-testid="email-input"
+            type="text"
+            name="email"
+            placeholder="email"
+            onChange={ (e) => this.handleChange(e.target) }
+            value={ email }
+          />
+
+          <input
+            data-testid="password-input"
+            type="text"
+            placeholder="password"
+            name="password"
+            onChange={ (e) => this.handleChange(e.target) }
+            value={ password }
+          />
+        </form>
+
+        <Link to="/carteira">
+          <button
+            disabled={ !isValid }
+            type="button"
+            onClick={
+              () => this.login(password, email)
+            }
+          >
+            Entrar
+          </button>
+
+        </Link>
+      </div>
+    );
+  }
 }
 
-const mapStateToProps = (state) => ({
-  email: state.user.email,
-  password: state.user.password,
-  status: state.user.status,
-});
-
 const mapDispatchToProps = (dispatch) => ({
-  handleClick: dispatch(handleLogin()),
-  handleChange: (e) => dispatch(updateForm(e)),
+  handleClick: (email) => (
+    dispatch(handleLogin(email))
+  ),
 });
 
 Login.propTypes = {
-  email: PropTypes.string,
-  password: PropTypes.string,
-  handleClick: PropTypes.shape({
-    handleClick: PropTypes.func,
-  }),
-  handleChange: PropTypes.func,
-  status: PropTypes.bool,
+  handleClick: PropTypes.func,
+
 };
 
 Login.defaultProps = {
-  email: '',
-  password: '',
-  status: false,
   handleClick: () => {},
-  handleChange: () => {},
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);

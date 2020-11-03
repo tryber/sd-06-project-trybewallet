@@ -4,16 +4,14 @@ export const CHANGE = 'CHANGE';
 
 const initialState = {
   email: '',
-  status: false,
-  password: '',
+
 };
 
 const user = (state = initialState, action) => {
   switch (action.type) {
   case LOGIN:
-    return { ...state, status: action.status, email: action.email };
-  case CHANGE:
-    return { ...state, [action.name]: action.value };
+    return { ...state, email: action.email };
+
   default:
     return state;
   }
