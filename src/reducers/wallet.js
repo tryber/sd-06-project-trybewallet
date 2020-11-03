@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case ('EXPENSE'):
-    return { ...state, expenses: action.expenses };
+    return { ...state, expenses: [...state.expenses, action.expense] };
   case ('FETCH'):
     return { ...state, currencies: action.currencies };
   default:
