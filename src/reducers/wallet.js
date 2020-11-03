@@ -1,4 +1,4 @@
-import { CURRENCY } from '../actions';
+import { CURRENCY, ADD_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -9,8 +9,11 @@ export default function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
   case CURRENCY:
     return { ...state,
-      currencies: Object.keys(action.currencies).filter((cur) => cur !== 'USDT') };
+      currencies: action.currencies };
+  case ADD_EXPENSE:
+    return { ...state,
+      expenses: [...state.expenses, action.expenses] };
   default:
     return state;
   }
-}
+};

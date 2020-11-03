@@ -1,72 +1,83 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import { thunkCurrencyAPI } from '../actions';
+import { thunkCurrencyAPI, thunkExpenses } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: '',
-      currency: undefined,
+      id: '',
+      value: '',
+      description: '',
+      currency: 'USD',
+      payment: 'Dinheiro',
+      category: 'Alimentação',
     };
 
-    this.handleFetch = this.handleFetch.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
-    this.handleFetch();
+    const { fetchCurrency } = this.props;
+    fetchCurrency();
   }
 
-  async handleFetch() {
-    const { fetchCurrency, email } = this.props;
-    const result = await fetchCurrency();
-    this.setState({
-      email: email,
-      currencies: result,
-    });
+  handleChange({ target }) {
+    this.setState({ [target.name]: target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { addExpUser } = this.props;
+    addExpUser(this.state);
   }
 
   render() {
-    const { email, currencies } = this.props;
+    const { email, currencies, expenses } = this.props;
     return (
       <div>
         <header>
-
           <h2 data-testid="email-field">{email}</h2>
-          <p data-testid="total-field">0</p>
+          <h3 data-testid="total-field">
+            { expenses.length !== 0 ?
+            expenses.reduce((sum, expense) => expense.value + sum) :
+            <p data-testid="total-field">0</p> }
+            { console.log(expenses) }
+          </h3>
           <p data-testid="header-currency-field">BRL</p>
         </header>
-        <form>
+        <form onSubmit={ this.handleSubmit }>
           <fieldset>
-            <label htmlFor="valor">
+            <label htmlFor="value">
               Valor:
-              <input name="valor" data-testid="value-input" />
+              <input onChange={ this.handleChange } name="value" data-testid="value-input" />
             </label>
-            <label htmlFor="descrição">
+            <label htmlFor="description">
               Descrição
-              <input name="descrição" data-testid="description-input" />
+              <input onChange={ this.handleChange } name="description" data-testid="description-input" />
             </label>
-            <label htmlFor="options">
+            <label htmlFor="currency">
               Moedas
-              <select name="options" data-testid="currency-input">
+              <select onChange={ this.handleChange } name="currency" data-testid="currency-input">
                 {currencies !== undefined ? currencies.map((currency) => (
-                  <option key={ currency }>{currency}</option>
-                )) : <p>não rolou</p>}
+                  <option data-testid={ currency } key={ currency }>{currency}</option>
+                )) : <p>Error</p>}
               </select>
             </label>
-            <label htmlFor="pagamento">
+            <label htmlFor="payment">
               Pagamento
-              <select name="pagamento" data-testid="method-input">
+              <select onChange={ this.handleChange } name="payment" data-testid="method-input">
                 <option>Dinheiro</option>
                 <option>Cartão de crédito</option>
                 <option>Cartão de débito</option>
               </select>
             </label>
-            <label htmlFor="categoria">
+            <label htmlFor="category">
               Categoria
-              <select name="categoria" data-testid="tag-input">
+              <select onChange={ this.handleChange } name="category" data-testid="tag-input">
                 <option>Alimentação</option>
                 <option>Lazer</option>
                 <option>Trabalho</option>
@@ -74,25 +85,28 @@ class Wallet extends React.Component {
                 <option>Saúde</option>
               </select>
             </label>
+            <button type="submit">Adicionar despesa</button>
           </fieldset>
         </form>
       </div>
     );
   }
 }
+
 const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrency: () => dispatch(thunkCurrencyAPI()),
+  addExpUser: (expenses) => dispatch(thunkExpenses(expenses)),
 });
 
 Wallet.propTypes = {
-  currencies: propTypes.object.isRequired,
-  email: propTypes.string.isRequired,
   fetchCurrency: propTypes.func.isRequired,
+  addExpUser: propTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
