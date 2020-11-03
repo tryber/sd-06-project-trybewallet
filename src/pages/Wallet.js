@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { fetchAPI, saveExpense } from '../actions';
+import { fetchAPI, saveExpense, deleteExpense } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -18,6 +18,7 @@ class Wallet extends React.Component {
     };
 
     this.addExpense = this.addExpense.bind(this);
+    this.excludeExpense = this.excludeExpense.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +64,24 @@ class Wallet extends React.Component {
       tag: 'Alimentação',
       description: '',
     });
+  }
+
+  editExpense({ target }) {
+    // let elementosTD = event.target.parentNode.parentNode.firstChild;
+    // const array = [];
+    // for (let indice = 0 ; indice < 8; indice += 1 ) {
+    //   array.push(elementosTD.innerText);
+    //   console.log(elementosTD.innerText);
+    //   elementosTD = elementosTD.nextSibling;
+    // }
+    // console.log("Array = " + array);
+  }
+
+  excludeExpense(index) {
+    const { expenses, deleteState } = this.props;
+    expenses.splice(index, 1);
+    deleteState(expenses);
+    this.setState({ value: 0 });
   }
 
   render() {
@@ -188,7 +207,7 @@ class Wallet extends React.Component {
             </tr>
           </thead>
           { (expenses.length > 0)
-            ? expenses.map((expense) => (
+            ? expenses.map((expense, index) => (
               <tbody key={ expense.id }>
                 <tr>
                   <td>{expense.description}</td>
@@ -205,11 +224,12 @@ class Wallet extends React.Component {
                     * Number(expense.value)).toFixed(2) }
                   </td>
                   <td>Real</td>
-                  <td>ICONE</td>
+                  <td><img data-testid="edit-btn" width="50px" onClick={(event) => this.editExpense(event)}  src="https://img2.gratispng.com/20180319/ysw/kisspng-computer-icons-editing-vector-graphics-editor-edit-pen-write-icon-5ab06a2456fa55.3095970115215109483563.jpg" alt="Editar"/>
+                  <img data-testid="delete-btn" onClick={() => this.excludeExpense(index)} width="30px"src="https://e7.pngegg.com/pngimages/953/119/png-clipart-computer-icons-delete-icon-cdr-angle.png" alt="Excluir"/></td>
                 </tr>
               </tbody>
             ))
-            : ''}
+            : <tbody></tbody>}
         </table>
         <p>{ isFetching ? 'Loading' : '' }</p>
 
@@ -229,6 +249,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   search: () => dispatch(fetchAPI),
   saveState: (expenses) => dispatch(saveExpense(expenses)),
+  deleteState: (expenses) => dispatch(deleteExpense(expenses)),
 });
 
 Wallet.propTypes = {

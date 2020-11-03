@@ -1,5 +1,6 @@
 export const UPDATE = 'UPDATE';
 export const SAVE = 'SAVE';
+export const DELETE = 'DELETE';
 export const LOADING = 'LOADING';
 export const SUCCESS = 'SUCCESS';
 export const ERROR = 'ERROR';
@@ -20,6 +21,11 @@ const successFetch = (data) => ({
 
 export const saveExpense = (expenses) => ({
   type: SAVE,
+  expenses,
+});
+
+export const deleteExpense = (expenses) => ({
+  type: DELETE,
   expenses,
 });
 
