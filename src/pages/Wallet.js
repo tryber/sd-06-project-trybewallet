@@ -5,8 +5,7 @@ import { fetchCurrencyValues } from '../actions';
 
 class Wallet extends React.Component {
   componentDidMount() {
-    const { fetchCurrencyValues } = this.props;
-    fetchCurrencyValues();
+    this.props.fetchCurrencyValues();
   }
 
   render() {
