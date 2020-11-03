@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './FormWallet.css';
 
-import { addWallet, fetchCurrencies } from '../actions';
+import { addWallet, editWallet, fetchCurrencies } from '../actions';
 
 class FormWallet extends React.Component {
   constructor() {
@@ -16,9 +16,11 @@ class FormWallet extends React.Component {
     this.showInputPayment = this.showInputPayment.bind(this);
     this.showInputTag = this.showInputTag.bind(this);
     this.clickAddWallet = this.clickAddWallet.bind(this);
+    this.updateInputs = this.updateInputs.bind(this);
 
     this.state = {
       currenciesKeys: [],
+      inputEditingOK: false,
       expense: {
         value: '',
         description: '',
@@ -37,13 +39,37 @@ class FormWallet extends React.Component {
   async callFetchCurrencies() {
     const { expense } = this.state; // Local state
     const { getCurrencies } = this.props;
-    const result = await getCurrencies();
-    const myCurrencies = Object.keys(result.currencies);
-    const currenciesWithoutUSDT = myCurrencies.filter((item) => item !== 'USDT');
+    const resultApi = await getCurrencies(); // props that Call Api
+    const myCurrencies = Object.keys(resultApi.currencies);
+    const myCurrenciesWithoutUSDT = myCurrencies.filter((item) => item !== 'USDT');
     this.setState(
       {
-        currenciesKeys: currenciesWithoutUSDT,
-        expense: { ...expense, exchangeRates: result.currencies },
+        currenciesKeys: myCurrenciesWithoutUSDT,
+        expense: { ...expense, exchangeRates: resultApi.currencies },
+      },
+    );
+  }
+
+  async clickAddWallet() {
+    const { expense } = this.state;
+    const { newWallet, idEditing, updateWallet } = this.props;
+    await this.callFetchCurrencies();
+
+    if (idEditing >= 0) {
+      await updateWallet(idEditing, expense);
+    } else {
+      await newWallet(expense);
+    }
+    await this.setState(
+      {
+        inputEditingOK: false,
+        expense: { ...expense,
+          value: '',
+          description: '',
+          currency: '',
+          method: '',
+          tag: '',
+        },
       },
     );
   }
@@ -53,112 +79,122 @@ class FormWallet extends React.Component {
     this.setState({ expense: { ...expense, [name]: value } });
   }
 
-  showInputValue({ value }) {
+  updateInputs() {
+    const { expense } = this.state;
+    const { expenses, idEditing } = this.props;
+    const { value, description, currency, method, tag } = expenses[idEditing];
+    this.setState({
+      inputEditingOK: true,
+      expense: { ...expense, value, description, currency, method, tag } });
+  }
+
+  // **********************************
+  // ******** INPUTS DO FORM **********
+  showInputValue({ expense }) {
     return (
-      <label htmlFor="value">
-        Valor
-        <input
-          name="value"
-          type="text"
-          value={ value }
-          onChange={ (e) => this.handleChange(e.target) }
-          data-testid="value-input"
-        />
-      </label>
+      <input
+        className="input-form"
+        name="value"
+        placeholder="Valor"
+        type="text"
+        value={ expense.value }
+        onChange={ (e) => this.handleChange(e.target) }
+        data-testid="value-input"
+      />
     );
   }
 
-  showInputDescription({ description }) {
+  showInputDescription({ expense }) {
     return (
-      <label htmlFor="description">
-        Descrição
-        <input
-          name="description"
-          type="text"
-          value={ description }
-          onChange={ (e) => this.handleChange(e.target) }
-          data-testid="description-input"
-        />
-      </label>
+      <input
+        className="input-form"
+        name="description"
+        placeholder="Descrição"
+        type="text"
+        value={ expense.description }
+        onChange={ (e) => this.handleChange(e.target) }
+        data-testid="description-input"
+      />
     );
   }
 
-  showInputCurrency({ currency }) {
+  showInputCurrency({ expense }) {
     const { currenciesKeys } = this.state;
+    const { idEditing } = this.props;
     return (
-      // <label htmlFor="currency">
-      // Moeda do pagamento
       <select
+        className="input-form"
         data-testid="currency-input"
         name="currency"
         id="currency"
-        value={ currency }
+        value={ (idEditing < 0 && expense.currency === '')
+          ? 'noSelect' : expense.currency }
+        // value={ expense.currency }
         onChange={ (e) => this.handleChange(e.target) }
       >
-        <option disabled selected value> -- Selecione uma Moeda -- </option>
+        <option disabled selected value="noSelect">-- Selecione uma Moeda --</option>
         { currenciesKeys.map((item) => (
           <option key={ item } data-testid={ item } value={ item }>
             { item }
           </option>
         ))}
       </select>
-      // </label>
     );
   }
 
-  showInputPayment({ method }) {
+  showInputPayment({ expense }) {
+    const { idEditing } = this.props;
     return (
-      // <label htmlFor="method">
-      //   Moeda do pagamento
       <select
+        className="input-form"
         name="method"
         data-testid="method-input"
-        value={ method }
+        value={ (idEditing < 0 && expense.method === '')
+          ? 'noSelect' : expense.method }
+        // value={ expense.method }
         onChange={ (e) => this.handleChange(e.target) }
       >
-        <option disabled selected value> -- Selecione um Pagamento -- </option>
+        <option disabled selected value="noSelect">-- Selecione um Pagamento --</option>
         <option value="Dinheiro">Dinheiro</option>
         <option value="Cartão de crédito">Cartão de crédito</option>
         <option value="Cartão de débito">Cartão de débito</option>
       </select>
-      // </label>
     );
   }
 
-  showInputTag({ tag }) {
+  showInputTag({ expense }) {
+    const { idEditing } = this.props;
     return (
-      // <label htmlFor="tag">
-      //   Categoria
       <select
+        className="input-form"
         name="tag"
         data-testid="tag-input"
-        value={ tag }
+        value={ (idEditing < 0 && expense.tag === '')
+          ? 'noSelect' : expense.tag }
+        // value={ expense.tag }
         onChange={ (e) => this.handleChange(e.target) }
       >
-        <option disabled selected value> -- Selecione uma Categoria -- </option>
+        <option disabled selected value="noSelect">-- Selecione uma Categoria --</option>
         <option value="Alimentação">Alimentação</option>
         <option value="Lazer">Lazer</option>
         <option value="Trabalho">Trabalho</option>
         <option value="Transporte">Transporte</option>
         <option value="Saúde">Saúde</option>
       </select>
-      // </label>
     );
   }
 
-  clickAddWallet() {
-    const { expense } = this.state;
-    const { newWallet } = this.props;
-
-    this.callFetchCurrencies();
-    newWallet(expense);
-  }
-
   render() {
-    const { isFetching } = this.props;
+    const { isFetching, idEditing } = this.props;
+    const { inputEditingOK } = this.state;
+    console.log(idEditing);
+    if (idEditing >= 0 && !inputEditingOK) this.updateInputs();
     return (
       isFetching ? <p>Loading...</p> : (
-        <div className="form-Wallet">
+        <div
+          className="form-Wallet"
+          style={ { background: (idEditing < 0) ? 'balck' : 'yellow' } }
+        >
           <form>
             { this.showInputValue(this.state) }
             { this.showInputDescription(this.state) }
@@ -168,8 +204,9 @@ class FormWallet extends React.Component {
             <button
               type="button"
               onClick={ () => this.clickAddWallet() }
+              className="button-form"
             >
-              Adicionar despesa
+              { (idEditing < 0) ? 'Adicionar despesa' : 'Editar despesa' }
             </button>
           </form>
         </div>
@@ -181,6 +218,7 @@ class FormWallet extends React.Component {
 const mapDispatchToProps = (dispatch) => (
   {
     newWallet: (expense) => dispatch(addWallet(expense)),
+    updateWallet: (id, expense) => dispatch(editWallet(id, expense)),
     getCurrencies: () => dispatch(fetchCurrencies()),
   }
 );
@@ -188,13 +226,16 @@ const mapDispatchToProps = (dispatch) => (
 const mapStateToProps = (state) => ({
   isFetching: state.wallet.isFetching,
   idEditing: state.wallet.idEditing,
+  expenses: state.wallet.expenses,
 });
 
 FormWallet.propTypes = {
   isFetching: PropTypes.bool.isRequired,
-  // idEditing: PropTypes.bool.isRequired,
+  idEditing: PropTypes.bool.isRequired,
   newWallet: PropTypes.func.isRequired,
+  updateWallet: PropTypes.func.isRequired,
   getCurrencies: PropTypes.func.isRequired,
+  expenses: PropTypes.shape.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormWallet);

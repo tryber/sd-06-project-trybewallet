@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { saveUser } from '../actions';
+import logo from '../imgs/trybe.png';
+import './Login.css';
 
 class Login extends React.Component {
   constructor() {
@@ -42,16 +44,19 @@ class Login extends React.Component {
     const { email, emailValid, passwordValid } = this.state;
     const { loginUser } = this.props;
     return (
-      <div>
-        <form>
-          <h1>Trybe</h1>
+      <div className="login-container">
+        <h1 className="login-title">PROJECT TRYBE WALLET</h1>
+        <form className="form-container">
+          <img className="logo-login" src={ logo } alt="Logo Trybe" />
           <input
+            className="input-form-login"
             type="text"
             placeholder="Enter e-mail"
             data-testid="email-input"
             onChange={ this.ChangeEmail }
           />
           <input
+            className="input-form-login"
             type="password"
             placeholder="Enter password"
             data-testid="password-input"
@@ -59,6 +64,7 @@ class Login extends React.Component {
           />
           <Link to="/carteira">
             <button
+              className="button-form-login"
               type="button"
               disabled={ !(emailValid && passwordValid) }
               onClick={ () => loginUser(email) }

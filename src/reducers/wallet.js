@@ -47,25 +47,34 @@ function wallet(state = DEFAULT_STATE, action) {
   case IS_EDITING_EXPENSE: {
     return {
       ...state,
-      idEditing: true,
+      idEditing: action.id,
     };
   }
   case EDIT_EXPENSE: {
-    const myExpenses = state.expenses;
-    myExpenses[action.id] = { ...action.expense };
+    const myExpenses = [...state.expenses];
+    myExpenses[action.id] = { ...action.expense, id: action.id };
+    const total = myExpenses.reduce((acc, item) => {
+      const totalItem = parseFloat(item.value * item.exchangeRates[item.currency].ask);
+      return acc + totalItem;
+    }, 0);
     return {
       ...state,
-      idEditing: false,
+      idEditing: -1,
       expenses: [...myExpenses],
-      totalExpense: state.totalExpense
-        + parseFloat(action.expense.value
-          * action.expense.exchangeRates[action.expense.currency].ask),
+      totalExpense: total,
     };
   }
   case DELETE_EXPENSE:
+    const myExpenses = [...state.expenses];
+    const myExpensesDelete = myExpenses.filter((item) => item.id !== action.id);
+    const totalDelete = myExpensesDelete.reduce((acc, item) => {
+      const totalItem = parseFloat(item.value * item.exchangeRates[item.currency].ask);
+      return acc + totalItem;
+    }, 0);
     return {
       ...state,
-      expenses: state.expenses.filter((item) => item.id !== action.id),
+      expenses: [...myExpensesDelete],
+      totalExpense: totalDelete,
     };
   default:
     return state;

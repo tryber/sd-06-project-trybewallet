@@ -1,34 +1,20 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  color: #333;
-}
-
-table {
-  text-align: left;
-  line-height: 40px;
-  border-collapse: separate;
+.table-container {
+  line-height: 30px;
   border-spacing: 0;
-  border: 2px solid #3b3a3a;
-  width: 80%;
-  margin: 10px auto;
-  border-radius: .25rem;
+  border: 1px solid #7e7d7d;
+  width: 85%;
+  margin: 5px auto;
+  font-size: 14px;
 }
 
-thead tr:first-child {
-  background: #8b8a8a;
-  color: #fff;
+.table-head {
+  background: black;
+  color: rgb(241, 241, 241);
   border: none;
 }
 
-th:first-child,
-td:first-child {
-  padding: 0 15px 0 20px;
+th:first-child, td:first-child {
+  padding: 0 10px 0 15px;
 }
 
 th {
@@ -36,11 +22,11 @@ th {
 }
 
 thead tr:last-child th {
-  border-bottom: 3px solid #ddd;
+  border-bottom: 3px solid rgb(138, 138, 138);
 }
 
 tbody tr:hover {
-  background-color: #f2f2f2;
+  background-color: #c7c5c5;
   cursor: default;
 }
 
@@ -53,21 +39,24 @@ tbody td {
 }
 
 td:last-child {
-  text-align: right;
-  padding-right: 10px;
+  text-align: center;
+  padding: 0 20px;
 }
 
-.button {
-  color: #aaa;
+.table-button {
+  background-color: rgb(204, 204, 204);
   cursor: pointer;
   vertical-align: middle;
-  margin-top: -4px;
+  margin: -5px 5px 0;
+  border: 0.6px solid rgb(77, 77, 77);
 }
 
-.edit:hover {
-  color: #0a79df;
+.table-button:hover {
+  background-color: rgb(114, 113, 113);
 }
 
-.delete:hover {
-  color: #dc2a2a;
+.no-expense {
+  font-size: 16px;
+  color: red;
+  margin: 20px;
 }

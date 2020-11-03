@@ -1,14 +1,11 @@
 .header {
   display: flex;
   justify-content: space-between;
-  /* background-color: aqua; */
-  height: 80px;
+  height: 70px;
   margin: 3px 50px;
-  /* border-bottom: 1px solid black; */
 }
 
 .logo-container {
-  /* background-color: brown; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,6 +29,6 @@
 }
 
 .logo {
-  width: 120px;
+  width: 100px;
   margin-left: 20px;
 }
