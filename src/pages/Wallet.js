@@ -1,5 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line import/no-named-as-default
 import Header from '../components/Header';
 import './wallet.css';
 
@@ -12,9 +11,9 @@ class Wallet extends React.Component {
 
   render() {
     return (
-      <header>
+      <div>
         <Header />
-      </header>
+      </div>
     );
   }
 }

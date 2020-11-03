@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import trybeWallet from '../pages/trybeWallet.png';
 
-export class Header extends React.Component {
+class Header extends React.Component {
   constructor(props) {
     super(props);
 
