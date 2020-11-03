@@ -1,4 +1,4 @@
-import { response } from '../tests/mockData';
+// import { response } from '../tests/mockData';
 
 // function fetchApiData() {
 //   return Promise.resolve(response);
@@ -6,7 +6,7 @@ import { response } from '../tests/mockData';
 
 // export default fetchApiData;
 
-window.fetch = async () => ({ json: () => Promise.resolve(response) });
+// window.fetch = async () => ({ json: () => Promise.resolve(response) });
 function fetchApi() {
   const endpoint = 'https://economia.awesomeapi.com.br/json/all';
   return fetch(endpoint)

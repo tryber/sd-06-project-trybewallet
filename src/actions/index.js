@@ -26,9 +26,12 @@ export const expensesAction = (expense) => ({
 export function fetchExchangeRates(expenseData) {
   return async (dispatch) => {
     const currencies = await currencyApi();
-    // const currencies = await response.json();
-    // const currencies = Object.keys(response);
     const expense = { ...expenseData, exchangeRates: currencies };
     dispatch(expensesAction(expense));
   };
 }
+
+export const deleteExpense = (expenseId) => ({
+  type: 'DELETE_EXPENSE',
+  expenseId,
+});

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCurrencies, fetchExchangeRates } from '../actions';
+import { fetchCurrencies, fetchExchangeRates, deleteExpense } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -64,7 +64,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencies, expenses } = this.props;
+    const { email, currencies, expenses, deleteExpenseButton } = this.props;
     const { value } = this.state;
     const totalValue = expenses.length ? Math.round(expenses
       .reduce((acc, cur) => acc + cur.value
@@ -172,6 +172,15 @@ class Wallet extends React.Component {
                     }
                   </td>
                   <td>Real</td>
+                  <td>
+                    <button
+                      type="button"
+                      data-testid="delete-btn"
+                      onClick={ () => deleteExpenseButton(expense.id) }
+                    >
+                      X
+                    </button>
+                  </td>
                 </tr>
               ))
             }
@@ -191,6 +200,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   criateCurrencies: () => dispatch(fetchCurrencies()),
   criateExpense: (expenses) => dispatch(fetchExchangeRates(expenses)),
+  deleteExpenseButton: (expenseId) => dispatch(deleteExpense(expenseId)),
 });
 
 Wallet.propTypes = {
@@ -199,6 +209,7 @@ Wallet.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)).isRequired,
   criateExpense: PropTypes.func.isRequired,
+  deleteExpenseButton: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
