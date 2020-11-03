@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { login } from '../actions';
 
 class Login extends React.Component {
@@ -10,45 +11,61 @@ class Login extends React.Component {
       email: '',
       password: '',
     };
+    this.handleLogin = this.handleLogin.bind(this);
+    this.verifyEmailAndPassword = this.verifyEmailAndPassword.bind(this);
+  }
+
+  handleLogin() {
+    console.log('clicou', this.props);
+    const { email } = this.state;
+    const { add } = this.props;
+    add(email);
+  }
+
+  verifyEmailAndPassword() {
+    const { email, password } = this.state;
+    const magic = 6;
+    const isValid = email.match(/\S+@\S+\.\S+/);
+    if (password.length > magic && isValid) {
+      return true;
+    }
   }
 
   render() {
     const { email, password } = this.state;
-    const magic = 6;
-    const activeButton = email.length > 0 && password.length > magic;
+    const activeBtn = this.verifyEmailAndPassword();
 
     return (
       <div>
         <label htmlFor="email">
           Email:
           <input
+            data-testid="email-input"
             type="email"
+            name="email"
             value={ email }
             onChange={ (event) => this.setState({ email: event.target.value }) }
-            required
             placeholder="alguem@alguem.com"
-            data-testid="email-input"
           />
         </label>
         <br />
         <label htmlFor="password">
           Senha:
           <input
+            data-testid="password-input"
             type="password"
+            name="password"
             value={ password }
             onChange={ (event) => this.setState({ password: event.target.value }) }
-            required
             placeholder="123456...¯\_(ツ)_/¯"
-            minLength="6"
-            data-testid="password-input"
           />
         </label>
         <br />
-        <Link to="/carteira ">
+        <Link to="/carteira">
           <button
-            disabled={ !activeButton }
+            disabled={ !activeBtn }
             type="button"
-            onClick={ () => login(email) }
+            onClick={ () => this.handleLogin() }
           >
             Entrar
           </button>
@@ -57,8 +74,12 @@ class Login extends React.Component {
   }
 }
 
+Login.propTypes = {
+  add: PropTypes.func.isRequired,
+};
+
 const mapDispatchToProps = (dispatch) => ({
-  login: (email) => dispatch(login(email)),
+  add: (email) => dispatch(login(email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);

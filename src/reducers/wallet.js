@@ -3,7 +3,7 @@
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  helloWorld: 'começando',
+  helloWorld: 'Wallet Page',
 };
 
 export default function reducer(state = INITIAL_STATE, action) {
