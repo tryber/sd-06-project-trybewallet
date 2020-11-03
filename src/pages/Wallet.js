@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { thunkCurrencyAPI, thunkExpenses } from '../actions';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -56,7 +57,7 @@ class Wallet extends React.Component {
         <form onSubmit={ this.handleSubmit }>
           <fieldset>
             <label htmlFor="value">
-              Valor
+              Value
               <input
                 onChange={ this.handleChange }
                 id="value"
@@ -66,7 +67,7 @@ class Wallet extends React.Component {
               />
             </label>
             <label htmlFor="description">
-              Descrição
+              Description
               <input
                 onChange={ this.handleChange }
                 id="description"
@@ -75,7 +76,7 @@ class Wallet extends React.Component {
               />
             </label>
             <label htmlFor="currency">
-              Moedas
+              Currency
               <select
                 onChange={ this.handleChange }
                 id="currency"
@@ -88,7 +89,7 @@ class Wallet extends React.Component {
               </select>
             </label>
             <label htmlFor="method">
-              Pagamento
+              Payment
               <select
                 onChange={ this.handleChange }
                 id="method"
@@ -101,7 +102,7 @@ class Wallet extends React.Component {
               </select>
             </label>
             <label htmlFor="tag">
-              Categoria
+              Category
               <select
                 onChange={ this.handleChange }
                 id="tag"
@@ -118,6 +119,7 @@ class Wallet extends React.Component {
             <button type="submit">Adicionar despesa</button>
           </fieldset>
         </form>
+        <Table />
       </div>
     );
   }
