@@ -1,17 +1,13 @@
 const initialState = {
   currencies: [],
   expenses: [],
+  coins: {},
   total: 0,
   id: undefined,
 };
 
-function wallet(state = initialState, { type, payload }) {
+export function wallet(state = initialState, { type, payload }) {
   switch (type) {
-  case 'GET_CURRENCY':
-    return {
-      ...state,
-      currencies: payload,
-    };
   case 'ADD_EXPENSE':
     return {
       ...state,
@@ -27,20 +23,29 @@ function wallet(state = initialState, { type, payload }) {
       expenses: [...payload.expenses],
       total: state.total + payload.total,
     };
-  case 'ADD_ID':
-    return {
-      ...state,
-      id: payload,
-    };
   case 'EDIT_EXPENSE':
     return {
       ...state,
       expenses: payload,
       id: undefined,
     };
+  case 'ADD_ID':
+    return {
+      ...state,
+      id: payload,
+    };
   default:
     return state;
   }
 }
 
-export default wallet;
+export function exchange(state = { coins: {} }, { type, payload }) {
+  switch (type) {
+  case 'GET_CURRENCY':
+    return {
+      coins: payload,
+    };
+  default:
+    return state;
+  }
+}

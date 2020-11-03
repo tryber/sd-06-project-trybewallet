@@ -22,7 +22,7 @@ class Table extends Component {
 
   deleteExpense({ target }) {
     const { wallet: { expenses }, sendExpense } = this.props;
-    const targetID = Number(target.parentNode.parentNode.id);
+    const targetID = Number(target.id);
     const newExpenses = expenses.filter((item) => item.id !== targetID);
     const minusValue = -Number(document.querySelector('.converted').innerHTML);
 
@@ -36,15 +36,7 @@ class Table extends Component {
 
   renderTableBody(expense) {
     const { id, description, tag, method, currency, value, exchangeRates } = expense;
-    /* console.log(exchangeRates.length); */
-    const currencyName = Object.keys(exchangeRates).reduce((acc, key) => {
-      if (key === currency) {
-        Object.assign(acc, { ...exchangeRates[key] });
-      }
-      return acc;
-    }, {});
-
-    const { name, ask } = currencyName;
+    const { name, ask } = exchangeRates[currency];
     const convertedValue = parseFloat(value * ask).toFixed(2);
     const exchange = (ask * 1).toFixed(2);
 
@@ -67,6 +59,7 @@ class Table extends Component {
             Editar
           </button>
           <button
+            id={ id }
             type="button"
             data-testid="delete-btn"
             onClick={ this.deleteExpense }
@@ -96,8 +89,7 @@ class Table extends Component {
           </tr>
         </thead>
         <tbody>
-          {expenses[0] === undefined ? null
-            : expenses.map((item) => this.renderTableBody(item))}
+          {expenses.length !== 0 && expenses.map((item) => this.renderTableBody(item))}
         </tbody>
       </table>
     );

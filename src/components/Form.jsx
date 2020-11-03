@@ -20,7 +20,6 @@ class Form extends Component {
         currency: 'USD',
         method: 'Dinheiro',
         tag: 'Alimentação',
-        exchangeRates: [],
       },
     };
   }
@@ -38,31 +37,32 @@ class Form extends Component {
   }
 
   handleForm() {
-    const {
-      id, sendExpense, sendEditedExpense, fetchWallet, currencies, expenses,
+    const { id, sendExpense, sendEditedExpense, fetchWallet, expenses, coins,
     } = this.props;
-    const { expenses: stateExpe, total } = this.state;
-    const exchangeRate = currencies[stateExpe.currency].ask;
-    const sum = total + parseFloat(stateExpe.value * exchangeRate);
-    fetchWallet();
+    const { expenses: stateExpense, total } = this.state;
+    const coinRate = coins[stateExpense.currency].ask;
+    const sum = total + parseFloat(stateExpense.value * coinRate);
 
+    fetchWallet();
     if (id === undefined) {
       this.setState((previous) => ({
         ...previous,
-        expenses: { ...previous.expenses, exchangeRates: { ...currencies } },
+        expenses: {
+          ...previous.expenses,
+          exchangeRates: coins,
+        },
         total: sum,
       }), () => sendExpense(this.state));
     } else {
       /* const sum = total + parseFloat((value - expenses[id].value) * exchangeRate); */
-
-      expenses[id] = { id, ...stateExpe };
+      expenses[id] = { id, exchangeRates: coins, ...stateExpense };
       sendEditedExpense(expenses);
     }
   }
 
   renderOptions() {
-    const { currencies } = this.props;
-    const filteredCurrencies = Object.keys(currencies).filter((key) => key !== 'USDT');
+    const { coins } = this.props;
+    const filteredCurrencies = Object.keys(coins).filter((key) => key !== 'USDT');
 
     return (
       filteredCurrencies.map((item) => (
@@ -171,7 +171,7 @@ class Form extends Component {
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
-  currencies: state.wallet.currencies,
+  coins: state.exchange.coins,
   id: state.wallet.id,
 });
 
@@ -186,7 +186,7 @@ Form.propTypes = {
   sendExpense: PropTypes.func.isRequired,
   sendEditedExpense: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
-  currencies: PropTypes.objectOf().isRequired,
+  coins: PropTypes.objectOf().isRequired,
   expenses: PropTypes.objectOf().isRequired,
 };
 
