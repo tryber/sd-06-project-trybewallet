@@ -1,17 +1,11 @@
 export const UPDATE = 'UPDATE';
 export const SAVE = 'SAVE';
-export const DELETE = 'DELETE';
-export const LOADING = 'LOADING';
+export const CHANGE = 'CHANGE';
 export const SUCCESS = 'SUCCESS';
-export const ERROR = 'ERROR';
 
 export const saveMail = (email) => ({
   type: UPDATE,
   email,
-});
-
-const isFetching = () => ({
-  type: LOADING,
 });
 
 const successFetch = (data) => ({
@@ -24,17 +18,12 @@ export const saveExpense = (expenses) => ({
   expenses,
 });
 
-export const deleteExpense = (expenses) => ({
-  type: DELETE,
+export const changeExpense = (expenses) => ({
+  type: CHANGE,
   expenses,
 });
 
-// const errorFetch = () => ({
-//   type: ERROR,
-// });
-
 export async function fetchAPI(dispatch) {
-  dispatch(isFetching);
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const data = await response.json();
   dispatch(successFetch(data));

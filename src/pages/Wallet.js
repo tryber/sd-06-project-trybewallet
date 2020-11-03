@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { fetchAPI, saveExpense, deleteExpense } from '../actions';
+import { fetchAPI, saveExpense, changeExpense } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -35,7 +34,7 @@ class Wallet extends React.Component {
   }
 
   addExpense() {
-    const { saveState, coinsOptions, search } = this.props;
+    const { saveState, currencies, search } = this.props;
     search();
     const {
       id,
@@ -54,12 +53,12 @@ class Wallet extends React.Component {
       method,
       tag,
       description,
-      exchangeRates: { ...coinsOptions },
+      exchangeRates: { ...currencies },
     };
 
     saveState(newExpenses);
 
-    const total = totalValue + (Number(value) * Number(coinsOptions[currency].ask));
+    const total = totalValue + (Number(value) * Number(currencies[currency].ask));
 
     this.setState({
       id: id + 1,
@@ -85,7 +84,7 @@ class Wallet extends React.Component {
   }
 
   editExpense() {
-    const { expenses, deleteState } = this.props;
+    const { expenses, changeState } = this.props;
     const {
       value,
       currency,
@@ -101,8 +100,8 @@ class Wallet extends React.Component {
     expenses[indexEdit].tag = tag;
     expenses[indexEdit].description = description;
 
-    deleteState(expenses);
-    console.log(expenses);
+    changeState(expenses);
+
     this.setState({
       edit: false,
       value: 0,
@@ -114,20 +113,19 @@ class Wallet extends React.Component {
   }
 
   excludeExpense(index) {
-    const { expenses, deleteState } = this.props;
+    const { expenses, changeState } = this.props;
     expenses.splice(index, 1);
-    deleteState(expenses);
+    changeState(expenses);
     this.setState({ value: 0 });
   }
 
   render() {
-    const { email, isFetching, coinsOptions, expenses } = this.props;
+    const { email, currencies, expenses } = this.props;
     const {
       value, currency, method, tag, description, totalValue, edit } = this.state;
-    const optionsCoins = (coinsOptions)
-      ? Object.keys(coinsOptions).filter((coins) => coins !== 'USDT')
+    const optionsCoins = (currencies)
+      ? Object.keys(currencies).filter((coins) => coins !== 'USDT')
       : ['USD'];
-
     return (
       <div>
         <header>
@@ -289,9 +287,6 @@ class Wallet extends React.Component {
             ))
             : <tbody /> }
         </table>
-        <p>{ isFetching ? 'Loading' : '' }</p>
-
-        <Link to="/">Voltar</Link>
       </div>
     );
   }
@@ -299,25 +294,23 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
-  isFetching: state.wallet.isFetching,
   expenses: state.wallet.expenses,
-  coinsOptions: state.wallet.coinsOptions,
+  currencies: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   search: () => dispatch(fetchAPI),
   saveState: (expenses) => dispatch(saveExpense(expenses)),
-  deleteState: (expenses) => dispatch(deleteExpense(expenses)),
+  changeState: (expenses) => dispatch(changeExpense(expenses)),
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  isFetching: PropTypes.bool.isRequired,
   expenses: PropTypes.arrayOf(Object).isRequired,
-  coinsOptions: PropTypes.objectOf(String).isRequired,
+  currencies: PropTypes.arrayOf(Object).isRequired,
   search: PropTypes.func.isRequired,
   saveState: PropTypes.func.isRequired,
-  deleteState: PropTypes.func.isRequired,
+  changeState: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
