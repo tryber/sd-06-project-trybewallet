@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './FormWallet.css';
 
-import { addWallet, editWallet, fetchCurrencies } from '../actions';
+import { addWalletThunk, editWalletThunk, fetchCurrencies } from '../actions';
 
 class FormWallet extends React.Component {
   constructor() {
@@ -16,7 +16,7 @@ class FormWallet extends React.Component {
     this.showInputPayment = this.showInputPayment.bind(this);
     this.showInputTag = this.showInputTag.bind(this);
     this.clickAddWallet = this.clickAddWallet.bind(this);
-    this.updateInputs = this.updateInputs.bind(this);
+    this.showEditingValuesInputs = this.showEditingValuesInputs.bind(this);
 
     this.state = {
       currenciesKeys: [],
@@ -27,7 +27,6 @@ class FormWallet extends React.Component {
         currency: '',
         method: '',
         tag: '',
-        exchangeRates: {},
       },
     };
   }
@@ -37,30 +36,23 @@ class FormWallet extends React.Component {
   }
 
   async callFetchCurrencies() {
-    const { expense } = this.state; // Local state
     const { getCurrencies } = this.props;
     const resultApi = await getCurrencies(); // props that Call Api
     const myCurrencies = Object.keys(resultApi.currencies);
     const myCurrenciesWithoutUSDT = myCurrencies.filter((item) => item !== 'USDT');
-    this.setState(
-      {
-        currenciesKeys: myCurrenciesWithoutUSDT,
-        expense: { ...expense, exchangeRates: resultApi.currencies },
-      },
-    );
+    this.setState({ currenciesKeys: myCurrenciesWithoutUSDT });
   }
 
   async clickAddWallet() {
     const { expense } = this.state;
-    const { newWallet, idEditing, updateWallet } = this.props;
-    await this.callFetchCurrencies();
+    const { newWallet, idEditing, updateWallet, expenses } = this.props;
 
-    if (idEditing >= 0) {
-      await updateWallet(idEditing, expense);
-    } else {
+    if (idEditing < 0) {
       await newWallet(expense);
+    } else {
+      await updateWallet(expenses, expense, idEditing);
     }
-    await this.setState(
+    this.setState(
       {
         inputEditingOK: false,
         expense: { ...expense,
@@ -79,7 +71,7 @@ class FormWallet extends React.Component {
     this.setState({ expense: { ...expense, [name]: value } });
   }
 
-  updateInputs() {
+  showEditingValuesInputs() {
     const { expense } = this.state;
     const { expenses, idEditing } = this.props;
     const { value, description, currency, method, tag } = expenses[idEditing];
@@ -187,8 +179,7 @@ class FormWallet extends React.Component {
   render() {
     const { isFetching, idEditing } = this.props;
     const { inputEditingOK } = this.state;
-    console.log(idEditing);
-    if (idEditing >= 0 && !inputEditingOK) this.updateInputs();
+    if (idEditing >= 0 && !inputEditingOK) this.showEditingValuesInputs();
     return (
       isFetching ? <p>Loading...</p> : (
         <div
@@ -217,8 +208,9 @@ class FormWallet extends React.Component {
 
 const mapDispatchToProps = (dispatch) => (
   {
-    newWallet: (expense) => dispatch(addWallet(expense)),
-    updateWallet: (id, expense) => dispatch(editWallet(id, expense)),
+    newWallet: (expense) => dispatch(addWalletThunk(expense)),
+    updateWallet:
+      (expenses, expense, id) => dispatch(editWalletThunk(expenses, expense, id)),
     getCurrencies: () => dispatch(fetchCurrencies()),
   }
 );

@@ -39,6 +39,12 @@
   color: white;
   background-color: rgb(0, 117, 117);
 }
+
+button:disabled, button[disabled]{
+  background-color: #cccccc;
+  cursor:not-allowed !important;
+}
+
 .input-form-login {
   margin: 1px 5px;
   font-size: 16px;

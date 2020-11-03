@@ -32,10 +32,9 @@ export const isEditingWallet = (id) => ({
   id,
 });
 
-export const editWallet = (id, expense) => ({
+export const editWallet = (expenses) => ({
   type: EDIT_EXPENSE,
-  id,
-  expense,
+  expenses,
 });
 
 const requestCurrencies = () => ({
@@ -47,8 +46,28 @@ const receiveCurrencies = (currencies) => ({
   currencies,
 });
 
+export function addWalletThunk(expense) {
+  return async (dispatch) => {
+    getCurrenciesApi()
+      .then((exchangeRates) => dispatch(
+        addWallet({ ...expense, exchangeRates }),
+      ));
+  };
+}
+
+export function editWalletThunk(expenses, expense, id) {
+  return async (dispatch) => {
+    getCurrenciesApi()
+      .then((exchangeRates) => {
+        const myExpenses = [...expenses];
+        myExpenses[id] = { ...expense, id, exchangeRates }; // Edit expense
+        dispatch(editWallet([...myExpenses]));
+      });
+  };
+}
+
 export function fetchCurrencies() {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(requestCurrencies());
     return getCurrenciesApi()
       .then((currencies) => dispatch(receiveCurrencies(currencies)));

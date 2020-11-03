@@ -12,7 +12,6 @@ const DEFAULT_STATE = {
   idEditing: -1,
   isFetching: false,
   nextId: 0,
-  totalExpense: 0,
   currencies: [],
   expenses: [],
 };
@@ -33,6 +32,7 @@ function wallet(state = DEFAULT_STATE, action) {
   case ADD_EXPENSE:
     return {
       ...state,
+      isFetching: false,
       expenses: [...state.expenses,
         {
           ...action.expense,
@@ -40,9 +40,6 @@ function wallet(state = DEFAULT_STATE, action) {
         },
       ],
       nextId: state.nextId + 1,
-      totalExpense: state.totalExpense
-        + parseFloat(action.expense.value
-          * action.expense.exchangeRates[action.expense.currency].ask),
     };
   case IS_EDITING_EXPENSE: {
     return {
@@ -51,30 +48,16 @@ function wallet(state = DEFAULT_STATE, action) {
     };
   }
   case EDIT_EXPENSE: {
-    const myExpenses = [...state.expenses];
-    myExpenses[action.id] = { ...action.expense, id: action.id };
-    const total = myExpenses.reduce((acc, item) => {
-      const totalItem = parseFloat(item.value * item.exchangeRates[item.currency].ask);
-      return acc + totalItem;
-    }, 0);
     return {
       ...state,
       idEditing: -1,
-      expenses: [...myExpenses],
-      totalExpense: total,
+      expenses: [...action.expenses],
     };
   }
   case DELETE_EXPENSE:
-    const myExpenses = [...state.expenses];
-    const myExpensesDelete = myExpenses.filter((item) => item.id !== action.id);
-    const totalDelete = myExpensesDelete.reduce((acc, item) => {
-      const totalItem = parseFloat(item.value * item.exchangeRates[item.currency].ask);
-      return acc + totalItem;
-    }, 0);
     return {
       ...state,
-      expenses: [...myExpensesDelete],
-      totalExpense: totalDelete,
+      expenses: state.expenses.filter((item) => item.id !== action.id),
     };
   default:
     return state;
