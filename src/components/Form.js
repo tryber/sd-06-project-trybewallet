@@ -11,9 +11,9 @@ class Form extends React.Component {
     this.state = {
       value: '0',
       description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
     this.insertExpenses = this.insertExpenses.bind(this);
