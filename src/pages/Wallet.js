@@ -12,7 +12,7 @@ class Wallet extends React.Component {
   render() {
     const {
       user: { email },
-      wallet: { currencyValues, currencyValuesLoading },
+      wallet: { currencies },
     } = this.props;
     const methodOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -47,15 +47,14 @@ class Wallet extends React.Component {
               id="currency-input-id"
             >
               {
-                currencyValuesLoading ? <option> - </option>
-                  : currencyValues.map((currency) => (
-                    <option
-                      data-testid={ currency }
-                      key={ currency }
-                    >
-                      { currency }
-                    </option>
-                  ))
+                currencies.map((currency) => (
+                  <option
+                    data-testid={ currency }
+                    key={ currency }
+                  >
+                    { currency }
+                  </option>
+                ))
               }
             </select>
           </label>
@@ -130,8 +129,7 @@ Wallet.propTypes = {
     password: PropTypes.string.isRequired,
   }).isRequired,
   wallet: PropTypes.shape({
-    currencyValues: PropTypes.arrayOf(PropTypes.string).isRequired,
-    currencyValuesLoading: PropTypes.bool.isRequired,
+    currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
   fetchCurrencyValues: PropTypes.func.isRequired,
 };

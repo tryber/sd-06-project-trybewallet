@@ -1,18 +1,16 @@
-import { GET_CURRENCY_VALUES_SUCCESS, LOADING_CURRENCIES } from '../actions';
+import { GET_CURRENCY_VALUES_SUCCESS } from '../actions';
 
-const INITIAL_STATE = { currencyValues: [], currencies: [], currencyValuesLoading: true };
+const INITIAL_STATE = { currencyInfo: [], currencies: [] };
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case LOADING_CURRENCIES:
-    return { ...state, currencyValuesLoading: true };
   case GET_CURRENCY_VALUES_SUCCESS:
     return {
       ...state,
-      currencyValues: Object.keys(action.currencies)
+      currencies: Object.keys(action.currencies)
         .filter((currency) => currency !== 'USDT'),
-      currencies: Object.values(action.currencies),
-      currencyValuesLoading: false };
+      currencyInfo: Object.values(action.currencies),
+    };
   default:
     return state;
   }
