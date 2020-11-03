@@ -16,10 +16,21 @@ class Table extends React.Component {
         </thead>
         <thead>
           { expenses.map((expense) => {
+            const { currency, exchangeRates } = expense;
+            const valorDespesa = expense.value;
+            const nomeMoeda = exchangeRates[currency].name;
+            const nomeMoedaConversao = 'Real';
+            const cambio = parseFloat(exchangeRates[currency].ask);
             return (
               <tr key={ expense.id }>
                 <td>{ expense.description }</td>
                 <td>{ expense.tag }</td>
+                <td>{ expense.method }</td>
+                <td>{ valorDespesa }</td>
+                <td>{ nomeMoeda }</td>
+                <td>{ cambio.toFixed(2) }</td>
+                <td>{ (valorDespesa * cambio).toFixed(2) }</td>
+                <td>{ nomeMoedaConversao }</td>
               </tr>
             );
           })}
