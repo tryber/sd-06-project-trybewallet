@@ -14,7 +14,6 @@ class Login extends React.Component {
 
   render() {
     const { email, password } = this.state;
-    const { login } = this.props;
     const magic = 6;
     const activeButton = email.length > 0 && password.length > magic;
 
