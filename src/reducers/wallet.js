@@ -16,4 +16,4 @@ export default function wallet(state = INITIAL_STATE, action) {
   default:
     return state;
   }
-};
+}
