@@ -28,7 +28,6 @@ export const removeItem = (id) => ({
 export function fetchCurrenciesAPI() {
   return async (dispatch) => {
     const response = await fetchAPI();
-    //  dispatch(addExpenses(response));
     const result = Object.keys(response).filter((e) => e !== 'USDT');
     dispatch(onFetchSuccess(result));
   };
@@ -37,6 +36,8 @@ export function fetchCurrenciesAPI() {
 export const fetchAddExpenses = (expense) => async (dispatch, getState) => {
   const { wallet: { expenses } } = getState();
   const exchangeRates = await fetchAPI();
-  const addExpense = { id: expenses.length, ...expense, exchangeRates };
+
+  const teste = expenses.length ? expenses[expenses.length - 1].id + 1 : 0;
+  const addExpense = { id: teste, ...expense, exchangeRates };
   dispatch(addExpenses(addExpense));
 };
