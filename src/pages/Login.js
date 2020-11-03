@@ -38,8 +38,9 @@ class Login extends React.Component {
   handleLogin() {
     const { email, pass } = this.state;
     const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/;
+    const min = 5;
 
-    if (pass.length > 5 && regex.test(email)) {
+    if (pass.length > min && regex.test(email)) {
       this.setState({
         disable: false,
       });
@@ -47,7 +48,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { disable } = this.state;
+    const { email, pass, disable } = this.state;
     return (
       <div>
         <div className="text-center">
@@ -59,7 +60,7 @@ class Login extends React.Component {
             <div className="form-group">
               <input
                 type="email"
-                value={ this.state.email }
+                value={ email }
                 placeholder="email"
                 data-testid="email-input"
                 name="email"
@@ -71,7 +72,7 @@ class Login extends React.Component {
             <div className="form-group">
               <input
                 type="password"
-                value={ this.state.pass }
+                value={ pass }
                 placeholder="senha"
                 data-testid="password-input"
                 name="pass"
