@@ -1,8 +1,9 @@
-import { IS_SUCCESS, ADD_EXPENSE, DEL_ITEM } from '../actions';
+import { IS_SUCCESS, ADD_EXPENSE, DEL_ITEM, EDIT_ITEM } from '../actions';
 
 const initialState = {
   currencies: [],
   expenses: [],
+  editExpense: false,
 };
 
 export default function (state = initialState, action) {
@@ -21,6 +22,11 @@ export default function (state = initialState, action) {
       ...state,
       expenses: state.expenses.filter((item, index) => index !== action.id),
     };
+  case EDIT_ITEM:
+    return {
+      ...state,
+      editExpense: [...state.expenses.filter((item, index) => index === action.id)],
+    }
   default:
     return state;
   }

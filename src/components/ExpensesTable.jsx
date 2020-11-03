@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { deleteListItem } from '../actions';
+import { deleteListItem, editiListItem } from '../actions';
 
 class ExpensesTable extends React.Component {
   constructor() {
@@ -11,7 +11,7 @@ class ExpensesTable extends React.Component {
   }
 
   handleListItems() {
-    const { expensesArr, deleteItem } = this.props;
+    const { expensesArr, deleteItem, editItem } = this.props;
     if (expensesArr.length > 0) {
       const askRate = expensesArr.map((value) => parseFloat(value.exchangeRates[value.currency].ask));
       const currency = expensesArr.map((value) => value.exchangeRates[value.currency].name);
@@ -51,6 +51,8 @@ class ExpensesTable extends React.Component {
             <td key={`td${index}`}>
               <button 
                 key={`edit${index}`}
+                onClick={ ({ target }) => editItem(parseInt(target.id)) }
+                id={index}
               >
                 {'EDIT'}
               </button>
@@ -93,6 +95,7 @@ class ExpensesTable extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   deleteItem: (id) => dispatch(deleteListItem(id)),
+  editItem: (id) => dispatch(editiListItem(id)),
 });
 
 const mapStateToProps = (state) => ({

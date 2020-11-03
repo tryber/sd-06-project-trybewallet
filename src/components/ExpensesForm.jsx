@@ -34,20 +34,26 @@ class ExpensesForm extends React.Component {
     });
   }
 
-  // componentDidUpdate(prevProps) {
-  //   const { currency } = this.props;
-  //   if (prevProps.currency.length !== currency.length) {
-  //     this.setState({
-  //       teste: currency,
-  //     })
-  //   }
-  // } -----> Desta forma é possível jogar as props vindas do redux para o state
+
+  componentDidUpdate(prevProps) {
+    const { editItem } = this.props;
+    if (prevProps.editItem.length !== editItem.length) {
+      this.setState({
+        id: editItem[0].id,
+        value: editItem[0].value,
+        description: editItem[0].description,
+        currency: editItem[0].currency,
+        method: editItem[0].method,
+        tag: editItem[0].tag,
+      })
+    }
+  } // -----> Desta forma é possível jogar as props vindas do redux para o state
+
 
   render() {
 
-    const { currencyProp, fetchRates } = this.props;
+    const { currencyProp, fetchRates, editItem } = this.props;
     const { value, description, currency, method, tag, id } = this.state
-
     const localExpenseArray = { id, value, description, currency, method, tag };
 
     return(
@@ -123,7 +129,6 @@ class ExpensesForm extends React.Component {
           >
             Adicionar despesa
           </button>
-
         </fieldset>
       </form>
     );
@@ -131,7 +136,8 @@ class ExpensesForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  currencyProp: state.wallet.currencies.filter((coin) => coin !== 'USDT')
+  currencyProp: state.wallet.currencies.filter((coin) => coin !== 'USDT'),
+  editItem: state.wallet.editExpense,
 });
 
 const mapDispatchToProps = (dispatch) => ({

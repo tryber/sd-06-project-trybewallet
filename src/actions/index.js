@@ -2,6 +2,7 @@ export const LOGIN_INPUT = 'LOGIN_INPUT';
 export const IS_SUCCESS = 'IS_SUCCESS';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const DEL_ITEM = 'DEL_ITEM';
+export const EDIT_ITEM = 'EDIT_ITEM';
 // export const RATES_SUCCESS = 'RATES_SUCCESS';
 // export const RATES_REQUEST = 'RATES_REQUEST';
 
@@ -47,3 +48,8 @@ export const deleteListItem = (id) => ({
   type: DEL_ITEM,
   id,
 });
+
+export const editiListItem = (id) => ({
+  type: EDIT_ITEM,
+  id,
+})
