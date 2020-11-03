@@ -21,25 +21,25 @@ class Table extends React.Component {
           </tr>
         </thead>
         <tbody>
-        {expenses.map((expense) => {
-          const valorMoedaSelecionada = Number(expense.exchangeRates[expense.currency]
-            .ask);
-          const nomeMoedaSelecionada = expense.exchangeRates[expense.currency]
-            .name;
-          const valorMultiplicado = valorMoedaSelecionada * expense.value;
-          return (
-            <tr>
-              <td>{ expense.description }</td>
-              <td>{ expense.tag }</td>
-              <td>{ expense.method }</td>
-              <td>{ expense.value }</td>
-              <td>{ valorMoedaSelecionada.toFixed(2) }</td>
-              <td>{ nomeMoedaSelecionada }</td>
-              <td>{ valorMultiplicado.toFixed(2) }</td>
-              <td>Real</td>
-            </tr>
-          );
-        })}
+          {expenses.map((expense, index) => {
+            const valorMoedaSelecionada = Number(expense.exchangeRates[expense.currency]
+              .ask);
+            const nomeMoedaSelecionada = expense.exchangeRates[expense.currency]
+              .name;
+            const valorMultiplicado = valorMoedaSelecionada * expense.value;
+            return (
+              <tr key= { index }>
+                <td>{ expense.description }</td>
+                <td>{ expense.tag }</td>
+                <td>{ expense.method }</td>
+                <td>{ expense.value }</td>
+                <td>{ valorMoedaSelecionada.toFixed(2) }</td>
+                <td>{ nomeMoedaSelecionada }</td>
+                <td>{ valorMultiplicado.toFixed(2) }</td>
+                <td>Real</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     );
