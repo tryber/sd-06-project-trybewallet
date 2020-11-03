@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { removeExpense, toogleEdit } from '../actions';
-import { AddExpense } from '.';
+import AddExpense from './AddExpense';
 
 import { response as mockResponse } from '../tests/mockData';
 

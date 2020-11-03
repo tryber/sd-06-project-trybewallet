@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import AddExpense from '../components/AddExpense';
+import ExpenseTable from '../components/ExpenseTable';
 import { storeCurrencies } from '../actions';
 import { response as mockResponse } from '../tests/mockData';
 import fetchApi from '../services/fetchApi';
 
 import '../css/Wallet.css';
 import trybeLogo from '../imgs/trybe-logo.png';
-import ExpenseTable from '../components/ExpenseTable';
 
 window.fetch = async () => ({ json: () => Promise.resolve(mockResponse) });
 

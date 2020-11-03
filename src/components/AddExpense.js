@@ -47,10 +47,11 @@ class AddExpense extends React.Component {
 
   async handleAddExpense(event) {
     event.preventDefault();
+
     const { expenses, dispatchExpense } = this.props;
-    console.log('addExpense', expenses.length);
     const { value, currency, method, tag, description } = this.state;
     const validForm = (value > 0 && description !== '');
+
     if (validForm) {
       const currentCurrencies = await fetchApi();
       const currencies = Object.keys(currentCurrencies);
@@ -58,7 +59,6 @@ class AddExpense extends React.Component {
         const currentObj = { ...obj,
           [current]: { ...currentCurrencies[current] },
         };
-
         return currentObj;
       }, {});
 
