@@ -19,7 +19,7 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: state.expenses.filter((expense) => expense.id !== action.expense),
-    }
+    };
   default:
     return state;
   }
