@@ -1,24 +1,36 @@
-import currencyAPI from '../services/currencyAPI';
+import fetchAPI from '../services/fetchAPI';
 
 export const EMAIL_INPUT = 'EMAIL_INPUT';
-
-export const currencySuccess = (value) => ({
-  type: 'FETCH_SUCCESS',
-  value,
-});
-
-export const currencyError = (error) => ({
-  type: 'FETCH_FAIL',
-  error,
-});
+export const FETCH_SUCCESS = 'FETCH_SUCCESS';
+export const ADD_EXPENSES = 'ADD_EXPENSES';
 
 export const emailSaveToState = (email) => ({
   type: EMAIL_INPUT,
   email,
 });
 
-export const thunkCurrency = (name) => (dispatch) => {
-  currencyAPI(name)
-    .then((convertedValue) => dispatch(currencySuccess(convertedValue.ask)))
-    .catch((error) => dispatch(currencyError(error)));
+export const onFetchSuccess = (currencies) => ({
+  type: FETCH_SUCCESS,
+  currencies,
+});
+
+export const addExpenses = (expenses) => ({
+  type: ADD_EXPENSES,
+  expenses,
+});
+
+export function fetchCurrenciesAPI() {
+  return async (dispatch) => {
+    const response = await fetchAPI();
+    //  dispatch(addExpenses(response));
+    const result = Object.keys(response).filter((e) => e !== 'USDT');
+    dispatch(onFetchSuccess(result));
+  };
+}
+
+export const fetchAddExpenses = (expense) => async (dispatch, getState) => {
+  const { wallet: { expenses } } = getState();
+  const exchangeRates = await fetchAPI();
+  const addExpense = { id: expenses.length, ...expense, exchangeRates };
+  dispatch(addExpenses(addExpense));
 };

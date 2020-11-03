@@ -41,7 +41,6 @@ class Login extends React.Component {
     if (emailValidation && passwordValidation) {
       callbackEmail(email);
       this.updateState('isOk', true);
-      // return (<Link to="/carteira" />).click();
     }
   }
 

@@ -1,20 +1,22 @@
+import { FETCH_SUCCESS, ADD_EXPENSES } from '../actions';
+
 const INITIAL_STATE = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
 };
 
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'WALLET_INPUT':
+  case FETCH_SUCCESS:
     return {
       ...state,
-      currencies: state.wallet.currencies.concat(action.currencies),
-      expenses: state.wallet.expenses.concat(action.expenses),
+      currencies: action.currencies,
     };
-  case 'RESET':
-    return INITIAL_STATE;
+  case ADD_EXPENSES:
+    return {
+      ...state,
+      expenses: [...state.expenses, action.expenses],
+    };
   default:
     return state;
   }
