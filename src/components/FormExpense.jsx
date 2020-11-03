@@ -1,15 +1,44 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getApiThunk } from '../actions';
+import { getApiThunk, addExpenseThunk } from '../actions';
 
 class FormExpense extends Component {
-  componentDidMount() {
-    const { getResponse } = this.props;
-    getResponse();
+  constructor() {
+    super();
+
+    this.state = {
+      id: '',
+      value: '',
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
+    }
+
+    this.handleOnchange = this.handleOnchange.bind(this);
+    // this.handleOnClick = this.handleOnClick.bind(this);
   }
+
+  componentDidMount() {
+    const { expenseValue, getResponse } = this.props;
+    getResponse();
+    this.setState({ id: expenseValue.length });
+  }
+
+  handleOnchange({ target }) {
+    const { name } = target;
+    this.setState({ [name]: target.value });
+  }
+
+  // handleOnClick(event) {
+  //   event.PreventDefault();
+  //   const { getUserExpenses } = this.props;
+  //   getUserExpenses(this.state);
+    
+  // }
+  
   render() {
-    const { currenciesValues } = this.props;
-    console.log(currenciesValues)
+    const { currenciesValues, getUserExpenses } = this.props;
     return (
       <form>
         <label htmlFor="expenseNumber">
@@ -17,8 +46,10 @@ class FormExpense extends Component {
           <input
             type="number"
             data-testid="value-input"
-            name="expenseValue"
+            name="value"
+            value={ this.state.value }
             id="expenseNumber"
+            onChange={this.handleOnchange}
           />
         </label>
         <label htmlFor="userDescription">
@@ -26,28 +57,32 @@ class FormExpense extends Component {
           <textarea
             data-testid="description-input"
             name="description"
+            value={ this.state.description }
             id="userDescription"
+            onChange={this.handleOnchange}
           />
         </label>
         <label htmlFor="selectedCoin">
           Moeda
           <select
             data-testid="currency-input"
-            name="description"
+            value={ this.state.currency }
+            name="currency"
             id="selectedCoin"
+            onChange={this.handleOnchange}
           >
-            {
-              currenciesValues.map(eachCoin => 
-                <option data-testid={eachCoin.code}>{eachCoin.code}</option>)
-            }
+            {currenciesValues.map(eachCoin =>
+            <option key={ eachCoin.name } data-testid={ eachCoin.code }>{ eachCoin.code }</option>)}
           </select>
         </label>
         <label htmlFor="payment">
         Método de pagamento
           <select
             data-testid="method-input"
-            name="paymentMethod"
+            name="method"
+            value={ this.state.method }
             id="payment"
+            onChange={this.handleOnchange}
           >
               <option>Dinheiro</option>
               <option>Cartão de crédito</option>
@@ -58,8 +93,10 @@ class FormExpense extends Component {
           Tag
           <select
             data-testid="tag-input"
-            name="tagName"
+            name="tag"
+            value={ this.state.tag }
             id="category"
+            onChange={this.handleOnchange}
           >
             <option>Alimentação</option>
             <option>Lazer</option>
@@ -68,18 +105,22 @@ class FormExpense extends Component {
             <option>Saúde</option>
           </select>
         </label>
-        <button>Adicionar despesa</button>
+        <button onClick={(event) =>{ event.preventDefault();
+          getUserExpenses(this.state) }}>Adicionar despesa</button>
       </form>     
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getResponse: () => dispatch(getApiThunk())
+  getResponse: () => dispatch(getApiThunk()),
+  getUserExpenses: (payload) => dispatch(addExpenseThunk(payload))
 });
 
 const mapStateToProps = (state) => ({
   currenciesValues: state.wallet.currencies,
+  responseObj: state.wallet.response,
+  expenseValue: state.wallet.expenses,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormExpense);

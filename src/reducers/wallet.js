@@ -1,21 +1,28 @@
-import { REQUEST_API, RECEIVE_RESPONSE } from '../actions';
+import { REQUEST_API, RECEIVE_RESPONSE, ADD_USER_EXPENSES } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   isfetching: false,
 };
+
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
   case REQUEST_API:
     return {
       ...state,
-      isfatching: true,
+      isfetching: true,
     };
   case RECEIVE_RESPONSE:
     return {
       ...state,
-      currencies: [...action.currencies],
+      currencies: action.currencies,
+      response: { ...action.response },
+    };
+  case ADD_USER_EXPENSES:
+    return {
+      ...state,
+      expenses: state.expenses.concat(action.expenses),
     };
   default:
     return state;
