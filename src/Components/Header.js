@@ -21,18 +21,20 @@ const Header = ({ email, total }) => (
 );
 
 const mapStateToProps = (state) => {
-  const total = state.wallet.expenses.map((element) => {
-    return element.exchangeRates[element.currency].ask * element.value;
-  }).reduce((acc, el) => { return acc + el}, 0)
-  return { email: state.user.email, total: total.toFixed(2)}
+  const total = state.wallet.expenses.map((element) => (
+    element.exchangeRates[element.currency].ask * element.value
+  )).reduce((acc, el) => acc + el, 0);
+  return { email: state.user.email, total: total.toFixed(2) };
 };
 
 Header.propTypes = {
   email: PropTypes.string,
+  total: PropTypes.number,
 };
 
 Header.defaultProps = {
   email: 'strange@strange.com',
+  total: 0,
 };
 
 export default connect(mapStateToProps)(Header);

@@ -30,7 +30,7 @@ class Wallet extends React.Component {
     return (
       <div>
         <Header />
-        <InputsSection currencies={currency} tags={tags} />
+        <InputsSection currencies={ currency } tags={ tags } />
         <Table />
       </div>
     );

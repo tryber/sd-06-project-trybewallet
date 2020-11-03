@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { LoginUser } from '../actions';
-import '../styles/Login/style.css'
+import '../styles/Login/style.css';
 
 class Login extends React.Component {
   constructor() {
@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   dispatchData: PropTypes.func,
-  history: PropTypes.object,
+  history: PropTypes.string,
 };
 
 Login.defaultProps = {

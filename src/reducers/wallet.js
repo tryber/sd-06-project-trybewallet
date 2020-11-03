@@ -3,8 +3,7 @@ const { EXPENSES_DATA } = require('../actions');
 const GET_INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  total: 0
-  
+  total: 0,
 };
 
 const user = (state = GET_INITIAL_STATE, action) => {
