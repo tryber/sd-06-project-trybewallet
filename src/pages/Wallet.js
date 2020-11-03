@@ -73,7 +73,7 @@ class Wallet extends React.Component {
     const { email, currencies } = this.props;
     const { expense } = this.state;
     const { value, description, method, currency, tag } = expense;
-    const { addExpenseThunk } = this.props;
+    const { addExpense } = this.props;
     return (
       <div>
         <header className="header-wallet">
@@ -159,7 +159,7 @@ class Wallet extends React.Component {
           <button
             className="wallet-button"
             type="button"
-            onClick={ () => addExpenseThunk(expense) }
+            onClick={ () => addExpense(expense) }
           >
             Adicionar despesa
           </button>
@@ -199,7 +199,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(fetchCurrencies()),
-  addExpenseThunk: (expense) => dispatch(addExpenseThunk(expense)),
+  addExpense: (expense) => dispatch(addExpenseThunk(expense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
@@ -209,7 +209,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  addExpenseThunk: PropTypes.func.isRequired,
+  addExpense: PropTypes.func.isRequired,
   getCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
   expenses: PropTypes.arrayOf(Object).isRequired,
