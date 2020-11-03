@@ -1,6 +1,7 @@
-import { createStore, applyMiddleware, compose, bindActionCreators } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { login, addexpenses } from '../actions/index';
+// import { bindActionCreators } from 'redux';
+// import { login, addexpenses } from '../actions/index';
 import rootReducer from '../reducers';
 
 const store = createStore(
@@ -13,12 +14,13 @@ const store = createStore(
   ),
 );
 
-export const actionCreators = bindActionCreators(
-  {
-    login,
-    addexpenses,
-  },
-  store.dispatch,
-);
+// COMO USAR O ACTION CREATORS???
+// export const actionCreators = bindActionCreators(
+//   {
+//     login,
+//     addexpenses,
+//   },
+//   store.dispatch,
+// );
 
 export default store;

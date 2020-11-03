@@ -1,4 +1,4 @@
-import { ADD_EXPENSES } from '../actions';
+import { ADD_EXPENSES, GET_CURRENCIES } from '../actions';
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INITIAL_STATE = {
   currencies: [],
@@ -14,6 +14,12 @@ export default function (state = INITIAL_STATE, action) {
         ...state.expenses,
         action.expenses,
       ],
+    };
+  case GET_CURRENCIES:
+    return {
+      ...state,
+      currencies:
+        action.currencies,
     };
   default:
     return state;

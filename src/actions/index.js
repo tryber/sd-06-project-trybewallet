@@ -1,3 +1,4 @@
+import fetchAPI from '../services/fetchAPICurrencies';
 // Coloque aqui suas actions
 export const LOGIN = 'LOGIN';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
@@ -18,11 +19,11 @@ export const getCurrencies = (currencies) => ({
   currencies,
 });
 
-export function requestAPI() {
+export function fetchCurrencies() {
   return async (dispatch) => {
-    const fetchAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const result = await fetchAPI.json();
-
-    dispatch(requestAPI(result));
+    const response = await fetchAPI();
+    const currencies = Object.keys(response);
+    const currenciesWithoutUSDT = currencies.filter((coin) => coin !== 'USDT');
+    dispatch(getCurrencies(currenciesWithoutUSDT));
   };
 }
