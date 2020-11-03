@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import './Header.css';
 
 class Header extends Component {
   constructor() {
@@ -22,15 +23,16 @@ class Header extends Component {
     return (
       <div className="header-container">
         <header>
-          <p data-testid="email-field">{user}</p>
-          <p data-testid="total-field">
+          <span className="header-child" data-testid="email-field">{user}</span>
+          <span className="header-child" data-testid="total-field">
+            Total despesas R$
             { this.exchangeCurrency().length === 0
               ? 0.00
               : Math.round(this.exchangeCurrency().reduce((sum, item) => (
                 Number(sum) + Number(item)
               ), 0) * 100) / 100}
-          </p>
-          <p data-testid="header-currency-field">BRL</p>
+          </span>
+          <span className="header-child" data-testid="header-currency-field">BRL</span>
         </header>
       </div>
     );
