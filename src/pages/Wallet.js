@@ -1,17 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import ExpenseForm from '../components/ExpenseForm';
+import Header from '../components/Header';
 
 class Wallet extends React.Component {
   render() {
-    const { email } = this.props;
+    const { totalValue } = this.props;
     return (
       <div>
-        <header>
-          <h4 data-testid="email-field">{`Email: ${email}`}</h4>
-          <h5 data-testid="total-field">Despesa total: 0</h5>
-          <h5 data-testid="header-currency-field">Câmbio: BRL</h5>
-        </header>
+        <Header totalValue={ totalValue } />
+        <ExpenseForm />
       </div>
     );
   }
@@ -24,5 +23,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(Wallet);
 
 Wallet.propTypes = {
-  email: propTypes.string.isRequired,
+  totalValue: propTypes.number.isRequired,
 };

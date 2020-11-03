@@ -1,6 +1,6 @@
 import { LOGIN } from '../actions';
 
-const initialState = {
+export const initialState = {
   user: {
     email: '',
   },
