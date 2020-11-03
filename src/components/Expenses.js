@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { currencyThunk, addThunk } from '../actions';
+import './Expenses.css';
 
 class Expenses extends Component {
   constructor(props) {
@@ -51,6 +52,7 @@ class Expenses extends Component {
           <label htmlFor="expense-value">
             Valor:
             <input
+              className="expense-input"
               name="value"
               id="expense-value"
               value={ value }
@@ -61,6 +63,7 @@ class Expenses extends Component {
           <label htmlFor="expense-description">
             Descrição despesa:
             <input
+              className="expense-input"
               name="description"
               id="expense-description"
               value={ description }
@@ -71,6 +74,7 @@ class Expenses extends Component {
           <label htmlFor="currency">
             Moeda:
             <select
+              className="currency-select"
               name="currency"
               id="currency"
               value={ currency }
@@ -91,6 +95,7 @@ class Expenses extends Component {
           <label htmlFor="method">
             Forma de pagamento:
             <select
+              className="method-select"
               name="method"
               id="method"
               value={ method }
@@ -105,6 +110,7 @@ class Expenses extends Component {
           <label htmlFor="tag">
             Tag:
             <select
+              className="tag-select"
               name="tag"
               id="tag"
               value={ tag }
@@ -119,6 +125,7 @@ class Expenses extends Component {
             </select>
           </label>
           <button
+            className="btn-expense"
             type="submit"
           >
             Adicionar despesa
