@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCurrenciesAPI, fetchAddExpenses, removeItem } from '../actions';
+import Table from '../components/Table';
+import { fetchCurrenciesAPI, fetchAddExpenses } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -17,17 +18,11 @@ class Wallet extends React.Component {
       },
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleRemoval = this.handleRemoval.bind(this);
   }
 
   componentDidMount() {
     const { fetchCurrencies } = this.props;
     fetchCurrencies();
-  }
-
-  handleRemoval(id) {
-    const { deleteExpense } = this.props;
-    deleteExpense(id);
   }
 
   handleChange({ target: { name, value } }) {
@@ -52,10 +47,6 @@ class Wallet extends React.Component {
 
     const methodArray = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagArray = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-    const fieldArray = ['Descrição', 'Tag', 'Método de pagamento', 'Valor',
-      'Moeda', 'Câmbio utilizado', 'Valor convertido',
-      'Moeda de conversão', 'Editar/Excluir'];
-
     return (
       <div>
         <header>
@@ -143,48 +134,7 @@ class Wallet extends React.Component {
               </div>
             </fieldset>
           </form>
-          <table id="tbl" border="1">
-            <thead>
-              <tr>
-                {fieldArray.map((header, index) => <td key={ index }>{ header }</td>)}
-              </tr>
-            </thead>
-            <tbody>
-              {expenses.map((element) => {
-                const exchangeValue = Number(element.exchangeRates[element.currency].ask);
-                const currencyName = element.exchangeRates[element.currency].name;
-                const convertedValue = exchangeValue * element.value;
-                return (
-                  <tr key={ element.id }>
-                    <td>{ element.description }</td>
-                    <td>{ element.tag }</td>
-                    <td>{ element.method }</td>
-                    <td>{ element.value }</td>
-                    <td>{ currencyName }</td>
-                    <td>{ exchangeValue.toFixed(2)}</td>
-                    <td>{ convertedValue.toFixed(2)}</td>
-                    <td>Real</td>
-                    <td>
-                      <button
-                        data-testid="edit-btn"
-                        type="button"
-                        disabled
-                      >
-                        Editar
-                      </button>
-                      <button
-                        data-testid="delete-btn"
-                        type="button"
-                        onClick={ () => this.handleRemoval(element.id) }
-                      >
-                        Excluir
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <Table />
         </main>
       </div>
     );
@@ -200,11 +150,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(fetchCurrenciesAPI()),
   callbackExpenses: (value) => dispatch(fetchAddExpenses(value)),
-  deleteExpense: (id) => dispatch(removeItem(id)),
 });
 
 Wallet.propTypes = {
-  deleteExpense: PropTypes.func.isRequired,
   callbackExpenses: PropTypes.func.isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
