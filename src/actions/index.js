@@ -4,7 +4,8 @@
 
 export const LOGIN = 'LOGIN';
 export const CURRENCY_FETCH = 'CURRENCY_FETCH';
-export const ADD_NEW_EXPENSE = 'ADD_NEW_EXPENSE';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const CLEAR_EXPENSE = 'CLEAR_EXPENSE';
 
 export const loginUsers = (email) => ({
   type: LOGIN,
@@ -17,8 +18,13 @@ export const currenciesFetch = (currencies) => ({
 });
 
 export const addNewExpense = (expenses) => ({
-  type: ADD_NEW_EXPENSE,
+  type: ADD_EXPENSE,
   expenses,
+});
+
+export const removeExpense = (id) => ({
+  type: CLEAR_EXPENSE,
+  id,
 });
 
 export const thunkWallet = () => async (dispatch) => {

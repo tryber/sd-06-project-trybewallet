@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import { thunkWallet, thunkAddANewCurrency } from '../actions';
+import { thunkWallet, thunkAddANewCurrency, removeExpense } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -15,6 +15,7 @@ class Wallet extends React.Component {
     };
     this.handleNewExpense = this.handleNewExpense.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClearExpense = this.handleClearExpense.bind(this);
   }
 
   componentDidMount() {
@@ -32,12 +33,17 @@ class Wallet extends React.Component {
     saveExpensesInfo(this.state);
   }
 
+  handleClearExpense(id) {
+    const { apagaDespesa } = this.props;
+    apagaDespesa(id);
+  }
+
   render() {
     const { value, ...expense } = this.state;
     const { email, currencies, expenses } = this.props;
     const titles = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
       'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
-    // solução Willian Gomes T06 Slack
+    // solução Willian Gomes T06 (VIA Slack)
     const totalValue = expenses.length ? Math.round(expenses
       .reduce((acc, cur) => acc + cur.value
        * cur.exchangeRates[cur.currency].ask, 0) * 100) / 100 : 0;
@@ -131,6 +137,7 @@ class Wallet extends React.Component {
           </thead>
           <tbody>
             {expenses.map((despesa, index) => {
+              // Number() Retorna um número, convertido de seu argumento (W3C).
               const exchangeValue = Number(despesa.exchangeRates[despesa.currency].ask);
               const currencyName = despesa.exchangeRates[despesa.currency].name;
               const convertedValue = exchangeValue * despesa.value;
@@ -148,8 +155,19 @@ class Wallet extends React.Component {
                   <td>{ convertedValue.toFixed(2) }</td>
                   <td>Real</td>
                   <td>
-                    <button type="button" data-testid="edit-btn">Editar</button>
-                    <button type="button" data-testid="delete-btn">Excluir</button>
+                    <button
+                      type="button"
+                      data-testid="edit-btn"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      type="button"
+                      data-testid="delete-btn"
+                      onClick={ () => this.handleClearExpense(despesa.id) }
+                    >
+                      Excluir
+                    </button>
                   </td>
                 </tr>
               );
@@ -176,6 +194,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   currenciesFetch: () => dispatch(thunkWallet()),
   saveExpensesInfo: (expense) => dispatch(thunkAddANewCurrency(expense)),
+  apagaDespesa: (id) => dispatch(removeExpense(id)),
 });
 
 Wallet.propTypes = {
@@ -183,6 +202,7 @@ Wallet.propTypes = {
   currencies: propTypes.arrayOf(propTypes.array).isRequired,
   currenciesFetch: propTypes.func.isRequired,
   saveExpensesInfo: propTypes.func.isRequired,
+  apagaDespesa: propTypes.func.isRequired,
   expenses: propTypes.arrayOf(Object).isRequired,
 };
 
