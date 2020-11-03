@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addTransaction } from '../actions';
 import fetchAPI from '../services/currencyAPI';
@@ -12,16 +11,18 @@ class Wallet extends React.Component {
     this.renderOptions = this.renderOptions.bind(this);
     this.handleChanges = this.handleChanges.bind(this);
     this.handleTransaction = this.handleTransaction.bind(this);
+    this.totalCalc = this.totalCalc.bind(this);
 
     this.state = {
       currencies: [],
       id: 0,
-      value: '',
+      value: 0,
       description: '',
       currency: 'USD',
       method: 'Cartão de crédito',
       tag: 'Alimentação',
       exchangeRates: {},
+      total: 0,
     };
   }
 
@@ -45,9 +46,22 @@ class Wallet extends React.Component {
 
     transaction(expenses);
 
-    this.setState((previousState) => ({ id: previousState.id + 1 }));
+    this.setState((previousState) => ({ id: previousState.id + 1 }), () => {
+      this.totalCalc();
+    });
 
     document.getElementById('transaction-form').reset();
+  }
+
+  totalCalc() {
+    const { userTransaction } = this.props;
+    const { value } = this.state;
+    const coin = userTransaction[userTransaction.length - 1].currency;
+    const cotation = userTransaction[userTransaction.length - 1].exchangeRates[coin].ask;
+
+    this.setState((previousState) => ({
+      total: previousState.total + (value * cotation),
+    }));
   }
 
   async renderOptions() {
@@ -62,12 +76,12 @@ class Wallet extends React.Component {
 
   render() {
     const { userEmail } = this.props;
-    const { currencies } = this.state;
+    const { currencies, total } = this.state;
 
     return (
       <header>
         <span data-testid="email-field">{ userEmail }</span>
-        <span data-testid="total-field">0</span>
+        <span data-testid="total-field">{ total }</span>
         <span data-testid="header-currency-field">BRL</span>
         <form id="transaction-form">
           <input
@@ -101,7 +115,7 @@ class Wallet extends React.Component {
             data-testid="method-input"
           >
             <option value="Cartão de crédito">Cartão de crédito</option>
-            <option value="Cartão de débido">Cartão de débito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
             <option value="Dinheiro">Dinheiro</option>
           </select>
           <select
@@ -116,14 +130,12 @@ class Wallet extends React.Component {
             <option>Saúde</option>
           </select>
         </form>
-        <Link to="/carteira">
-          <button
-            type="button"
-            onClick={ this.handleTransaction }
-          >
-            Adicionar despesa
-          </button>
-        </Link>
+        <button
+          type="button"
+          onClick={ this.handleTransaction }
+        >
+          Adicionar despesa
+        </button>
       </header>
     );
   }
@@ -132,6 +144,9 @@ class Wallet extends React.Component {
 Wallet.propTypes = {
   userEmail: PropTypes.string,
   transaction: PropTypes.func.isRequired,
+  userTransaction: PropTypes.arrayOf(
+    PropTypes.shape([PropTypes.string, PropTypes.number]),
+  ).isRequired,
 };
 
 Wallet.defaultProps = {
@@ -140,6 +155,7 @@ Wallet.defaultProps = {
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
+  userTransaction: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
