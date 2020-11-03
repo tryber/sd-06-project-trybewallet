@@ -1,6 +1,7 @@
 export const LOGIN = 'LOGIN';
 
-export default login = (email) => ({
+const login = (email) => ({
   type: LOGIN,
   email,
 });
+export default login;

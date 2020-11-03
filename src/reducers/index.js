@@ -2,7 +2,9 @@ import { combineReducers } from 'redux';
 import user from './user';
 import wallet from './wallet';
 
-export default combiner = combineReducers({
+const combiner = combineReducers({
   user,
   wallet,
 });
+
+export default combiner;
