@@ -1,13 +1,14 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 class AddButton extends React.Component {
   render() {
-    // const {  } = this.props;
+    const { onClick } = this.props;
 
     return (
       <button
         type="button"
+        onClick={ onClick }
       >
         Adicionar despesa
       </button>
@@ -15,14 +16,14 @@ class AddButton extends React.Component {
   }
 }
 
-// AddButton.defaultProps = {
-//   disabled: false,
-//   onClick: () => {},
-// };
+AddButton.defaultProps = {
+  disabled: false,
+  onClick: () => {},
+};
 
-// AddButton.propTypes = {
-//   disabled: PropTypes.bool,
-//   onClick: PropTypes.func,
-// };
+AddButton.propTypes = {
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+};
 
 export default AddButton;

@@ -1,117 +1,130 @@
 import React from 'react';
+
+import { connect } from 'react-redux';
+
+import PropTypes from 'prop-types';
+
+import { addExpense, updateExchangeInfo } from '../../actions';
 import AddButton from './AddButton';
 
+import fetchApi from '../../services/api';
+
+const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+
 class FormularioDespesa extends React.Component {
-  // constructor() {
-  //   super();
-  //   // this.state = {
-  //   //   id: 0,
-  //   //   value: 0,
-  //   //   description: '',
-  //   //   currency: 'BRL',
-  //   //   method: '',
-  //   //   tag: '',
-  //   //   exchangeRates: {},
-  //   // };
+  constructor() {
+    super();
+    this.submitForm = this.submitForm.bind(this);
+  }
 
-  //   // this.addExpense = this.addExpense.bind(this);
-  // }
-
-  currencyOptions() {
-    const currencyArray = ['USD', 'CAD', 'EUR', 'GBP',
-      'ARS', 'BTC', 'LTC', 'JPY', 'CHF', 'AUD', 'CNY',
-      'ILS', 'ETH', 'XRP'];
-
-    return currencyArray
-      .map((currency) => (
+  generateOptions(values) {
+    return values
+      .map((val) => (
         <option
-          key={ currency }
-          data-testid={ currency }
+          key={ val }
+          data-testid={ val }
+          value={ val }
         >
-          {`${currency}`}
+          { val }
         </option>
       ));
   }
 
-  payMethod() {
-    const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+  submitForm() {
+    const { updateExchangeInfo, addExpense } = this.props;
 
-    return methods
-      .map((method) => (
-        <option
-          key={ method }
-          data-testid={ method }
-        >
-          {`${method}`}
-        </option>
-      ));
+    fetchApi().then((exchangeRates) => {
+      updateExchangeInfo(exchangeRates);
+      addExpense({ ...this.state, exchangeRates: exchangeRates });
+    });
   }
 
-  tagOption() {
-    const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-
-    return tagOptions
-      .map((tag) => (
-        <option
-          key={ tag }
-          data-testid={ tag }
-        >
-          {`${tag}`}
-        </option>
-      ));
+  handleChange(name, { target }) {
+    this.setState({
+      [name]: target.value,
+    });
   }
-
-  // addExpense() {
-  //   // const { id, expenseValue, description, currency, payMethod, categoryTag } = this.state;
-
-  //   this.setState = {
-  //     // pegar os valores dos inputs
-  //   };
-  // }
 
   render() {
+    const { currencies } = this.props;
+    const { value, description, currency, method, tag } = this.state || {};
+
     return (
       <div>
         <label htmlFor="value-input">
           Valor:
           <input
+            type="number"
             data-testid="value-input"
+            onChange={ (e) => this.handleChange('value', e) }
+            value={ value }
           />
         </label>
 
         <label htmlFor="description-input">
           Descrição:
-          <input
-            data-testid="description-input"
-          />
         </label>
+        <input
+          data-testid="description-input"
+          onChange={ (e) => this.handleChange('description', e) }
+          value={ description }
+        />
 
         <label htmlFor="currency-input">
           Moeda:
-          <select data-testid="currency-input">
-            {this.currencyOptions()}
-          </select>
         </label>
+        <select
+          id="currency"
+          name="currency"
+          data-testid="currency-input"
+          onChange={ (e) => this.handleChange('currency', e) }
+          value={ currency }
+        >
+          {this.generateOptions(currencies)}
+        </select>
 
         <label htmlFor="method-input">
           Forma de pagamento:
-          <select data-testid="method-input">
-            {this.payMethod()}
-          </select>
         </label>
+        <select
+          data-testid="method-input"
+          onChange={ (e) => this.handleChange('method', e) }
+          value={ method }
+        >
+          {this.generateOptions(paymentMethods)}
+        </select>
 
         <label htmlFor="tag-input">
           Categoria:
-          <select data-testid="tag-input">
-            {this.tagOption()}
-          </select>
         </label>
+        <select
+          data-testid="tag-input"
+          onChange={ (e) => this.handleChange('tag', e) }
+          value={ tag }
+        >
+          {this.generateOptions(tagOptions)}
+        </select>
 
-        <AddButton onClick={ this.addExpense } />
-
+        <AddButton onClick={ this.submitForm } />
       </div>
     );
   }
 }
 
-export default FormularioDespesa;
+function mapStateToProps(state) {
+  const { wallet } = state;
+  return { currencies: wallet.currencies };
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  addExpense: (expense) => dispatch(addExpense(expense)),
+  updateExchangeInfo: (exchangeInfo) => dispatch(updateExchangeInfo(exchangeInfo)),
+});
+
+FormularioDespesa.propTypes = {
+  addExpense: PropTypes.func.isRequired,
+  currencies: PropTypes.string.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormularioDespesa);
