@@ -23,6 +23,8 @@ class Login extends React.Component {
         this.emailOK();
       });
     }
+
+    handleChange
   }
     render() {
       const { email, password, isValid } = this.state;
@@ -46,7 +48,7 @@ class Login extends React.Component {
             type="password"
             name="password-input"
             id="password-input"
-            minLength="6"
+            // minLength="6"
             required
           // onChange={ this.handleChange }
           />
