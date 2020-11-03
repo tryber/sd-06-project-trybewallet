@@ -13,6 +13,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       senha: '',
+      isValid: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -21,12 +22,24 @@ class Login extends React.Component {
   handleInput({ target: { name, value } }) {
     this.setState({
       [name]: value,
-    });
+    }, () => this.validateInputs());
+  }
+
+  validateInputs() {
+    const { email, senha } = this.state;
+    const regex = /^\w+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$/;
+    const magicNumber = 6;
+    if (senha.length >= magicNumber && regex.test(email)) {
+      this.setState({
+        isValid: true,
+      });
+    }
   }
 
   handleSubmit() {
-    const { onSubmit } = this.props;
-    onSubmit(this.state);
+    const { login } = this.props;
+    const { email } = this.state;
+    login(email);
   }
 
   renderInputEmail() {
@@ -58,7 +71,7 @@ class Login extends React.Component {
             type="password"
             className="validate"
             value={ password }
-            onSubmit={ this.handleInput }
+            onClick={ this.handleInput }
           />
         </label>
       </div>
@@ -68,9 +81,11 @@ class Login extends React.Component {
   renderButtonEntrar() {
     return (
       <div>
-        <button type="submit">
-          onclick=
-          {this.handleSubmit}
+        <button
+          type="submit"
+          disabled={ !isValid }
+          onClick={ this.handleSubmit }
+        >
           Entrar
         </button>
         <Link to="/wallet">Logging</Link>
@@ -91,18 +106,16 @@ class Login extends React.Component {
   }
 }
 const mapDispatchToProps = (dispatch) => ({
-  Login: state.email,
+  Login: (email) => dispatch(login(email)),
 });
 
 Login.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
 }.isRequired;
 
-export default connect(
-  null, mapDispatchToProps,
-)(login);
+export default connect(null, mapDispatchToProps)(Login);
 
-// login autentucar usuario, login logaut
+// login autenticar usuario, login logaut
 
 /* ### Página de Login
 1. Crie uma página inicial de login com os seguintes campos e características:
