@@ -19,7 +19,7 @@ function walletReducer(state = INITIAL_STATE, action) {
     };
   case EXCLUDE_ITEM:
     return {
-      ...state, expenses: [state.expenses.filter((item) => (item.id !== action.id))],
+      ...state, expenses: state.expenses.filter((item) => (item.id !== action.id)),
     };
   default:
     return state;
