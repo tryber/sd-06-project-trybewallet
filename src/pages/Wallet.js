@@ -63,15 +63,17 @@ class Wallet extends React.Component {
             />
             {/* <label htmlFor="description">Descrição</label> */}
             <input
-            onChange={ this.handleChange }
-            id="description" name="description" data-testid="description-input"
+              onChange={ this.handleChange }
+              id="description"
+              name="description"
+              data-testid="description-input"
             />
             {/* <label htmlFor="currency">Moedas</label> */}
             <select
-            onChange={ this.handleChange }
-            id="currency"
-            name="currency"
-            data-testid="currency-input"
+              onChange={ this.handleChange }
+              id="currency"
+              name="currency"
+              data-testid="currency-input"
             >
               {currencies !== undefined ? currencies.map((currency) => (
                 <option data-testid={ currency } key={ currency }>{currency}</option>
@@ -79,10 +81,10 @@ class Wallet extends React.Component {
             </select>
             {/* <label htmlFor="method">Pagamento</label> */}
             <select
-            onChange={ this.handleChange }
-            id="method"
-            name="method"
-            data-testid="method-input"
+              onChange={ this.handleChange }
+              id="method"
+              name="method"
+              data-testid="method-input"
             >
               <option>Dinheiro</option>
               <option>Cartão de crédito</option>
@@ -90,10 +92,10 @@ class Wallet extends React.Component {
             </select>
             {/* <label htmlFor="tag">Categoria</label> */}
             <select
-            onChange={ this.handleChange }
-            id="tag"
-            name="tag"
-            data-testid="tag-input"
+              onChange={ this.handleChange }
+              id="tag"
+              name="tag"
+              data-testid="tag-input"
             >
               <option>Alimentação</option>
               <option>Lazer</option>
@@ -124,8 +126,8 @@ Wallet.propTypes = {
   fetchCurrency: propTypes.func.isRequired,
   addExpUser: propTypes.func.isRequired,
   email: propTypes.string.isRequired,
-  currencies: propTypes.array.isRequired,
-  expenses: propTypes.array.isRequired,
+  currencies: propTypes.arrayOf.isRequired,
+  expenses: propTypes.arrayOf.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
