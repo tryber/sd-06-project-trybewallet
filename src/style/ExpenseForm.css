@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+.form_wallet {
+  align-items: center;
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-flow: row nowrap;
+  font-family: 'Open Sans', sans-serif;
+  justify-content: space-around;
+  height: 50px;
+  width: 1850px;
+}
+
+.value-input {
+  font-family: 'Open Sans', sans-serif;
+  height: 20px;
+  text-align: center;
+  width: 75px;
+}
+
+.currency-input {
+  font-family: 'Open Sans', sans-serif;
+  height: 25px;
+  text-align: center;
+  width: 75px;
+}
+
+.method-input {
+  font-family: 'Open Sans', sans-serif;
+  height: 25px;
+  text-align: center;
+  width: 150px;
+}
+
+.tag-input {
+  font-family: 'Open Sans', sans-serif;
+  height: 25px;
+  text-align: center;
+  width: 150px;
+}
+
+.description-input {
+  font-family: 'Open Sans', sans-serif;
+  height: 20px;
+  width: 350px;
+}
+
+
+.button_wallet {
+  background-color: rgb(41, 141, 223);
+  border-radius: 5px;
+  color:white;
+  height: 35px;
+  margin-top: 5px;
+  width: 200px;
+}
+
+.button_wallet:hover {
+  background-color: rgb(27, 109, 177);
+  cursor: pointer;
+}

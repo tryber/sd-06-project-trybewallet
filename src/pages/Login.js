@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login } from '../actions';
-import './Login.css';
+import { getEmail } from '../actions/getEmail';
+import trybeWallet from '../images/trybe_wallet.png';
+import '../style/Login.css';
 
 class Login extends Component {
   constructor() {
     super();
 
-    this.handleLogin = this.handleLogin.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
@@ -18,7 +19,7 @@ class Login extends Component {
     };
   }
 
-  handleLogin(event) {
+  handleSubmit(event) {
     event.preventDefault();
     const { history, saveEmail } = this.props;
     const { email } = this.state;
@@ -43,9 +44,11 @@ class Login extends Component {
   render() {
     const { email, password, disabled } = this.state;
     return (
-      <div>
-        <form onSubmit={ this.handleLogin }>
+      <div className="div_login">
+        <form className="form_login">
+          <img className="image_wallet" src={ trybeWallet } alt="Logo Trybe Wallet" />
           <input
+            className="input_login"
             data-testid="email-input"
             type="text"
             name="email"
@@ -54,8 +57,8 @@ class Login extends Component {
             value={ email }
             onChange={ this.handleChange }
           />
-          <br />
           <input
+            className="input_login"
             data-testid="password-input"
             type="password"
             name="password"
@@ -64,10 +67,11 @@ class Login extends Component {
             value={ password }
             onChange={ this.handleChange }
           />
-          <br />
           <button
+            className="button_login"
             type="submit"
-            disabled={ disabled } // impede que um usuário clique no botão até que alguma outra condição seja atendida
+            disabled={ disabled }
+            onClick={ this.handleSubmit }
           >
             Entrar
           </button>
@@ -78,7 +82,7 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  saveEmail: (email) => dispatch(login(email)),
+  saveEmail: (email) => dispatch(getEmail(email)),
 });
 
 Login.propTypes = {
