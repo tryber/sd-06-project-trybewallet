@@ -11,10 +11,13 @@ class Login extends React.Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
+    this.verifyEmail = this.verifyEmail.bind(this);
+    this.verifyPassword = this.verifyPassword.bind(this);
+    this.verifyStatusButton = this.verifyStatusButton.bind(this);
+
     this.state = {
       email: '',
-      // password: '',
-      // disableButton: true,
+      password: '',
     };
   }
 
@@ -23,6 +26,37 @@ class Login extends React.Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  // Regex utilizado a partir do link: https://www.formget.com/regular-expression-for-email/;
+  verifyEmail() {
+    let statusEmail = false;
+    const { email } = this.state;
+    const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const isEmailValid = regex.test(email);
+    if (isEmailValid) {
+      statusEmail = true;
+    }
+    return statusEmail;
+  }
+
+  verifyPassword() {
+    let statusPassword = false;
+    const { password } = this.state;
+    const minimumPasswordLength = 6;
+    const isPasswordValid = password.length >= minimumPasswordLength;
+    if (isPasswordValid) {
+      statusPassword = true;
+    }
+    return statusPassword;
+  }
+
+  verifyStatusButton() {
+    let statusDisableButton = true;
+    if (this.verifyEmail() && this.verifyPassword()) {
+      statusDisableButton = false;
+    }
+    return statusDisableButton;
   }
 
   render() {
@@ -44,11 +78,15 @@ class Login extends React.Component {
           type="password"
           name="password"
           placeholder="Digite aqui a sua senha"
+          onChange={ this.handleChange }
         />
-        <Link to="/carteira" onClick={ () => sendEmail(email) }>
-          <button type="button">Entrar</button>
+        <Link to="/carteira" onClick={() => sendEmail(email)}>
+          <button type="button" disabled={ this.verifyStatusButton() }>
+            Entrar
+          </button>
         </Link>
-      </div>);
+      </div>
+    );
   }
 }
 
