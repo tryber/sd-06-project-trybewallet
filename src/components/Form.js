@@ -9,20 +9,43 @@ class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-      id: 0,
       value: '0',
       description: '',
       currency: '',
       method: '',
       tag: '',
-      exchangeRates: {}
     };
     this.handleChange = this.handleChange.bind(this);
+    this.insertExpenses = this.insertExpenses.bind(this);
+    this.getCurrencies = this.getCurrencies.bind(this);
   }
 
   componentDidMount() {
     const { fetchCurrencies } = this.props;
     fetchCurrencies();
+  }
+
+  async getCurrencies() {
+    let value = {};
+    value = fetchCurrencyApi();
+    return value;
+  }
+
+  async insertExpenses() {
+    const { value, description, currency, method, tag } = this.state;
+    const { addExpenses, wallet } = this.props;
+    const arrayExpense = wallet.expenses;
+    const expense = {
+      id: arrayExpense.length,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates: await this.getCurrencies(),
+    };
+    arrayExpense.push(expense);
+    addExpenses(arrayExpense);
   }
 
   handleChange({ target }) {
@@ -68,7 +91,6 @@ class Form extends React.Component {
         >
           <select
             data-testid="currency-input"
-            name="currencies"
             id="currencies"
             name="currency"
             value={ currency }
@@ -90,7 +112,6 @@ class Form extends React.Component {
         >
           <select
             data-testid="method-input"
-            name="metodoPgto"
             id="metodoPgto"
             name="method"
             value={ method }
@@ -106,7 +127,6 @@ class Form extends React.Component {
         >
           <select
             data-testid="tag-input"
-            name="categoriaDespesa"
             id="categoriaDespesa"
             name="tag"
             value={ tag }
@@ -121,7 +141,7 @@ class Form extends React.Component {
         </label>
         <button
           type="button"
-          // onClick={ () => this.add(wallet.expenses) }
+          onClick={ () => this.insertExpenses() }
         >
           Adicionar despesa
         </button>
@@ -137,7 +157,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(thunkCurrency()),
-  // addExpenses: (data) => dispatch(thunkAddExpenses(data)),
+  addExpenses: (data) => dispatch(thunkAddExpenses(data)),
 });
 
 Form.propTypes = {

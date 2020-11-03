@@ -14,23 +14,23 @@ export const sucessCurrencies = (currencies) => ({
   currencies,
 });
 
-// export const sucessExpenses = (expenses) => ({
-//   type: SUCESS_EXPENSES,
-//   expenses,
-// });
+export const sucessExpenses = (expenses) => ({
+  type: SUCESS_EXPENSES,
+  expenses,
+});
 
 export function thunkCurrency() {
   return (dispatch) => (
     fetchCurrencyApi()
       .then((currencies) => {
         const tempCurrencies = Object.keys(currencies);
-        dispatch(sucessCurrencies(tempCurrencies.filter((curr) => curr !== 'USDT')));
+        dispatch(sucessCurrencies(tempCurrencies.filter((curr) => (curr !== 'USDT'))));
       })
   );
 }
 
-// export function thunkAddExpenses(expenses) {
-//   return (dispatch) => {
-//     dispatch(sucessExpenses(expenses));
-//   };
-// }
+export function thunkAddExpenses(expenses) {
+  return (dispatch) => (
+    dispatch(sucessExpenses(expenses))
+  );
+}
