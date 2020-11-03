@@ -24,7 +24,6 @@ class Header extends Component {
         <header>
           <p data-testid="email-field">{user}</p>
           <p data-testid="total-field">
-            Despesas:
             { this.exchangeCurrency().length === 0
               ? 0.00
               : Math.round(this.exchangeCurrency().reduce((sum, item) => (

@@ -59,7 +59,7 @@ class Expenses extends Component {
             />
           </label>
           <label htmlFor="expense-description">
-            Descrição
+            Descrição despesa:
             <input
               name="description"
               id="expense-description"
@@ -89,7 +89,7 @@ class Expenses extends Component {
             </select>
           </label>
           <label htmlFor="method">
-            Pagamento:
+            Forma de pagamento:
             <select
               name="method"
               id="method"
