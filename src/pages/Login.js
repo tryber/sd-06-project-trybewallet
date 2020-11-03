@@ -33,7 +33,9 @@ class Login extends React.Component {
             />
           </label>
         </div>
-        <button>Entrar</button>
+        <button
+          type="submit"
+        >Entrar</button>
       </div>
     );
   }
