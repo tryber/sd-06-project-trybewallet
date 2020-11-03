@@ -1,4 +1,9 @@
-const currencyCode = (code) => ({ type: 'CURRENCY', code })
+const currencyCode = (code) => ({ type: 'CURRENCY', code });
+
+export const expenseAction = (expense) => ({
+  type: 'EXPENSES',
+  expense,
+});
 
 export function fetchApi() {
   return async (dispatch) => {
@@ -6,12 +11,7 @@ export function fetchApi() {
     const currResponse = await fetch(endpoint);
     const currJson = await currResponse.json();
     dispatch(currencyCode(currJson));
-  }
+  };
 }
-
-export const expense = (expense) => ({
-  type: 'EXPENSES',
-  expense
-})
 
 export const action = (value) => ({ type: 'EMAIL', value });
