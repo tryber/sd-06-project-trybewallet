@@ -1,19 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import getCurrencyList from '../services/currencyAPI';
 // import PropTypes from 'prop-types';
-import { addExpense } from '../actions';
+import { addExpense, fetchCurrencyList } from '../actions';
 
 class ExpenseForm extends React.Component {
   constructor() {
     super();
     this.state = {
       expense: 0,
-      // currency: 'BRL',
+      selectedCurrency: 'USD',
       // paymentMethod: 'Dinheiro',
       // tag: '',
       description: '',
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    fetchCurrencyList();
   }
 
   handleChange({ target }) {
@@ -24,7 +29,8 @@ class ExpenseForm extends React.Component {
   }
 
   render() {
-    const { expense, description } = this.state;
+    const { expense, description, selectedCurrency } = this.state;
+    const currencyList = getCurrencyList('USDT');
     return (
       <form>
         <label htmlFor="expense">
@@ -38,7 +44,7 @@ class ExpenseForm extends React.Component {
           />
         </label>
         <label htmlFor="description">
-          Valor:
+          Descrição:
           <input
             name="description"
             type="text"
@@ -46,6 +52,29 @@ class ExpenseForm extends React.Component {
             value={ description }
             onChange={ this.handleChange }
           />
+        </label>
+        <label htmlFor="currency">
+          Moeda :
+          <select
+            name="currency"
+            type="select"
+            data-testid="currency-input"
+            value={ selectedCurrency }
+            onChange={ this.handleChange }
+          >
+            { Object.keys(currencyList).map((currency) => {
+              const { code } = currency;
+              return (
+                <option
+                  key={ code }
+                  data-testid={ code }
+                  value={ code }
+                >
+                  { `${code}` }
+                </option>
+              );
+            }) }
+          </select>
         </label>
       </form>
     );

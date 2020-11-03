@@ -1,6 +1,6 @@
-import { ADD_EXPENSE, ADD_CURRENCY } from '../actions';
+import { ADD_EXPENSE, ADD_CURRENCY, FETCHING_LIST } from '../actions';
 
-const INITIAL_STATE = { currencies: [], expenses: [] };
+const INITIAL_STATE = { currencies: [], expenses: [], fetchingList: false };
 
 function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -13,6 +13,12 @@ function walletReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       currencies: [...state.currencies, action.value],
+      fetchingList: false,
+    };
+  case FETCHING_LIST:
+    return {
+      ...state,
+      fetchingList: true,
     };
   default:
     return state;
