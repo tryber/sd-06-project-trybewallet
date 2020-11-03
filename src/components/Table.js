@@ -46,7 +46,7 @@ class Table extends React.Component {
                   <button
                     type="button"
                     data-testid="delete-btn"
-                    onClick={ this.handleClick(expense.id) }
+                    onClick={ () => this.handleClick(expense.id) }
                   >
                     Excluir
                   </button>
