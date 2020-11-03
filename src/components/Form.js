@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addExpenseToRecord } from '../actions'; 
+import PropTypes from 'prop-types';
+import { addExpenseToRecord } from '../actions';
 import Table from './Table';
 
 class Form extends React.Component {
@@ -97,6 +98,11 @@ class Form extends React.Component {
     );
   }
 }
+
+Form.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  registerExpense: PropTypes.func.isRequired,
+};
 
 function mapDispatchToProps(dispatch) {
   return {

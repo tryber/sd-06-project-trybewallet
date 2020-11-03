@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { addEmailToRecord } from '../actions';
 import './Login.css';
 
@@ -72,6 +73,10 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  registerEmail: PropTypes.func.isRequired,
+};
 
 function mapDispacthToProps(dispatch) {
   return {

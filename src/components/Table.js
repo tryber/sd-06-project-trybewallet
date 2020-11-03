@@ -1,16 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { deleteExpenseToRecord } from '../actions';
+import PropTypes from 'prop-types';
+// import { deleteExpenseToRecord } from '../actions';
 
 class Table extends React.Component {
-
   componentDidUpdate() {
     this.createRow();
   }
 
   createRow() {
-    const { expenses, deleteRecord } = this.props;
-
+    const { expenses } = this.props;
     const rowNumber = expenses.length;
     if (rowNumber !== 0) {
       const item = expenses[rowNumber - 1];
@@ -31,12 +30,12 @@ class Table extends React.Component {
       tdCurrency.innerHTML = item.exchangeRates[item.currency].name;
       tr.appendChild(tdCurrency);
       const tdUsedExchange = document.createElement('td');
-      tdUsedExchange.innerHTML = parseFloat(item.exchangeRates[item.currency].ask, 10)
+      tdUsedExchange.innerHTML = parseFloat(item.exchangeRates[item.currency].ask)
         .toFixed(2);
       tr.appendChild(tdUsedExchange);
       const tdCovertedValue = document.createElement('td');
-      const correctValue = (parseFloat(tdValue.innerHTML, 10)
-        * parseFloat(tdUsedExchange.innerHTML, 10)).toFixed(2);
+      const correctValue = (parseFloat(tdValue.innerHTML)
+        * parseFloat(tdUsedExchange.innerHTML)).toFixed(2);
       tdCovertedValue.innerHTML = correctValue;
       tr.appendChild(tdCovertedValue);
       const tdCurrencyToConvert = document.createElement('td');
@@ -80,16 +79,20 @@ class Table extends React.Component {
   }
 }
 
+Table.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 function mapStateToProps(state) {
   return {
     expenses: state.wallet.expenses,
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    deleteRecord: (expense) => dispatch(deleteExpenseToRecord(expense)),
-  };
-}
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     deleteRecord: (expense) => dispatch(deleteExpenseToRecord(expense)),
+//   };
+// }
 
 export default connect(mapStateToProps)(Table);

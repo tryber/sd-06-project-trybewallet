@@ -1,13 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Form from '../components/Form';
 
 class Wallet extends React.Component {
   totalExpenses() {
     const { expenses } = this.props;
+    const numberBasis = 10;
     if (expenses.length !== 0) {
       const total = expenses.reduce((acc, cur) => {
-        acc += parseInt(cur.value, 10);
+        acc += parseFloat((parseFloat(cur.value, numberBasis)
+          * parseFloat(cur.exchangeRates[cur.currency].ask, numberBasis)
+            .toFixed(2)).toFixed(2));
         return acc;
       }, 0);
       return total;
@@ -32,6 +36,11 @@ class Wallet extends React.Component {
     );
   }
 }
+
+Wallet.propTypes = {
+  email: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 function mapStateToProps(state) {
   return {
