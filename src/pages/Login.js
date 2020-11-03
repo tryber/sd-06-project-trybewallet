@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { login } from '../actions';
+import PropTypes from 'prop-types';
+import login from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -9,24 +10,24 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      validate: false
+      validate: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.validateInputs = this.validateInputs.bind(this);
-  };
+  }
 
   validateInputs() {
     const { email, password } = this.state;
     const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
     const numMax = 6;
-      this.setState({
-        validate: emailRegex && password.length >= numMax
-      });
+    this.setState({
+      validate: emailRegex && password.length >= numMax,
+    });
   }
 
   handleChange(event) {
-    const { target: { name, value }} = event;
+    const { target: { name, value } } = event;
     this.setState({
       [name]: value,
     }, () => this.validateInputs());
@@ -41,44 +42,45 @@ class Login extends React.Component {
   render() {
     const { validate } = this.state;
     return (
-      <div style={{margin: 'auto', width: '30%'}}>
-        <h1 style={{textAlign: 'center'}}>LOGIN</h1>
-        <fieldset style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
+      <div style={ { margin: 'auto', width: '30%' } }>
+        <h1 style={ { textAlign: 'center' } }>LOGIN</h1>
+        <fieldset style={ { textAlign: 'center' } }>
           <form>
-            <label>
+            <label htmlFor="email-inpu">
               Email:
               <br />
               <input
                 name="email"
                 type="email"
                 data-testid="email-input"
-                onChange={(event) => this.handleChange(event)}
+                onChange={ (event) => this.handleChange(event) }
               />
             </label>
             <br />
-            <label>
+            <label htmlFor="password-input">
               Senha:
               <br />
               <input
                 name="password"
                 type="password"
                 data-testid="password-input"
-                onChange={(event) => this.handleChange(event)} />
+                onChange={ (event) => this.handleChange(event) }
+              />
             </label>
             <br />
             <Link to="/carteira">
               <button
                 id="botaoEnviar"
-                style={{marginTop: "10px"}}
+                style={ { marginTop: '10px' } }
                 type="submit"
-                onClick={() => this.handleSubmit()}
+                onClick={ () => this.handleSubmit() }
                 disabled={ !validate }
               >
                 Entrar
               </button>
             </Link>
           </form>
-          </fieldset>
+        </fieldset>
       </div>
     );
   }
@@ -87,5 +89,7 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   actionLogin: (email) => dispatch(login(email)),
 });
+
+Login.propTypes = { actionLogin: PropTypes.func.isRequired };
 
 export default connect(null, mapDispatchToProps)(Login);
