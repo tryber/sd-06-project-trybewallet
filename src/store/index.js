@@ -9,8 +9,8 @@ const INITIAL_STATE = {
   wallet: {
     currencies: [],
     expenses: [],
+    editMode: false,
   },
-  isFetching: false,
 };
 
 const store = createStore(

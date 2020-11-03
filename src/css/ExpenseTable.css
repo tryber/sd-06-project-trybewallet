@@ -4,3 +4,16 @@
   border-radius: 0 8px 0 0;
   padding: 0 10px 0 0;
 }
+
+.edit-expense {
+  background-color: rgba(2, 7, 1, .3);
+  height: 100vh;
+  overflow: hidden;
+  overflow-y: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding: 65px 0 0 0;
+  position: absolute;
+  top: 0;
+  width: 100vw;
+}

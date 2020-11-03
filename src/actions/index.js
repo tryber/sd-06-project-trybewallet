@@ -1,17 +1,9 @@
-// export const ADD_USER_EMAIL = 'ADD_USER_EMAIL';
-
 export const ADD_CURRENCIES = 'ADD_CURRENCIES';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 export { ADD_USER_EMAIL, loginUser } from './ADD_USER_EMAIL';
 export { REMOVE_EXPENSE, removeExpense } from './REMOVE_EXPENSE';
-
-// const addUserEmail = (email) => ({
-//   type: ADD_USER_EMAIL,
-//   payload: {
-//     email,
-//   },
-// });
+export { TOOGLE_EDIT_MODE, toogleEdit } from './TOOGLE_EDIT_MODE';
 
 const addCurrencies = (currencies) => ({
   type: ADD_CURRENCIES,
@@ -26,12 +18,6 @@ const addExpense = (expense) => ({
     expense,
   },
 });
-
-// export function loginUser(email) {
-//   return (dispatch) => {
-//     dispatch(addUserEmail(email));
-//   };
-// }
 
 export function storeCurrencies(currencies) {
   return (dispatch) => {

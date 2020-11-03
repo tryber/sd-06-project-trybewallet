@@ -49,7 +49,7 @@ class Wallet extends React.Component {
 
   render() {
     const { email } = this.state;
-    const { expenses } = this.props;
+    const { expenses, editMode } = this.props;
 
     return (
       <div>
@@ -75,7 +75,9 @@ class Wallet extends React.Component {
             </section>
           </section>
           <section className="header-form">
-            <AddExpense />
+            { (editMode)
+              ? <div />
+              : <AddExpense /> }
           </section>
         </header>
         { (expenses.length > 0)
@@ -89,6 +91,7 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   user: state.user.email,
   expenses: state.wallet.expenses,
+  editMode: state.wallet.editMode,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -99,6 +102,7 @@ Wallet.propTypes = {
   dispatchCurrencies: PropTypes.func.isRequired,
   user: PropTypes.string.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  editMode: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

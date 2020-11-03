@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import fetchApi from '../services/fetchApi';
-import { storeExpense } from '../actions';
+import { storeExpense, removeExpense } from '../actions';
 
 import { response as mockResponse } from '../tests/mockData';
 
@@ -14,16 +14,38 @@ class AddExpense extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      currency: 'USD',
-      method: 'cash',
-      tag: 'food',
-      value: 0,
-      description: '',
-    };
+    const { editMode, editExpense, expenses } = this.props;
+
+    if (editMode) {
+      const currExpense = expenses.filter((expense) => (
+        expense.id === editExpense.expenseEditId
+        && expense.description === editExpense.expenseEditDescription
+      ))[0];
+
+      this.state = {
+        prevExpense: currExpense,
+        currency: currExpense.currency,
+        method: currExpense.method,
+        tag: currExpense.tag,
+        value: currExpense.value,
+        description: currExpense.description,
+        editMode,
+      };
+    } else {
+      this.state = {
+        currency: 'USD',
+        method: 'cash',
+        tag: 'food',
+        value: 0,
+        description: '',
+        editMode: false,
+        prevExpense: {},
+      };
+    }
 
     this.handleAddExpense = this.handleAddExpense.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleEditExpense = this.handleEditExpense.bind(this);
   }
 
   async handleAddExpense(event) {
@@ -67,12 +89,49 @@ class AddExpense extends React.Component {
     }
   }
 
+  async handleEditExpense(event) {
+    event.preventDefault();
+    const { expenses, dispatchExpense, editHandler, deleteExpense } = this.props;
+    const { prevExpense, value, description, tag, method, currency } = this.state;
+    const validForm = (value > 0 && description !== '');
+    if (validForm) {
+      const currentCurrencies = await fetchApi();
+      const currencies = Object.keys(currentCurrencies);
+      const exchangeRates = currencies.reduce((obj, current) => {
+        const currentObj = { ...obj,
+          [current]: { ...currentCurrencies[current] },
+        };
+
+        return currentObj;
+      }, {});
+
+      const newExpense = {
+        id: expenses.length,
+        currency,
+        value,
+        method,
+        tag,
+        description,
+        exchangeRates,
+      };
+
+      await deleteExpense(prevExpense.description);
+      await dispatchExpense(newExpense);
+
+      editHandler('close');
+    } else {
+      console.log('form não preenchido.');
+    }
+  }
+
   handleChange({ target }) {
     this.setState({ [target.id]: target.value });
   }
 
   render() {
     const { currencies } = this.props;
+    const { prevExpense, editMode } = this.state;
+    const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 
     return (
       <form className="expense-form" id="expense-form">
@@ -84,6 +143,7 @@ class AddExpense extends React.Component {
             step="0.01"
             placeholder="0.00"
             id="value"
+            defaultValue={ prevExpense.value }
             data-testid="value-input"
             onChange={ this.handleChange }
             required
@@ -97,39 +157,72 @@ class AddExpense extends React.Component {
             id="description"
             data-testid="description-input"
             onChange={ this.handleChange }
-            required
+            defaultValue={ prevExpense.description }
           />
         </label>
 
-        <select id="currency" data-testid="currency-input" onChange={ this.handleChange }>
+        <select
+          id="currency"
+          onChange={ this.handleChange }
+          defaultValue={ prevExpense.currency }
+          data-testid="currency-input"
+          disabled={ editMode }
+        >
           {
-            currencies.map((currency) => (
+            currencies.map((curr) => (
               <option
-                value={ currency }
-                key={ currency }
-                data-testid={ currency }
+                value={ curr }
+                key={ curr }
+                data-testid={ curr }
                 onChange={ this.handleChange }
               >
-                { currency }
+                { curr }
               </option>
             ))
           }
         </select>
 
-        <select id="method" data-testid="method-input" onChange={ this.handleChange }>
-          <option value="Dinheiro">Dinheiro</option>
-          <option value="Cartão de crédito">Cartão de crédito</option>
-          <option value="Cartão de débito">Cartão de débito</option>
+        <select
+          id="method"
+          defaultValue={ prevExpense.method }
+          onChange={ this.handleChange }
+          data-testid="method-input"
+        >
+          { methods.map((curr) => (
+            (prevExpense.method === curr)
+              ? (
+                <option value={ prevExpense.method } key={ prevExpense.method }>
+                  { prevExpense.method }
+                </option>)
+              : <option value={ curr } key={ curr }>{ curr }</option>
+          )) }
         </select>
 
-        <select id="tag" data-testid="tag-input" onChange={ this.handleChange }>
+        <select
+          id="tag"
+          defaultValue={ prevExpense.tag }
+          onChange={ this.handleChange }
+          data-testid="tag-input"
+        >
           <option value="Alimentação">Alimentação</option>
           <option value="Lazer">Lazer</option>
           <option value="Trabalho">Trabalho</option>
           <option value="Transporte">Transporte</option>
           <option value="Saúde">Saúde</option>
         </select>
-        <button type="submit" onClick={ this.handleAddExpense }>Adicionar despesa</button>
+        {
+          (!editMode)
+            ? (
+              <button type="submit" onClick={ this.handleAddExpense }>
+                Adicionar despesa
+              </button>
+            )
+            : (
+              <button type="submit" onClick={ this.handleEditExpense }>
+                Editar despesa
+              </button>
+            )
+        }
       </form>
     );
   }
@@ -142,17 +235,25 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchExpense: (expense) => dispatch(storeExpense(expense)),
+  deleteExpense: (expense) => dispatch(removeExpense(expense)),
 });
 
 AddExpense.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string),
   expenses: PropTypes.arrayOf(PropTypes.any),
   dispatchExpense: PropTypes.func.isRequired,
+  editMode: PropTypes.bool,
+  editHandler: PropTypes.func,
+  editExpense: PropTypes.objectOf(PropTypes.any),
+  deleteExpense: PropTypes.func.isRequired,
 };
 
 AddExpense.defaultProps = {
   currencies: [],
   expenses: [],
+  editMode: false,
+  editHandler: () => {},
+  editExpense: {},
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddExpense);
