@@ -13,7 +13,7 @@ class WalletWelcome extends React.Component {
           seja bem-vindx!
           <span role="img" aria-label="coração verde">💚</span>
           <span data-testid="header-currency-field">Total em BRL R$</span>
-          <p data-testid="total-field">
+          <span data-testid="total-field">
             {/* como visto no PR da colega Laís Gurgel <3 */}
             { expenses.reduce((previewValue, expense) => {
               const { currency, exchangeRates, value } = expense;
@@ -23,7 +23,7 @@ class WalletWelcome extends React.Component {
 
               return previewValue + parseFloat(finalBRLValue);
             }, 0).toFixed(2)}
-          </p>
+          </span>
         </p>
       </div>
     );
