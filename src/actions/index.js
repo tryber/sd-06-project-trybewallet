@@ -4,6 +4,7 @@ const GET_CURRENCIES = 'GET_CURRENCIES';
 const FAILED_REQUEST = 'FAILED_REQUEST';
 const ADD_EXPENSE = 'ADD_EXPENSE';
 const UPDATE_TOTAL = 'UPDATE_TOTAL';
+const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const login = (value) => ({ type: LOGIN, value });
 
@@ -16,6 +17,8 @@ export const failedRequest = (err) => ({ type: FAILED_REQUEST, error: err });
 export const addExpense = (data) => ({ type: ADD_EXPENSE, expenseData: data });
 
 export const updateTotal = (total) => ({ type: UPDATE_TOTAL, total });
+
+export const deleteExpense = (expenseId) =>({ type: DELETE_EXPENSE, expenseId });
 
 export function fetchAPI() {
   return async (dispatch) => {

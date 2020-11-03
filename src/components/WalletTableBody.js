@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { deleteExpense } from '../actions/index'
 import PropTypes from 'prop-types';
 
 class WalletTableBody extends Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, sendExpenseId } = this.props;
 
     return (
       <tbody>
@@ -23,7 +25,15 @@ class WalletTableBody extends Component {
                   }
                 </td>
                 <td> Real </td>
-                <td> O/X </td>
+                <td>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => sendExpenseId(exp.id) }
+                >
+                  Deletar
+                </button>
+                </td>
               </tr>
             ))
             : ''
@@ -33,8 +43,12 @@ class WalletTableBody extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  sendExpenseId: (id) => dispatch(deleteExpense(id)),
+});
+
 WalletTableBody.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default WalletTableBody;
+export default connect(null, mapDispatchToProps)(WalletTableBody);
