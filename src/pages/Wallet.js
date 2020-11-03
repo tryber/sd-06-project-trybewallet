@@ -58,18 +58,18 @@ class Wallet extends React.Component {
           <fieldset>
             <label htmlFor="value">
               Value
-            <input
-                onChange={this.handleChange}
+              <input
+                onChange={ this.handleChange }
                 id="value"
                 name="value"
-                value={value}
+                value={ value }
                 data-testid="value-input"
               />
             </label>
             <label htmlFor="description">
               Description
-            <input
-                onChange={this.handleChange}
+              <input
+                onChange={ this.handleChange }
                 id="description"
                 name="description"
                 data-testid="description-input"
@@ -77,21 +77,21 @@ class Wallet extends React.Component {
             </label>
             <label htmlFor="currency">
               Currency
-            <select
-                onChange={this.handleChange}
+              <select
+                onChange={ this.handleChange }
                 id="currency"
                 name="currency"
                 data-testid="currency-input"
               >
                 {currencies !== undefined ? currencies.map((currency) => (
-                  <option data-testid={currency} key={currency}>{currency}</option>
+                  <option data-testid={ currency } key={ currency }>{ currency }</option>
                 )) : <p>Error</p>}
               </select>
             </label>
             <label htmlFor="method">
               Payment
-            <select
-                onChange={this.handleChange}
+              <select
+                onChange={ this.handleChange }
                 id="method"
                 name="method"
                 data-testid="method-input"
@@ -103,8 +103,8 @@ class Wallet extends React.Component {
             </label>
             <label htmlFor="tag">
               Categories
-            <select
-                onChange={this.handleChange}
+              <select
+                onChange={ this.handleChange }
                 id="tag"
                 name="tag"
                 data-testid="tag-input"
@@ -116,7 +116,7 @@ class Wallet extends React.Component {
                 <option>Saúde</option>
               </select>
             </label>
-            <button type="button" onClick={this.handleSubmit}>Adicionar despesa</button>
+            <button type="button" onClick={ this.handleSubmit }>Adicionar despesa</button>
           </fieldset>
         </form>
         <Table />
