@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from '../components/Form';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   updateTotalValue() {
     const { expenses } = this.props;
-    console.log(expenses);
     let totalValue = 0;
     expenses.forEach((expense) => {
       const exchangeRatesKey = Object.keys(expense.exchangeRates)
@@ -29,9 +29,12 @@ class Wallet extends React.Component {
           <span data-testid="total-field">{`Despesa Total: ${totalValue} `}</span>
           <span data-testid="header-currency-field">BRL</span>
         </header>
-        <div>
+        <section>
           <Form />
-        </div>
+        </section>
+        <section>
+          <Table />
+        </section>
       </div>);
   }
 }
