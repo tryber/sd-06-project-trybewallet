@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addTransaction } from '../actions';
 import fetchAPI from '../services/currencyAPI';
+import TransactionForm from '../components/transactionForm';
+import TableElements from '../components/tableElements';
 
 class Wallet extends React.Component {
   constructor() {
@@ -75,68 +77,74 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { userEmail } = this.props;
+    const { userEmail, userTransaction } = this.props;
     const { currencies, total } = this.state;
 
     return (
-      <header>
-        <span data-testid="email-field">{ userEmail }</span>
-        <span data-testid="total-field">{ total }</span>
-        <span data-testid="header-currency-field">BRL</span>
-        <form id="transaction-form">
-          <input
-            data-testid="value-input"
-            type="number"
-            name="value"
-            placeholder="0"
-            onChange={ this.handleChanges }
-          />
-          <input
-            data-testid="description-input"
-            type="text"
-            name="description"
-            onChange={ this.handleChanges }
-          />
-          <select
-            name="currency"
-            data-testid="currency-input"
-            onChange={ this.handleChanges }
+      <div>
+        <header>
+          <span data-testid="email-field">{ userEmail }</span>
+          <span data-testid="total-field">{ total }</span>
+          <span data-testid="header-currency-field">BRL</span>
+          <form id="transaction-form">
+            <input
+              data-testid="value-input"
+              type="number"
+              name="value"
+              placeholder="0"
+              onChange={ this.handleChanges }
+            />
+            <input
+              data-testid="description-input"
+              type="text"
+              name="description"
+              onChange={ this.handleChanges }
+            />
+            <select
+              name="currency"
+              data-testid="currency-input"
+              onChange={ this.handleChanges }
+            >
+              {currencies
+                .map((option) => (
+                  <option data-testid={ option } key={ option } value={ option }>
+                    { option }
+                  </option>
+                ))}
+            </select>
+            <select
+              name="method"
+              onChange={ this.handleChanges }
+              data-testid="method-input"
+            >
+              <option value="Cartão de crédito">Cartão de crédito</option>
+              <option value="Cartão de débito">Cartão de débito</option>
+              <option value="Dinheiro">Dinheiro</option>
+            </select>
+            <select
+              name="tag"
+              onChange={ this.handleChanges }
+              data-testid="tag-input"
+            >
+              <option>Alimentação</option>
+              <option>Lazer</option>
+              <option>Trabalho</option>
+              <option>Transporte</option>
+              <option>Saúde</option>
+            </select>
+          </form>
+          <button
+            type="button"
+            onClick={ this.handleTransaction }
           >
-            {currencies
-              .map((option) => (
-                <option data-testid={ option } key={ option } value={ option }>
-                  { option }
-                </option>
-              ))}
-          </select>
-          <select
-            name="method"
-            onChange={ this.handleChanges }
-            data-testid="method-input"
-          >
-            <option value="Cartão de crédito">Cartão de crédito</option>
-            <option value="Cartão de débito">Cartão de débito</option>
-            <option value="Dinheiro">Dinheiro</option>
-          </select>
-          <select
-            name="tag"
-            onChange={ this.handleChanges }
-            data-testid="tag-input"
-          >
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
-          </select>
-        </form>
-        <button
-          type="button"
-          onClick={ this.handleTransaction }
-        >
-          Adicionar despesa
-        </button>
-      </header>
+            Adicionar despesa
+          </button>
+        </header>
+        <div>
+          <TransactionForm />
+          <TableElements userTransaction={ userTransaction } />
+        </div>
+      </div>
     );
   }
 }
