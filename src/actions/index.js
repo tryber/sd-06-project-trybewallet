@@ -4,6 +4,7 @@ export const REQUEST_RATES = 'REQUEST_RATES';
 export const GET_RATES = 'GET_RATES';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
 export const SEND_TO_GLOBAL_STATE = 'SEND_TO_GLOBAL_STATE';
+export const SEND_TOTAL_VALUE = 'SEND_TOTAL_VALUE';
 
 export const emailLogin = (email) => ({
   type: EMAIL, email,
@@ -28,17 +29,20 @@ const failedRequest = (error) => ({
 export function getRates() {
   return (dispatch) => {
     dispatch(requestRates()); // muda isFetching pra true
+
     return fetch('https://economia.awesomeapi.com.br/json/all')
       .then((response) => response.json()) // faz a requisição
-      // .then(json => console.log(json))
       .then(
-        (data) => dispatch(getRateList(data)),
+        (json) => dispatch(getRateList(json)),
         (error) => dispatch(failedRequest(error))
       );
   }
 }
 
-export function sendExpenseToGlobalState(object) {
-  // console.log(object)
-  return { type: SEND_TO_GLOBAL_STATE, payload: object }
-}
+export function sendExpenseToGlobalState(expense) {
+  return { type: SEND_TO_GLOBAL_STATE, payload: expense }
+};
+
+export function sendTotalValue(totalValue) {
+  return { type: SEND_TOTAL_VALUE, payload: totalValue }
+};

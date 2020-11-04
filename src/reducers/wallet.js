@@ -1,4 +1,10 @@
-import { REQUEST_RATES, GET_RATES, FAILED_REQUEST, SEND_TO_GLOBAL_STATE } from '../actions';
+import {
+  REQUEST_RATES,
+  GET_RATES,
+  FAILED_REQUEST,
+  SEND_TO_GLOBAL_STATE,
+  SEND_TOTAL_VALUE,
+} from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -6,6 +12,7 @@ const INITIAL_STATE = {
   isFetching: false,
   ratesJson: [],
   error: '',
+  totalExpenses: 0,
 };
 
 export default function wallet(state = INITIAL_STATE, action) {
@@ -13,11 +20,13 @@ export default function wallet(state = INITIAL_STATE, action) {
     case REQUEST_RATES:
       return { ...state, isFetching: true };
     case GET_RATES:
-      return { ...state, ratesJson: action.payload, isFetching: false };
+      return { ...state, currencies: action.payload, isFetching: false };
     case FAILED_REQUEST:
       return { ...state, error: action.payload, isFetching: false };
     case SEND_TO_GLOBAL_STATE:
-      return { ...state, expenses: [...state.expenses, action.payload] }
+      return { ...state, expenses: [...state.expenses, action.payload] };
+    case SEND_TOTAL_VALUE:
+      return { ...state, totalExpenses: action.payload };
     default:
       return state;
   }
