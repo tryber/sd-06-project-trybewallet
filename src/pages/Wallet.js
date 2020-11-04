@@ -75,20 +75,17 @@ class Wallet extends React.Component {
     const { value, currency, tag, method, description } = this.state.expense;
     return (
       <div>
+         {/* HEADER */}
         <div id="header">
           <h1>TrybeWallet</h1>
           <label htmlFor="user-email">Email</label>
           <p data-testid="email-field" id="user-email">{ email }</p>
           <label htmlFor="total-expenses">Despesa Total</label>
-          <p data-testid="total-field" id="total-expenses">
-            {/* { expenses.reduce((sum, expense) => sum += Math.round(parseFloat(expense.value)*10000)/10000 * Math.round(parseFloat(expense.exchangeRates[expense.currency].ask)*10000)/10000, 0) } */}
-            { this.sumExpenses() }
-          </p>
-          <label htmlFor="currency-to-exchange">Moeda de Câmbio</label>
-          <p data-testid="header-currency-field" id="currency-to-exchange">
-            { currencyToExchange }
-          </p>
+          <p data-testid="total-field" id="total-expenses">{ this.sumExpenses() }</p>
+          <label>Moeda de Câmbio</label>
+          <p data-testid="header-currency-field">{ currencyToExchange }</p>
         </div>
+        {/* FORM */}
         <div id="form">
           <div>
             <label htmlFor="expenseInput">Despesa: </label>
@@ -129,7 +126,9 @@ class Wallet extends React.Component {
                     key={ currencyStr }
                     data-testid={ currencyStr }
                     value={ currencyStr }
-                  />
+                  >
+                    { currencyStr }
+                  </option>
                 );
               }) }
             </select>
@@ -167,6 +166,43 @@ class Wallet extends React.Component {
           <div>
             <button onClick={ this.addExpenseButton }>Adicionar despesa</button>
           </div>
+        </div>
+        {/* TABLE */}
+        <div id="table">
+          <table>
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
+            </tr>
+            { expenses.map((expense) => {
+              const { description, tag, method, value, currency, exchangeRates } = expense;
+              const roundValue = Math.round(parseFloat(value)*10000)/10000;
+              const roundRate = Math.round(parseFloat(exchangeRates[currency].ask)*10000)/10000;
+              const roundRateToTable = Math.round(parseFloat(exchangeRates[currency].ask)*100)/100;
+              return (
+                <tr>
+                  <td>{ description }</td>
+                  <td>{ tag }</td>
+                  <td>{ method }</td>
+                  <td>{ roundValue }</td>
+                  <td>{ exchangeRates[currency].name }</td>
+                  <td>{ roundRateToTable }</td>
+                  <td>{ roundValue * roundRate }</td>
+                  <td>{ exchangeRates[currency].codein === 'BRL' ? 'Real' : 'Outra moeda' }</td>
+                  <td>{ exchangeRates[currency].codein === 'BRL' ? 'Real' : 'Outra moeda' }</td>
+
+                </tr>
+              );
+              }) 
+            }
+          </table>
         </div>
       </div>
     );
