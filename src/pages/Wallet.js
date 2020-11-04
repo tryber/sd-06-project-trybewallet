@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCurrencyValues, fetchExchangeRates, deleteSelectedExpenses } from '../actions';
+import {
+  fetchCurrencyValues,
+  fetchExchangeRates,
+  deleteSelectedExpenses,
+} from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -217,43 +221,44 @@ class Wallet extends React.Component {
               expenses.map((currentRow) => {
                 const exchangeRateToRow = currentRow.exchangeRates[currentRow.currency];
                 return (
-                <tr key={ currentRow }>
-                  <td>
-                    { currentRow.description }
-                  </td>
-                  <td>
-                    { currentRow.tag }
-                  </td>
-                  <td>
-                    { currentRow.method }
-                  </td>
-                  <td>
-                    { currentRow.value }
-                  </td>
-                  <td>
-                    { parseFloat(exchangeRateToRow.ask).toFixed(2) }
-                  </td>
-                  <td>
-                    { exchangeRateToRow.name }
-                  </td>
-                  <td>
-                    { (currentRow.value * exchangeRateToRow.ask).toFixed(2) }
-                  </td>
-                  <td>
-                    Real
-                  </td>
-                  <td>
-                    { currentRow.id }
-                  </td>
-                  <button
-                    type="button"
-                    data-testid="delete-btn"
-                    onClick={ () => deleteBtnHandler(currentRow.id) }
-                  >
-                    Deletar
-                  </button>
-                </tr>
-              )})
+                  <tr key={ currentRow }>
+                    <td>
+                      { currentRow.description }
+                    </td>
+                    <td>
+                      { currentRow.tag }
+                    </td>
+                    <td>
+                      { currentRow.method }
+                    </td>
+                    <td>
+                      { currentRow.value }
+                    </td>
+                    <td>
+                      { parseFloat(exchangeRateToRow.ask).toFixed(2) }
+                    </td>
+                    <td>
+                      { exchangeRateToRow.name }
+                    </td>
+                    <td>
+                      { (currentRow.value * exchangeRateToRow.ask).toFixed(2) }
+                    </td>
+                    <td>
+                      Real
+                    </td>
+                    <td>
+                      { currentRow.id }
+                    </td>
+                    <button
+                      type="button"
+                      data-testid="delete-btn"
+                      onClick={ () => deleteBtnHandler(currentRow.id) }
+                    >
+                      Deletar
+                    </button>
+                  </tr>
+                );
+              })
             }
           </tbody>
         </table>
