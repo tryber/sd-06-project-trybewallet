@@ -6,15 +6,18 @@ export const login = (email) => ({
   email,
 });
 
-export const fetchCurrencies = (json) => ({
+export const fetchCurrencies = (currencies) => ({
   type: FETCH_CURRENCIES,
-  json,
+  currencies,
 });
 
-export async function fetchAwesomeAPI() {
+export function fetchAwesomeAPI() {
   return ((dispatch) => (
     fetch('https://economia.awesomeapi.com.br/json/all')
       .then((response) => response.json())
-      .then((json) => dispatch(fetchCurrencies(json)))
+      .then((currencies) => {
+        delete currencies.USDT; // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete
+        return dispatch(fetchCurrencies(currencies));
+      })
   ));
 }

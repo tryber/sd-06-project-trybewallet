@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchAwesomeAPI } from '../actions';
 
@@ -10,13 +11,26 @@ class ExpenseForm extends React.Component {
 
   render() {
     const { currencies } = this.props;
+
+    const currenciesDropdownList = currencies.map((currency, index) => (
+      <option
+        key={ index }
+        data-testid={ currency }
+        value={ currency }
+      >
+        { currency }
+      </option>
+    ));
+
     return (
       <form>
         {'Valor: '}
         <input data-testid="value-input" type="number" />
 
-        {' Descrição: '}
-        <input data-testid="description-input" type="text" />
+        {'Moeda: '}
+        <select data-testid="currency-input">
+          {currenciesDropdownList}
+        </select>
 
         {' Método de pagamento: '}
         <select data-testid="method-input">
@@ -36,6 +50,9 @@ class ExpenseForm extends React.Component {
           <option value="Saúde">Saúde</option>
         </select>
 
+        {' Descrição: '}
+        <input data-testid="description-input" type="text" />
+
         <button type="button">Adicionar despesa</button>
       </form>
     );
@@ -53,3 +70,8 @@ const mapDispatchToProps = (dispatch) => (
 export default connect(
   mapStateToProps, mapDispatchToProps,
 )(ExpenseForm);
+
+ExpenseForm.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fetchAPI: PropTypes.func.isRequired,
+};
