@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addExpense } from '../actions';
+import { addExpense, rmvExpense } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -48,7 +48,11 @@ class Wallet extends React.Component {
     this.setState((currentState) => {
       return ({
         ...currentState,
-        expense: { ...currentState.expense, [name]: value, id: expenses.length }
+        expense: {
+          ...currentState.expense,
+          [name]: value,
+          id: (expenses.length === 0) ? 0 : expenses.reduce((greater, exp) => (greater > exp.id)
+            ? greater : exp.id , 0) + 1 }
       })
     });
   }
@@ -69,8 +73,9 @@ class Wallet extends React.Component {
       .then(r => this.setState({ currencies: Object.keys(r).filter(c => c !== "USDT") }));
   }
 
+
   render() {
-    const { email, expenses, currencyToExchange } = this.props;
+    const { email, expenses, currencyToExchange, rmvExpense } = this.props;
     const { currencies } = this.state;
     const { value, currency, tag, method, description } = this.state.expense;
     return (
@@ -118,8 +123,9 @@ class Wallet extends React.Component {
               data-testid="currency-input"
               id="currencyInput"
               onChange={ this.handleState }
-              value={ currency }
+              value = { currency }
             >
+              <option>Selecine a moeda</option>
               { currencies.map((currencyStr) => {
                 return(
                   <option
@@ -142,6 +148,7 @@ class Wallet extends React.Component {
               value={ method }
               onChange={ this.handleState }
             >
+              <option>Selecine o método de pagamento</option>
               <option value="Dinheiro">Dinheiro</option>
               <option value="Cartão de crédito">Cartão de crédito</option>
               <option value="Cartão de débito">Cartão de débito</option>
@@ -156,6 +163,7 @@ class Wallet extends React.Component {
               value={ tag }
               onChange={ this.handleState }
             >
+              <option>Selecine a categoria</option>
               <option value="Alimentação">Alimentação</option>
               <option value="Lazer">Lazer</option>
               <option value="Trabalho">Trabalho</option>
@@ -181,8 +189,8 @@ class Wallet extends React.Component {
               <th>Moeda de conversão</th>
               <th>Editar/Excluir</th>
             </tr>
-            { expenses.map((expense) => {
-              const { description, tag, method, value, currency, exchangeRates } = expense;
+            { expenses.map((expenseX) => {
+              const { description, tag, method, value, currency, exchangeRates } = expenseX;
               const roundValue = Math.round(parseFloat(value)*10000)/10000;
               const roundRate = Math.round(parseFloat(exchangeRates[currency].ask)*10000)/10000;
               const roundRateToTable = Math.round(parseFloat(exchangeRates[currency].ask)*100)/100;
@@ -196,7 +204,14 @@ class Wallet extends React.Component {
                   <td>{ roundRateToTable }</td>
                   <td>{ roundValue * roundRate }</td>
                   <td>{ exchangeRates[currency].codein === 'BRL' ? 'Real' : 'Outra moeda' }</td>
-                  <td>{ exchangeRates[currency].codein === 'BRL' ? 'Real' : 'Outra moeda' }</td>
+                  <td>
+                    <button
+                      data-testid="delete-btn"
+                      onClick={ () => rmvExpense(expenseX) }
+                    >
+                      Deletar despesa
+                    </button>
+                  </td>
 
                 </tr>
               );
@@ -209,7 +224,10 @@ class Wallet extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({ addExpense: (e) => dispatch(addExpense(e)) });
+const mapDispatchToProps = (dispatch) => ({
+  addExpense: (e) => dispatch(addExpense(e)),
+  rmvExpense: (e) => dispatch(rmvExpense(e)),
+});
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
