@@ -5,6 +5,7 @@ export const GET_RATES = 'GET_RATES';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
 export const SEND_TO_GLOBAL_STATE = 'SEND_TO_GLOBAL_STATE';
 export const SEND_TOTAL_VALUE = 'SEND_TOTAL_VALUE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const emailLogin = (email) => ({
   type: EMAIL, email,
@@ -45,4 +46,8 @@ export function sendExpenseToGlobalState(expense) {
 
 export function sendTotalValue(totalValue) {
   return { type: SEND_TOTAL_VALUE, payload: totalValue };
+}
+
+export function deleteExpense(expenseId) {
+  return { type: DELETE_EXPENSE, payload: expenseId };
 }

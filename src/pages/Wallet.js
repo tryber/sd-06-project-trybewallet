@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import '../index.css';
 import trybeLogo from '../img/trybe-logo.png';
 import Form from '../components/Form';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   render() {
@@ -26,6 +27,7 @@ class Wallet extends React.Component {
           </div>
         </header>
         <Form />
+        <Table />
       </div>
     );
   }

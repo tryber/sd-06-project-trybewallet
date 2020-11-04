@@ -4,6 +4,7 @@ import {
   FAILED_REQUEST,
   SEND_TO_GLOBAL_STATE,
   SEND_TOTAL_VALUE,
+  DELETE_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -16,6 +17,7 @@ const INITIAL_STATE = {
 };
 
 export default function wallet(state = INITIAL_STATE, action) {
+  let newExpenses;
   switch (action.type) {
   case REQUEST_RATES:
     return { ...state, isFetching: true };
@@ -27,6 +29,14 @@ export default function wallet(state = INITIAL_STATE, action) {
     return { ...state, expenses: [...state.expenses, action.payload] };
   case SEND_TOTAL_VALUE:
     return { ...state, totalExpenses: action.payload };
+  case DELETE_EXPENSE:
+    if (state.expenses.length === 1) {
+      newExpenses = [];
+    } else {
+      newExpenses = [...state.expenses];
+      newExpenses.splice(Number(action.payload), 1);
+    }
+    return { ...state, expenses: newExpenses };
   default:
     return state;
   }
