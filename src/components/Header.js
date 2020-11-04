@@ -10,11 +10,11 @@ class Header extends React.Component {
 
   calcExpenses() {
     const { despesas } = this.props;
-    const ask = nextvalue.exchangeRates[nextvalue.currency].ask;
     if (despesas.length > 0) {
       const moeda = despesas.reduce((despesa, nextvalue) => {
-        // linha return despesa + (nextvalue.exchangeRates[nextvalue.currency].ask * nextvalue.value);
-        return despesa + (ask * nextvalue.value);
+        const asked = nextvalue.exchangeRates[nextvalue.currency].ask;
+        // return despesa + (nextvalue.exchangeRates[nextvalue.currency].ask * nextvalue.value);
+        return despesa + (asked * nextvalue.value);
       }, 0);
     return parseFloat(moeda).toFixed(2);
     } else {

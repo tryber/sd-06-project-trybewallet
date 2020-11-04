@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { currency } from '../actions'
-import * as api from '../services/api';
+import getAllCurrency from '../services/api';
 
 class SelectMoeda extends React.Component {
   constructor() {
@@ -13,7 +13,7 @@ class SelectMoeda extends React.Component {
   }
 
   async componentDidMount() {
-    const allCurrency = await api.getAllCurrency();
+    const allCurrency = await getAllCurrency();
     const arrayAllCurrency = Object.values(allCurrency);
     arrayAllCurrency.splice(1,1);
     const currency = arrayAllCurrency.map(currency => currency.code);

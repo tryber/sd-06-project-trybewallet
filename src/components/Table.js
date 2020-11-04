@@ -9,7 +9,7 @@ class Table extends React.Component {
   }
 
 buttonDel(event) {
-  this.props.dellet(event.target.name)
+  this.props.dellet(parseInt(event.target.name))
 }
 
   render() {
