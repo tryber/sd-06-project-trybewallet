@@ -14,7 +14,7 @@
     background-color: white;
 }
 
-.form {
+ .form {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -71,4 +71,11 @@ span {
 .header-expenses th {
     font-size: 1.8vw;
     padding-left: 10px;
+}
+
+.table-expenses {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
 }

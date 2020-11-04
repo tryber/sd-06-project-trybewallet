@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import '../css/Wallet.css';
 import logo from '../images/logo.png';
 import { addExpenseThunk, fetchCurrencies } from '../actions';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 // import { actionCreators } from '../store/index';
 
 class Wallet extends React.Component {
@@ -70,7 +71,7 @@ class Wallet extends React.Component {
   render() {
     const payMeth = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const expCat = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-    const { email, currencies } = this.props;
+    const { email, currencies, expenses } = this.props;
     const { expense } = this.state;
     const { value, description, method, currency, tag } = expense;
     const { addExpense } = this.props;
@@ -164,7 +165,7 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
         </form>
-        <table className="header-expenses">
+        <table>
           <thead>
             <tr>
               <th>Descrição</th>
@@ -181,9 +182,27 @@ class Wallet extends React.Component {
         </table>
         <table>
           <tbody>
-            <tr>
-              {/* fazer um map das expenses e exibir aqui! */}
-            </tr>
+            {expenses.map((exp) => (
+              <tr key={ exp.currency }>
+                <td>{ exp.description }</td>
+                <td>{ exp.tag }</td>
+                <td>{ exp.method }</td>
+                <td>{ exp.value }</td>
+                <td>{ exp.exchangeRates[exp.currency].name }</td>
+                <td>{ parseFloat(exp.exchangeRates[exp.currency].ask).toFixed(2) }</td>
+                <td>
+                  {
+                    (exp.exchangeRates[exp.currency].ask * exp.value).toFixed(2)
+                  }
+                </td>
+                <td> Real </td>
+                <td>
+                  <button type="button">
+                    Deletar
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
