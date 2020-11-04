@@ -1,8 +1,6 @@
-// Coloque aqui suas actions
-
-const userLogin = (email) => ({
-  type: 'USER_LOGIN',
-  payload: email,
-});
-
-export default userLogin;
+export default function userLogin(email) {
+  return {
+    type: 'USER_LOGIN',
+    payload: email,
+  };
+}

@@ -6,20 +6,27 @@ import PropTypes from 'prop-types';
 // import navLogo from '../img/trybe-logo.png';
 
 /* COMPONENTES */
+import Form from '../components/Form';
+
 // import Table from '../components/Table';
 
 class Wallet extends React.Component {
   render() {
     const { email, total } = this.props;
     return (
-      <header>
-        {/* <img src="" alt="trybe-logo" /> */}
-        <p data-testid="email-field">{email}</p>
+      <div>
+        <header>
+          {/* <img src="" alt="trybe-logo" /> */}
+          <p data-testid="email-field">{email}</p>
 
-        <span> Despesa total: </span>
-        <p data-testid="total-field" value="0">{total}</p>
-        <p data-testid="header-currency-field"> BRL </p>
-      </header>
+          <span>
+            Despesa total:
+            <p data-testid="total-field" value="0">{total}</p>
+            <p data-testid="header-currency-field"> BRL </p>
+          </span>
+        </header>
+        <Form />
+      </div>
     );
   }
 }
