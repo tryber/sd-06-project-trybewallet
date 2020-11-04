@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Header from '../components/Header.jsx'
 
-class Wallet extends Component {
+class Wallet extends React.Component {
   render() {
     return (
       <div className="header">
-        <Header emanil="alguem@email.com" total={0} /> 
+        <Header email="alguem@email.com" total={0} /> 
       </div>
     );
   };
