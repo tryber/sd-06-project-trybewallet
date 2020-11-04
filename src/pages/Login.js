@@ -24,7 +24,7 @@ class Login extends React.Component {
 
   verifyEmailAndPassword() {
     const { email, password } = this.state;
-    const magic = 6;
+    const magic = 5;
     const isValid = email.match(/\S+@\S+\.\S+/);
     if (password.length > magic && isValid) {
       return true;
