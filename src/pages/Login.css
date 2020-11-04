@@ -39,15 +39,21 @@ h1 {
   align-items: center;
   background-color: rgba(31, 148, 31, 0.795);
   border-radius: 5px;
+  border: 0;
   color: aliceblue;
+  cursor: pointer;
   display: flex;
-  height: 10px;
+  height: 25px;
   justify-content: center;
-  margin-bottom: 30px;
   margin-top: 10px;
   padding: 10px;
-  text-decoration: none;
   width: 100px;
+}
+
+.btnn {
+  height: 0;
+  margin-bottom: 55px;
+  text-decoration: none;
 }
 
 .btn:hover {

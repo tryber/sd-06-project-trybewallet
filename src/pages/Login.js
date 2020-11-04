@@ -10,34 +10,30 @@ class Login extends React.Component {
     super(props);
 
     this.validateFields = this.validateFields.bind(this);
-    this.HandleLinkRedirect = this.HandleLinkRedirect.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
       email: '',
       password: '',
-      enable: false,
+      isValid: false,
     };
   }
 
   validateFields() {
+    const MIN_LENGTH = 6;
     const { email, password } = this.state;
-    const minLength = 5;
-    const validEmail = (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
-    const validPassword = (password.length >= minLength);
-    const loginIsValid = (validEmail && validPassword);
-    if (loginIsValid) return this.setState({ enable: true });
+    this.setState({
+      isValid: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+      && password.length >= MIN_LENGTH,
+    });
   }
 
-  HandleLinkRedirect() {
-    const { enable } = this.state;
-    if (enable) return '/carteira';
+  handleChange({ target }) {
+    this.setState({ [target.name]: target.value }, () => {
+      this.validateFields();
+    });
   }
-
-  // HandleClickRedirect() {
-  //   const { enable } = this.state;
-  //   if (!enable) alert('Enail ou senha inválidos');
-  // }
 
   handleSubmit(event) {
     const { history, saveEmail } = this.props;
@@ -48,6 +44,7 @@ class Login extends React.Component {
   }
 
   render() {
+    const { email, password, isValid } = this.state;
     return (
       <section className="login-container">
         <h1>Login</h1>
@@ -56,27 +53,32 @@ class Login extends React.Component {
           required
           type="email"
           name="email"
+          value={ email }
           placeholder=" Dígite seu email"
-          onChange={ ({ target: { value } }) => this.setState({ email: value }) }
+          onChange={ this.handleChange }
         />
         <input
           data-testid="password-input"
           required
           type="password"
           name="password"
+          value={ password }
           placeholder=" Senha"
-          onChange={ ({ target: { value } }) => {
-            this.setState({ password: value });
-            return this.validateFields();
-          } }
+          onChange={ this.handleChange }
         />
         <Link
-          className="btn"
+          to="/carteira"
           onClick={ this.handleSubmit }
-          to={ () => this.HandleLinkRedirect() }
+          className="btnn"
         >
-          Entrar
-
+          <button
+            type="submit"
+            className="btn"
+            disabled={ !isValid }
+            onClick={ () => this.validateFields() }
+          >
+            Entrar
+          </button>
         </Link>
       </section>
     );
