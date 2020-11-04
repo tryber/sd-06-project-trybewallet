@@ -19,7 +19,12 @@ class Wallet extends React.Component {
       tag: '',
     };
   }
-  
+
+  componentDidMount() {
+    const { fetchCurrencyValue } = this.props;
+    fetchCurrencyValue();
+  }
+
   onSubmit(event) {
     event.preventDefault();
     const { fetchExchangeRates } = this.props;
@@ -44,11 +49,6 @@ class Wallet extends React.Component {
     this.setState({
       [name]: value,
     });
-  }
-
-  componentDidMount() {
-    const { fetchCurrencyValue } = this.props;
-    fetchCurrencyValue();
   }
 
   render() {
@@ -110,12 +110,12 @@ class Wallet extends React.Component {
             >
               <option>-</option>
               {
-                currencies.map((currency) => (
+                currencies.map((currentCurrency) => (
                   <option
-                    data-testid={ currency }
-                    key={ currency }
+                    data-testid={ currentCurrency }
+                    key={ currentCurrency }
                   >
-                    { currency }
+                    { currentCurrency }
                   </option>
                 ))
               }
@@ -133,12 +133,12 @@ class Wallet extends React.Component {
               <option>-</option>
               {
                 methodOptions
-                  .map((method) => (
+                  .map((currentMethod) => (
                     <option
-                      data-testid={ method }
-                      key={ method }
+                      data-testid={ currentMethod }
+                      key={ currentMethod }
                     >
-                      { method }
+                      { currentMethod }
                     </option>
                   ))
               }
@@ -156,12 +156,12 @@ class Wallet extends React.Component {
               <option>-</option>
               {
                 tagOptions
-                  .map((tag) => (
+                  .map((currentTag) => (
                     <option
-                      data-testid={ tag }
-                      key={ tag }
+                      data-testid={ currentTag }
+                      key={ currentTag }
                     >
-                      { tag }
+                      { currentTag }
                     </option>
                   ))
               }
