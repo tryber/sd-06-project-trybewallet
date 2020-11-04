@@ -40,7 +40,7 @@ class FormExpense extends Component {
     return (
       <form>
         <label htmlFor="expenseNumber">
-          Valor
+          Valor:
           <input
             type="number"
             data-testid="value-input"
@@ -51,7 +51,7 @@ class FormExpense extends Component {
           />
         </label>
         <label htmlFor="userDescription">
-          Descrição
+          Descrição:
           <textarea
             data-testid="description-input"
             name="description"
@@ -61,7 +61,7 @@ class FormExpense extends Component {
           />
         </label>
         <label htmlFor="selectedCoin">
-          Moeda
+          Moeda:
           <select
             data-testid="currency-input"
             value={ this.state.currency }
@@ -74,7 +74,7 @@ class FormExpense extends Component {
           </select>
         </label>
         <label htmlFor="payment">
-        Método de pagamento
+        Método de pagamento:
           <select
             data-testid="method-input"
             name="method"
@@ -88,7 +88,7 @@ class FormExpense extends Component {
             </select>
         </label>
         <label htmlFor="category">
-          Tag
+          Tag:
           <select
             data-testid="tag-input"
             name="tag"

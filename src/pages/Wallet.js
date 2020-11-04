@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import FormExpense from '../components/FormExpense';
+import ExpensesTable from '../components/ExpensesTable';
 import '../css/Wallet.css';
 
 class Wallet extends React.Component {
@@ -30,11 +31,12 @@ class Wallet extends React.Component {
         <header className="headerInfo">
           <ul>
             <li data-testid="email-field">{`Email: ${userEmail}`}</li>
-            <li data-testid="total-field">{this.sumPrice()}</li>
+            <li data-testid="total-field">{`Despesa Total R$ ${this.sumPrice()}`}</li>
             <li data-testid="header-currency-field">BRL</li>
           </ul>
         </header>
         <FormExpense />
+        <ExpensesTable />
       </div>
     );
   }
