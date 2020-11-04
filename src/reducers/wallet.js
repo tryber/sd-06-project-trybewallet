@@ -1,12 +1,18 @@
-const INITIAL_STATE = { currencyToExchange: 'BRL', expenses: [] };
-const WALLET = 'WALLET';
+const INITIAL_STATE = {
+  currencyToExchange: 'BRL',
+  expenses: [],
+};
+
+const ADD_EXPENSE = 'ADD_EXPENSE';
 
 const wallet = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-  case WALLET:
+  const { expenses } = state;
+  const { type, expense } = action;
+  switch (type) {
+  case ADD_EXPENSE:
     return ({
-      expenses: action.expenses,
-      currencyToExchange: action.currencyToExchange,
+      ...state,
+      expenses: [...expenses, expense],
     });
   default:
     return state;

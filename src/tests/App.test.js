@@ -99,7 +99,7 @@ describe('1 - [PÁGINA DE LOGIN] Crie uma página inicial de login com os seguin
   });
 });
 
-describe.only('2 - [PÁGINA DA CARTEIRA] Crie uma página para sua carteira com as seguintes características:', () => {
+describe('2 - [PÁGINA DA CARTEIRA] Crie uma página para sua carteira com as seguintes características:', () => {
   test('A rota para esta página deve ser \'/carteira\'', () => {
     const { history } = renderWithRouterAndStore(<App />);
     history.push('/carteira');
