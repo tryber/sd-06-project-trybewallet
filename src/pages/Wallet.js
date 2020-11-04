@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addExpense, fetchCurrencies } from '../actions';
+import { addExpense, editExpense, fetchCurrencies } from '../actions';
 import WalletTable from '../components/WalletTable';
 
 class Wallet extends React.Component {
@@ -10,6 +10,8 @@ class Wallet extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.mountForm = this.mountForm.bind(this);
+    this.editExpense = this.editExpense.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
 
     this.state = {
       currencies: [],
@@ -19,12 +21,63 @@ class Wallet extends React.Component {
       method: 'Dinheiro',
       tag: 'Alimentação',
       exchangeRates: {},
+      addBtn: false,
+      editBtn: true,
+      editId: 0,
     };
   }
 
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({ [name]: value });
+  }
+
+  editExpense(type, id) {
+    if (type === 'edit') this.setState({ addBtn: true, editBtn: false });
+    if (type === 'del') this.setState({ addBtn: false, editBtn: true });
+    const { expenses } = this.props;
+    const item = expenses
+      .filter((item) => id === item.id)
+      .reduce((acc, item) => ({
+        ...item,
+        acc
+      }), {});
+    this.setState({
+      value: item.value,
+      description: item.description,
+      currency: item.currency,
+      method: item.method,
+      tag: item.tag,
+      exchangeRates: item.exchangeRates,
+      editId: id,
+    });
+  }
+
+  handleEdit() {
+    this.setState({ addBtn: false, editBtn: true });
+    const {
+      editId,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates,
+    } = this.state;
+    const { expenses, editData } = this.props;
+    const id = editId;
+    const editedExpenses = expenses.map((item) => {
+      if (item.id === id) {
+        item.value = value
+        item.description = description
+        item.currency = currency
+        item.method = method
+        item.tag = tag
+        item.exchangeRates = exchangeRates
+      }
+      return item;
+    });
+    editData(editedExpenses);
   }
 
   mountForm(total) {
@@ -62,9 +115,6 @@ class Wallet extends React.Component {
         bid = rates[item].ask;
       }
     });
-    // Two decimals round:
-    // https://learnersbucket.com/examples/javascript/
-    // learn-how-to-round-to-2-decimal-places-in-javascript/
     this.setState({ exchangeRates: rates });
     const newTotal = total + (value * bid);
     this.mountForm(newTotal);
@@ -77,6 +127,14 @@ class Wallet extends React.Component {
 
   render() {
     const { email, rates, total } = this.props;
+    const { addBtn,
+      editBtn,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+    } = this.state;
     const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
@@ -94,22 +152,28 @@ class Wallet extends React.Component {
               id='value'
               data-testid='value-input'
               name='value'
+              // I was getting an uncontrolled type error, learned how to get it right from here:
+              // https://stackoverflow.com/questions/47012169/
+              // a-component-is-changing-an-uncontrolled-input-of-type-text-to-be-controlled-erro
+              value={value || 0}
               onChange={this.handleChange}
-              defaultValue='0'
             />
           </label>
           <label htmlFor='description'>
+            Desc
             <input
               type='text'
               id='description'
               data-testid='description-input'
               name='description'
+              value={description || ''}
               onChange={this.handleChange}
             />
           </label>
           <select
             data-testid='currency-input'
             name='currency'
+            value={currency || 'USD'}
             onChange={this.handleChange}
           >
             {Object.keys(rates)
@@ -121,6 +185,7 @@ class Wallet extends React.Component {
           <select
             data-testid='method-input'
             name='method'
+            value={method || 'Dinheiro'}
             onChange={this.handleChange}
           >
             {methods.map((item) => <option key={item}>{item}</option>)}
@@ -128,18 +193,27 @@ class Wallet extends React.Component {
           <select
             data-testid='tag-input'
             name='tag'
+            value={tag || 'Alimentação'}
             onChange={this.handleChange}
           >
             {tags.map((item) => <option key={item}>{item}</option>)}
           </select>
           <button
             type='button'
+            disabled={addBtn}
             onClick={() => this.handleSubmit()}
           >
             Adicionar despesa
           </button>
+          <button
+            type='button'
+            disabled={editBtn}
+            onClick={() => this.handleEdit()}
+          >
+            Editar despesa
+          </button>
         </form>
-        <WalletTable />
+        <WalletTable editExpense={this.editExpense} />
       </div>
     );
   }
@@ -155,6 +229,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetch: () => dispatch(fetchCurrencies()),
   addData: (expense, total) => dispatch(addExpense(expense, total)),
+  editData: (updatedData) => dispatch(editExpense(updatedData)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
