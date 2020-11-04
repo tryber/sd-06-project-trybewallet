@@ -1,4 +1,4 @@
-import SAVE_USER from './actionTypes';
+import { SAVE_USER } from './actionTypes';
 
 function registerUser(userName) {
   const action = {

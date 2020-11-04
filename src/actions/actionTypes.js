@@ -1,3 +1,4 @@
 const SAVE_USER = 'SAVE_USER';
+const SAVE_EXPENSE = 'SAVE_EXPENSE';
 
-export default SAVE_USER;
+export { SAVE_USER, SAVE_EXPENSE };

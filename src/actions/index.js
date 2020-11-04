@@ -1,3 +1,4 @@
 import registerUser from './registerUser';
+import saveExpense from './saveExpense';
 
-export default registerUser;
+export { registerUser, saveExpense };
