@@ -3,26 +3,24 @@ import { connect } from 'react-redux';
 import { getApiThunk, addExpenseThunk } from '../actions';
 
 class FormExpense extends Component {
-  constructor() {
+  constructor(props) {
     super();
-
+    const { expenseValue } = props;
     this.state = {
-      id: '',
+      id: expenseValue.length,
       value: '',
       description: '',
       currency: '',
       method: '',
       tag: '',
     }
-
     this.handleOnchange = this.handleOnchange.bind(this);
-    // this.handleOnClick = this.handleOnClick.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
   }
 
   componentDidMount() {
-    const { expenseValue, getResponse } = this.props;
+    const { getResponse } = this.props;
     getResponse();
-    this.setState({ id: expenseValue.length });
   }
 
   handleOnchange({ target }) {
@@ -30,15 +28,15 @@ class FormExpense extends Component {
     this.setState({ [name]: target.value });
   }
 
-  // handleOnClick(event) {
-  //   event.PreventDefault();
-  //   const { getUserExpenses } = this.props;
-  //   getUserExpenses(this.state);
-    
-  // }
-  
+  handleOnClick(event) {
+    const { expenseValue, getUserExpenses } = this.props;
+    event.preventDefault();
+    this.setState({ id: expenseValue.length + 1});
+    getUserExpenses(this.state);
+  }
+
   render() {
-    const { currenciesValues, getUserExpenses } = this.props;
+    const { currenciesValues } = this.props;
     return (
       <form>
         <label htmlFor="expenseNumber">
@@ -105,9 +103,8 @@ class FormExpense extends Component {
             <option>Saúde</option>
           </select>
         </label>
-        <button onClick={(event) =>{ event.preventDefault();
-          getUserExpenses(this.state) }}>Adicionar despesa</button>
-      </form>     
+        <button onClick={this.handleOnClick}>Adicionar despesa</button>
+      </form>  
     );
   }
 }
@@ -119,7 +116,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   currenciesValues: state.wallet.currencies,
-  responseObj: state.wallet.response,
   expenseValue: state.wallet.expenses,
 })
 

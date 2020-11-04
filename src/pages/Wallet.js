@@ -16,17 +16,15 @@ class Wallet extends React.Component {
     const { expenseValue } = this.props;
     if (expenseValue.length > 0) {
       return expenseValue
-        .reduce((acc, curr) => (acc + (Math.round(parseFloat(
-          curr.exchangeRates[curr.currency].ask,
-        )
-          * curr.value) * 100) / 100), 0);
+        .reduce((acc, curr) => (acc + (
+          parseFloat(curr.exchangeRates[curr.currency].ask)
+        ) * curr.value), 0).toFixed(2);
     }
     return 0;
   }
 
   render() {
-    const { userEmail, expenseValue } = this.props;
-    console.log(expenseValue);
+    const { userEmail } = this.props;
     return (
       <div>
         <header className="headerInfo">
