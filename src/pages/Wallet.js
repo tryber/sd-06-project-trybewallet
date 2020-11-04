@@ -237,9 +237,13 @@ Wallet.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   editData: PropTypes.func.isRequired,
   addData: PropTypes.func.isRequired,
-  rates: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  total: PropTypes.number.isRequired,
+  rates: PropTypes.arrayOf(PropTypes.string).isRequired,
+  total: PropTypes.number,
   email: PropTypes.string.isRequired,
+};
+
+Wallet.defaultProps = {
+  total: 0,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
