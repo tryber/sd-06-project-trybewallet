@@ -67,6 +67,7 @@ Fieldset.propTypes = {
   coins: propTypes.arrayOf(propTypes.shape(), propTypes.func).isRequired,
   methods: propTypes.arrayOf(propTypes.shape(), propTypes.func).isRequired,
   allTags: propTypes.arrayOf(propTypes.shape(), propTypes.func).isRequired,
+  value: propTypes.string.isRequired,
   changeValue: propTypes.func.isRequired,
   changeCoin: propTypes.func.isRequired,
   changeMethod: propTypes.func.isRequired,

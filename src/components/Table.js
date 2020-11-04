@@ -22,8 +22,8 @@ class Table extends Component {
     actionEdit({ value, description, currency, method, tag, id, isEditing });
   }
 
-  handleEditExpense(id) {
-    this.setState({ editedId: id, isEditing: true });
+  handleEditExpense() {
+    this.setState({ isEditing: true });
   }
 
   render() {
@@ -81,6 +81,7 @@ class Table extends Component {
 Table.propTypes = {
   expenses: propTypes.arrayOf(propTypes.shape()).isRequired,
   actionRemove: propTypes.func.isRequired,
+  actionEdit: propTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
