@@ -113,7 +113,7 @@ describe('2 - [PÁGINA DA CARTEIRA] Crie uma página para sua carteira com as se
   });
 });
 
-describe.only('3 - [PÁGINA DA CARTEIRA] Crie um header para a página de carteira contendo as seguintes características:', () => {
+describe('3 - [PÁGINA DA CARTEIRA] Crie um header para a página de carteira contendo as seguintes características:', () => {
   const initial = initialStateHeader;
 
   test('Um elemento que exiba o email do usuário que fez login.', () => {

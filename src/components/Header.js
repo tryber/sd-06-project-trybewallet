@@ -44,7 +44,7 @@ function mapStateToProps(state) {
   return {
     userLogin: state.user.email,
     totalExpenses: state.wallet.total,
-  }
+  };
 }
 
 Header.propTypes = {
