@@ -9,10 +9,8 @@ class Wallet extends React.Component {
     const { expenses } = this.props;
     let totalValue = 0;
     expenses.forEach((expense) => {
-      const exchangeRatesKey = Object.keys(expense.exchangeRates)
-        .find((key) => key === expense.currency);
       const floatValue = parseFloat(expense.value);
-      const floatExchangeRate = parseFloat(expense.exchangeRates[exchangeRatesKey].ask);
+      const floatExchangeRate = parseFloat(expense.exchangeRates[expense.currency].ask);
       totalValue += floatValue * floatExchangeRate;
     });
     return totalValue.toFixed(2);

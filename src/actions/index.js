@@ -10,18 +10,12 @@ export const storeEmail = (email) => ({
   email,
 });
 
-const requestExchangeRates = () => ({
-  type: REQUEST_EXCHANGE_RATES });
-
 const storeExpenses = (expenses, exchangeRates) => ({
   type: SAVE_EXPENSE,
   expenses: { ...expenses, exchangeRates },
 });
 
 export function fetchExchangeRatesAndStoreExpenses(expenses) {
-  return (dispatch) => {
-    dispatch(requestExchangeRates());
-    return awesomeAPI()
-      .then((exchangeRates) => dispatch(storeExpenses(expenses, exchangeRates)));
-  };
+  return (dispatch) => awesomeAPI()
+    .then((exchangeRates) => dispatch(storeExpenses(expenses, exchangeRates)));
 }

@@ -90,7 +90,7 @@ class Form extends Component {
             onChange={ (e) => this.saveToState(e.target) }
             defaultValue="DEFAULT"
           >
-            <option disabled value="DEFAULT"> -- Selecione uma opção -- </option>
+            <option disabled value="DEFAULT"> -- Moeda -- </option>
             {currencyList.map((currency) => {
               if (currency === 'USDT') return;
               return (
@@ -113,7 +113,7 @@ class Form extends Component {
             id="method-input"
             onChange={ (e) => this.saveToState(e.target) }
           >
-            <option disabled value="DEFAULT"> -- Selecione uma opção -- </option>
+            <option disabled value="DEFAULT"> -- Método de pagamento -- </option>
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
             <option value="Cartão de débito">Cartão de débito</option>
@@ -128,7 +128,7 @@ class Form extends Component {
             id="tag-input"
             onChange={ (e) => this.saveToState(e.target) }
           >
-            <option disabled value="DEFAULT"> -- Selecione uma opção -- </option>
+            <option disabled value="DEFAULT"> -- Categoria -- </option>
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
             <option value="Trabalho">Trabalho</option>
