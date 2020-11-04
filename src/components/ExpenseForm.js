@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addExpense } from '../actions/addExpense';
 import fetchCurrencies from '../actions/fetchCurrencies';
+import fetchExpenses from '../actions/fetchExpenses';
 import '../style/ExpenseForm.css';
 
 class ExpenseForm extends Component {
@@ -19,6 +19,7 @@ class ExpenseForm extends Component {
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
+      exchangeRates: {},
     };
   }
 
@@ -31,24 +32,10 @@ class ExpenseForm extends Component {
     this.setState({ [target.name]: target.value });
   }
 
-  // Um botão com o texto 'Adicionar despesa' que salva as informações da despesa no estado global e atualiza a soma de despesas no header.
-  // - Desenvolva a funcionalidade do botão "Adicionar despesa" de modo que ao clicar no botão, as seguintes ações sejam executadas:
-  // Os valores dos campos devem ser salvos no estado da aplicação, na chave expenses, dentro de um array contendo todos gastos que serão adicionados:
-  // O id da despesa deve ser um número sequencial, começando em 0. Ou seja: a primeira despesa terá id 0, a segunda terá id 1, a terceira id 2, e assim por diante.
-  // => Você deverá salvar a cotação do câmbio feita no momento da adição para ter esse dado quando for efetuar uma edição do gasto. Caso você não tenha essa informação salva, o valor da cotação trazida poderá ser diferente do obtido anteriormente.
-  // Atenção nesse ponto: você deverá fazer uma requisição para API e buscar a cotação no momento que o botão de `Adicionar despesa` for apertado. Para isso você deve utilizar um thunk
-  // => Após adicionar a despesa, atualize a soma total das despesas. Essa informação deve ficar no header dentro do elemento com data-testid="total-field"
-
   handleSubmit(event) {
     event.preventDefault();
-    const { saveExpense, currencies, expenses } = this.props;
-    const id = expenses.length > 0 ? (expenses[expenses.length - 1].id + 1) : 0;
-
-    saveExpense({
-      ...this.state,
-      id,
-      exchangeRates: currencies,
-    });
+    const { saveExpense } = this.props;
+    saveExpense(this.state);
   }
 
   render() {
@@ -80,7 +67,6 @@ class ExpenseForm extends Component {
               value={ currency }
               onChange={ this.handleChange }
             >
-              <option>Selecione</option>
               {currencies.map((coin, index) => (
                 <option
                   key={ index }
@@ -102,7 +88,6 @@ class ExpenseForm extends Component {
               value={ method }
               onChange={ this.handleChange }
             >
-              <option>Selecione</option>
               <option>Dinheiro</option>
               <option>Cartão de crédito</option>
               <option>Cartão de débito</option>
@@ -118,7 +103,6 @@ class ExpenseForm extends Component {
               value={ tag }
               onChange={ this.handleChange }
             >
-              <option>Selecione</option>
               <option>Alimentação</option>
               <option>Lazer</option>
               <option>Trabalho</option>
@@ -159,14 +143,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(fetchCurrencies()),
-  saveExpense: (expense) => dispatch(addExpense(expense)),
+  saveExpense: (expense) => dispatch(fetchExpenses(expense)),
 });
 
 ExpenseForm.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
   saveExpense: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf().isRequired,
-  expenses: PropTypes.arrayOf().isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);

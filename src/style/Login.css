@@ -47,7 +47,7 @@
   width: 260px;
 }
 
-.button:hover {
+.button_login:hover {
   background-color: rgb(59, 141, 59);
   cursor: pointer;
 }
