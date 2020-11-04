@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { connect } from 'react-redux';
-import '../styles/Header.css'
+import '../styles/Header.css';
 
 class Header extends React.Component {
   constructor() {
@@ -9,11 +9,13 @@ class Header extends React.Component {
   }
 
   calcExpenses() {
-    const  { despesas }  = this.props;
-    if(despesas.length > 0){
-    const moeda = despesas.reduce((despesa, nextvalue) => {
-      return despesa + (nextvalue.exchangeRates[nextvalue.currency].ask * nextvalue.value);
-      }, 0)
+    const { despesas } = this.props;
+    const ask = nextvalue.exchangeRates[nextvalue.currency].ask;
+    if (despesas.length > 0) {
+      const moeda = despesas.reduce((despesa, nextvalue) => {
+        // linha return despesa + (nextvalue.exchangeRates[nextvalue.currency].ask * nextvalue.value);
+        return despesa + (ask * nextvalue.value);
+      }, 0);
     return parseFloat(moeda).toFixed(2);
     } else {
       return 0;
@@ -23,7 +25,7 @@ class Header extends React.Component {
   render() {
     const { email } = this.props;
     const total = this.calcExpenses();
-    return(
+    return (
       <div className="main-content">
         <div className="trybe-header">
           <h2>TRYBE WALLET</h2>
