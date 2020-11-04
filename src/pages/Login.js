@@ -82,9 +82,9 @@ class Login extends React.Component {
             </div>
 
             <button
+              disabled={ disable }
               className="btn btn-primary"
               type="submit"
-              disabled={ disable }
             >
               Entrar
             </button>
