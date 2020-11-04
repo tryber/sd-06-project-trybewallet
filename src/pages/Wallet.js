@@ -18,7 +18,7 @@ class Wallet extends React.Component {
       method: 'Dinheiro',
       tag: 'Alimentação',
       exchangeRates: {},
-    }
+    };
   }
 
   componentDidMount() {
@@ -48,33 +48,35 @@ class Wallet extends React.Component {
           <h2 data-testid="email-field">{ email }</h2>
           <p data-testid="total-field">
           {
-            expenses.length !== 0 ?
-            expenses.reduce((total, currValue) => {
-            const { value, currency, exchangeRates } = currValue;
-            const currencyPrice = exchangeRates[currency].ask;
-            const conversion = value * currencyPrice;
-            return total + conversion
-            }, 0).toFixed(2)
-            : 0.00
+            expenses.length !== 0 
+            ?
+              expenses.reduce((total, currValue) => {
+              const { value, currency, exchangeRates } = currValue;
+              const currencyPrice = exchangeRates[currency].ask;
+              const conversion = value * currencyPrice;
+              return total + conversion
+              }, 0).toFixed(2)
+            :
+            0.00
           }
           </p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <form onSubmit={ this.handleSubmit }>
           <fieldset>
-            <label>
+            <label htmlFor="value">
               Valor:
-              <input value={value} name="value" type="number" onChange={ this.handleChange } data-testid="value-input"/>
+              <input value={ value } name="value" type="number" onChange={ this.handleChange } data-testid="value-input"/>
             </label>
             <br />
-            <label>
+            <label htmlFor="description">
               Descreva:
-              <input value={description} name="description" onChange={ this.handleChange } data-testid="description-input"/>
+              <input value={ description } name="description" onChange={ this.handleChange } data-testid="description-input"/>
             </label>
             <br />
             <label>
               Moeda:
-              <select value={currency} name="currency" onChange={ this.handleChange } data-testid="currency-input">
+              <select value={ currency } name="currency" onChange={ this.handleChange } data-testid="currency-input">
                 { currencies.map((currency) =>
                 <option data-testid={currency} key={currency}>
                   {currency}
@@ -84,16 +86,16 @@ class Wallet extends React.Component {
             <br />
             <label>
               Forma de Pagamento:
-              <select value={method} name="method" onChange={ this.handleChange } data-testid="method-input">
+              <select value={ method } name="method" onChange={ this.handleChange } data-testid="method-input">
                 <option>Dinheiro</option>
                 <option>Cartão de crédito</option>
                 <option>Cartão de débito</option>
               </select>
             </label>
             <br />
-            <label>
+            <label g>
               Categoria:
-              <select value={tag} name="tag" onChange={ this.handleChange }data-testid="tag-input">
+              <select value={ tag } name="tag" onChange={ this.handleChange } data-testid="tag-input">
                 <option>Alimentação</option>
                 <option>Lazer</option>
                 <option>Trabalho</option>
@@ -117,23 +119,26 @@ class Wallet extends React.Component {
             <th>Moeda de conversão</th>
             <th>Editar/Excluir</th>
           </thead>
-          {expenses.length !== 0 ? 
-            expenses.map((expense) => {
-              const currencyName = expense.exchangeRates[expense.currency].name;
-              const exchange = expense.exchangeRates[expense.currency].ask;
-              const conversion = expense.value * exchange;
-              return <tbody>
-                <td>{ expense.description }</td>
-                <td>{ expense.tag }</td>
-                <td>{ expense.method }</td>
-                <td>{ expense.value }</td>
-                <td>{ currencyName }</td>
-                <td>{ parseFloat(exchange).toFixed(2) }</td>
-                <td>{ parseFloat(conversion).toFixed(2) }</td>
-                <td> Real </td>
-              </tbody>
-            }) : ''
-          }
+          {expenses.length !== 0 
+            ? 
+              expenses.map((expense) => {
+                const currencyName = expense.exchangeRates[expense.currency].name;
+                const exchange = expense.exchangeRates[expense.currency].ask;
+                const conversion = expense.value * exchange;
+                return <tbody>
+                  <td>{ expense.description }</td>
+                  <td>{ expense.tag }</td>
+                  <td>{ expense.method }</td>
+                  <td>{ expense.value }</td>
+                  <td>{ currencyName }</td>
+                  <td>{ parseFloat(exchange).toFixed(2) }</td>
+                  <td>{ parseFloat(conversion).toFixed(2) }</td>
+                  <td> Real </td>
+                </tbody>
+              })
+            :
+            ''
+          };
         </table>
       </div>
     );
@@ -153,6 +158,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 Wallet.propTypes = {
   email: propTypes.string.isRequired,
+  fetchCurrency: propTypes.func.isRequired,
+  updateExpenses: propTypes.func.isRequired,
+  expenses: propTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
