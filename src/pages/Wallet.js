@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCurrencyValues, fetchExchangeRates } from '../actions';
+import { fetchCurrencyValues, fetchExchangeRates, deleteSelectedExpenses } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -9,6 +9,7 @@ class Wallet extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.deleteBtnHandler = this.deleteBtnHandler.bind(this);
 
     this.state = {
       id: 0,
@@ -51,8 +52,13 @@ class Wallet extends React.Component {
     });
   }
 
+  deleteBtnHandler(id) {
+    const { deleteSelectedExpense } = this.props;
+    deleteSelectedExpense(id);
+  }
+
   render() {
-    const { handleChange, onSubmit } = this;
+    const { handleChange, onSubmit, deleteBtnHandler } = this;
     const {
       user: { email },
       wallet: { currencies, expenses },
@@ -66,6 +72,17 @@ class Wallet extends React.Component {
     } = this.state;
     const methodOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const tableHeadNames = [
+      'Descrição',
+      'Tag',
+      'Método de pagamento',
+      'Valor',
+      'Moeda',
+      'Câmbio utilizado',
+      'Valor convertido',
+      'Moeda de conversão',
+      'Editar/Excluir',
+    ];
     const totalExpense = expenses.length
       ? Math.round(expenses
         .reduce((acc, curr) => {
@@ -183,6 +200,63 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
         </form>
+        <table>
+          <thead>
+            <tr>
+              {
+                tableHeadNames.map((currentHeadName) => (
+                  <th key={ currentHeadName }>
+                    { currentHeadName }
+                  </th>
+                ))
+              }
+            </tr>
+          </thead>
+          <tbody>
+            {
+              expenses.map((currentRow) => {
+                const exchangeRateToRow = currentRow.exchangeRates[currentRow.currency];
+                return (
+                <tr key={ currentRow }>
+                  <td>
+                    { currentRow.description }
+                  </td>
+                  <td>
+                    { currentRow.tag }
+                  </td>
+                  <td>
+                    { currentRow.method }
+                  </td>
+                  <td>
+                    { currentRow.value }
+                  </td>
+                  <td>
+                    { parseFloat(exchangeRateToRow.ask).toFixed(2) }
+                  </td>
+                  <td>
+                    { exchangeRateToRow.name }
+                  </td>
+                  <td>
+                    { (currentRow.value * exchangeRateToRow.ask).toFixed(2) }
+                  </td>
+                  <td>
+                    Real
+                  </td>
+                  <td>
+                    { currentRow.id }
+                  </td>
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    onClick={ () => deleteBtnHandler(currentRow.id) }
+                  >
+                    Deletar
+                  </button>
+                </tr>
+              )})
+            }
+          </tbody>
+        </table>
       </div>
     );
   }
@@ -196,6 +270,7 @@ const mapStateToProps = ({ user, wallet }) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencyValue: (currencyData) => dispatch(fetchCurrencyValues(currencyData)),
   fetchExchangeRate: (newExpense) => dispatch(fetchExchangeRates(newExpense)),
+  deleteSelectedExpense: (id) => dispatch(deleteSelectedExpenses(id)),
 });
 
 Wallet.propTypes = {
@@ -209,6 +284,7 @@ Wallet.propTypes = {
   }).isRequired,
   fetchCurrencyValue: PropTypes.func.isRequired,
   fetchExchangeRate: PropTypes.func.isRequired,
+  deleteSelectedExpense: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

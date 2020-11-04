@@ -2,6 +2,7 @@ export const EMAIL_UPDATE = 'EMAIL_UPDATE';
 export const PASSWORD_UPDATE = 'PASSWORD_UPDATE';
 export const GET_CURRENCY_VALUES_SUCCESS = 'GET_CURRENCY_VALUES_SUCCESS';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const DELETE_SELECTED_EXPENSES = 'DELETE_SELECTED_EXPENSES';
 
 export const emailUpdate = (email) => ({
   type: EMAIL_UPDATE,
@@ -21,6 +22,11 @@ const getCurrencyValues = (currencies) => ({
 export const addExpense = (newExpense) => ({
   type: ADD_EXPENSE,
   newExpense,
+});
+
+export const deleteSelectedExpenses = (expense) => ({
+  type: DELETE_SELECTED_EXPENSES,
+  expense,
 });
 
 export function fetchCurrencyValues() {
