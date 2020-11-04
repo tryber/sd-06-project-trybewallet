@@ -2,8 +2,39 @@
   margin: 0;
   padding: 0;
 }
+
 .containerLogin{
   align-items: center;
   display: flex;
   justify-content: center;
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  height: 40px;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.header h1 {
+  align-items: flex-start;
+  align-self: start;
+  text-align: left;
+  display: flex;
+  justify-content: left;
+}
+
+.header span {
+  margin-right: 15px;
+}
+
+.form {
+  align-items: center;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding: 10px 10px;
+  width: 100%;
 }
