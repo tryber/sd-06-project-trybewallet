@@ -38,7 +38,7 @@ export function fetchExchangeRates(newExpense) {
   return async (dispatch) => {
     const exchangeRatesResponse = await fetch(endpoint);
     const exchangeRatesJson = await exchangeRatesResponse.json();
-    const completeNewExpense = { ...newExpense, exchangeRates: exchangeRatesJson }
+    const completeNewExpense = { ...newExpense, exchangeRates: exchangeRatesJson };
 
     return dispatch(addExpense(completeNewExpense));
   };

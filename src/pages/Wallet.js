@@ -19,13 +19,7 @@ class Wallet extends React.Component {
       tag: '',
     };
   }
-
-  handleChange({ target: { name, value } }) {
-    this.setState({
-      [name]: value,
-    });
-  }
-
+  
   onSubmit(event) {
     event.preventDefault();
     const { fetchExchangeRates } = this.props;
@@ -46,6 +40,12 @@ class Wallet extends React.Component {
     }));
   }
 
+  handleChange({ target: { name, value } }) {
+    this.setState({
+      [name]: value,
+    });
+  }
+
   componentDidMount() {
     const { fetchCurrencyValue } = this.props;
     fetchCurrencyValue();
@@ -58,7 +58,6 @@ class Wallet extends React.Component {
       wallet: { currencies, expenses },
     } = this.props;
     const {
-      id,
       value,
       description,
       currency,
@@ -206,9 +205,10 @@ Wallet.propTypes = {
   }).isRequired,
   wallet: PropTypes.shape({
     currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+    expenses: PropTypes.arrayOf(PropTypes.string.isRequired),
   }).isRequired,
   fetchCurrencyValue: PropTypes.func.isRequired,
-  addExpense: PropTypes.func.isRequired,
+  fetchExchangeRates: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
