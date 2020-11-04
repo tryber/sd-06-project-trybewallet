@@ -1,7 +1,8 @@
 import React from 'react';
-import { storeEmail } from '../actions';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { storeEmail } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class Login extends React.Component {
 
   checkBtnValidity() {
     const { email, password } = this.state;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const testEmail = emailRegex.test(email);
     const passwordMinLength = 5;
     const testPassword = (password.length >= passwordMinLength);
@@ -43,35 +44,35 @@ class Login extends React.Component {
 
   render() {
     const { isBtnDisabled, redirect } = this.state;
-    if (redirect) return <Redirect to='/carteira' />
+    if (redirect) return <Redirect to="/carteira" />;
     return (
       <form>
-        <label htmlFor='email'>
+        <label htmlFor="email">
           Email:
           <input
-            type='text'
+            type="text"
             required
-            name='email'
-            id='email'
-            data-testid='email-input'
-            onChange={this.handleChange}
+            name="email"
+            id="email"
+            data-testid="email-input"
+            onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor='password'>
+        <label htmlFor="password">
           Password:
           <input
-            type='text'
+            type="text"
             required
-            name='password'
-            id='password'
-            data-testid='password-input'
-            onChange={this.handleChange}
+            name="password"
+            id="password"
+            data-testid="password-input"
+            onChange={ this.handleChange }
           />
         </label>
         <button
-          type='button'
-          disabled={isBtnDisabled}
-          onClick={() => this.handleClick()}
+          type="button"
+          disabled={ isBtnDisabled }
+          onClick={ () => this.handleClick() }
         >
           Entrar
         </button>
@@ -83,5 +84,9 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   saveEmail: (email) => dispatch(storeEmail(email)),
 });
+
+Login.propTypes = {
+  saveEmail: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);

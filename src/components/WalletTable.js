@@ -95,7 +95,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 WalletTable.propTypes = {
   editExpense: PropTypes.func.isRequired,
-  data: PropTypes.array.isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   delExpense: PropTypes.func.isRequired,
 };
 
