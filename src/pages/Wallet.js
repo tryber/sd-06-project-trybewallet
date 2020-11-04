@@ -7,17 +7,8 @@ import trybeLogo from '../img/trybe-logo.png';
 import Form from '../components/Form';
 
 class Wallet extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      totalValue: 0,
-    }
-
-    // this.postValue = this.postValue.bind(this);
-  }
-
   render() {
+    const { email, totalExpenses } = this.props;
     return (
       <div>
         <header>
@@ -25,15 +16,18 @@ class Wallet extends React.Component {
           <div>
             <span data-testid="email-field">
               E-mail:
-            { this.props.email }
+              { email }
             </span>
-            <span data-testid="total-field">Despesa Total: R$ { this.props.totalExpenses ? this.props.totalExpenses : 0 }</span>
+            <span data-testid="total-field">
+              Despesa Total: R$
+              { !totalExpenses ? 0 : totalExpenses }
+            </span>
             <span data-testid="header-currency-field">BRL</span>
           </div>
         </header>
         <Form />
       </div>
-    )
+    );
   }
 }
 
@@ -49,3 +43,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Wallet);
+
+Wallet.propTypes = {
+  totalExpenses: PropTypes.number.isRequired,
+};

@@ -16,11 +16,11 @@ export const passwordLogin = (password) => ({
 
 function requestRates() {
   return { type: REQUEST_RATES };
-};
+}
 
 function getRateList(json) {
   return { type: GET_RATES, payload: json };
-};
+}
 
 const failedRequest = (error) => ({
   type: FAILED_REQUEST, payload: error,
@@ -34,15 +34,15 @@ export function getRates() {
       .then((response) => response.json()) // faz a requisição
       .then(
         (json) => dispatch(getRateList(json)),
-        (error) => dispatch(failedRequest(error))
+        (error) => dispatch(failedRequest(error)),
       );
-  }
+  };
 }
 
 export function sendExpenseToGlobalState(expense) {
-  return { type: SEND_TO_GLOBAL_STATE, payload: expense }
-};
+  return { type: SEND_TO_GLOBAL_STATE, payload: expense };
+}
 
 export function sendTotalValue(totalValue) {
-  return { type: SEND_TOTAL_VALUE, payload: totalValue }
-};
+  return { type: SEND_TOTAL_VALUE, payload: totalValue };
+}
