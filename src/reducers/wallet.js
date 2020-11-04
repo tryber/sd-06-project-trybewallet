@@ -1,6 +1,5 @@
 import {
-  ADD_EXPENSES,
-  REQUEST_CURRENCY,
+  ADD_EXPENSE,
   SUCESS_CURRENCY,
 } from '../actions';
 
@@ -9,16 +8,12 @@ const INITIAL_STATE = {
   expenses: [],
 };
 
-export default function wallet(state = INITIAL_STATE, { type, expenses, currencies }) {
+export default function wallet(state = INITIAL_STATE, { type, expense, currencies }) {
   switch (type) {
-  case ADD_EXPENSES:
+  case ADD_EXPENSE:
     return {
       ...state,
-      expenses,
-    };
-  case REQUEST_CURRENCY:
-    return {
-      ...state,
+      expenses: [...state.expenses, expense],
     };
   case SUCESS_CURRENCY:
     return {

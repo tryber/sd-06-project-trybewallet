@@ -1,8 +1,7 @@
 import getCurrency from '../services/currencyAPI';
 
 export const START_LOGIN = 'START_LOGIN';
-export const ADD_EXPENSES = 'ADD_EXPENSES';
-export const REQUEST_CURRENCY = 'REQUEST_CURRENCY';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const SUCESS_CURRENCY = 'SUCESS_CURRENCY';
 
 export const startLogin = (email) => ({
@@ -10,24 +9,26 @@ export const startLogin = (email) => ({
   email,
 });
 
-export const addExpenses = (expenses) => ({
-  type: ADD_EXPENSES,
-  expenses,
-});
-
-const requestCurrency = () => ({
-  type: REQUEST_CURRENCY,
-});
-
 const sucessCurrency = (currencies) => ({
   type: SUCESS_CURRENCY,
   currencies,
 });
 
-export default function fetchCurrency() {
-  return async (dispatch) => {
-    dispatch(requestCurrency());
-    const responseCurrency = await getCurrency();
-    dispatch(sucessCurrency(responseCurrency));
+export const addExpense = (expense) => ({
+  type: ADD_EXPENSE,
+  expense,
+});
+
+export const fetchCurrency = () => async (dispatch) => {
+  const responseCurrency = await getCurrency();
+  dispatch(sucessCurrency(responseCurrency));
+};
+
+export const addExpenseThunk = (expense) => async (dispatch) => {
+  const responseCurrency = await getCurrency();
+  const expenseState = {
+    ...expense,
+    exchangeRates: responseCurrency,
   };
-}
+  dispatch(addExpense(expenseState));
+};
