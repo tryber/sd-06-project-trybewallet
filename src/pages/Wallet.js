@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { addExpense, editExpense, fetchCurrencies } from '../actions';
 import WalletTable from '../components/WalletTable';
 
@@ -14,7 +15,6 @@ class Wallet extends React.Component {
     this.handleEdit = this.handleEdit.bind(this);
 
     this.state = {
-      currencies: [],
       value: 0,
       description: '',
       currency: 'USD',
@@ -27,30 +27,9 @@ class Wallet extends React.Component {
     };
   }
 
-  handleChange({ target }) {
-    const { name, value } = target;
-    this.setState({ [name]: value });
-  }
-
-  editExpense(type, id) {
-    if (type === 'edit') this.setState({ addBtn: true, editBtn: false });
-    if (type === 'del') this.setState({ addBtn: false, editBtn: true });
-    const { expenses } = this.props;
-    const item = expenses
-      .filter((item) => id === item.id)
-      .reduce((acc, item) => ({
-        ...item,
-        acc
-      }), {});
-    this.setState({
-      value: item.value,
-      description: item.description,
-      currency: item.currency,
-      method: item.method,
-      tag: item.tag,
-      exchangeRates: item.exchangeRates,
-      editId: id,
-    });
+  async componentDidMount() {
+    const { fetch } = this.props;
+    await fetch();
   }
 
   handleEdit() {
@@ -68,12 +47,12 @@ class Wallet extends React.Component {
     const id = editId;
     const editedExpenses = expenses.map((item) => {
       if (item.id === id) {
-        item.value = value
-        item.description = description
-        item.currency = currency
-        item.method = method
-        item.tag = tag
-        item.exchangeRates = exchangeRates
+        item.value = value;
+        item.description = description;
+        item.currency = currency;
+        item.method = method;
+        item.tag = tag;
+        item.exchangeRates = exchangeRates;
       }
       return item;
     });
@@ -120,9 +99,30 @@ class Wallet extends React.Component {
     this.mountForm(newTotal);
   }
 
-  async componentDidMount() {
-    const { fetch } = this.props;
-    await fetch();
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  }
+
+  editExpense(type, id) {
+    if (type === 'edit') this.setState({ addBtn: true, editBtn: false });
+    if (type === 'del') this.setState({ addBtn: false, editBtn: true });
+    const { expenses } = this.props;
+    const expense = expenses
+      .filter((item) => id === item.id)
+      .reduce((acc, item) => ({
+        ...item,
+        acc,
+      }), {});
+    this.setState({
+      value: expense.value,
+      description: expense.description,
+      currency: expense.currency,
+      method: expense.method,
+      tag: expense.tag,
+      exchangeRates: expense.exchangeRates,
+      editId: id,
+    });
   }
 
   render() {
@@ -140,80 +140,80 @@ class Wallet extends React.Component {
     return (
       <div>
         <header>
-          <h3 data-testid='email-field'>{email}</h3>
-          <p data-testid='total-field' value='0'>{total}</p>
-          <p data-testid='header-currency-field'>BRL</p>
+          <h3 data-testid="email-field">{email}</h3>
+          <p data-testid="total-field" value="0">{total}</p>
+          <p data-testid="header-currency-field">BRL</p>
         </header>
         <form>
-          <label htmlFor='value'>
+          <label htmlFor="value">
             Despesa
             <input
-              type='number'
-              id='value'
-              data-testid='value-input'
-              name='value'
+              type="number"
+              id="value"
+              data-testid="value-input"
+              name="value"
               // I was getting an uncontrolled type error, learned how to get it right from here:
               // https://stackoverflow.com/questions/47012169/
               // a-component-is-changing-an-uncontrolled-input-of-type-text-to-be-controlled-erro
-              value={value || 0}
-              onChange={this.handleChange}
+              value={ value || 0 }
+              onChange={ this.handleChange }
             />
           </label>
-          <label htmlFor='description'>
+          <label htmlFor="description">
             Desc
             <input
-              type='text'
-              id='description'
-              data-testid='description-input'
-              name='description'
-              value={description || ''}
-              onChange={this.handleChange}
+              type="text"
+              id="description"
+              data-testid="description-input"
+              name="description"
+              value={ description || '' }
+              onChange={ this.handleChange }
             />
           </label>
           <select
-            data-testid='currency-input'
-            name='currency'
-            value={currency || 'USD'}
-            onChange={this.handleChange}
+            data-testid="currency-input"
+            name="currency"
+            value={ currency || 'USD' }
+            onChange={ this.handleChange }
           >
             {Object.keys(rates)
-            .filter((item) => item !== 'USDT')
-            .map((item) => {
-              return <option key={item} data-testid={item}>{item}</option>
-            })}
+              .filter((item) => item !== 'USDT')
+              .map((item) => (
+                <option key={ item } data-testid={ item }>{item}</option>
+              ))}
           </select>
           <select
-            data-testid='method-input'
-            name='method'
-            value={method || 'Dinheiro'}
-            onChange={this.handleChange}
+            data-testid="method-input"
+            name="method"
+            value={ method || 'Dinheiro' }
+            onChange={ this.handleChange }
           >
-            {methods.map((item) => <option key={item}>{item}</option>)}
+            {methods.map((item) => <option key={ item }>{item}</option>)}
           </select>
           <select
-            data-testid='tag-input'
-            name='tag'
-            value={tag || 'Alimentação'}
-            onChange={this.handleChange}
+            data-testid="tag-input"
+            name="tag"
+            value={ tag || 'Alimentação' }
+            onChange={ this.handleChange }
           >
-            {tags.map((item) => <option key={item}>{item}</option>)}
+            {tags.map((item) => <option key={ item }>{item}</option>)}
           </select>
           <button
-            type='button'
-            disabled={addBtn}
-            onClick={() => this.handleSubmit()}
+            type="button"
+            disabled={ addBtn }
+            onClick={ () => this.handleSubmit() }
           >
             Adicionar despesa
           </button>
           <button
-            type='button'
-            disabled={editBtn}
-            onClick={() => this.handleEdit()}
+            type="button"
+            disabled={ editBtn }
+            onClick={ () => this.handleEdit() }
           >
             Editar despesa
           </button>
         </form>
-        <WalletTable editExpense={this.editExpense} />
+        <WalletTable editExpense={ this.editExpense } />
       </div>
     );
   }
@@ -231,5 +231,15 @@ const mapDispatchToProps = (dispatch) => ({
   addData: (expense, total) => dispatch(addExpense(expense, total)),
   editData: (updatedData) => dispatch(editExpense(updatedData)),
 });
+
+Wallet.propTypes = {
+  fetch: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  editData: PropTypes.func.isRequired,
+  addData: PropTypes.func.isRequired,
+  rates: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  total: PropTypes.number.isRequired,
+  email: PropTypes.string.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
