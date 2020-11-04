@@ -1,7 +1,7 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INITIAL_STATE = {
-    currencies: [],
-    expenses: [],
+  currencies: [],
+  expenses: [],
 };
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -10,7 +10,11 @@ export default function reducer(state = INITIAL_STATE, action) {
   case 'ATT_CURRENCIES':
     return { ...state, currencies: [...state.currencies, action.currencies] };
   case 'ATT_EXCHANGERATES':
-    return {...state, expenses: [...state.expenses, { ...action.expenses, exchangeRates: action.exchangeRates }  ] };
+    return {
+      ...state,
+      expenses: [...state.expenses,
+      { ...action.expenses,
+        exchangeRates: action.exchangeRates }] };
   case 'DELL_CURRENCY':
     return {
       ...state,
