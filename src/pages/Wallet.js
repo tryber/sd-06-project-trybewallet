@@ -110,6 +110,44 @@ class Wallet extends React.Component {
     );
   }
 
+  expenseTable() {
+    const { wallet: { expenses } } = this.props;
+    const expenseData = expenses.map((exp, index) => (
+      <tr key={ `expense-${index}` }>
+        <td key={ `desc-${index}` }>{exp.description}</td>
+        <td key={ `tag-${index}` }>{exp.tag}</td>
+        <td key={ `method-${index}` }>{exp.method}</td>
+        <td key={ `val-${index}` }>{Number(exp.value)}</td>
+        <td key={ `curr-${index}` }>{exp.exchangeRates[exp.currency].name}</td>
+        <td key={ `rate-${index}` }>
+          {Number(exp.exchangeRates[exp.currency].ask).toFixed(2)}
+        </td>
+        <td key={ `total-${index}` }>
+          {Number(exp.value * exp.exchangeRates[exp.currency].ask).toFixed(2)}
+        </td>
+        <td key={ `conv-${index}` }>Real</td>
+        <td key={ `btn-${index}` }>botão</td>
+      </tr>
+    ));
+
+    return (
+      <table>
+        <tr>
+          <th>Descrição</th>
+          <th>Tag</th>
+          <th>Método de pagamento</th>
+          <th>Valor</th>
+          <th>Moeda</th>
+          <th>Câmbio utilizado</th>
+          <th>Valor convertido</th>
+          <th>Moeda de conversão</th>
+          <th>Editar/Excluir</th>
+        </tr>
+        {expenseData}
+      </table>
+    );
+  }
+
   render() {
     const { wallet: { currencies, expenses } } = this.props;
     const { user: { email } } = this.props;
@@ -129,6 +167,7 @@ class Wallet extends React.Component {
           </data>
         </header>
         {this.addExpenseForm(currencies)}
+        {this.expenseTable()}
       </main>
     );
   }
