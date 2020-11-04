@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { actionCreators } from '../store/index';
+//import { actionCreators } from '../store/index';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { login } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -12,7 +15,7 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.inputValidate = this.inputValidate.bind(this);
-    this.submit = this.submit.bind(this);
+    //this.submit = this.submit.bind(this);
   }
 
   handleChange({ target }) {
@@ -32,20 +35,22 @@ class Login extends React.Component {
     return this.setState({ disabled: true });
   }
 
-  submit() {
-    const { history } = this.props;
-    const { email } = this.state;
-    actionCreators.login(email);
-    history.push('/carteira');
-  }
+  // submit() {
+  //   const { history } = this.props;
+  //   emailSaving;
+  //   actionCreators.login(email);
+  //   history.push('/carteira');
+  // }
 
   render() {
-    const { disabled } = this.state;
+    const { disabled, email } = this.state;
+    const { emailSaving } = this.props;
     return (
       <div>
         <label htmlFor="email">
           E-mail:
           <input
+            value={ email }
             name="email"
             type="email"
             data-testid="email-input"
@@ -63,22 +68,26 @@ class Login extends React.Component {
           />
         </label>
         <br />
-        <button
-          disabled={ disabled }
-          onClick={ () => this.submit() }
-          type="button"
-        >
-          Entrar
-        </button>
+        <Link to="/carteira">
+          <button
+            disabled={ disabled }
+            onClick={ () => emailSaving(email) }
+            type="button"
+          >
+            Entrar
+          </button>
+        </Link>
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  emailSaving: (email) => dispatch(login(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+  emailSaving: PropTypes.func.isRequired,
 };
