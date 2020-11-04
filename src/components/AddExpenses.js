@@ -13,10 +13,10 @@ class AddExpenses extends React.Component {
     this.convertValue = this.convertValue.bind(this);
 
     this.state = {
-      value: '',
-      currency: '',
-      method: '',
-      tag: '',
+      value: 0,
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       description: '',
     };
   }
@@ -82,7 +82,6 @@ class AddExpenses extends React.Component {
             value={ currency }
             onChange={ ({ target }) => this.handleOwnState(target.id, target.value) }
           >
-            <option>-</option>
             {currencies.map((eachCurrency) => (
               <option
                 key={ eachCurrency }
@@ -104,7 +103,6 @@ class AddExpenses extends React.Component {
             value={ method }
             onChange={ ({ target }) => this.handleOwnState(target.id, target.value) }
           >
-            <option>-</option>
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
             <option value="Cartão de débito">Cartão de débito</option>
@@ -120,7 +118,6 @@ class AddExpenses extends React.Component {
             value={ tag }
             onChange={ ({ target }) => this.handleOwnState(target.id, target.value) }
           >
-            <option>-</option>
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
             <option value="Trabalho">Trabalho</option>
@@ -155,7 +152,7 @@ class AddExpenses extends React.Component {
 AddExpenses.propTypes = {
   fetchPrices: PropTypes.func.isRequired,
   addExpense: PropTypes.func.isRequired,
-  currenciesPrice: PropTypes.objectOf(PropTypes.object).isRequired,
+  currenciesPrice: PropTypes.arrayOf(PropTypes.object).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   totalExpenses: PropTypes.number.isRequired,
 };

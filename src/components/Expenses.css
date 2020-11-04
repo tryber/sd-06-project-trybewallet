@@ -13,9 +13,18 @@
   padding: 8px;
 }
 
-.tr_items{
+.table-titles {
+  height: 30px;
+  background-color: rgb(223, 240, 239);
+}
+
+.tr_items {
   height: 30px;
   text-align: center;
+}
+
+.tr_items:hover {
+  background-color: rgba(211, 240, 238, 0.308);
 }
 
 .edit-button, .del-button {

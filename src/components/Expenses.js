@@ -23,7 +23,7 @@ class Expenses extends Component {
       <div className="table-wrap">
         <table>
           <thead>
-            <tr className="tr_items">
+            <tr className="table-titles">
               {header.map((item, index) => (
                 <th key={ index } className="th_items">{item}</th>
               ))}
