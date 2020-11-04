@@ -59,8 +59,12 @@ class AddExpenses extends React.Component {
   }
 
   render() {
-    const { currenciesPrice, isEditing, expenseEditingBar, editItemExpense } = this.props;
-    console.log(expenseEditingBar);
+    const {
+      currenciesPrice,
+      isEditing,
+      expenseEditingBar = 0,
+      editItemExpense,
+    } = this.props;
     const btClickFunc = (isEditing)
       ? (() => this.editExpensesOnReduxState())
       : (() => this.addExpensesToReduxState());

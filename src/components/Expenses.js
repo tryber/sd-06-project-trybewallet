@@ -38,12 +38,14 @@ class Expenses extends Component {
                 <td>{expense.value}</td>
                 <td>{expense.exchangeRates[expense.currency].name}</td>
                 <td>
-                  {Math.ceil(expense.exchangeRates[expense.currency].ask * 100) / 100}
+                  {(Math.round(
+                    expense.exchangeRates[expense.currency].ask * 100,
+                  ) / 100).toFixed(2)}
                 </td>
                 <td>
-                  {Math.ceil(
+                  {(Math.round(
                     expense.value * expense.exchangeRates[expense.currency].ask * 100,
-                  ) / 100}
+                  ) / 100).toFixed(2)}
                 </td>
                 <td>Real</td>
                 <td>
