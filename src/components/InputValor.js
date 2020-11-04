@@ -6,9 +6,10 @@ class InputValor extends React.Component {
     const { value, handleChange } = this.props;
     return (
       <div>
-        <label>
+        <label htmlFor={`value-input-${value}`}>
           Valor :
           <input
+            id={`value-input-${value}`}
             type="text"
             name="value"
             data-testid="value-input"
