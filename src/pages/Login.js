@@ -40,7 +40,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { validate } = this.state;
+    const { email, validate } = this.state;
     return (
       <div style={ { margin: 'auto', width: '30%' } }>
         <h1 style={ { textAlign: 'center' } }>LOGIN</h1>
@@ -53,6 +53,7 @@ class Login extends React.Component {
                 name="email"
                 type="email"
                 data-testid="email-input"
+                value={ email }
                 onChange={ (event) => this.handleChange(event) }
               />
             </label>

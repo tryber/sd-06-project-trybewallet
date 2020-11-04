@@ -1,5 +1,4 @@
 import fetchCurrency from '../services/fetchCurrency';
-import fetchCurrencyStore from '../services/fetchCurrencyStore';
 
 export const login = (email) => ({
   type: 'LOGIN',
@@ -14,7 +13,7 @@ export const currencies = (currenciesAPI) => ({
 export const currenciesStore = (currenciesAPI) => ({
   type: 'FETCH_CURRENCY_STORE',
   currenciesAPI,
-})
+});
 
 export function requestCurrency() {
   return (dispatch) => {
@@ -23,9 +22,10 @@ export function requestCurrency() {
   };
 }
 
-export function requestCurrencyStore() {
-  return (dispatch) => {
-    fetchCurrencyStore()
-      .then((currStoreResponse) => dispatch(currenciesStore(currStoreResponse)));
-  }
+export function requestCurrencyStore(currenciesState) {
+  return async (dispatch) => {
+    const responseAPI = await fetchCurrency();
+    const newExpensive = { ...currenciesState, exchangeRates: responseAPI };
+    dispatch(currenciesStore(newExpensive));
+  };
 }

@@ -1,14 +1,6 @@
 const INITIAL_STATE = {
   currencies: [],
-  expenses: [{
-    id: 0,
-    value: '',
-    description: '',
-    currency: '',
-    method: '',
-    tag: '',
-    exchangeRates: [],
-  }],
+  expenses: [],
 };
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -16,7 +8,9 @@ export default function reducer(state = INITIAL_STATE, action) {
   case 'FETCH_CURRENCY':
     return { ...state, currencies: { ...action.currenciesAPI } };
   case 'FETCH_CURRENCY_STORE':
-    return { ...state, expenses: expenses[6]: ...action.currenciesAPI  };
+    return {
+      ...state,
+      expenses: [...state.expenses].concat({ ...action.currenciesAPI }) };
   default:
     return state;
   }
