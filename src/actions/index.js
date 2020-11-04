@@ -12,6 +12,7 @@ export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
 export const SAVE_EXPENCES = 'SAVE_EXPENCES';
 export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 
 export const actionLogin = (email) => ({
   type: LOGIN,
@@ -54,7 +55,12 @@ export function actionExpenseThunk(expense) {
   };
 }
 
-export const actionRemoveExpense = (id) => ({
+export const actionRemoveExpense = (index) => ({
   type: REMOVE_EXPENSE,
-  id,
+  index,
+});
+
+export const actionEditExpense = (expense) => ({
+  type: EDIT_EXPENSE,
+  expense,
 });

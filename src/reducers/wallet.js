@@ -5,11 +5,13 @@ import {
   FAILED_REQUEST,
   SAVE_EXPENCES,
   REMOVE_EXPENSE,
+  EDIT_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  editExpenses: [],
   isFetched: false,
 };
 
@@ -33,7 +35,16 @@ export default function (state = INITIAL_STATE, action) {
   case REMOVE_EXPENSE:
     return {
       ...state,
-      expenses: state.expenses.filter((expense) => expense.id !== action.id),
+      expenses: state.expenses.filter((_expense, index) => index !== action.index),
+    };
+  case EDIT_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.map((expense) => (
+        expense.id === action.expense.id && action.expense.isEditing
+          ? { ...expense, ...action.expense }
+          : expense
+      )),
     };
   default:
     return state;

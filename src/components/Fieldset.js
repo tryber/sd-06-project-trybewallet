@@ -7,6 +7,7 @@ export default class Fieldset extends Component {
       coins,
       methods,
       allTags,
+      value,
       changeValue,
       changeCoin,
       changeMethod,
@@ -21,6 +22,7 @@ export default class Fieldset extends Component {
             onChange={ changeValue }
             className="quantity"
             id="quantity"
+            value={ value }
             type="text"
             data-testid="value-input"
           />
@@ -37,7 +39,7 @@ export default class Fieldset extends Component {
         </label>
         <label htmlFor="method">
           Método de Pagamento:
-          <select onChange={ changeMethod } data-testid="method-input">
+          <select onChange={ changeMethod } id="method" data-testid="method-input">
             { methods }
           </select>
         </label>

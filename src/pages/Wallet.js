@@ -8,7 +8,10 @@ class Wallet extends React.Component {
   constructor() {
     super();
 
+    this.handleClick = this.handleClick.bind(this);
+
     this.state = {
+      id: 0,
       value: [],
       currency: 'USD',
       method: 'Dinheiro',
@@ -22,8 +25,15 @@ class Wallet extends React.Component {
     actionFetch(allCoins);
   }
 
+  handleClick() {
+    const { actionThunk, expenses } = this.props;
+    const newId = expenses.length;
+    actionThunk({ ...this.state, id: newId });
+  }
+
   render() {
-    const { allCoins, actionThunk } = this.props;
+    const { allCoins } = this.props;
+    const { value } = this.state;
     const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const allTags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
@@ -51,10 +61,11 @@ class Wallet extends React.Component {
             allTags={
               allTags.map((tag) => <option value={ tag } key={ tag }>{tag}</option>)
             }
+            value={ value }
           />
           <button
             className="btn-wallet"
-            onClick={ () => actionThunk(this.state) }
+            onClick={ () => this.handleClick() }
             type="button"
           >
             Adicionar despesa
@@ -69,6 +80,7 @@ class Wallet extends React.Component {
 }
 
 Wallet.propTypes = {
+  expenses: propTypes.arrayOf(propTypes.shape()).isRequired,
   allCoins: propTypes.oneOfType([propTypes.shape(), propTypes.array]).isRequired,
   actionFetch: propTypes.func.isRequired,
   actionThunk: propTypes.func.isRequired,
