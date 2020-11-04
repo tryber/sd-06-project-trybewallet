@@ -14,7 +14,8 @@ class Header extends Component {
 
     if (expenses.length > 0) {
       const expenseValue = expenses.map((coin) => parseFloat(coin.value));
-      const expenseAsk = expenses.map((value) => parseFloat(value.exchangeRates[value.currency].ask));
+      const expenseAsk = expenses
+        .map((value) => parseFloat(value.exchangeRates[value.currency].ask));
       const sumValue = expenseValue.reduce((acc, curr, index) => {
         return (acc + (curr * expenseAsk[index]))
       }, 0);

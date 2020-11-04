@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { fetchAPI } from '../services/API'
 import { connect } from 'react-redux';
+import { fetchAPI } from '../services/API';
 import { wallet, addExpenseThunk } from '../actions';
 
 class Form extends Component {
@@ -17,24 +17,11 @@ class Form extends Component {
         currency: 'USD',
         method: '',
         tag: '',
-      }
+      },
     };
 
     this.pickUpCoins = this.pickUpCoins.bind(this);
     this.savingFormEntries = this.savingFormEntries.bind(this);
-  }
-
-  componentDidUpdate(prevProps) {
-    const { expenses } = this.props;
-    const { expense } = this.state;
-    const updateID = () => {
-      this.setState({
-        expense: { ...expense, id: expenses.length, },
-      });
-    }
-    if (prevProps.expenses.length !== expenses.length) {
-      updateID()
-    }
   }
 
   componentDidMount() {
@@ -56,6 +43,19 @@ class Form extends Component {
     this.setState({
       expense: { ...expense, [name]: value, },
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    const { expenses } = this.props;
+    const { expense } = this.state;
+    const updateID = () => {
+      this.setState({
+        expense: { ...expense, id: expenses.length, },
+      });
+    }
+    if (prevProps.expenses.length !== expenses.length) {
+      updateID()
+    }
   }
 
   render() {
@@ -134,7 +134,11 @@ class Form extends Component {
               <option>Saúde</option>
             </select>
           </label>
-          <button onClick={ () => addExpense(expense) } type="button">Adicionar despesa</button>
+          <button
+            onClick={ () => addExpense(expense) }
+            type="button">
+              Adicionar despesa
+            </button>
         </form>
       </div>
     );
@@ -142,7 +146,6 @@ class Form extends Component {
 }
 
 Form.propTypes = {
-  formAction: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -150,8 +153,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  formAction: (state) => dispatch(wallet(state)),
-  addExpense: (expense) => dispatch(addExpenseThunk(expense))
+  addExpense: (expense) => dispatch(addExpenseThunk(expense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

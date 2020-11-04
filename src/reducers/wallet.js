@@ -9,10 +9,11 @@ function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
   case ADD_EXPENSES:
     return {
-      ...state, expenses: [
+      ...state,
+      expenses: [
         ...state.expenses, action.expense,
       ],
-    };  
+    };
   default:
     return state;
   }

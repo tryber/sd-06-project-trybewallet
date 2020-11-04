@@ -15,5 +15,5 @@ export const wallet = (expense) => ({
 
 export const addExpenseThunk = (expense) => async (dispatch) => {
   const reponse = await fetchAPI();
-  dispatch(wallet(({ ...expense, exchangeRates: reponse})));
+  dispatch(wallet(({ ...expense, exchangeRates: reponse })));
 };
