@@ -27,7 +27,7 @@ class Wallet extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    const { fetchExchangeRates } = this.props;
+    const { fetchExchangeRate } = this.props;
     const { id, value, description, currency, method, tag } = this.state;
     const fetchedExpense = {
       id,
@@ -37,7 +37,7 @@ class Wallet extends React.Component {
       method,
       tag,
     };
-    fetchExchangeRates(fetchedExpense);
+    fetchExchangeRate(fetchedExpense);
     this.setState((previousState) => ({
       id: previousState.id + 1,
       value: 0,
@@ -195,7 +195,7 @@ const mapStateToProps = ({ user, wallet }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencyValue: (currencyData) => dispatch(fetchCurrencyValues(currencyData)),
-  fetchExchangeRates: (newExpense) => dispatch(fetchExchangeRates(newExpense)),
+  fetchExchangeRate: (newExpense) => dispatch(fetchExchangeRates(newExpense)),
 });
 
 Wallet.propTypes = {
@@ -208,7 +208,7 @@ Wallet.propTypes = {
     expenses: PropTypes.arrayOf(PropTypes.string.isRequired),
   }).isRequired,
   fetchCurrencyValue: PropTypes.func.isRequired,
-  fetchExchangeRates: PropTypes.func.isRequired,
+  fetchExchangeRate: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
