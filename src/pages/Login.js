@@ -54,7 +54,6 @@ class Login extends React.Component {
             name="email"
             id="email"
             type="email"
-            pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
             placeholder="email address"
             data-testid="email-input"
             value={ email }
@@ -66,7 +65,6 @@ class Login extends React.Component {
             name="password"
             id="password"
             type="password"
-            minLength="6"
             data-testid="password-input"
             placeholder="password"
             value={ password }
