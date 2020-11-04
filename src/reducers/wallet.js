@@ -1,4 +1,4 @@
-import { FORM_ENTRIES } from '../actions';
+import { ADD_EXPENSES } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -7,8 +7,12 @@ const INITIAL_STATE = {
 
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case FORM_ENTRIES:
-    return { ...state, expenses: action.expenses };
+  case ADD_EXPENSES:
+    return {
+      ...state, expenses: [
+        ...state.expenses, action.expense,
+      ],
+    };  
   default:
     return state;
   }

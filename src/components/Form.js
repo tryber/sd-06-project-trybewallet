@@ -1,27 +1,48 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { fetchCurrency } from '../services/API'
+import { fetchAPI } from '../services/API'
 import { connect } from 'react-redux';
-import { wallet } from '../actions';
+import { wallet, addExpenseThunk } from '../actions';
 
 class Form extends Component {
-  constructor() {
-    super();
-
-    this.pickUpCoins = this.pickUpCoins.bind(this);
-    this.savingFormEntries = this.savingFormEntries.bind(this);
+  constructor(props) {
+    super(props);
 
     this.state = {
       coins: [],
+      expense: {
+        id: 0,
+        value: 0,
+        description: '',
+        currency: 'USD',
+        method: '',
+        tag: '',
+      }
     };
+
+    this.pickUpCoins = this.pickUpCoins.bind(this);
+    this.savingFormEntries = this.savingFormEntries.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { expenses } = this.props;
+    const { expense } = this.state;
+    const updateID = () => {
+      this.setState({
+        expense: { ...expense, id: expenses.length, },
+      });
+    }
+    if (prevProps.expenses.length !== expenses.length) {
+      updateID()
+    }
   }
 
   componentDidMount() {
-    this.pickUpCoins()
+    this.pickUpCoins();
   }
 
   async pickUpCoins() {
-    const res = await fetchCurrency();
+    const res = await fetchAPI();
     const coins = await Object.keys(res).filter(coin => coin !== 'USDT');
     this.setState({
       coins: coins,
@@ -29,16 +50,17 @@ class Form extends Component {
   }
 
   savingFormEntries({ target }) {
-    console.log(target.name)
+    const { name, value } = target;
+    const { expense } = this.state;
+
     this.setState({
-      [target.name]: target.value,
-    }); 
+      expense: { ...expense, [name]: value, },
+    });
   }
 
   render() {
-    const { formAction } = this.props;
-    const { coins } = this.state;
-    const { state } = this;
+    const { addExpense } = this.props;
+    const { coins, expense } = this.state;
 
     return (
       <div>
@@ -49,8 +71,9 @@ class Form extends Component {
               name="value"
               onChange={ this.savingFormEntries }
               id="input-value"
-              type="text"
+              type="number"
               data-testid="value-input"
+              placeholder="0.00"
             />
           </label>
           <label htmlFor="description-input">
@@ -111,8 +134,8 @@ class Form extends Component {
               <option>Saúde</option>
             </select>
           </label>
+          <button onClick={ () => addExpense(expense) } type="button">Adicionar despesa</button>
         </form>
-        <button onClick={ () => formAction([state]) } type="submit">Adicionar despesa</button>
       </div>
     );
   }
@@ -122,8 +145,13 @@ Form.propTypes = {
   formAction: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  formAction: (state) => dispatch(wallet(state)),
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
 });
 
-export default connect(null, mapDispatchToProps)(Form);
+const mapDispatchToProps = (dispatch) => ({
+  formAction: (state) => dispatch(wallet(state)),
+  addExpense: (expense) => dispatch(addExpenseThunk(expense))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
