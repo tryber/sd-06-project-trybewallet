@@ -48,8 +48,8 @@ class Wallet extends React.Component {
     const { id, value, description, currency, method, tag } = this.state;
     const expensesKeys = { id, value, description, currency, method, tag };
     const { walletState } = this.props;
-    this.setState((Previous) => ({ id: Previous.id + 1 }));
     walletState(expensesKeys);
+    this.setState((Previous) => ({ id: Previous.id + 1 }));
   }
 
   render() {
@@ -180,5 +180,5 @@ Wallet.propTypes = {
   currencAPI: propTypes.func.isRequired,
   currencies: propTypes.objectOf(propTypes.string).isRequired,
   expenses: propTypes.objectOf(propTypes.string).isRequired,
-  walletState: propTypes.func.isRequired,
+  walletState: propTypes.arrayOf(Object).isRequired,
 };

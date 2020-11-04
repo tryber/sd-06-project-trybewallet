@@ -14,13 +14,10 @@ function fecthCurrenc(json) {
   return { type: FETCHCURRENCSUCCESS, payload: json };
 }
 
-export const addExpenseThunk = (expenses) => {
-  //
-  async (dispatch) => {
-    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const data = await response.json();
-    dispatch(walletfunc({ ...expenses, exchangeRates: data }));
-  };
+export const addExpenseThunk = (expenses) => async (dispatch) => {
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const data = await response.json();
+  dispatch(walletfunc({ ...expenses, exchangeRates: data }));
 };
 
 export function walletAPI() {
