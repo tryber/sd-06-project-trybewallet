@@ -27,3 +27,10 @@ export const addExpense = (expenses, total) => ({
   expenses,
   total,
 });
+
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+
+export const deleteExpense = (updatedExpenses) => ({
+  type: DELETE_EXPENSE,
+  updatedExpenses,
+});
