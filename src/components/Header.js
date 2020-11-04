@@ -23,6 +23,7 @@ class Header extends React.Component {
           Despesa Total:
           <span
             data-testid="total-field"
+            value="0"
           >
             { totalExpenses }
           </span>
@@ -40,11 +41,10 @@ class Header extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const mappedProps = {
+  return {
     userLogin: state.user.email,
     totalExpenses: state.wallet.total,
-  };
-  return mappedProps;
+  }
 }
 
 Header.propTypes = {
