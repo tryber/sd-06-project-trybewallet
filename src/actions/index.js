@@ -18,6 +18,11 @@ const getCurrencyValues = (currencies) => ({
   currencies,
 });
 
+export const addExpense = (newExpense) => ({
+  type: ADD_EXPENSE,
+  newExpense,
+});
+
 export function fetchCurrencyValues() {
   const endpoint = 'https://economia.awesomeapi.com.br/json/all';
   return async (dispatch) => {
@@ -28,7 +33,13 @@ export function fetchCurrencyValues() {
   };
 }
 
-export const addExpense = (expense) => ({
-  type: ADD_EXPENSE,
-  expense,
-});
+export function fetchExchangeRates(newExpense) {
+  const endpoint = 'https://economia.awesomeapi.com.br/json/all';
+  return async (dispatch) => {
+    const exchangeRatesResponse = await fetch(endpoint);
+    const exchangeRatesJson = await exchangeRatesResponse.json();
+    const completeNewExpense = { ...newExpense, exchangeRates: exchangeRatesJson }
+
+    return dispatch(addExpense(completeNewExpense));
+  };
+}
