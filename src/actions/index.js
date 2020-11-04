@@ -3,6 +3,9 @@ export const ADD_EXPENSES = 'ADD_EXPENSES';
 export const REMOVE_EXPENSES = 'REMOVE_EXPENSES';
 export const REQUEST_CURRENCIES_PRICE = 'REQUEST_CURRENCIES_PRICE';
 export const RECEIVE_CURRENCIES_PRICE = 'RECEIVE_CURRENCIES_PRICE';
+export const EDIT_ENTRY = 'EDIT_ENTRY';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const EDIT_EACH_FIELD_EXPENSE_BAR = 'EDIT_EACH_FIELD_EXPENSE_BAR';
 const API_CURRENCIES_PRICE = 'https://economia.awesomeapi.com.br/json/all';
 
 export const addEmailToState = (email, loggedIn) => (
@@ -17,6 +20,11 @@ export const addExpensesToState = (payload, totalExpenses) => (
     type: ADD_EXPENSES,
     payload,
     totalExpenses,
+  });
+
+export const editActiveExpense = () => (
+  {
+    type: EDIT_EXPENSE,
   });
 
 export const removeExpense = (index) => (
@@ -43,3 +51,17 @@ export const fetchCurrenciesPrice = () => async (dispatch) => {
   delete jsonPrices.USDT;
   return dispatch(receivePrices(jsonPrices));
 };
+
+export const editEntry = (boolValue, index) => (
+  {
+    type: EDIT_ENTRY,
+    boolValue,
+    index,
+  });
+
+export const editExpenseField = (key, value) => (
+  {
+    type: EDIT_EACH_FIELD_EXPENSE_BAR,
+    key,
+    value,
+  });

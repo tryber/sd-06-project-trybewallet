@@ -1,4 +1,4 @@
-.add-expense {
+.add-expense, .edit-expense {
   align-items: center;
   background: linear-gradient(45deg, rgb(28, 44, 46), rgb(24, 24, 24));
   color: white;
@@ -8,7 +8,10 @@
   justify-content: space-around;
   flex-wrap: nowrap;
   border-top: 3px solid rgb(204, 141, 5);
+}
 
+.edit-expense {
+  background: linear-gradient(45deg, rgb(18, 160, 179), rgb(59, 59, 59));
 }
 
 .add-expense label {

@@ -1,24 +1,21 @@
 import React from 'react';
 import './AddExpenses.css';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
+import { FaEdit } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurrenciesPrice, addExpensesToState } from '../actions';
+import {
+  fetchCurrenciesPrice,
+  addExpensesToState,
+  editExpenseField,
+  editActiveExpense,
+} from '../actions';
 
 class AddExpenses extends React.Component {
   constructor() {
     super();
-    this.handleOwnState = this.handleOwnState.bind(this);
     this.addExpensesToReduxState = this.addExpensesToReduxState.bind(this);
     this.convertValue = this.convertValue.bind(this);
-
-    this.state = {
-      value: 0,
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
-      description: '',
-    };
   }
 
   componentDidMount() {
@@ -26,13 +23,13 @@ class AddExpenses extends React.Component {
     fetchPrices();
   }
 
-  handleOwnState(id, value) {
-    this.setState({ [id]: value });
-  }
-
   convertValue() {
-    const { currenciesPrice, expenses, totalExpenses } = this.props;
-    const { currency, value } = this.state;
+    const {
+      currenciesPrice,
+      expenses,
+      totalExpenses,
+      expenseEditingBar: { currency, value },
+    } = this.props;
     const currPrice = parseFloat(currenciesPrice[0][currency].ask);
     const totalValue = currPrice * parseFloat(value);
     let totalCost = 0;
@@ -45,22 +42,41 @@ class AddExpenses extends React.Component {
   }
 
   async addExpensesToReduxState() {
-    const { value, currency, method, tag, description } = this.state;
-    const { addExpense, fetchPrices } = this.props;
+    const {
+      addExpense,
+      fetchPrices,
+      expenseEditingBar: { value, currency, method, tag, description },
+    } = this.props;
     await fetchPrices();
     const totalExpenses = this.convertValue();
     const payload = { value, currency, method, tag, description };
     addExpense(payload, totalExpenses);
   }
 
+  editExpensesOnReduxState() {
+    const { editExpense } = this.props;
+    editExpense();
+  }
+
   render() {
-    const { currenciesPrice } = this.props;
-    const { value, currency, method, tag, description } = this.state;
+    const { currenciesPrice, isEditing, expenseEditingBar, editItemExpense } = this.props;
+    console.log(expenseEditingBar);
+    const btClickFunc = (isEditing)
+      ? (() => this.editExpensesOnReduxState())
+      : (() => this.addExpensesToReduxState());
+    let classEditingForm = 'add-expense';
+    let textButton = 'Adicionar Despesa';
+    let btIcon = <AiOutlinePlusCircle size="35" />;
+    if (isEditing) {
+      classEditingForm = 'edit-expense';
+      textButton = 'Editar Despesa';
+      btIcon = <FaEdit size="35" />;
+    }
     const currencies = (currenciesPrice[0])
       ? Object.keys(currenciesPrice[0])
       : ['Loading...'];
     return (
-      <form className="add-expense">
+      <form className={ classEditingForm }>
         <label htmlFor="value">
           Valor:
           <input
@@ -68,8 +84,8 @@ class AddExpenses extends React.Component {
             type="number"
             className="inputs size1"
             data-testid="value-input"
-            value={ value }
-            onChange={ ({ target }) => this.handleOwnState(target.id, target.value) }
+            value={ expenseEditingBar.value }
+            onChange={ ({ target }) => editItemExpense(target.id, target.value) }
           />
         </label>
         <label htmlFor="currency">
@@ -79,8 +95,8 @@ class AddExpenses extends React.Component {
             type="text"
             className="inputs size1"
             data-testid="currency-input"
-            value={ currency }
-            onChange={ ({ target }) => this.handleOwnState(target.id, target.value) }
+            value={ expenseEditingBar.currency }
+            onChange={ ({ target }) => editItemExpense(target.id, target.value) }
           >
             {currencies.map((eachCurrency) => (
               <option
@@ -100,8 +116,8 @@ class AddExpenses extends React.Component {
             type="text"
             className="inputs size3"
             data-testid="method-input"
-            value={ method }
-            onChange={ ({ target }) => this.handleOwnState(target.id, target.value) }
+            value={ expenseEditingBar.method }
+            onChange={ ({ target }) => editItemExpense(target.id, target.value) }
           >
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
@@ -115,8 +131,8 @@ class AddExpenses extends React.Component {
             type="text"
             className="inputs size2"
             data-testid="tag-input"
-            value={ tag }
-            onChange={ ({ target }) => this.handleOwnState(target.id, target.value) }
+            value={ expenseEditingBar.tag }
+            onChange={ ({ target }) => editItemExpense(target.id, target.value) }
           >
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
@@ -132,17 +148,17 @@ class AddExpenses extends React.Component {
             type="text"
             className="inputs size4"
             data-testid="description-input"
-            value={ description }
-            onChange={ ({ target }) => this.handleOwnState(target.id, target.value) }
+            value={ expenseEditingBar.description }
+            onChange={ ({ target }) => editItemExpense(target.id, target.value) }
           />
         </label>
         <button
           type="button"
           className="bt-add-expenses"
-          onClick={ () => this.addExpensesToReduxState() }
+          onClick={ btClickFunc }
         >
-          Adicionar Despesa
-          <AiOutlinePlusCircle className="bt-icon-plus" size="35" />
+          {textButton}
+          {btIcon}
         </button>
       </form>
     );
@@ -155,6 +171,10 @@ AddExpenses.propTypes = {
   currenciesPrice: PropTypes.arrayOf(PropTypes.object).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   totalExpenses: PropTypes.number.isRequired,
+  isEditing: PropTypes.bool.isRequired,
+  editExpense: PropTypes.func.isRequired,
+  editItemExpense: PropTypes.func.isRequired,
+  expenseEditingBar: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -162,10 +182,14 @@ const mapStateToProps = (state) => ({
   isFetching: state.wallet.isFetching,
   expenses: state.wallet.expenses,
   totalExpenses: state.wallet.totalExpenses,
+  isEditing: state.wallet.isEditing,
+  expenseEditingBar: state.wallet.expenseEditingBar,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchPrices: () => dispatch(fetchCurrenciesPrice()),
+  editItemExpense: (key, value) => dispatch(editExpenseField(key, value)),
+  editExpense: () => dispatch(editActiveExpense()),
   addExpense: (payload, totalExpenses) => (
     dispatch(addExpensesToState(payload, totalExpenses))
   ),

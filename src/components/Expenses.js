@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import './Expenses.css';
 import PropTypes from 'prop-types';
 import { FaTrash, FaEdit } from 'react-icons/fa';
-import { removeExpense } from '../actions';
+import { removeExpense, editEntry } from '../actions';
 
 class Expenses extends Component {
   render() {
-    const { expenses, deleteExpense } = this.props;
+    const { expenses, deleteExpense, editAnEntry } = this.props;
     const header = [
       'Descrição',
       'Tag',
@@ -51,6 +51,7 @@ class Expenses extends Component {
                     type="button"
                     data-testid="edit-btn"
                     className="edit-button"
+                    onClick={ () => editAnEntry(true, index) }
                   >
                     <FaEdit size="20" />
                   </button>
@@ -75,6 +76,7 @@ class Expenses extends Component {
 Expenses.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   deleteExpense: PropTypes.func.isRequired,
+  editAnEntry: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -83,6 +85,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (index) => dispatch(removeExpense(index)),
+  editAnEntry: (boolValue, index) => dispatch(editEntry(boolValue, index)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Expenses);
