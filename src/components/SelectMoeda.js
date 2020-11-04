@@ -16,8 +16,6 @@ class SelectMoeda extends React.Component {
     const allCurrency = await api.getAllCurrency();
     const arrayAllCurrency = Object.values(allCurrency);
     arrayAllCurrency.splice(1,1);
-    console.log(allCurrency);
-    console.log(arrayAllCurrency);
     const currency = arrayAllCurrency.map(currency => currency.code);
     this.setState({
       currencys: arrayAllCurrency.map(currency => currency.code),
@@ -29,7 +27,7 @@ class SelectMoeda extends React.Component {
     const { currencys } = this.state;
     return(
       <label>Moeda :
-        <select data-testid="currency-input" onChange={ this.props.metodoMoeda }>
+        <select data-testid="currency-input" name="currency" onChange={ this.props.handleChange }>
           { currencys.map(currency => {
             return <option value={currency} data-testid={currency} key={currency}>{currency}</option>
           })

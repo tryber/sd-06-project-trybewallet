@@ -22,6 +22,10 @@ class Login extends React.Component {
       this.setState({
         email: value,
       });
+    } else {
+      this.setState({
+        email: '',
+      });
     }
   }
 
@@ -30,7 +34,11 @@ class Login extends React.Component {
       // console.log('validado')
       this.setState({
         password: e.target.value,
-      })
+      });
+    } else {
+      this.setState({
+        password: '',
+      });
     } 
   }
 

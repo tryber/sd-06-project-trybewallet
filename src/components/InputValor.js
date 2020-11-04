@@ -5,7 +5,7 @@ class InputValor extends React.Component {
     return(
       <div>
         <label>Valor :
-          <input type="text" data-testid="value-input" onChange={this.props.metodoValor} />
+          <input type="text" name="value" data-testid="value-input" value={ this.props.value } onChange={ this.props.handleChange } />
         </label>
     </div>
     );

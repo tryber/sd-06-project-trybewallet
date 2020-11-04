@@ -5,7 +5,7 @@ class InputDescricao extends React.Component {
     return(
       <div>
         <label>Descricao :
-          <input type="text" data-testid="description-input" onChange={ this.props.metodoDescricao } />
+          <input type="text" name="description" data-testid="description-input" onChange={ this.props.handleChange } />
         </label>
     </div>
     );

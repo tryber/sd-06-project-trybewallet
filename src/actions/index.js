@@ -6,23 +6,24 @@ export const login = (email) => ({
     email,
 })
 
-export const wallet = (expenses) => ({
-    type: 'ATT_EXPENSES',
-    expenses,
-})
-
 export const currency = (currencies) => ({
     type: 'ATT_CURRENCIES',
     currencies,
 })
 
-export const feaction = (exchangeRatesJson) => ({
+export const feaction = (exchangeRates, expenses) => ({
     type: 'ATT_EXCHANGERATES',
-    exchangeRatesJson,
+    exchangeRates,
+    expenses,
 })
 
-export const fetchData = () => async (dispatch) => {
+export const fetchData = (expenses) => async (dispatch) => {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const currencies = await response.json();
-    dispatch(feaction(currencies));
+    const exchangeRates = await response.json();
+    dispatch(feaction(exchangeRates, expenses));
   };
+
+export const buttonDell = (line) => ({
+    type: 'DELL_CURRENCY',
+    line,
+})
