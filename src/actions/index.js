@@ -24,9 +24,9 @@ export const addExpense = (newExpense) => ({
   newExpense,
 });
 
-export const deleteSelectedExpenses = (expense) => ({
+export const deleteSelectedExpenses = (id) => ({
   type: DELETE_SELECTED_EXPENSES,
-  expense,
+  id,
 });
 
 export function fetchCurrencyValues() {
