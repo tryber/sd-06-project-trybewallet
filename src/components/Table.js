@@ -9,7 +9,8 @@ class Table extends React.Component {
   }
 
   buttonDel(event) {
-   this.props.dellet(parseInt(event.target.name));
+    const { dellet } = this.props;
+    dellet(parseInt(event.target.name));
   }
 
   render() {
@@ -38,17 +39,23 @@ class Table extends React.Component {
                 <td>
                   {parseFloat(
                     expense.exchangeRates[expense.currency].ask
-                    ).toFixed(2)}
+                    ).toFixed(2)};
                 </td>
                 <td>
                   {parseFloat(
                   expense.exchangeRates[expense.currency].ask * expense.value
-                  ).toFixed(2)}
+                  ).toFixed(2)};
                 </td>
                 <td>Real</td>
                 <td>
                   <button type="button">editar</button>
-                  <button type="button" data-testid="delete-btn" name={ expense.id } onClick={ this.buttonDel }>excluir</button>
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    name={ expense.id }
+                    onClick={ this.buttonDel }>
+                      excluir
+                  </button>
                 </td>
               </tr>
             );

@@ -18,9 +18,8 @@ class Header extends React.Component {
         return despesa + (asked * nextvalue.value);
       }, 0);
       return parseFloat(moeda).toFixed(2);
-    } else {
-      return zero;
     }
+    return 0;
   }
 
   render() {
@@ -34,8 +33,11 @@ class Header extends React.Component {
         <div className="info-header">
           <h4 data-testid="email-field">{email}</h4>
           <h4>
-            <span data-testid="total-field">Despesa total: R$ { `${ total }` } </span>
-            <span data-testid="header-currency-field">BRL</span>
+            <span data-testid="total-field">
+              Despesa total: R$ 
+              { `${ total }` } 
+            </span>
+            <span data-testid="header-currency-field"> BRL</span>
           </h4>
         </div>
       </div>

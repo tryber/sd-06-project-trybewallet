@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { currency } from '../actions';
 import getAllCurrency from '../services/api';
-import PropTypes from 'prop-types';
 
 class SelectMoeda extends React.Component {
   constructor() {
@@ -14,14 +14,15 @@ class SelectMoeda extends React.Component {
   }
 
   async componentDidMount() {
+    const { currency } = this.props;
     const allCurrency = await getAllCurrency();
     const arrayAllCurrency = Object.values(allCurrency);
     arrayAllCurrency.splice(1, 1);
-    const currency = arrayAllCurrency.map((currency) => currency.code);
+    const currencyNew = arrayAllCurrency.map((currency) => currency.code);
     this.setState({
       currencys: arrayAllCurrency.map((currency) => currency.code),
     });
-    this.props.currency(currency);
+    currency(currencyNew);
   }
 
   render() {

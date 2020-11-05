@@ -48,12 +48,17 @@ class Login extends React.Component {
     return (
       <div className="login-box">
         <div className="header-from">
-        <h2>Trybe Wallet</h2>
+          <h2>Trybe Wallet</h2>
         </div>
         <div className="form">
           <label className="label-email">
             Email
-            <input type="email" data-testid="email-input" onChange={ this.isEmail } placeholder="Digite aqui seu email" />
+            <input
+              type="email"
+              data-testid="email-input"
+              onChange={ this.isEmail }
+              placeholder="Digite aqui seu email"
+            />
           </label>
           <label className="label-password">
             Senha
