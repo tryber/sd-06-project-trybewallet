@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Login.css';
-import { signIn } from '../actions/';
+import { signIn } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class Login extends React.Component {
 
   render() {
     const { loggin } = this.props;
-    const { email, buttonActived } = this.state;
+    const { email, password, buttonActived } = this.state;
     const walletPath = buttonActived ? '/carteira' : '#';
     return (
       <div>
@@ -49,6 +49,7 @@ class Login extends React.Component {
             className="input-box"
             data-testid="email-input"
             placeholder="Digite seu email aqui"
+            value={ email }
             onChange={ this.handleState }
           />
           <input
@@ -57,6 +58,7 @@ class Login extends React.Component {
             className="input-box"
             data-testid="password-input"
             placeholder="Digite sua senha aqui"
+            value={ password }
             onChange={ this.handleState }
           />
           <Link to={ walletPath } className="link-button-box">

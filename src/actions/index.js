@@ -4,7 +4,7 @@ const RMV_EXPENSE = 'RMV_EXPENSE';
 
 const signIn = (email) => ({ type: LOGIN, email });
 
-const addExpense = (state) => {
+const includeExpense = (state) => {
   const { id, value, currency, method, tag, description, exchangeRates } = state;
   return ({
     type: ADD_EXPENSE,
@@ -12,7 +12,7 @@ const addExpense = (state) => {
   });
 };
 
-const rmvExpense = (state) => {
+const removeExpense = (state) => {
   const { id, value, currency, method, tag, description, exchangeRates } = state;
   return ({
     type: RMV_EXPENSE,
@@ -20,4 +20,4 @@ const rmvExpense = (state) => {
   });
 };
 
-export { signIn, addExpense, rmvExpense };
+export { signIn, includeExpense, removeExpense };
