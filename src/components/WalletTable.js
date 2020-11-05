@@ -9,7 +9,12 @@ class WalletTable extends React.Component {
     this.renderTableContents = this.renderTableContents.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
-  
+
+  edit(type, id) {
+    const { editExpense } = this.props;
+    editExpense(type, id);
+  }
+
   handleClick(id) {
     const { data, delExpense } = this.props;
     const expenses = [...data];
@@ -17,11 +22,6 @@ class WalletTable extends React.Component {
       .filter((item) => item.id !== id);
     delExpense(filteredExpenses);
     this.edit('del');
-  }
-
-  edit(type, id) {
-    const { editExpense } = this.props;
-    editExpense(type, id);
   }
 
   renderTableContents() {
