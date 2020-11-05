@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../styles/Header.css';
+import PropTypes from 'prop-types';
 
 class Header extends React.Component {
   constructor() {
@@ -43,6 +44,10 @@ class Header extends React.Component {
     );
   }
 }
+
+Header.propTypes = {
+  despesas: PropTypes.array.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
