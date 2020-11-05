@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import trybe from '../image/trybeIMG.png';
 import '../index.css';
 import { walletAPI, addExpenseThunk } from '../actions';
+import DebtsTable from '../components/debtsTable';
 
 class Wallet extends React.Component {
   constructor() {
@@ -14,8 +15,8 @@ class Wallet extends React.Component {
       value: '',
       description: '',
       currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
+      method: '',
+      tag: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -84,35 +85,35 @@ class Wallet extends React.Component {
         <section>
           <form onSubmit={ this.handleSubmit }>
             <label
-              htmlFor="valor"
+              htmlFor="valor:"
             >
-              Valor
+              Valor:
               <input
                 type="text"
-                id="valor"
+                id="valor:"
                 data-testid="value-input"
                 onChange={ (e) => this.handleChange(e, 'value') }
                 value={ value }
               />
             </label>
             <label
-              htmlFor="descricao"
+              htmlFor="descricao:"
             >
-              Descrição
+              Descrição:
               <input
                 type="text"
-                id="descricao"
+                id="descricao:"
                 data-testid="description-input"
                 onChange={ (e) => this.handleChange(e, 'description') }
                 value={ description }
               />
             </label>
             <label
-              htmlFor="moeda"
+              htmlFor="moeda:"
             >
-              Moeda
+              Moeda:
               <select
-                id="moeda"
+                id="moeda:"
                 data-testid="currency-input"
                 onChange={ (e) => this.handleChange(e, 'currency') }
                 value={ currency }
@@ -131,7 +132,7 @@ class Wallet extends React.Component {
             <label
               htmlFor="metodo_pg"
             >
-              forma de pagamento
+              forma de pagamento:
               <select
                 id="metodo_pg"
                 data-testid="method-input"
@@ -144,7 +145,7 @@ class Wallet extends React.Component {
               </select>
             </label>
             <label htmlFor="tag">
-              tag
+              tag:
               <select
                 id="tag"
                 data-testid="tag-input"
@@ -161,10 +162,12 @@ class Wallet extends React.Component {
             <button type="submit">Adicionar despesa</button>
           </form>
         </section>
+        <DebtsTable />
       </div>
     );
   }
 }
+
 const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
