@@ -15,13 +15,6 @@ class Login extends React.Component {
     this.state = { email: '', password: '', isBtnDisabled: true, redirect: false };
   }
 
-  handleClick() {
-    const { saveEmail } = this.props;
-    const { email } = this.state;
-    saveEmail(email);
-    this.setState({ redirect: true });
-  }
-
   checkBtnValidity() {
     const { email, password } = this.state;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -40,6 +33,13 @@ class Login extends React.Component {
     } else {
       this.setState({ isBtnDisabled: true });
     }
+  }
+
+  handleClick() {
+    const { saveEmail } = this.props;
+    const { email } = this.state;
+    saveEmail(email);
+    this.setState({ redirect: true });
   }
 
   render() {
