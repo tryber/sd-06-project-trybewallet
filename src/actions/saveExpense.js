@@ -21,7 +21,6 @@ function saveExpense(expense) {
     const convertedBRLExpense = (
       Math.round(parseFloat(value) * parseFloat(ask) * 100)
     ) / 100;
-
     const expenseData = { ...expense, exchangeRates };
     dispatch(sendExpenseToStore(expenseData, convertedBRLExpense));
   };

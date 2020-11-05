@@ -11,9 +11,7 @@ class Header extends React.Component {
         <img src={ trybeLogo } alt="trybe-logo" />
         <div className="email-field">
           Email:
-          <span
-            data-testid="email-field"
-          >
+          <span data-testid="email-field">
             { userLogin }
           </span>
         </div>
@@ -27,9 +25,7 @@ class Header extends React.Component {
           </span>
         </div>
         <div className="currency-field">
-          <span
-            data-testid="header-currency-field"
-          >
+          <span data-testid="header-currency-field">
             BRL
           </span>
         </div>

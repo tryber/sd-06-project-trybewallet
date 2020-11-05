@@ -17,7 +17,7 @@ function wallet(state = INITIAL_STATE, action) {
         ...state.expenses,
         action.payload.expenseData,
       ],
-      total: action.payload.convertedBRLExpense,
+      total: state.total + action.payload.convertedBRLExpense,
     });
   case SAVE_CURRENCIES_NAMES:
     return ({

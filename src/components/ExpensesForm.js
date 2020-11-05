@@ -12,46 +12,22 @@ const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito']
 const categoryTags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
 class ExpensesForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
-    this.setInitialCurrency = this.setInitialCurrency.bind(this);
     this.state = {
       id: 0,
       value: 0,
       method: paymentMethods[0],
       tag: categoryTags[0],
       description: '',
-      currency: '',
+      currency: 'USD',
     };
   }
 
   componentDidMount() {
-    // const { fetchCurrenciesNamesAction } = this.props;
-    // fetchCurrenciesNamesAction();
-    this.setInitialCurrency();
-  }
-
-  componentDidUpdate(previousProps, previousState) {
-    console.log('Previous Prop CurrenciesNames', previousProps.currenciesNames);
-    console.log('Previous State Id', previousState.id);
-    /*
-    if (!previousProps.currenciesNames) {
-      fazer o fetch?
-      chamar setInitialCurrency? Deveria mudar o nome para setCurrencies?
-    }
-    */
-    const { currenciesNames } = this.props;
-    console.log('Chamando currenciesNames no DidUpdate', currenciesNames);
-  }
-
-  async setInitialCurrency() {
     const { fetchCurrenciesNamesAction } = this.props;
-    await fetchCurrenciesNamesAction();
-    const { currenciesNames } = this.props;
-    this.setState({
-      currency: currenciesNames[0],
-    });
+    fetchCurrenciesNamesAction();
   }
 
   async getCurrenciesNames() {
