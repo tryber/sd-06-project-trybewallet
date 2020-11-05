@@ -24,6 +24,6 @@ export const fetchData = (expenses) => async (dispatch) => {
 };
 
 export const buttonDell = (line) => ({
-	type: 'DELL_CURRENCY',
-	line,
+  type: 'DELL_CURRENCY',
+  line,
 });

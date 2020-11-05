@@ -10,6 +10,7 @@ class Header extends React.Component {
 
   calcExpenses() {
     const { despesas } = this.props;
+    const zero = 0;
     if (despesas.length > 0) {
       const moeda = despesas.reduce((despesa, nextvalue) => {
         const asked = nextvalue.exchangeRates[nextvalue.currency].ask;
@@ -17,6 +18,8 @@ class Header extends React.Component {
         return despesa + (asked * nextvalue.value);
       }, 0);
       return parseFloat(moeda).toFixed(2);
+    } else {
+      return zero;
     }
   }
 
