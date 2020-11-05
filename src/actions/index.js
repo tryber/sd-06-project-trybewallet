@@ -7,20 +7,20 @@ export const login = (email) => ({
 });
 
 export const currency = (currencies) => ({
-	type: 'ATT_CURRENCIES',
-	currencies,
+  type: 'ATT_CURRENCIES',
+  currencies,
 });
 
 export const feaction = (exchangeRates, expenses) => ({
-	type: 'ATT_EXCHANGERATES',
-	exchangeRates,
-	expenses,
+  type: 'ATT_EXCHANGERATES',
+  exchangeRates,
+  expenses,
 });
 
 export const fetchData = (expenses) => async (dispatch) => {
-	const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-	const exchangeRates = await response.json();
-	dispatch(feaction(exchangeRates, expenses));
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const exchangeRates = await response.json();
+  dispatch(feaction(exchangeRates, expenses));
 };
 
 export const buttonDell = (line) => ({
