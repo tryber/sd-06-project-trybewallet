@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { deleteExpense } from '../actions';
 import PropTypes from 'prop-types';
+import { deleteExpense } from '../actions';
+
 
 class WalletTable extends React.Component {
   constructor(props) {

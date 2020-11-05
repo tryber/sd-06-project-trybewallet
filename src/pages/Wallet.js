@@ -26,13 +26,10 @@ class Wallet extends React.Component {
       editId: 0,
     };
   }
-
   async componentDidMount() {
     const { fetch } = this.props;
     await fetch();
   }
-
-
 
   mountForm(total) {
     const { addData, expenses } = this.props;
@@ -89,7 +86,7 @@ class Wallet extends React.Component {
     const { currency, value } = this.state;
     await fetch();
     let bid = 0;
-    
+
     Object.keys(rates).forEach((item) => {
       if (currency === item) {
         bid = rates[item].ask;
@@ -141,8 +138,8 @@ class Wallet extends React.Component {
     return (
       <div>
         <header>
-          <h3 data-testid="email-field">{email}</h3>
-          <p data-testid="total-field" value="0">{total}</p>
+          <h3 data-testid="email-field">{ email }</h3>
+          <p data-testid="total-field" value="0">{ total }</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <form>
@@ -154,64 +151,57 @@ class Wallet extends React.Component {
               data-testid="value-input"
               name="value"
               value={value || 0}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label htmlFor="description">
-            Desc
-            <input
+              onChange={ this.handleChange }/>
+            </label>
+            <label htmlFor="description">
+              <input
               type="text"
               id="description"
               data-testid="description-input"
               name="description"
-              value={description || ''}
-              onChange={this.handleChange}
+              value={ description || '' }
+              onChange={ this.handleChange }
             />
           </label>
           <select
             data-testid="currency-input"
             name="currency"
-            value={currency || 'USD'}
-            onChange={this.handleChange}
-          >
+            value={ currency || 'USD' }
+            onChange={this.handleChange}>
             {Object.keys(rates)
               .filter((item) => item !== 'USDT')
               .map((item) => (
-                <option key={item} data-testid={item}>{item}</option>
+                <option key={ item } data-testid={ item }>{ item }</option>
               ))}
           </select>
           <select
             data-testid="method-input"
             name="method"
-            value={method || 'Dinheiro'}
-            onChange={this.handleChange}
-          >
+            value={ method || 'Dinheiro' }
+            onChange={this.handleChange}>
             {methods.map((item) => <option key={item}>{item}</option>)}
           </select>
           <select
             data-testid="tag-input"
             name="tag"
-            value={tag || 'Alimentação'}
-            onChange={this.handleChange}
-          >
-            {tags.map((item) => <option key={item}>{item}</option>)}
+            value={ tag || 'Alimentação' }
+            onChange={ this.handleChange }>
+            { tags.map((item) => <option key={ item }>{ item }</option>) }
           </select>
           <button
             type="button"
-            disabled={addBtn}
-            onClick={() => this.handleSubmit()}
-          >
+            disabled={ addBtn }
+            onClick={() => this.handleSubmit()}>
             Adicionar despesa
           </button>
           <button
             type="button"
-            disabled={editBtn}
-            onClick={() => this.handleEdit()}
-          >
+            disabled={ editBtn }
+            onClick={() => this.handleEdit()}>
             Editar despesa
           </button>
         </form>
-        <WalletTable editExpense={this.editExpense} />
+        <WalletTable editExpense={ this.editExpense } />
       </div>
     );
   }
