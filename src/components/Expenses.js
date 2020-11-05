@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { fetchData } from '../actions';
 import SelectMoeda from './SelectMoeda';
 import SelectPagamento from './SelectPagamento';
@@ -58,6 +59,10 @@ class Expenses extends React.Component {
     );
   }
 }
+
+Expenses.propTypes = {
+  fetch: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => ({
   fetch: (expenses) => dispatch(fetchData(expenses)),
