@@ -87,9 +87,7 @@ class Wallet extends React.Component {
     const { currency, value } = this.state;
     await fetch();
     let bid = 0;
-    // Learned how to iterate through objects here:
-    // https://masteringjs.io/tutorials/fundamentals/foreach-object
-    Object.keys(rates).forEach((item) => {
+		Object.keys(rates).forEach((item) => {
       if (currency === item) {
         bid = rates[item].ask;
       }
@@ -152,9 +150,6 @@ class Wallet extends React.Component {
               id="value"
               data-testid="value-input"
               name="value"
-              // I was getting an uncontrolled type error, learned how to get it right from here:
-              // https://stackoverflow.com/questions/47012169/
-              // a-component-is-changing-an-uncontrolled-input-of-type-text-to-be-controlled-erro
               value={ value || 0 }
               onChange={ this.handleChange }
             />
