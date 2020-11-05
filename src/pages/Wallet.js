@@ -15,6 +15,7 @@ class Wallet extends React.Component {
   render() {
     const { email } = this.props;
     const { cambio, expenses } = this.state;
+    console.log(email);
     return (
       <div>
         <h1>TrybeWallet</h1>
@@ -50,7 +51,7 @@ class Wallet extends React.Component {
           </div>
 
           <div>
-            <input type="submit" value="Adicionar" />
+            <input type="submit" value="Adicionar despesa" />
           </div>
 
         </fieldset>
@@ -59,12 +60,12 @@ class Wallet extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  email: state.user.email,
-});
-
 Wallet.propTypes = {
   password: PropTypes.func.isRequired,
 }.isRequired;
+
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+});
 
 export default connect(mapStateToProps, null)(Wallet);

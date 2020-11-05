@@ -4,3 +4,5 @@ const get = async () => {
 
   return data;
 }
+
+export default get;

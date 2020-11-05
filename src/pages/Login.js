@@ -10,39 +10,36 @@ class Login extends React.Component {
     this.state = {
       email: '',
       pass: '',
-      disable: true,
+      disable: false,
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange({ target }) {
     const { name } = target;
-
     this.setState({
       [name]: target.value,
+    },
+    () => {
+      const { email, pass } = this.state;
+      const min = 5;
+      const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/;
+
+      this.setState({
+        disable: pass.length > min && regex.test(email),
+      });
     });
   }
 
-  handleSubmit() {
+  handleSubmit(e) {
+    e.preventDefault();
     const { login, history } = this.props;
-    const { email } = this.state;
-
-    login(email);
-    history.push('/carteira');
-  }
-
-  handleLogin() {
-    const { email, pass } = this.state;
-    const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/;
-    const min = 5;
-
-    if (pass.length > min && regex.test(email)) {
-      this.setState({
-        disable: false,
-      });
+    const { email, disable } = this.state;
+    if (disable) {
+      history.push('/carteira');
+      return login(email);
     }
   }
 
@@ -76,13 +73,12 @@ class Login extends React.Component {
                 data-testid="password-input"
                 name="pass"
                 onChange={ this.handleChange }
-                onKeyDown={ this.handleLogin }
                 required
               />
             </div>
 
             <button
-              disabled={ disable }
+              disabled={ !disable }
               className="btn btn-primary"
               type="submit"
             >
