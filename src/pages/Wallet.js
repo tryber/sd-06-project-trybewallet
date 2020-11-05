@@ -7,8 +7,7 @@ import PropTypes from 'prop-types';
 
 /* COMPONENTES */
 import Form from '../components/Form';
-
-// import Table from '../components/Table';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   render() {
@@ -26,6 +25,7 @@ class Wallet extends React.Component {
           </span>
         </header>
         <Form />
+        <Table />
       </div>
     );
   }

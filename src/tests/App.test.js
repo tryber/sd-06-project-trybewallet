@@ -141,7 +141,7 @@ describe('3 - [PÁGINA DA CARTEIRA] Crie um header para a página de carteira co
   });
 });
 
-describe.only('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
+describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
   test('Um campo para adicionar o valor da despesa', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const valueInput = await screen.findByTestId('value-input');
@@ -385,7 +385,7 @@ describe('6 - [PÁGINA DA CARTEIRA] Crie um botão para deletar uma despesa da t
   });
 });
 
-describe('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela contendo as seguintes características:', () => {
+describe.only('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela contendo as seguintes características:', () => {
   const initial = initialStateWithExpenses;
 
   test('O botão deve estar dentro do último item da linha da tabela e deve possuir `data-testid="edit-btn"`', () => {

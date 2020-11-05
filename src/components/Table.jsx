@@ -1,59 +1,113 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { removeExpense, idExpense } from '../actions/expenseActions';
 
-export default class Table extends React.Component {
-  render() {
+class Table extends Component {
+  constructor() {
+    super();
+
+    this.renderTable = this.renderTable.bind(this);
+    this.deleteExpense = this.deleteExpense.bind(this);
+    this.getExpenseId = this.getExpenseId.bind(this);
+  }
+
+  getExpenseId({ target }) {
+    const { dispatchId } = this.props;
+    const targetID = Number(target.parentNode.parentNode.id);
+
+    dispatchId(targetID);
+  }
+
+  deleteExpense({ target }) {
+    const { wallet: { expenses }, dispatchExpense } = this.props;
+    const targetID = Number(target.id);
+    const newExpenses = expenses.filter((item) => item.id !== targetID);
+    const minusValue = -Number(document.querySelector('.converted').innerHTML);
+
+    const expenseObj = {
+      total: minusValue,
+      expenses: newExpenses,
+    };
+
+    dispatchExpense(expenseObj);
+  }
+
+  renderTable(expense) {
+    const { id, description, tag, method, currency, value, exchangeRates } = expense;
+    const { name, ask } = exchangeRates[currency];
+    const convertedValue = parseFloat(value * ask).toFixed(2);
+    const exchange = (ask * 1).toFixed(2);
+
     return (
-      <div className="md:px-10 py-1">
-        <div className="shadow overflow-hidden rounded border-b border-gray-200">
-          <table className="bg-white">
-            <thead className="bg-gray-800 text-white">
-              <tr>
-                <th className=" text-left py-3 px-4 uppercase font-semibold text-sm">
-                  Descrição
-                </th>
-                <th className="text-left py-3 px-4 uppercase font-semibold text-sm">
-                  Tag
-                </th>
-                <th className="  text-left py-3 px-4 uppercase font-semibold text-sm">
-                  Método de pagamento
-                </th>
-                <th className=" text-left py-3 px-4 uppercase font-semibold text-sm">
-                  Valor
-                </th>
-                <th className=" text-left py-3 px-4 uppercase font-semibold text-sm">
-                  Moeda
-                </th>
-                <th className=" text-left py-3 px-4 uppercase font-semibold text-sm">
-                  Câmbio utilizado
-                </th>
-                <th className=" text-left py-3 px-4 uppercase font-semibold text-sm">
-                  Valor convertido
-                </th>
-                <th className=" text-left py-3 px-4 uppercase font-semibold text-sm">
-                  Moeda de conversão
-                </th>
-                <th className=" text-left py-3 px-4 uppercase font-semibold text-sm">
-                  Editar/Excluir
-                </th>
-              </tr>
-            </thead>
-            <tbody className="text-gray-700">
-              <tr>
-                <td className="text-left py-3 px-4">Lian</td>
-                <td className="text-left py-3 px-4">Smith</td>
-                <td className="text-left py-3 px-4">
-                  <a className="hover:text-blue-500" href="tel:622322662">622322662</a>
-                </td>
-                <td className="text-left py-3 px-4">
-                  <a className="hover:text-blue-500" href="mailto:jonsmith@mail.com">
-                    jonsmith@mail.com
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <tr key={ id } id={ id }>
+        <td>{ description }</td>
+        <td>{ tag }</td>
+        <td>{ method }</td>
+        <td>{ value }</td>
+        <td>{ name }</td>
+        <td>{ exchange }</td>
+        <td className="converted">{ convertedValue }</td>
+        <td>Real</td>
+        <td>
+          <button
+            data-testid="edit-btn"
+            type="button"
+            onClick={ this.getExpenseId }
+          >
+            Editar
+          </button>
+          <button
+            id={ id }
+            type="button"
+            data-testid="delete-btn"
+            onClick={ this.deleteExpense }
+          >
+            Excluir
+          </button>
+        </td>
+      </tr>
+    );
+  }
+
+  render() {
+    const { wallet: { expenses } } = this.props;
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
+            <th>Valor</th>
+            <th>Moeda</th>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+            <th>Editar/Excluir</th>
+          </tr>
+        </thead>
+        <tbody>
+          {expenses.length !== 0 && expenses.map((item) => this.renderTable(item))}
+        </tbody>
+      </table>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  wallet: state.wallet,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchExpense: (expenses) => dispatch(removeExpense(expenses)),
+  dispatchId: (id) => dispatch(idExpense(id)),
+});
+
+Table.propTypes = {
+  wallet: PropTypes.objectOf().isRequired,
+  dispatchExpense: PropTypes.func.isRequired,
+  dispatchId: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
