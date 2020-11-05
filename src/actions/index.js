@@ -10,9 +10,9 @@ export const currencies = (currenciesAPI) => ({
   currenciesAPI,
 });
 
-export const currenciesStore = (currenciesAPI) => ({
-  type: 'FETCH_CURRENCY_STORE',
-  currenciesAPI,
+export const addNewExpense = (expense) => ({
+  type: 'NEW_EXPENSE',
+  expense,
 });
 
 export function requestCurrency() {
@@ -22,10 +22,10 @@ export function requestCurrency() {
   };
 }
 
-export function requestCurrencyStore(currenciesState) {
+export function addNewExpenseThunk(currenciesState) {
   return async (dispatch) => {
     const responseAPI = await fetchCurrency();
     const newExpensive = { ...currenciesState, exchangeRates: responseAPI };
-    dispatch(currenciesStore(newExpensive));
+    dispatch(addNewExpense(newExpensive));
   };
 }

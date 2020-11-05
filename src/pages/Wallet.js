@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { requestCurrency, requestCurrencyStore } from '../actions/index';
+import { requestCurrency, addNewExpenseThunk } from '../actions/index';
 
 class Wallet extends React.Component {
   constructor() {
@@ -12,7 +12,6 @@ class Wallet extends React.Component {
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
-      sum: 0,
     };
     this.selectCurrency = this.selectCurrency.bind(this);
     this.handleSelectPay = this.handleSelectPay.bind(this);
@@ -21,41 +20,22 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
-    const { requestCurrencyProps } = this.props;
-    requestCurrencyProps();
+    const { currenciesAPI } = this.props;
+    currenciesAPI();
   }
 
-
-  renderSum(actualExpense) {
-    const { expensesStore, exchangeRatesProps } = this.props;
-    const { currency } = this.state;
-    const findAsk = expensesStore.exchangeRates;
-    console.log('ask', findAsk);
-    console.log('teste', exchangeRatesProps)
-    // expensesStore é um array com todos os objetos de despesa
-    console.log('expensesStore', expensesStore);
-    // fazendo o map nesse array, tenho um array com os valores de cada despesa
-    const values = expensesStore.map((expense) => Number(expense.value));
-    // console.log(values);
-    const sumValues = values.reduce((acc, current) => acc + current, 0);
-    // console.log(sumValues);
-    const sumTotal = Number(sumValues) + Number(actualExpense);
-    const arredondando = Math.round(sumTotal * 100) / 100;
-    return this.setState({ sum: arredondando });
-  }
+  /* tive dificuldade para implementar a lógica de fazer o id aumentar,
+  então me baseei na mesma lógica usada pela Dani Perse
+  link do PR: https://github.com/tryber/sd-06-project-trybewallet/pull/45/files */
 
   sendInfos() {
-    /* tive dificuldade para implementar a lógica de fazer o id aumentar,
-    então me baseei na mesma lógica usada pela Dani Perse
-    link do PR: https://github.com/tryber/sd-06-project-trybewallet/pull/45/files */
-    const { requestNewCurrencyProps, expensesStore } = this.props;
+    const { addNewExpense, expensesStore } = this.props;
     const numExpenses = expensesStore.length;
     const newExpense = {
       id: numExpenses,
       ...this.state,
     };
-    requestNewCurrencyProps(newExpense);
-    this.renderSum(this.state.value);
+    addNewExpense(newExpense);
     this.setState({ value: 0 });
   }
 
@@ -67,8 +47,8 @@ class Wallet extends React.Component {
   }
 
   selectCurrency() {
-    const { currenciesProps } = this.props;
-    const nomesMoedas = Object.keys(currenciesProps);
+    const { currenciesStore } = this.props;
+    const nomesMoedas = Object.keys(currenciesStore);
     const currenciesSelect = nomesMoedas.filter((moeda) => moeda !== 'USDT');
     const { currency } = this.state;
     return (
@@ -146,9 +126,17 @@ class Wallet extends React.Component {
     );
   }
 
+  // implementação final do requisito 4.6:
+  // utilizei a lógica do William Gomes para conseguir finalizar a soma dos produtos
+  // mas graças a ajuda do Luiz Simões para compeender todas as partes do reducer
+  // link do PR: https://github.com/tryber/sd-06-project-trybewallet/pull/8/files
+
   render() {
-    const { emailStore } = this.props;
-    const { value, description, sum } = this.state;
+    const { emailStore, expensesStore } = this.props;
+    const { value, description } = this.state;
+    const totalValue = expensesStore.length ? Math.round(expensesStore
+      .reduce((acc, current) => acc + current.value
+       * current.exchangeRates[current.currency].ask, 0) * 100) / 100 : 0;
     return (
       <div>
         <header>
@@ -158,7 +146,7 @@ class Wallet extends React.Component {
           </span>
           <span style={ { marginLeft: '20px' } } data-testid="total-field">
             Despesa Total: R$
-              { sum }
+            { totalValue }
           </span>
           <span data-testid="header-currency-field">
             BRL
@@ -190,7 +178,6 @@ class Wallet extends React.Component {
             Adicionar despesa
           </button>
         </form>
-        <button tupe="button" onClick={() => this.renderSum()}>Teste Soma</button>
       </div>
     );
   }
@@ -198,20 +185,20 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   emailStore: state.user.email,
-  currenciesProps: state.wallet.currencies,
+  currenciesStore: state.wallet.currencies,
   expensesStore: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  requestCurrencyProps: () => dispatch(requestCurrency()),
-  requestNewCurrencyProps: (state) => dispatch(requestCurrencyStore(state)),
+  currenciesAPI: () => dispatch(requestCurrency()),
+  addNewExpense: (state) => dispatch(addNewExpenseThunk(state)),
 });
 
 Wallet.propTypes = {
   emailStore: PropTypes.string.isRequired,
-  currenciesProps: PropTypes.arrayOf(Object).isRequired,
-  requestCurrencyProps: PropTypes.func.isRequired,
-  requestNewCurrencyProps: PropTypes.func.isRequired,
+  currenciesStore: PropTypes.arrayOf(Object).isRequired,
+  currenciesAPI: PropTypes.func.isRequired,
+  addNewExpense: PropTypes.func.isRequired,
   expensesStore: PropTypes.arrayOf(Object).isRequired,
 };
 
