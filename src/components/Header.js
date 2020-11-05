@@ -10,7 +10,6 @@ class Header extends React.Component {
 
   calcExpenses() {
     const { despesas } = this.props;
-    const zero = 0;
     if (despesas.length > 0) {
       const moeda = despesas.reduce((despesa, nextvalue) => {
         const asked = nextvalue.exchangeRates[nextvalue.currency].ask;
@@ -35,7 +34,7 @@ class Header extends React.Component {
           <h4>
             <span data-testid="total-field">
               Despesa total: R$
-              {`${ total }`}
+              {`${total}`}
             </span>
             <span data-testid="header-currency-field"> BRL</span>
           </h4>

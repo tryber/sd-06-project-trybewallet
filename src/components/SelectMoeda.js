@@ -30,7 +30,10 @@ class SelectMoeda extends React.Component {
     return(
       <label>
         Moeda :
-        <select data-testid="currency-input" name="currency" onChange={ this.props.handleChange }>
+        <select
+          data-testid="currency-input"
+          name="currency"
+          onChange={ this.props.handleChange }>
           { currencys.map(currency => {
             return <option value={ currency } data-testid={ currency } key={ currency }>{ currency }</option>
           })

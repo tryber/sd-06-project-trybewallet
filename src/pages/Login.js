@@ -51,18 +51,20 @@ class Login extends React.Component {
           <h2>Trybe Wallet</h2>
         </div>
         <div className="form">
-          <label className="label-email">
+          <label className="label-email" htmlFor="email-input">
             Email
             <input
+              id="email-input"
               type="email"
               data-testid="email-input"
               onChange={ this.isEmail }
               placeholder="Digite aqui seu email"
             />
           </label>
-          <label className="label-password">
+          <label className="label-password" htmlFor="pass-input">
             Senha
             <input
+              id="pass-input"
               type="password"
               data-testid="password-input"
               onChange={ this.isPassword }
@@ -73,7 +75,7 @@ class Login extends React.Component {
             <button
               id="join-button"
               onClick={ () => this.props.login(this.state.email) }
-              disabled={ email !== '' && password !== '' ? false:true }>
+              disabled={ email !== '' && password !== '' ? false : true }>
                 Entrar
             </button>
           </Link>
@@ -88,4 +90,5 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(
-  null, mapDispatchToProps)(Login);
+  null, mapDispatchToProps)
+  (Login);

@@ -39,7 +39,7 @@ class Table extends React.Component {
                 <td>
                   {parseFloat(
                     expense.exchangeRates[expense.currency].ask
-                    ).toFixed(2)};
+                  ).toFixed(2)};
                 </td>
                 <td>
                   {parseFloat(
@@ -59,7 +59,7 @@ class Table extends React.Component {
                 </td>
               </tr>
             );
-          }
+          },
           )}
         </table>
       </div>
@@ -68,7 +68,7 @@ class Table extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  expenses: state.wallet
+  expenses: state.wallet,
 });
 
 const mapDispatchToProps = (dispatch) => ({
