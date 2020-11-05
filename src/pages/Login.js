@@ -75,8 +75,9 @@ class Login extends React.Component {
             <button
               id="join-button"
               onClick={ () => this.props.login(this.state.email) }
-              disabled={ email !== '' && password !== '' ? false : true }>
-                Entrar
+              disabled={ email !== '' && password !== '' ? false : true }
+            >
+              Entrar
             </button>
           </Link>
         </div>
@@ -90,5 +91,5 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(
-  null, mapDispatchToProps)
-  (Login);
+  null, mapDispatchToProps
+  )(Login);

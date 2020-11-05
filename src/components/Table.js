@@ -53,8 +53,9 @@ class Table extends React.Component {
                     type="button"
                     data-testid="delete-btn"
                     name={ expense.id }
-                    onClick={ this.buttonDel }>
-                      excluir
+                    onClick={ this.buttonDel }
+                  >
+                    excluir
                   </button>
                 </td>
               </tr>
