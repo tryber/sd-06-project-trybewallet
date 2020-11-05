@@ -26,6 +26,7 @@ class Wallet extends React.Component {
       editId: 0,
     };
   }
+
   async componentDidMount() {
     const { fetch } = this.props;
     await fetch();
@@ -150,9 +151,9 @@ class Wallet extends React.Component {
               id="value"
               data-testid="value-input"
               name="value"
-              value={value || 0}
+              value={ value || 0 }
               onChange={ this.handleChange }/>
-            </label>
+          </label>
             <label htmlFor="description">
               <input
               type="text"
@@ -161,8 +162,8 @@ class Wallet extends React.Component {
               name="description"
               value={ description || '' }
               onChange={ this.handleChange }
-            />
-          </label>
+              />
+            </label>
           <select
             data-testid="currency-input"
             name="currency"
@@ -197,7 +198,7 @@ class Wallet extends React.Component {
           <button
             type="button"
             disabled={ editBtn }
-            onClick={() => this.handleEdit()}>
+            onClick={ () => this.handleEdit() }>
             Editar despesa
           </button>
         </form>

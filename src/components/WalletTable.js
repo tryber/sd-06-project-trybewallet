@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteExpense } from '../actions';
 
-
 class WalletTable extends React.Component {
   constructor(props) {
     super(props);
