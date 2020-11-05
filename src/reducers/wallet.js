@@ -13,8 +13,8 @@ export default function reducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: [...state.expenses,
-      { ...action.expenses,
-        exchangeRates: action.exchangeRates }] };
+        { ...action.expenses,
+          exchangeRates: action.exchangeRates }] };
   case 'DELL_CURRENCY':
     return {
       ...state,
