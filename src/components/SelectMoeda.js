@@ -27,19 +27,19 @@ class SelectMoeda extends React.Component {
 
   render() {
     const { currencys } = this.state;
-    return(
+    return (
       <label>
         Moeda :
         <select
           data-testid="currency-input"
           name="currency"
           onChange={ this.props.handleChange }>
-          { currencys.map(currency => {
+          { currencys.map((currency) => {
             return <option
               value={ currency }
               data-testid={ currency }
               key={ currency }>
-                { currency }
+              { currency }
             </option>
           })
           }
@@ -51,6 +51,7 @@ class SelectMoeda extends React.Component {
 
 SelectMoeda.propTypes = {
   handleChange: PropTypes.func.isRequired,
+  currency: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -60,4 +61,3 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   null, mapDispatchToProps
 )(SelectMoeda);
-
