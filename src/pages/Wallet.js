@@ -15,7 +15,6 @@ class Wallet extends React.Component {
   render() {
     const { email } = this.props;
     const { cambio, expenses } = this.state;
-    console.log(email);
     return (
       <div>
         <h1>TrybeWallet</h1>
