@@ -2,8 +2,8 @@
 // actions sao objetos com chave type
 // mas aqui sao functions que retornam objetos
 export const login = (email) => ({
-	type: 'LOGIN',
-	email,
+  type: 'LOGIN',
+  email,
 });
 
 export const currency = (currencies) => ({
