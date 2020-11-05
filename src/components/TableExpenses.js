@@ -1,27 +1,78 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+const headerTable = [
+  'Descrição',
+  'Tag',
+  'Método de pagamento',
+  'Valor',
+  'Moeda',
+  'Câmbio utilizado',
+  'Valor convertido',
+  'Moeda de conversão',
+  'Editar/Excluir'];
 
 class TableExpenses extends Component {
   render() {
-    const headerTable = [
-      'Descrição',
-      'Tag',
-      'Método de pagamento',
-      'Valor',
-      'Moeda',
-      'Câmbio utilizado',
-      'Valor convertido',
-      'Moeda de conversão',
-      'Editar/Excluir'];
-
+    const { expenses } = this.props;
     return (
-      <div>
-        {headerTable.map((item, index) => (
-          <span key={ index }>
-            {item}
-          </span>))}
-      </div>
+      <table>
+        <thead>
+          <tr>
+            {headerTable.map((item, index) => (
+              <th key={ index }>
+                {item}
+              </th>))}
+          </tr>
+        </thead>
+        <tbody>
+          {expenses.map((expense, index) => {
+            const { value, currency, method, tag, description, exchangeRates } = expense;
+            const actualExchange = Number(exchangeRates[currency].ask);
+            const { name } = exchangeRates[currency];
+            const convertValue = actualExchange * value;
+            return (
+              <tr key={ index }>
+                <td>
+                  { description }
+                </td>
+                <td>
+                  { tag }
+                </td>
+                <td>
+                  { method }
+                </td>
+                <td>
+                  { value }
+                </td>
+                <td>
+                  { name }
+                </td>
+                <td>
+                  { actualExchange.toFixed(2) }
+                </td>
+                <td>
+                  { convertValue }
+                </td>
+                <td>
+                  Real
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     );
   }
 }
 
-export default TableExpenses;
+TableExpenses.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+export default connect(mapStateToProps)(TableExpenses);
