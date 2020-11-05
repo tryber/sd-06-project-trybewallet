@@ -1,8 +1,6 @@
 import { LOGIN } from '../actions';
 
-const initialState = { email: '' };
-
-function user(state = initialState, action) {
+function user(state = { email: '' }, action) {
   switch (action.type) {
   case LOGIN:
     return { email: action.email };
