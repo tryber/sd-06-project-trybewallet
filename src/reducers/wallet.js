@@ -1,5 +1,5 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { SAVE_EXPENSE } from '../actions/actionTypes';
+import { SAVE_EXPENSE, SAVE_CURRENCIES_NAMES } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -18,6 +18,11 @@ function wallet(state = INITIAL_STATE, action) {
         action.payload.expenseData,
       ],
       total: action.payload.convertedBRLExpense,
+    });
+  case SAVE_CURRENCIES_NAMES:
+    return ({
+      ...state,
+      currencies: action.payload.currenciesNames,
     });
   default:
     return state;

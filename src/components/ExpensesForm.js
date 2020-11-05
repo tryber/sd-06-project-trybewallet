@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { saveExpense } from '../actions';
+// import { paymentMethods, categoryTags } from '../services/data';
+import { saveExpense, fetchCurrenciesNames } from '../actions';
 
 /*
 Dropdown binding from API inspired by
@@ -13,19 +14,44 @@ const categoryTags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúd
 class ExpensesForm extends React.Component {
   constructor() {
     super();
+
+    this.setInitialCurrency = this.setInitialCurrency.bind(this);
     this.state = {
       id: 0,
       value: 0,
       method: paymentMethods[0],
       tag: categoryTags[0],
       description: '',
-      currenciesNames: [],
       currency: '',
     };
   }
 
   componentDidMount() {
-    this.getCurrenciesNames();
+    // const { fetchCurrenciesNamesAction } = this.props;
+    // fetchCurrenciesNamesAction();
+    this.setInitialCurrency();
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    console.log('Previous Prop CurrenciesNames', previousProps.currenciesNames);
+    console.log('Previous State Id', previousState.id);
+    /*
+    if (!previousProps.currenciesNames) {
+      fazer o fetch?
+      chamar setInitialCurrency? Deveria mudar o nome para setCurrencies?
+    }
+    */
+    const { currenciesNames } = this.props;
+    console.log('Chamando currenciesNames no DidUpdate', currenciesNames);
+  }
+
+  async setInitialCurrency() {
+    const { fetchCurrenciesNamesAction } = this.props;
+    await fetchCurrenciesNamesAction();
+    const { currenciesNames } = this.props;
+    this.setState({
+      currency: currenciesNames[0],
+    });
   }
 
   async getCurrenciesNames() {
@@ -39,7 +65,7 @@ class ExpensesForm extends React.Component {
     ));
     this.setState({
       currenciesNames: withoutUSDTCurrencies,
-      currency: currenciesNames[0],
+      currency: withoutUSDTCurrencies[0],
     });
   }
 
@@ -54,8 +80,10 @@ class ExpensesForm extends React.Component {
     const { addExpenseAction } = this.props;
     event.preventDefault();
     addExpenseAction(this.state);
-    this.setState((previousState) => (
-      { id: previousState.id + 1 }
+    this.setState((previousState) => ({
+      id: previousState.id + 1,
+      value: 0,
+    }
     ));
   }
 
@@ -65,9 +93,10 @@ class ExpensesForm extends React.Component {
       method,
       tag,
       description,
-      currenciesNames,
       currency,
     } = this.state;
+
+    const { currenciesNames } = this.props;
     return (
       <form>
         <label htmlFor="value-input">
@@ -157,6 +186,11 @@ class ExpensesForm extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   addExpenseAction: (expense) => dispatch(saveExpense(expense)),
+  fetchCurrenciesNamesAction: () => dispatch(fetchCurrenciesNames()),
+});
+
+const mapStateToProps = (state) => ({
+  currenciesNames: state.wallet.currencies,
 });
 
 /*
@@ -170,6 +204,8 @@ function mapDispatchToProps(dispatch) {
 
 ExpensesForm.propTypes = {
   addExpenseAction: PropTypes.func.isRequired,
+  currenciesNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fetchCurrenciesNamesAction: PropTypes.func.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(ExpensesForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);

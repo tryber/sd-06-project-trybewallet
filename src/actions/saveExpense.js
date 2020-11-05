@@ -15,7 +15,6 @@ function saveExpense(expense) {
   return async (dispatch) => {
     const requestResponse = await fetch('https://economia.awesomeapi.com.br/json/all');
     const exchangeRates = await requestResponse.json();
-
     // Expense conversion
     const { value, currency } = expense;
     const { [currency]: { ask } } = exchangeRates;

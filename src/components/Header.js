@@ -5,8 +5,6 @@ import trybeLogo from '../images/trybeLogo.png';
 
 class Header extends React.Component {
   render() {
-    console.log('Header props');
-    console.log(this.props);
     const { userLogin, totalExpenses } = this.props;
     return (
       <header>
