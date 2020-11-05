@@ -9,6 +9,7 @@ class WalletTable extends React.Component {
     this.renderTableContents = this.renderTableContents.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
+  
   handleClick(id) {
     const { data, delExpense } = this.props;
     const expenses = [...data];
