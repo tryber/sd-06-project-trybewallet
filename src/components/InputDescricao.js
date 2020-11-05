@@ -3,23 +3,26 @@ import PropTypes from 'prop-types';
 
 class InputDescricao extends React.Component {
   render() {
+    const { handleChange } = this.props;
     return (
       <div>
-        <label>Descricao :
-          <input 
+        <label htmlFor="description">
+          Descricao :
+          <input
+            id="description"
             type="text"
             name="description"
             data-testid="description-input"
-            onChange={ this.props.handleChange }
+            onChange={ handleChange }
           />
         </label>
-    </div>
+      </div>
     );
   }
 }
 
 InputDescricao.propTypes = {
   handleChange: PropTypes.func.isRequired,
-}
+};
 
 export default InputDescricao;

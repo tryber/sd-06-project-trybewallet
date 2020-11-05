@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class SelectPagamento extends React.Component {
   render() {
-    const { handleChange } = this.props
+    const { handleChange } = this.props;
     return (
       <label htmlFor="method">
         Metodo de pagamento
@@ -20,5 +21,9 @@ class SelectPagamento extends React.Component {
     );
   }
 }
+
+SelectPagamento.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+};
 
 export default SelectPagamento;
