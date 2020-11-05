@@ -2,6 +2,7 @@
 // Coloque aqui suas actions
 const USER_LOGIN = 'USER_LOGIN';
 const ADD_EXPENSE = 'ADD_EXPENSE';
+const DELETE_EXPENSE = 'DELETE_EXPENSE';
 const FETCHCURRENCSUCCESS = 'FETCHCURRENCSUCCESS';
 
 export const user = (email) => ({
@@ -9,6 +10,9 @@ export const user = (email) => ({
 });
 export const walletfunc = (payload) => ({
   type: ADD_EXPENSE, payload,
+});
+export const handleDeleteExpense = (payload) => ({
+  type: DELETE_EXPENSE, payload,
 });
 function fecthCurrenc(json) {
   return { type: FETCHCURRENCSUCCESS, payload: json };
