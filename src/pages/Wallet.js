@@ -87,7 +87,8 @@ class Wallet extends React.Component {
     const { currency, value } = this.state;
     await fetch();
     let bid = 0;
-		Object.keys(rates).forEach((item) => {
+    
+    Object.keys(rates).forEach((item) => {
       if (currency === item) {
         bid = rates[item].ask;
       }
