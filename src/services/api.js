@@ -3,6 +3,6 @@ const get = async () => {
   const data = resp.json();
 
   return data;
-}
+};
 
 export default get;

@@ -9,7 +9,7 @@ class Wallet extends React.Component {
     this.state = {
       expenses: 0,
       cambio: 'BRL',
-    }
+    };
   }
 
   render() {
@@ -41,8 +41,14 @@ class Wallet extends React.Component {
           </div>
 
           <div>
-            <label htmlFor="currency">Moeda:</label>
-            <select name="currency" id="currency" data-testid="currency-input" className="custom-select" style={ { width: 'auto' } }>
+            Moeda:
+            <select
+              name="currency"
+              id="currency"
+              data-testid="currency-input"
+              className="custom-select"
+              style={ { width: 'auto' } }
+            >
               <option value="USD">USD</option>
               <option value="CAD">CAD</option>
               <option value="EUR">EUR</option>
