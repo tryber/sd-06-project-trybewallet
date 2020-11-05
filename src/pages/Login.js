@@ -62,10 +62,20 @@ class Login extends React.Component {
           </label>
           <label className="label-password">
             Senha
-            <input type="password" data-testid="password-input" onChange={ this.isPassword } placeholder="Digite aqui sua senha" />
+            <input
+              type="password"
+              data-testid="password-input"
+              onChange={ this.isPassword }
+              placeholder="Digite aqui sua senha"
+            />
           </label>
           <Link to='/carteira'>
-            <button id="join-button" onClick={() => this.props.login(this.state.email)} disabled={ email !== '' && password !== '' ? false:true }>Entrar</button>
+            <button
+              id="join-button"
+              onClick={ () => this.props.login(this.state.email) }
+              disabled={ email !== '' && password !== '' ? false:true }>
+                Entrar
+            </button>
           </Link>
         </div>
       </div>
@@ -74,7 +84,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (email) => dispatch(login(email))
+  login: (email) => dispatch(login(email)),
 });
 
 export default connect(
