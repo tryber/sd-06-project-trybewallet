@@ -11,8 +11,6 @@ class Login extends Component {
       email: '',
       password: '',
     };
-    // this.validateEmail = this.validateEmail.bind(this);
-    // this.validatePassword = this.validatePassword.bind(this);
   }
 
   /* O regex usado nesta função foi retirado do site:

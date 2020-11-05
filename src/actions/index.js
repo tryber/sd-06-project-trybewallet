@@ -12,17 +12,18 @@ export const requestOK = (currencies) => ({
   currencies,
 });
 
-export const saveState = (json) => ({
-  type: 'SAVE_STATE',
-  currencies: json.message,
-});
-
 export const fetchCurrencies = () => (dispatch) => {
   fetchAPI()
     .then((currencies) => dispatch(requestOK(currencies)));
 };
 
-export const saveExpenses = (expenses) => ({
+export const saveFormExpenses = (exchangeRates, stateExpenses) => ({
   type: 'SAVE_EXPENSES',
-  expenses,
+  expenses: { ...stateExpenses, exchangeRates },
 });
+
+export const fetchAPIExpenses = (stateExpenses) => (dispatch) => {
+  fetchAPI()
+    // .then((response) => console.log(response))
+    .then((response) => dispatch(saveFormExpenses(response, stateExpenses)));
+};
