@@ -273,3 +273,11 @@ Wallet.defaultProps = {
   addExpense: '',
   rmvExpense: '',
 };
+
+Wallet.propTypes = {
+  email: PropTypes.string,
+  expenses: PropTypes.arrayOf(PropTypes.object),
+  currencyToExchange: PropTypes.string,
+  addExpense: PropTypes.string,
+  rmvExpense: PropTypes.string,
+};

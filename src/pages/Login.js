@@ -81,7 +81,7 @@ export default connect(null, mapDispatchToProps)(Login);
 
 Login.defaultProps = {
   loggin: {},
-}
+};
 
 Login.propTypes = {
   loggin: PropTypes.objectOf(PropTypes.string),
