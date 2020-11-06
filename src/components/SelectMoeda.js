@@ -42,12 +42,12 @@ class SelectMoeda extends React.Component {
           name="currency"
           onChange={ handleChange }>
           { currencys.map((currency) => {
-            return <option
+            return (<option
               value={ currency }
               data-testid={ currency }
               key={ currency }>
               { currency }
-            </option>;
+            </option>);
           })}
         </select>
       </label>

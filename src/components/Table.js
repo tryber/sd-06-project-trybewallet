@@ -11,7 +11,7 @@ class Table extends React.Component {
 
   buttonDel(event) {
     const { dellet } = this.props;
-    dellet(parseInt(event.target.name));
+    dellet(parseInt(event.target.name, 10));
   }
 
   render() {
@@ -40,7 +40,7 @@ class Table extends React.Component {
                 <td>{expense.exchangeRates[expense.currency].name}</td>
                 <td>
                   {parseFloat(
-                    expense.exchangeRates[expense.currency].ask
+                    expense.exchangeRates[expense.currency].ask,
                   ).toFixed(2)
                   };
                 </td>
@@ -73,6 +73,7 @@ class Table extends React.Component {
 
 Table.propTypes = {
   dellet: PropTypes.func.isRequired,
+  expenses: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
