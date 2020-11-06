@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getCurrencyAPI, getExpensesAPI } from '../actions/index';
+import { getCurrencyAPI, getExpensesAPI, delExpenses } from '../actions/index';
 
 class Wallet extends React.Component {
   constructor() {
@@ -40,7 +40,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { userEmail, currencyKey, expensesToSum } = this.props;
+    const { userEmail, currencyKey, expensesToSum, expenseDel } = this.props;
     const sumExpenses = expensesToSum
       .reduce(((acc, curr) => acc + parseFloat((curr
         .exchangeRates[curr.currency].ask * curr.value))), 0);
@@ -59,7 +59,7 @@ class Wallet extends React.Component {
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <div>
-          <label htmlFor="value-input">
+          <label htmlFor="valueinput">
             Valor:
             <input
               name="value"
@@ -68,8 +68,6 @@ class Wallet extends React.Component {
               data-testid="value-input"
               type="number"
               min="0.00"
-              max="10000.00"
-              step="0.01"
             />
           </label>
           <label htmlFor="description-input">
@@ -148,6 +146,13 @@ class Wallet extends React.Component {
                     .ask * expenses.value) * 100) / 100)) }
                 </td>
                 <td>Real</td>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => expenseDel(expenses.id) }
+                >
+                  Deletar
+                </button>
               </tr>
             ))}
           </tbody>
@@ -166,11 +171,13 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getCurrency: () => dispatch(getCurrencyAPI()),
   createExpense: (expense) => dispatch(getExpensesAPI(expense)),
+  expenseDel: (expense) => dispatch(delExpenses(expense)),
 });
 
 Wallet.propTypes = {
   currencyKey: PropTypes.arrayOf(Object).isRequired,
   expensesToSum: PropTypes.arrayOf(Object).isRequired,
+  expenseDel: PropTypes.func.isRequired,
   getCurrency: PropTypes.func.isRequired,
   createExpense: PropTypes.func.isRequired,
   userEmail: PropTypes.shape({

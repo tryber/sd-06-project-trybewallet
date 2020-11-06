@@ -13,6 +13,11 @@ export const expensesAdd = (expenses) => ({
   payload: expenses,
 });
 
+export const delExpenses = (expense) => ({
+  type: 'DEL_EXPENSE',
+  expense,
+});
+
 export const getCurrencyAPI = () => async (dispatch) => {
   const responseAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
   const currencies = await responseAPI.json();
