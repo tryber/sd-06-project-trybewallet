@@ -1,111 +1,85 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-//  import logoCarteira from '../img/trybe-wallet.png';
-import { loginAction } from '../actions';
-
-import Header from '../components/Header';
+import './Login.css';
+import { signIn } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: '',
       password: '',
-      isValid: false,
+      emailValidation: false,
+      passwordValidation: false,
+      buttonActived: false,
     };
-    this.getLoginData = this.getLoginData.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleState = this.handleState.bind(this);
+    this.handleButton = this.handleButton.bind(this);
   }
 
-  getLoginData({ target }) {
-    this.setState({ [target.name]: target.value });
-    const { email, password } = this.state;
-
-    //  validacao dos campos
-    const regexEmailValidation = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-    const textEmailValidation = document.querySelector('#textEmailValidation');
-
-    const textPasswordValidation = document.querySelector('#textPasswordValidation');
-    const passwordLength = 5;
-
-    if (email.match(regexEmailValidation)) {
-      textEmailValidation.innerHTML = 'email válido!';
-      textEmailValidation.style.color = 'green';
-      if (password.length === 0) {
-        textPasswordValidation.innerHTML = '';
-        this.setState({ isValid: false });
-      } else if (password.length < passwordLength) {
-        textPasswordValidation.innerHTML = 'senha inválida!';
-        textPasswordValidation.style.color = 'red';
-        this.setState({ isValid: false });
-      } else {
-        textPasswordValidation.innerHTML = 'senha válida!';
-        textPasswordValidation.style.color = 'green';
-        this.setState({ isValid: true });
-      }
-    } else {
-      textEmailValidation.innerHTML = 'email inválido!';
-      textEmailValidation.style.color = 'red';
-      this.setState({ isValid: false });
-    }
+  handleState({ target }) {
+    const { name, value } = target;
+    const regEx = {
+      email: /^[_a-z0-9.-]+@[a-z0-9]+\.com/,
+      password: /[a-z0-9]{6,}/,
+    };
+    const inputValidation = value.match(regEx[name]) !== null;
+    this.setState({ [name]: value, [`${name}Validation`]: inputValidation },
+      this.handleButton);
   }
 
-  handleClick(event) {
-    event.preventDefault();
-    const { login, history } = this.props;
-    const { email } = this.state;
-    login(email);
-    history.push('/carteira');
+  handleButton() {
+    const { emailValidation, passwordValidation } = this.state;
+    const buttonActived = (emailValidation && passwordValidation);
+    this.setState({ buttonActived });
   }
 
   render() {
-    const { isValid } = this.state;
+    const { loggin } = this.props;
+    const { email, password, buttonActived } = this.state;
+    const walletPath = buttonActived ? '/carteira' : '#';
     return (
-      <>
-        <Header titulo="planeje sua viagem!" />
-        <div className="login-box">
-          <img src={ logoCarteira } alt="logo da TrybeWallet" />
-          <form>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              data-testid="email-input"
-              onChange={ (event) => this.getLoginData(event) }
-            />
-            <span id="textEmailValidation" />
-            <input
-              type="password"
-              name="password"
-              id="password"
-              data-testid="password-input"
-              onChange={ (event) => this.getLoginData(event) }
-            />
-            <span id="textPasswordValidation" />
+      <div>
+        <form className="form-login-page">
+          <input
+            type="text"
+            name="email"
+            className="input-box"
+            data-testid="email-input"
+            placeholder="Digite seu email aqui"
+            value={ email }
+            onChange={ this.handleState }
+          />
+          <input
+            type="text"
+            name="password"
+            className="input-box"
+            data-testid="password-input"
+            placeholder="Digite sua senha aqui"
+            value={ password }
+            onChange={ this.handleState }
+          />
+          <Link to={ walletPath } className="link-button-box">
             <button
-              type="submit"
-              disabled={ !isValid }
-              onClick={ this.handleClick }
+              type="button"
+              className="button-box"
+              disabled={ !buttonActived }
+              onClick={ () => loggin(email) }
             >
               Entrar
             </button>
-          </form>
-        </div>
-      </>
+          </Link>
+        </form>
+      </div>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  login: (email) => dispatch(loginAction(email)),
-});
+const mapDispatchToProps = (dispatch) => ({ loggin: (e) => dispatch(signIn(e)) });
+export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
+  loggin: PropTypes.objectOf(PropTypes.string),
 };
-
-export default connect(null, mapDispatchToProps)(Login);

@@ -1,19 +1,34 @@
-import { RECEIVE_CURRENCY_OK, ADD_EXPENSES } from '../actions';
-
 const INITIAL_STATE = {
-  currencies: [],
+  currencyToExchange: 'BRL',
   expenses: [],
 };
 
-export default function usosCarteira(state = INITIAL_STATE, action) {
-  switch (action.type) {
-  case RECEIVE_CURRENCY_OK:
-    return { ...state, currencies: action.currencies };
-  case ADD_EXPENSES:
-    return { ...state, expenses: [...state.expenses, action.expenses] };
+const ADD_EXPENSE = 'ADD_EXPENSE';
+const RMV_EXPENSE = 'RMV_EXPENSE';
+
+const wallet = (state = INITIAL_STATE, action) => {
+  const { expenses, currencyToExchange } = state;
+  const { type, expense } = action;
+  // const index = expenses.findIndex((exp) => exp.id === expense.id);
+  switch (type) {
+  case ADD_EXPENSE:
+    return ({
+      currencyToExchange,
+      expenses: [...expenses, expense],
+    });
+  case RMV_EXPENSE:
+    return ({
+      currencyToExchange,
+      expenses: [
+        ...expenses.slice(0, expenses.findIndex((exp) => exp.id === expense.id)),
+        ...expenses.slice(expenses.findIndex((exp) => exp.id === expense.id) + 1),
+      ],
+    });
   default:
     return state;
   }
-}
+};
+
+export default wallet;
 
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
