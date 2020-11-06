@@ -4,7 +4,7 @@ import logoCarteira from '../img/trybe-wallet.png';
 import PropTypes from 'prop-types';
 import { loginAction } from '../actions';
 
-import Header from '../components/Header';
+import Header from '../components/Header.js';
 
 class Login extends React.Component {
   constructor() {
@@ -93,7 +93,7 @@ class Login extends React.Component {
           </form>
         </div>
       </>
-    )
+    );
   }
 }
 
