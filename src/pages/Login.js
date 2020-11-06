@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import userLogin from '../actions/index';
+import { userLogin } from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
     super();
 
-    this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.state = {
       isDisabled: true,
       email: '',

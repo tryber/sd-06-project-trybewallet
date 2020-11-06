@@ -5,8 +5,13 @@ const INITIAL_STATE = {
 
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'USER_WALLET':
-    return { ...state };
+  case 'GET_MOEDAS':
+    return {
+      ...state,
+      currencies: Object.keys(action.payload).filter((currency) => currency !== 'USDT'),
+    };
+  case 'ADD_EXPENSES':
+    return { ...state, expenses: [...state.expenses, action.payload] };
   default:
     return state;
   }
