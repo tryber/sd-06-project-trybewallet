@@ -1,4 +1,4 @@
-import { fetchAPI } from '../services/API';
+import fetchAPI from '../services/API';
 
 export const LOGIN = 'LOGIN';
 export const ADD_EXPENSES = 'FORM_ENTRIES';

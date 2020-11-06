@@ -16,18 +16,15 @@ class Header extends Component {
       const expenseValue = expenses.map((coin) => parseFloat(coin.value));
       const expenseAsk = expenses
         .map((value) => parseFloat(value.exchangeRates[value.currency].ask));
-      const sumValue = expenseValue.reduce((acc, curr, index) => {
-        return (acc + (curr * expenseAsk[index]))
-      }, 0);
+      const sumValue = expenseValue.reduce((acc, curr, index) => (acc + (curr * expenseAsk[index])), 0);
       return sumValue.toFixed(2);
-    } else {
-      return 0;
     }
+    return 0;
   }
 
   render() {
     const { userEmail } = this.props;
-    console.log(this.sumExpenses())
+    console.log(this.sumExpenses());
     return (
       <div>
         <div data-testid="email-field">

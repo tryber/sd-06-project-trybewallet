@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchAPI } from '../services/API';
+import fetchAPI from '../services/API';
 import { wallet, addExpenseThunk } from '../actions';
 
 class Form extends Component {
@@ -28,11 +28,24 @@ class Form extends Component {
     this.pickUpCoins();
   }
 
+  componentDidUpdate(prevProps) {
+    const { expenses } = this.props;
+    const { expense } = this.state;
+    const updateID = () => {
+      this.setState({
+        expense: { ...expense, id: expenses.length },
+      });
+    };
+    if (prevProps.expenses.length !== expenses.length) {
+      updateID();
+    }
+  }
+
   async pickUpCoins() {
     const res = await fetchAPI();
-    const coins = await Object.keys(res).filter(coin => coin !== 'USDT');
+    const coins = await Object.keys(res).filter((coin) => coin !== 'USDT');
     this.setState({
-      coins: coins,
+      coins,
     });
   }
 
@@ -41,21 +54,8 @@ class Form extends Component {
     const { expense } = this.state;
 
     this.setState({
-      expense: { ...expense, [name]: value, },
+      expense: { ...expense, [name]: value },
     });
-  }
-
-  componentDidUpdate(prevProps) {
-    const { expenses } = this.props;
-    const { expense } = this.state;
-    const updateID = () => {
-      this.setState({
-        expense: { ...expense, id: expenses.length, },
-      });
-    }
-    if (prevProps.expenses.length !== expenses.length) {
-      updateID()
-    }
   }
 
   render() {
@@ -95,14 +95,14 @@ class Form extends Component {
               type="text"
               data-testid="currency-input"
             >
-              { coins.map(coin =>
-                <option
-                  data-testid={ coin }
-                  key={ coin }
-            >
-              { coin }
-              </option>) }
-          </select>
+              { coins.map((coin) => (<option
+                data-testid={ coin }
+                key={ coin }
+              >
+                { coin }
+              </option>
+              )) }
+            </select>
           </label>
           <label htmlFor="method-input">
             Método de pagamento:
@@ -136,9 +136,10 @@ class Form extends Component {
           </label>
           <button
             onClick={ () => addExpense(expense) }
-            type="button">
-              Adicionar despesa
-            </button>
+            type="button"
+          >
+            Adicionar despesa
+          </button>
         </form>
       </div>
     );
