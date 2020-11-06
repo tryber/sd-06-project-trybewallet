@@ -15,6 +15,7 @@ class Table extends React.Component {
   }
 
   render() {
+    const { expenses } = this.props;
     return (
       <div>
         <table>
@@ -29,7 +30,7 @@ class Table extends React.Component {
             <th> Moeda de conversão </th>
             <th> Editar/Excluir </th>
           </tr>
-          {this.props.expenses.expenses.map((expense) => {
+          {expenses.expenses.map((expense) => {
             return (
               <tr key={ expense.id }>
                 <td>{expense.description}</td>
@@ -40,12 +41,14 @@ class Table extends React.Component {
                 <td>
                   {parseFloat(
                     expense.exchangeRates[expense.currency].ask
-                  ).toFixed(2)};
+                  ).toFixed(2)
+                  };
                 </td>
                 <td>
                   {parseFloat(
-                  expense.exchangeRates[expense.currency].ask * expense.value
-                  ).toFixed(2)};
+                    expense.exchangeRates[expense.currency].ask * expense.value
+                  ).toFixed(2)
+                  };
                 </td>
                 <td>Real</td>
                 <td>
@@ -61,7 +64,7 @@ class Table extends React.Component {
                 </td>
               </tr>
             );
-          },)}
+          })}
         </table>
       </div>
     );

@@ -45,6 +45,7 @@ class Login extends React.Component {
   }
 
   render() {
+    const { login } = this.props;
     const { email, password } = this.state;
     return (
       <div className="login-box">
@@ -74,8 +75,9 @@ class Login extends React.Component {
           </label>
           <Link to="/carteira">
             <button
+              type="button"
               id="join-button"
-              onClick={ () => this.props.login(email) }
+              onClick={ () => login(email) }
               disabled={ email !== '' && password !== '' ? false : true }
             >
               Entrar

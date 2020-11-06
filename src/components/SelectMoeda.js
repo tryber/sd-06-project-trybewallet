@@ -31,14 +31,16 @@ class SelectMoeda extends React.Component {
   }
 
   render() {
+    const { handleChange } = this.props;
     const { currencys } = this.state;
     return (
-      <label>
+      <label htmlFor="select-moeda">
         Moeda :
         <select
+          id="select-moeda"
           data-testid="currency-input"
           name="currency"
-          onChange={ this.props.handleChange }>
+          onChange={ handleChange }>
           { currencys.map((currency) => {
             return <option
               value={ currency }
@@ -59,9 +61,9 @@ SelectMoeda.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  currency: (currencies, expenses) => dispatch(currency(currencies, expenses))
+  currency: (currencies, expenses) => dispatch(currency(currencies, expenses)),
 });
 
 export default connect(
-  null, mapDispatchToProps
+  null, mapDispatchToProps,
 )(SelectMoeda);
