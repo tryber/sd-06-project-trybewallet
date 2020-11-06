@@ -61,7 +61,7 @@ class Table extends React.Component {
                   excluir
                 </button>
               </td>
-            </tr>
+            </tr>;
             return trtd;
           })}
         </table>

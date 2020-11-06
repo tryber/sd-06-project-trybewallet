@@ -49,7 +49,7 @@ class SelectMoeda extends React.Component {
               key={ currencyZ }
             >
               { currencyZ }
-            </option>
+            </option>;
             return opt;
           })}
         </select>
