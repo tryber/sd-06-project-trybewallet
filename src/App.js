@@ -7,7 +7,8 @@ function App() {
     <Switch>
       <Route
         component={ Login }
-        exact path="/"
+        exact
+        path="/"
       />
       <Route
         path="/carteira"
