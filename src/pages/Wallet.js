@@ -266,10 +266,10 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
-Wallet.propTypes = {
-  email: PropTypes.string,
-  expenses: PropTypes.arrayOf(PropTypes.object),
-  currencyToExchange: PropTypes.string,
-  addExpense: PropTypes.string,
-  rmvExpense: PropTypes.string,
+Wallet.defaultProps = {
+  email: '',
+  expenses: [],
+  currencyToExchange: '',
+  addExpense: '',
+  rmvExpense: '',
 };

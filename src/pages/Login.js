@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import './Login.css';
 import { signIn } from '../actions';
 
 class Login extends React.Component {
@@ -79,6 +78,10 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({ loggin: (e) => dispatch(signIn(e)) });
 export default connect(null, mapDispatchToProps)(Login);
+
+Login.defaultProps = {
+  loggin: {},
+}
 
 Login.propTypes = {
   loggin: PropTypes.objectOf(PropTypes.string),
