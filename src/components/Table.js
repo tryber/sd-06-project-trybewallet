@@ -31,39 +31,38 @@ class Table extends React.Component {
             <th> Editar/Excluir </th>
           </tr>
           {expenses.expenses.map((expense) => {
-            return (
-              <tr key={ expense.id }>
-                <td>{expense.description}</td>
-                <td>{expense.tag}</td>
-                <td>{expense.method}</td>
-                <td>{expense.value}</td>
-                <td>{expense.exchangeRates[expense.currency].name}</td>
-                <td>
-                  {parseFloat(
-                    expense.exchangeRates[expense.currency].ask,
-                  ).toFixed(2)}
-                  ;
-                </td>
-                <td>
-                  {parseFloat(
-                    expense.exchangeRates[expense.currency].ask * expense.value,
-                  ).toFixed(2)}
-                  ;
-                </td>
-                <td>Real</td>
-                <td>
-                  <button type="button">editar</button>
-                  <button
-                    type="button"
-                    data-testid="delete-btn"
-                    name={ expense.id }
-                    onClick={ this.buttonDel }
-                  >
-                    excluir
-                  </button>
-                </td>
-              </tr>
-            );
+            const trtd = <tr key={ expense.id }>
+            <td>{expense.description}</td>
+            <td>{expense.tag}</td>
+            <td>{expense.method}</td>
+            <td>{expense.value}</td>
+            <td>{expense.exchangeRates[expense.currency].name}</td>
+            <td>
+              {parseFloat(
+                expense.exchangeRates[expense.currency].ask,
+              ).toFixed(2)}
+              ;
+            </td>
+            <td>
+              {parseFloat(
+                expense.exchangeRates[expense.currency].ask * expense.value,
+              ).toFixed(2)}
+              ;
+            </td>
+            <td>Real</td>
+            <td>
+              <button type="button">editar</button>
+              <button
+                type="button"
+                data-testid="delete-btn"
+                name={ expense.id }
+                onClick={ this.buttonDel }
+              >
+                excluir
+              </button>
+            </td>
+          </tr>
+            return trtd;
           })}
         </table>
       </div>
