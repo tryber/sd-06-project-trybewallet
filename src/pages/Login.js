@@ -45,7 +45,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { login } = this.props;
+    const { loginN } = this.props;
     const { email, password } = this.state;
     return (
       <div className="login-box">
@@ -77,7 +77,7 @@ class Login extends React.Component {
             <button
               type="button"
               id="join-button"
-              onClick={ () => login(email) }
+              onClick={ () => loginN(email) }
               disabled={ email !== '' && password !== '' ? false : true }
             >
               Entrar
@@ -90,11 +90,11 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired,
+  loginN: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (email) => dispatch(login(email)),
+  loginN: (email) => dispatch(login(email)),
 });
 
 export default connect(
