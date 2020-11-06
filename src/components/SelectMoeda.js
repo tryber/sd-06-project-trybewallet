@@ -19,7 +19,7 @@ class SelectMoeda extends React.Component {
   }
 
   async startFunction() {
-    const { currency } = this.props;
+    const { currencyP } = this.props;
     const allCurrency = await getAllCurrency();
     const arrayAllCurrency = Object.values(allCurrency);
     arrayAllCurrency.splice(1, 1);
@@ -27,7 +27,7 @@ class SelectMoeda extends React.Component {
     this.setState({
       currencys: arrayAllCurrency.map((currency) => currency.code),
     });
-    currency(currencyNew);
+    currencyP(currencyNew);
   }
 
   render() {
@@ -41,12 +41,12 @@ class SelectMoeda extends React.Component {
           data-testid="currency-input"
           name="currency"
           onChange={ handleChange }>
-          { currencys.map((currency) => {
+          { currencys.map((currencyZ) => {
             return (<option
-              value={ currency }
-              data-testid={ currency }
-              key={ currency }>
-              { currency }
+              value={ currencyZ }
+              data-testid={ currencyZ }
+              key={ currencyZ }>
+              { currencyZ }
             </option>);
           })}
         </select>
@@ -57,11 +57,11 @@ class SelectMoeda extends React.Component {
 
 SelectMoeda.propTypes = {
   handleChange: PropTypes.func.isRequired,
-  currency: PropTypes.func.isRequired,
+  currencyP: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  currency: (currencies, expenses) => dispatch(currency(currencies, expenses)),
+  currencyP: (currencies, expenses) => dispatch(currency(currencies, expenses)),
 });
 
 export default connect(

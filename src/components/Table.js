@@ -47,8 +47,8 @@ class Table extends React.Component {
                 <td>
                   {parseFloat(
                     expense.exchangeRates[expense.currency].ask * expense.value,
-                  ).toFixed(2)
-                  };
+                  ).toFixed(2)}
+                  ;
                 </td>
                 <td>Real</td>
                 <td>
@@ -73,7 +73,7 @@ class Table extends React.Component {
 
 Table.propTypes = {
   dellet: PropTypes.func.isRequired,
-  expenses: PropTypes.object.isRequired,
+  expenses: PropTypes.arrayOf(Object).isRequired,
 };
 
 const mapStateToProps = (state) => ({
