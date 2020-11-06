@@ -45,6 +45,8 @@ class Login extends React.Component {
   }
 
   render() {
+    const x = false;
+    const y = true;
     const { loginN } = this.props;
     const { email, password } = this.state;
     return (
@@ -78,7 +80,7 @@ class Login extends React.Component {
               type="button"
               id="join-button"
               onClick={ () => loginN(email) }
-              disabled={ email !== '' && password !== '' ? false : true }
+              disabled={ email !== '' && password !== '' ? x : y }
             >
               Entrar
             </button>

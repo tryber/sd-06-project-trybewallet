@@ -31,7 +31,8 @@ class Table extends React.Component {
             <th> Editar/Excluir </th>
           </tr>
           {expenses.expenses.map((expense) => {
-            const trtd = <tr key={ expense.id }>
+            const trtd = 
+            <tr key={ expense.id }>
               <td>{expense.description}</td>
               <td>{expense.tag}</td>
               <td>{expense.method}</td>
