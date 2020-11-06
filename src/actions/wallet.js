@@ -13,4 +13,5 @@ export const fetchAPI = () => async (dispatch) => {
   const url = 'https://economia.awesomeapi.com.br/json/all';
   const response = await (await (await fetch(url)).json());
   dispatch(addCurrencies(response));
+  return response;
 };

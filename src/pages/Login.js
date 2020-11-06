@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fillEmail } from '../actions';
-import tioPatinhas from '../img/tioPatinhas.jpeg';
 import './Login.css';
 
 class Login extends Component {
@@ -44,10 +43,7 @@ class Login extends Component {
     const { email, password, doneEmail, donePassword } = this.state;
     return (
       <div className="main-content">
-        <div className="image">
-          <img src={ tioPatinhas } alt="tioPatinhas" />
-        </div>
-        <h1>Tio Patinhas - WALLET</h1>
+        <h1 className="header">Trybe - WALLET</h1>
         <label htmlFor="email" className="email">
           Email:
           <input
@@ -61,7 +57,7 @@ class Login extends Component {
         </label>
         <br />
         <div className="separator" />
-        <label htmlFor="password">
+        <label htmlFor="password" className="password">
           Senha:
           <input
             type="password"

@@ -8,6 +8,7 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
+  const { totalExpense } = { ...state };
   switch (action.type) {
   case ADD_CURRENCIES:
     return {
@@ -17,7 +18,10 @@ export default function (state = initialState, action) {
   case ADD_EXPENSE:
     return {
       ...state,
-      expenses: action.expense.expenses,
+      expenses: [...state.expenses, { id: state.expenses.length, ...action.expense }],
+      totalExpense: totalExpense
+      + (Number(action.expense.value)
+      * action.expense.exchangeRates[action.expense.currency].ask),
     };
   default:
     return state;
