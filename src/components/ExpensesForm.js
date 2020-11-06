@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { paymentMethods, categoryTags } from '../services/data';
+import { paymentMethods, categoryTags } from '../services/data';
 import { saveExpense, fetchCurrenciesNames } from '../actions';
 
 /*
 Dropdown binding from API inspired by
 https://www.carlrippon.com/react-drop-down-data-binding/
 */
-const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-const categoryTags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
 class ExpensesForm extends React.Component {
   constructor(props) {
@@ -28,21 +26,6 @@ class ExpensesForm extends React.Component {
   componentDidMount() {
     const { fetchCurrenciesNamesAction } = this.props;
     fetchCurrenciesNamesAction();
-  }
-
-  async getCurrenciesNames() {
-    const requestResponse = await fetch(
-      'https://economia.awesomeapi.com.br/json/all',
-    );
-    const formattedData = await requestResponse.json();
-    const currenciesNames = Object.keys(formattedData);
-    const withoutUSDTCurrencies = currenciesNames.filter((currency) => (
-      currency !== 'USDT'
-    ));
-    this.setState({
-      currenciesNames: withoutUSDTCurrencies,
-      currency: withoutUSDTCurrencies[0],
-    });
   }
 
   handleInputChange(event) {
@@ -160,23 +143,18 @@ class ExpensesForm extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  addExpenseAction: (expense) => dispatch(saveExpense(expense)),
-  fetchCurrenciesNamesAction: () => dispatch(fetchCurrenciesNames()),
-});
-
-const mapStateToProps = (state) => ({
-  currenciesNames: state.wallet.currencies,
-});
-
-/*
-function mapDispatchToProps(dispatch) {
-  const mappedProps = {
-    addExpenseAction: (expense) => dispatch(saveExpense(expense)),
+function mapStateToProps(state) {
+  return {
+    currenciesNames: state.wallet.currencies,
   };
-  return mappedProps;
 }
-*/
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addExpenseAction: (expense) => dispatch(saveExpense(expense)),
+    fetchCurrenciesNamesAction: () => dispatch(fetchCurrenciesNames()),
+  };
+}
 
 ExpensesForm.propTypes = {
   addExpenseAction: PropTypes.func.isRequired,
