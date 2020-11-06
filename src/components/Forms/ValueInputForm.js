@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './style.css';
-
 class ValueInputForm extends React.Component {
   render() {
     const { genericHandleChange } = this.props;

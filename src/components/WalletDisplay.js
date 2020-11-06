@@ -20,9 +20,8 @@ class WalletDisplay extends React.Component {
         <tbody>
           {expenses.map((eachExpense) => {
             const { currency, value, exchangeRates } = eachExpense;
-            const exchange = exchangeRates[currency].ask; // <3 <3
+            const exchange = exchangeRates[currency].ask;
             const finalBRLValue = (exchange * value).toFixed(2);
-        
             const exchangeFinal = Number.parseFloat(exchange).toFixed(2);
             return (
               <tr key={ eachExpense.id }>

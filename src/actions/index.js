@@ -14,7 +14,7 @@ export const addExpenses = (expenses) => ({
 
 export const requestCurrencyOk = (currency) => ({
   type: RECEIVE_CURRENCY_OK,
-  currencies,
+  currency,
 });
 
 export const currenciesThunk = () => (dispatch) => {

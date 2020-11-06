@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import logoCarteira from '../img/trybe-wallet.png';
 import PropTypes from 'prop-types';
+  //import logoCarteira from '../img/trybe-wallet.png';
 import { loginAction } from '../actions';
 
-import Header from '../components/Header.js';
+import Header from '../components/Header';
 
 class Login extends React.Component {
   constructor() {
@@ -22,7 +22,7 @@ class Login extends React.Component {
     this.setState({ [target.name]: target.value });
     const { email, password } = this.state;
 
-    //validacao dos campos
+      //validacao dos campos
     const regexEmailValidation = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
     const textEmailValidation = document.querySelector('#textEmailValidation');
 
@@ -103,7 +103,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  history:PropTypes.shape({
+  history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
 };

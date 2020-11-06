@@ -5,7 +5,7 @@ import Wallet from './pages/Wallet';
 
 class App extends React.Component {
   render() {
-    return(
+    return (
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route path="/carteira" component={ Wallet } />
