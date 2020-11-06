@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-  //import logoCarteira from '../img/trybe-wallet.png';
+//  import logoCarteira from '../img/trybe-wallet.png';
 import { loginAction } from '../actions';
 
 import Header from '../components/Header';
@@ -22,7 +22,7 @@ class Login extends React.Component {
     this.setState({ [target.name]: target.value });
     const { email, password } = this.state;
 
-      //validacao dos campos
+    //  validacao dos campos
     const regexEmailValidation = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
     const textEmailValidation = document.querySelector('#textEmailValidation');
 
@@ -56,7 +56,7 @@ class Login extends React.Component {
     const { login, history } = this.props;
     const { email } = this.state;
     login(email);
-    historu.push('/carteira');
+    history.push('/carteira');
   }
 
   render() {
