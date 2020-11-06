@@ -34,10 +34,11 @@ class Expenses extends React.Component {
 
   metodoButton(event) {
     const { fetch } = this.props;
-    const id = this.state.id + 1;
+    const { id } = this.state;
+    const newId = id + 1;
     fetch(this.state);
     this.setState({
-      id,
+      id: newId,
     });
     event.preventDefault();
   }

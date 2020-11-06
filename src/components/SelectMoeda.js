@@ -11,9 +11,10 @@ class SelectMoeda extends React.Component {
     this.state = {
       currencys: [],
     };
+    this.startFunction = this.startFunction.bind(this);
   }
 
-  async componentDidMount() {
+  async startFunction() {
     const { currency } = this.props;
     const allCurrency = await getAllCurrency();
     const arrayAllCurrency = Object.values(allCurrency);
@@ -23,6 +24,10 @@ class SelectMoeda extends React.Component {
       currencys: arrayAllCurrency.map((currency) => currency.code),
     });
     currency(currencyNew);
+  }
+
+  async componentDidMount() {
+    this.startFunction();
   }
 
   render() {
