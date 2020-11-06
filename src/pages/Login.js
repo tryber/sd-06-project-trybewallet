@@ -1,5 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import logoCarteira from '../img/trybe-wallet.png';
+import PropTypes from 'prop-types';
+import { loginAction } from '../actions';
+
+import Header from '../components/Header';
 
 class Login extends React.Component {
   constructor() {
@@ -92,4 +97,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  login: (email) => dispatch(loginAction(email)),
+});
+
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  history:PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
