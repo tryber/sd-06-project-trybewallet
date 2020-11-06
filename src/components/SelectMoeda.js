@@ -44,12 +44,12 @@ class SelectMoeda extends React.Component {
         >
           { currencys.map((currencyZ) => {
             const opt = <option
-            value={ currencyZ }
-            data-testid={ currencyZ }
-            key={ currencyZ }
-          >
-            { currencyZ }
-          </option>
+              value={ currencyZ }
+              data-testid={ currencyZ }
+              key={ currencyZ }
+            >
+              { currencyZ }
+            </option>
             return opt;
           })}
         </select>
