@@ -46,7 +46,7 @@ class Table extends React.Component {
                 </td>
                 <td>
                   {parseFloat(
-                    expense.exchangeRates[expense.currency].ask * expense.value
+                    expense.exchangeRates[expense.currency].ask * expense.value,
                   ).toFixed(2)
                   };
                 </td>
