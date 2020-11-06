@@ -14,6 +14,10 @@ class SelectMoeda extends React.Component {
     this.startFunction = this.startFunction.bind(this);
   }
 
+  async componentDidMount() {
+    this.startFunction();
+  }
+
   async startFunction() {
     const { currency } = this.props;
     const allCurrency = await getAllCurrency();
@@ -24,10 +28,6 @@ class SelectMoeda extends React.Component {
       currencys: arrayAllCurrency.map((currency) => currency.code),
     });
     currency(currencyNew);
-  }
-
-  async componentDidMount() {
-    this.startFunction();
   }
 
   render() {
@@ -45,11 +45,10 @@ class SelectMoeda extends React.Component {
               data-testid={ currency }
               key={ currency }>
               { currency }
-            </option>
-          })
-          }
+            </option>;
+          })}
         </select>
-      </label> 
+      </label>
     );
   }
 }
@@ -61,7 +60,7 @@ SelectMoeda.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   currency: (currencies, expenses) => dispatch(currency(currencies, expenses))
-})
+});
 
 export default connect(
   null, mapDispatchToProps

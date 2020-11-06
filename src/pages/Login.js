@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { login } from '../actions';
 import '../styles/Login.css';
 
@@ -71,10 +72,10 @@ class Login extends React.Component {
               placeholder="Digite aqui sua senha"
             />
           </label>
-          <Link to='/carteira'>
+          <Link to="/carteira">
             <button
               id="join-button"
-              onClick={ () => this.props.login(this.state.email) }
+              onClick={ () => this.props.login(email) }
               disabled={ email !== '' && password !== '' ? false : true }
             >
               Entrar
@@ -86,10 +87,14 @@ class Login extends React.Component {
   }
 }
 
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+}
+
 const mapDispatchToProps = (dispatch) => ({
   login: (email) => dispatch(login(email)),
 });
 
 export default connect(
-  null, mapDispatchToProps
-  )(Login);
+  null, mapDispatchToProps,
+)(Login);

@@ -61,8 +61,7 @@ class Table extends React.Component {
                 </td>
               </tr>
             );
-          },
-          )}
+          },)}
         </table>
       </div>
     );
