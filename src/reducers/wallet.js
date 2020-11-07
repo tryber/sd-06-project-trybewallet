@@ -1,19 +1,26 @@
-import { SET_WALLET } from '../actions/types';
+import { GET_CURRENCIES, ADD_EXPENSES } from '../actions/types';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  hellworld: 'helldux',
 };
 
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
-  case SET_WALLET:
+  case ADD_EXPENSES:
     return {
       ...state,
-      currencies: action.currencies,
-      expenses: action.expenses,
+      expenses: [
+        ...state.expenses,
+        action.expense,
+      ],
     };
+  case GET_CURRENCIES:
+    return ({
+      ...state,
+      currencies: [...Object.keys(action.currencies)
+        .filter((currency) => currency !== 'USDT')],
+    });
   default:
     return state;
   }

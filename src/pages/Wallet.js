@@ -2,28 +2,31 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-// import { login } from '../actions';
+import Form from '../components/Form';
 
 class Wallet extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currency: 'BRL',
-      totalExpenses: 0,
-    };
+  constructor() {
+    super();
+    this.totalExpenses = this.totalExpenses.bind(this);
   }
 
-  // handleClick() {
-  //   const { loginAction } = this.props;
-  //   loginAction('jc@gmail.com');
-  // }
+  totalExpenses() {
+    const { wallet } = this.props;
+    const { expenses } = wallet;
+
+    // método de cálculo baseado no projeto de Ana Capedeville
+    return expenses.length !== 0
+      ? (Math.round(expenses.reduce((sum, expense) => (
+        Number(sum) + (Number(expense.value)
+          * (Object.values(expense.exchangeRates)
+            .find((currency) => currency.code === expense.currency)
+            .ask))
+      ), 0) * 100) / 100).toFixed(2) : 0.00;
+  }
 
   render() {
-    const { username } = this.props;
-    const { currency, totalExpenses } = this.state;
-
-    // const { myComponentProps } = this.props;
-    // return <div onClick = { () => loginAction('jc@gmail.com') }>{ myComponentProps }</div>;
+    const { user } = this.props;
+    const { email } = user;
     return (
       <div>
         <header>
@@ -32,46 +35,39 @@ class Wallet extends React.Component {
             alt="TrybeImage"
           />
           <p data-testid="email-field">
-            { username }
+            { email }
           </p>
           <p data-testid="total-field">
-            { `Despesa Total: ${totalExpenses}`}
+            { 'Despesa total: '}
+            { this.totalExpenses() }
           </p>
           <p data-testid="header-currency-field">
-            { currency }
+            BRL
           </p>
         </header>
+        <div>
+          <Form />
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  // myComponentProps: state.wallet.hellworld,
-  username: state.user.email,
-});
-
-// const mapDispatcToProps = (dispatch) => ({
-//   loginAction: (email) => dispatch(login(email)),
-// });
-
-// Wallet.propTypes = {
-// //   loginAction: PropTypes.func.isRequired,
-//   username: PropTypes.arrayOf(
-//     PropTypes.shape(
-//       {
-//         email: PropTypes.string,
-//       },
-//     ),
-//   ).isRequired,
-// };
-
 Wallet.propTypes = {
-  //   loginAction: PropTypes.func.isRequired,
-  username: PropTypes.arrayOf().isRequired,
+  user: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+  }).isRequired,
+
+  wallet: PropTypes.shape({
+    expenses: PropTypes.arrayOf.isRequired,
+  }).isRequired,
+
 };
+const mapStateToProps = (state) => ({
+  user: state.user,
+  wallet: state.wallet,
+});
 
 export default connect(
   mapStateToProps,
-  // mapDispatcToProps,
 )(Wallet);
