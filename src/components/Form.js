@@ -59,8 +59,9 @@ class Form extends Component {
   }
 
   render() {
-    const { addExpense } = this.props;
+    const { addExpense, expenses } = this.props;
     const { coins, expense } = this.state;
+    console.log(expenses);
 
     return (
       <div>
@@ -148,7 +149,14 @@ class Form extends Component {
 
 Form.propTypes = {
   addExpense: PropTypes.func.isRequired,
-  expenses: PropTypes.array.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    currency: PropTypes.string.isRequired,
+    method: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 const mapStateToProps = (state) => ({
