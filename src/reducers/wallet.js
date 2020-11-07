@@ -19,8 +19,8 @@ export default function (state = initialState, action) {
     return {
       ...state,
       expenses: [...state.expenses, { id: state.expenses.length, ...action.expense }],
-      totalExpense: totalExpense
-      + (Number(action.expense.value)
+      totalExpense:
+      totalExpense + (Number(action.expense.value)
       * action.expense.exchangeRates[action.expense.currency].ask),
     };
   default:

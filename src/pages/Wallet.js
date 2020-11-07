@@ -40,8 +40,9 @@ class Wallet extends React.Component {
 
   async handleChange(event) {
     event.preventDefault();
-    const { addExp, apiFetch } = this.props;
-    await apiFetch();
+    const { addExp } = this.props;
+    const { handleFetch } = this;
+    await handleFetch();
     const { expenses } = this.state;
     console.log('expenses', expenses);
     addExp(expenses);
@@ -52,7 +53,7 @@ class Wallet extends React.Component {
         description: '',
         currency: 'USD',
         value: 0,
-        exchangeRates: {},
+        exchangeRates: { ...expenses.exchangeRates },
       } });
   }
 
@@ -66,9 +67,8 @@ class Wallet extends React.Component {
   render() {
     const { _Email, currencies, totalExpense } = this.props;
     const dez = 10;
-    console.log('totalExpense', totalExpense);
-    const { value, method, description, tag, currency } = this.state;
-    console.log('currencies', typeof currencies);
+    const { expenses } = this.state;
+    const { value, method, description, tag, currency } = expenses;
     const filteredCurrencies = Object.keys(currencies).filter((coin) => coin !== 'USDT');
     return (
       <div>
@@ -221,7 +221,7 @@ class Wallet extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   apiFetch: () => dispatch(fetchAPI()),
-  addExp: (expense) => dispatch(addExpenses(expense)),
+  addExp: (expenses) => dispatch(addExpenses(expenses)),
 });
 
 const mapStateToProps = (state) => ({
