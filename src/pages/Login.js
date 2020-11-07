@@ -7,8 +7,10 @@ import { salveUserEmail } from '../actions';
 class Login extends React.Component {
   constructor() {
     super();
+
     this.changeSalve = this.changeSalve.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+
     this.state = {
       email: '',
       password: '',
