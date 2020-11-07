@@ -49,11 +49,13 @@ class Wallet extends React.Component {
           <p data-testid="total-field">
             {
               expenses.length !== 0
-              ? expenses.reduce((total, currValue) => {
-                const { value, currency, exchangeRates } = currValue;
-                const currencyPrice = exchangeRates[currency].ask;
-                const conversion = value * currencyPrice;
-                return total + conversion
+                ? expenses.reduce((total, currValue) => {
+                  const { value: storeValue,
+                    currency: storeCurrency,
+                    exchangeRates } = currValue;
+                  const currencyPrice = exchangeRates[storeCurrency].ask;
+                  const conversion = storeValue * currencyPrice;
+                  return total + conversion;
                 }, 0).toFixed(2) : 0.00
             }
           </p>
@@ -63,51 +65,65 @@ class Wallet extends React.Component {
           <fieldset>
             <label htmlFor="value">
               Valor:
-              <input value={ value }
-              name="value" type="number"
-              onChange={ this.handleChange }
-              data-testid="value-input" />
+              <input
+                value={ value }
+                name="value"
+                type="number"
+                onChange={ this.handleChange }
+                data-testid="value-input"
+              />
             </label>
             <br />
             <label htmlFor="description">
               Descreva:
-              <input value={ description }
-              name="description"
-              onChange={ this.handleChange }
-              data-testid="description-input"/>
+              <input
+                value={ description }
+                name="description"
+                onChange={ this.handleChange }
+                data-testid="description-input"
+              />
             </label>
             <br />
-            <label>
+            <label htmlFor="currency">
               Moeda:
-              <select value={ currency }
-              name="currency"
-              onChange={ this.handleChange }
-              data-testid="currency-input">
-                { currencies.map((currency) =>
-                <option data-testid={currency} key={currency}>
-                  {currency}
-                </option> ) }
+              <select
+                value={ currency }
+                name="currency"
+                id="currency"
+                onChange={ this.handleChange }
+                data-testid="currency-input"
+              >
+                { currencies.map((money) => (
+                  <option data-testid={ money } key={ money }>
+                    { money }
+                  </option>))}
               </select>
             </label>
             <br />
-            <label>
+            <label htmlFor="method">
               Forma de Pagamento:
-              <select value={ method }
-              name="method"
-              onChange={ this.handleChange }
-              data-testid="method-input">
+              <select
+                value={ method }
+                name="method"
+                id="method"
+                onChange={ this.handleChange }
+                data-testid="method-input"
+              >
                 <option>Dinheiro</option>
                 <option>Cartão de crédito</option>
                 <option>Cartão de débito</option>
               </select>
             </label>
             <br />
-            <label g>
+            <label htmlFor="tag">
               Categoria:
-              <select value={ tag }
-              name="tag"
-              onChange={ this.handleChange }
-              data-testid="tag-input">
+              <select
+                value={ tag }
+                id="tag"
+                name="tag"
+                onChange={ this.handleChange }
+                data-testid="tag-input"
+              >
                 <option>Alimentação</option>
                 <option>Lazer</option>
                 <option>Trabalho</option>
@@ -131,24 +147,23 @@ class Wallet extends React.Component {
             <th>Moeda de conversão</th>
             <th>Editar/Excluir</th>
           </thead>
-          {expenses.length !== 0 
+          {expenses.length !== 0
             ? expenses.map((expense) => {
               const currencyName = expense.exchangeRates[expense.currency].name;
               const exchange = expense.exchangeRates[expense.currency].ask;
               const conversion = expense.value * exchange;
-              return <tbody>
-                <td>{ expense.description }</td>
-                <td>{ expense.tag }</td>
-                <td>{ expense.method }</td>
-                <td>{ expense.value }</td>
-                <td>{ currencyName }</td>
-                <td>{ parseFloat(exchange).toFixed(2) }</td>
-                <td>{ parseFloat(conversion).toFixed(2) }</td>
-                <td> Real </td>
-              </tbody>
-              }) : ''
-          }
-          ;
+              return (
+                <tbody key={ expense.id }>
+                  <td>{ expense.description }</td>
+                  <td>{ expense.tag }</td>
+                  <td>{ expense.method }</td>
+                  <td>{ expense.value }</td>
+                  <td>{ currencyName }</td>
+                  <td>{ parseFloat(exchange).toFixed(2) }</td>
+                  <td>{ parseFloat(conversion).toFixed(2) }</td>
+                  <td> Real </td>
+                </tbody>);
+            }) : '' }
         </table>
       </div>
     );
