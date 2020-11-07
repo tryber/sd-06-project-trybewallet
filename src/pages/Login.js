@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { login } from '../actions';
 import './Login.css';
+import logoWallet from '../trybeWallet.png';
 
 class Login extends React.Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class Login extends React.Component {
     const { email, password, isValid } = this.state;
     return (
       <section className="login-container">
-        <h1>Login</h1>
+        <h1><img src={ logoWallet } alt="Logo Trybe Wallet" /></h1>
         <input
           data-testid="email-input"
           required

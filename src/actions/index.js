@@ -1,5 +1,4 @@
 export const LOGIN = 'LOGIN';
-
 export const CURRENCIES_FECTH_SUCESS = 'CURRENCIES_FECTH_SUCESS';
 export const ADD_NEW_EXPENSE = 'ADD_NEW_EXPENSE';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';

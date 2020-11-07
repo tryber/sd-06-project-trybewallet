@@ -65,99 +65,105 @@ class Wallet extends React.Component {
        * cur.exchangeRates[cur.currency].ask, 0) * 100) / 100 : 0;
     const fields = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
       'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
-    console.log(expenses);
     return (
       <main>
-        <header>
+        <header className="header-wallet">
           <span data-testid="email-field">
             Email:
             { ` ${email}` }
           </span>
-          <span data-testid="total-field">
-            Despesa:
+          <span className="despesa-total" data-testid="total-field">
+            Despesa Total:
             { ` ${totalValue} ` }
             <span data-testid="header-currency-field">BRL</span>
           </span>
         </header>
         <form
-          onSubmit={ isEditing ? this.handleSubmitEditedExpense
+          className="form-container"
+          onSubmit={ isEditing
+            ? this.handleSubmitEditedExpense
             : this.handleAddNewExpense }
         >
-          <label htmlFor="value">
-            Valor:
-            <input
-              onChange={ this.handleChange }
-              type="text"
-              name="value"
-              id="value"
-              data-testid="value-input"
-              value={ value }
-            />
-          </label>
-          <label htmlFor="description">
-            Descrição:
-            <input
-              onChange={ this.handleChange }
-              type="text"
-              name="description"
-              id="description"
-              data-testid="description-input"
-              value={ description }
-            />
-          </label>
-          <label htmlFor="currency">
-            Moeda:
-            <select
-              name="currency"
-              id="currency"
-              data-testid="currency-input"
-              value={ currency }
-              onChange={ this.handleChange }
+          <section className="valor-descricao">
+            <label htmlFor="value">
+              Valor:
+              <input
+                onChange={ this.handleChange }
+                type="text"
+                name="value"
+                id="value"
+                data-testid="value-input"
+                value={ value }
+              />
+            </label>
+            <label htmlFor="description">
+              Descrição:
+              <input
+                onChange={ this.handleChange }
+                type="text"
+                name="description"
+                id="description"
+                data-testid="description-input"
+                value={ description }
+              />
+            </label>
+          </section>
+          <section className="selects">
+            <label htmlFor="currency">
+              Moeda:
+              <select
+                name="currency"
+                id="currency"
+                data-testid="currency-input"
+                value={ currency }
+                onChange={ this.handleChange }
+              >
+                {currencies && currencies.map((coin) => (
+                  <option key={ coin } data-testid={ `${coin}` } value={ coin }>
+                    { coin }
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label htmlFor="method">
+              Método:
+              <select
+                name="method"
+                id="method"
+                data-testid="method-input"
+                value={ method }
+                onChange={ this.handleChange }
+              >
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Cartão de crédito">Cartão de crédito</option>
+                <option value="Cartão de débito">Cartão de débito</option>
+              </select>
+            </label>
+            <label htmlFor="tag">
+              Tag:
+              <select
+                data-testid="tag-input"
+                id="tag"
+                name="tag"
+                value={ tag }
+                onChange={ this.handleChange }
+              >
+                <option value="Alimentação">Alimentação</option>
+                <option value="Lazer">Lazer</option>
+                <option value="Trabalho">Trabalho</option>
+                <option value="Transporte ">Transporte</option>
+                <option value="Saúde">Saúde</option>
+              </select>
+            </label>
+            <button
+              id="adicionar-despesa"
+              type="submit"
             >
-              {currencies && currencies.map((coin) => (
-                <option key={ coin } data-testid={ `${coin}` } value={ coin }>
-                  { coin }
-                </option>
-              ))}
-            </select>
-          </label>
-          <label htmlFor="method">
-            Método:
-            <select
-              name="method"
-              id="method"
-              data-testid="method-input"
-              value={ method }
-              onChange={ this.handleChange }
-            >
-              <option value="Dinheiro">Dinheiro</option>
-              <option value="Cartão de crédito">Cartão de crédito</option>
-              <option value="Cartão de débito">Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag">
-            Tag:
-            <select
-              data-testid="tag-input"
-              id="tag"
-              name="tag"
-              value={ tag }
-              onChange={ this.handleChange }
-            >
-              <option value="Alimentação">Alimentação</option>
-              <option value="Lazer">Lazer</option>
-              <option value="Trabalho">Trabalho</option>
-              <option value="Transporte ">Transporte</option>
-              <option value="Saúde">Saúde</option>
-            </select>
-          </label>
-          <button
-            type="submit"
-          >
-            { isEditing ? 'Editar despesa' : 'Adicionar despesa' }
-          </button>
+              { isEditing ? 'Editar despesa' : 'Adicionar despesa' }
+            </button>
+          </section>
         </form>
-        <table id="tbl" border="1">
+        <table className="table-container" id="tbl" border="1">
           <thead>
             <tr>
               {fields.map((title) => <td key={ title }>{ title }</td>)}
@@ -169,7 +175,15 @@ class Wallet extends React.Component {
               const currencyName = expen.exchangeRates[expen.currency].name;
               const convertedValue = exchangeValue * expen.value;
               return (
-                <tr key={ expen.id }>
+                <tr
+                  style={ {
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    marginTop: '10px',
+                    padding: '0 7px',
+                  } }
+                  key={ expen.id }
+                >
                   <td>{ expen.description }</td>
                   <td>{ expen.tag }</td>
                   <td>{ expen.method }</td>
@@ -181,6 +195,7 @@ class Wallet extends React.Component {
                   <td>
                     <button
                       type="button"
+                      id="btn-editar"
                       data-testid="edit-btn"
                       onClick={ () => this.handleEditExpense(expen.id) }
                     >
@@ -188,6 +203,7 @@ class Wallet extends React.Component {
                     </button>
                     <button
                       type="button"
+                      id="btn-excluir"
                       data-testid="delete-btn"
                       onClick={ () => this.handleRemoveExpense(expen.id) }
                     >
