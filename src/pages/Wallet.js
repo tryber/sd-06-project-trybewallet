@@ -83,13 +83,14 @@ class Wallet extends React.Component {
           </div>
         </header>
         <section>
-          <form onSubmit={ this.handleSubmit }>
+          <form className="form" onSubmit={ this.handleSubmit }>
             <label
               htmlFor="valor:"
             >
               Valor:
               <input
                 type="text"
+                className="valor"
                 id="valor:"
                 data-testid="value-input"
                 onChange={ (e) => this.handleChange(e, 'value') }
@@ -159,7 +160,7 @@ class Wallet extends React.Component {
                 <option id="tag">Saúde</option>
               </select>
             </label>
-            <button type="submit">Adicionar despesa</button>
+            <button type="submit" className="addExpenseBtn">Adicionar despesa</button>
           </form>
         </section>
         <DebtsTable />

@@ -48,3 +48,22 @@
   display: flex;
   justify-content: space-between;
 }
+.addExpenseBtn {
+  border-radius: 6px;
+  color: white;
+  background-color: purple;
+  height: 21px;
+  font-weight: bolder;
+}
+.form {
+  background-color: grey;
+  display: flex;
+  justify-content: space-between;
+  padding:10px;
+  height: 20px;
+  font-weight: bolder;
+  color: aliceblue;
+}
+.valor {
+  width: 50px;
+}

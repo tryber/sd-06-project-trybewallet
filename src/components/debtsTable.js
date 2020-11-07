@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { handleDeleteExpense } from '../actions';
+import '../App.css';
 
 class DebtsTable extends Component {
   render() {
@@ -37,18 +38,19 @@ class DebtsTable extends Component {
                       .toFixed(2)
                   }
                 </td>
-                <td>
+                <td className="value_moeda">
                   {
                     (Math.round((el.value * el.exchangeRates[el.currency].ask)
                     * 100) / 100
                     ).toFixed(2)
                   }
                 </td>
-                <td>Real</td>
+                <td className="real">Real</td>
                 <td>
                   <button
                     type="button"
                     data-testid="delete-btn"
+                    className="btnDelete"
                     onClick={ () => deleteExpense(el.id) }
                   >
                     Click
