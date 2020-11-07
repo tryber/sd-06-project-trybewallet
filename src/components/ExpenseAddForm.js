@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { fetchCurrencies as fetchCurrenciesThunk, saveFormExpenses, fetchAPIExpenses } from '../actions';
+import {
+  fetchCurrencies as fetchCurrenciesThunk,
+  fetchAPIExpenses as fetchAPIExpensesThunk,
+} from '../actions';
 
 class ExpenseAddForm extends Component {
   constructor(props) {
@@ -29,10 +32,7 @@ class ExpenseAddForm extends Component {
   }
 
   handleSaveExpenses() {
-    const { expenses, fetchAPIExpenses } = this.props;
-    // this.setState((previousID) => ({
-    //   id: previousID.id + 1 }));
-    // expenses(this.state);
+    const { fetchAPIExpenses } = this.props;
     fetchAPIExpenses(this.state);
     this.setState((previousState) => (
       // console.log('teste'),
@@ -44,7 +44,7 @@ class ExpenseAddForm extends Component {
 
   render() {
     const { currencies } = this.props;
-    const { currency } = this.state;
+    const { value } = this.state;
     return (
       <div>
         <form>
@@ -53,7 +53,7 @@ class ExpenseAddForm extends Component {
             <input
               id="value-input"
               data-testid="value-input"
-              value={this.state.value}
+              value={ value }
               onChange={ (event) => this.handleChange(event, 'value') }
             />
           </label>
@@ -135,13 +135,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(fetchCurrenciesThunk()),
-  fetchAPIExpenses: (state) => dispatch(fetchAPIExpenses(state)),
+  fetchAPIExpenses: (state) => dispatch(fetchAPIExpensesThunk(state)),
 });
 
 ExpenseAddForm.propTypes = {
   currencies: PropTypes.shape.isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
-  expenses: PropTypes.func.isRequired,
+  fetchAPIExpenses: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseAddForm);

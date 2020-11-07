@@ -7,11 +7,12 @@ class Header extends Component {
   sumExpenses() {
     const { expenses } = this.props;
 
-    const mapeado = expenses.map((element) => element.currency);
-    const currentQuot = expenses.map((element) => element.exchangeRates[mapeado].ask);
+    // const mapeado = expenses.map((element) => element.currency);
+    // const currentQuot = expenses.map((element) => element.exchangeRates[mapeado].ask);
     const total = expenses
-      .reduce((acc, curr) => (Number(acc) + (Number(curr.value) * currentQuot)), 0);
-    return Math.round(total * 10) / 10;
+      .reduce((acc, curr) => (
+        (Number(acc) + (Number(curr.value) * curr.exchangeRates[curr.currency].ask))), 0);
+    return Math.round(total * 100) / 100;
   }
 
   render() {
@@ -36,6 +37,9 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-Header.propTypes = { email: PropTypes.shape.isRequired };
+Header.propTypes = {
+  email: PropTypes.shape.isRequired,
+  expenses: PropTypes.shape.isRequired,
+};
 
 export default connect(mapStateToProps)(Header);

@@ -39,6 +39,7 @@ class Login extends Component {
   render() {
     const { email, password } = this.state;
     const activeButton = this.validateEmail(email) && this.validatePassword(password);
+    // const { saveEmail } = this.props;
     return (
       <div>
         <input
@@ -61,7 +62,7 @@ class Login extends Component {
             id="button-login"
             value="Entrar"
             disabled={ !activeButton }
-            onClick={ () => this.handleLogin() }
+            onClick={ () => this.handleLogin({ email }) }
           />
         </Link>
       </div>
