@@ -58,6 +58,10 @@ class Wallet extends React.Component {
     const total = expenses.length ? Math.round(expenses
       .reduce((acc, crr) => acc + crr.value * crr.exchangeRates[crr.currency].ask, 0)
       * 100) / 100 : 0;
+    const tableFields = [
+      'Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
+      'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir',
+    ];
     return (
       <div>
         TrybeWallet
@@ -79,7 +83,7 @@ class Wallet extends React.Component {
             />
           </label>
           <label htmlFor="description">
-            Descrição
+            Descrição:
             <input
               name="description"
               id="description"
@@ -134,6 +138,35 @@ class Wallet extends React.Component {
             <button type="submit">Adicionar despesa</button>
           </div>
         </form>
+        <div>
+          <table>
+            <thead>
+              <tr>
+                {tableFields.map((title) => <th key={ title }>{ title }</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {expenses.map((item) => {
+                const crrExchange = item.exchangeRates[item.currency];
+                const expenseValue = Number(crrExchange.ask);
+                const crrName = crrExchange.name;
+                const convertedValue = expenseValue * item.value;
+                return (
+                  <tr key={ item.id }>
+                    <td>{ item.description }</td>
+                    <td>{ item.tag }</td>
+                    <td>{ item.method }</td>
+                    <td>{ item.value }</td>
+                    <td>{ expenseValue.toFixed(2) }</td>
+                    <td>{ crrName }</td>
+                    <td>{ convertedValue.toFixed(2) }</td>
+                    <td>Real</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import { ADD_EXPENSE, CURRENCY } from '../actions';
 
 const INITIAL_STATE = {
-  currencies: [],
+  currencies: {},
   expenses: [],
   total: 0,
 };
