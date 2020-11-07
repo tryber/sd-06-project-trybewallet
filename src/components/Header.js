@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export class Header extends Component {
+class Header extends Component {
   render() {
     const { email } = this.props;
     console.log(email);
     return (
       <div>
         <p data-testid="email-field">
-          {`${email}`}
+          {` ${email} `}
         </p>
         <p data-testid="total-field">
           0
