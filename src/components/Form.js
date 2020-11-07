@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import fetchAPI from '../services/API';
-import { wallet, addExpenseThunk } from '../actions';
+import { addExpenseThunk } from '../actions';
 
 class Form extends Component {
   constructor(props) {
@@ -95,13 +95,13 @@ class Form extends Component {
               type="text"
               data-testid="currency-input"
             >
-              { coins.map((coin) => (<option
-                data-testid={ coin }
-                key={ coin }
-              >
-                { coin }
-              </option>
-              )) }
+              { coins.map((coin) => (
+                <option
+                  data-testid={ coin }
+                  key={ coin }
+                >
+                  { coin }
+                </option>))}
             </select>
           </label>
           <label htmlFor="method-input">
@@ -147,6 +147,8 @@ class Form extends Component {
 }
 
 Form.propTypes = {
+  addExpense: PropTypes.func.isRequired,
+  expenses: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -16,7 +16,12 @@ class Header extends Component {
       const expenseValue = expenses.map((coin) => parseFloat(coin.value));
       const expenseAsk = expenses
         .map((value) => parseFloat(value.exchangeRates[value.currency].ask));
-      const sumValue = expenseValue.reduce((acc, curr, index) => (acc + (curr * expenseAsk[index])), 0);
+
+      const sumValue = expenseValue.reduce(
+        (acc, curr, index) => (acc + (curr * expenseAsk[index])
+        ), 0,
+      );
+
       return sumValue.toFixed(2);
     }
     return 0;
@@ -49,6 +54,7 @@ class Header extends Component {
 
 Header.propTypes = {
   userEmail: PropTypes.string.isRequired,
+  expenses: PropTypes.array.isRequired,
 };
 
 const mapStateToPros = (state) => ({
