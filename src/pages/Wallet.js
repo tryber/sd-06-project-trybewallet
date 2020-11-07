@@ -3,8 +3,30 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = ({
+      currencys: [],
+    });
+  }
+
+  componentDidMount() {
+    this.requestCurrencys();
+  }
+
+  async requestCurrencys() {
+    const currencys = await fetch('https://economia.awesomeapi.com.br/json/all ');
+    const jsonCurrencys = await currencys.json();
+    delete jsonCurrencys.USDT;
+    const listCurrencys = Object.values(jsonCurrencys);
+    this.setState({
+      currencys: listCurrencys,
+    });
+  }
+
   render() {
     const { email } = this.props;
+    const { currencys } = this.state;
     return (
       <div>
         <header>
@@ -32,28 +54,45 @@ class Wallet extends React.Component {
 
         <form onSubmit="">
           <label
-            htmlFor="email-user"
+            htmlFor="valor-despesas"
           >
-            Email
+            valor despesas
             <input
-              placeholder="Digite seu email"
-              data-testid="email-inpu"
-              id="email-user"
-              type="text"
-              value="email"
+              placeholder="valor"
+              data-testid="value-input"
+              id="valor-despesas"
+              type="number"
+              // value="email"
             />
           </label>
           <div>
-            <label htmlFor="movie_image">
-              Senha
+            <label htmlFor="descrição">
+              Descrição despesas
               <input
-                placeholder="Digite sua senha"
-                data-testid="password-inpu"
-                id="senha-user"
-                type="password"
-                value="senha"
+                placeholder="descrição"
+                data-testid="description-input"
+                id="descrição"
+                type="text"
+                // value="senha"
               // onChange={ (event) => this.handleUpdateState('senha', event) }
               />
+            </label>
+          </div>
+          <div>
+            <label
+              htmlFor="moeda-despesa"
+            >
+              Gênero
+
+              <select
+                data-testid="currency-input"
+                id="moeda-despesa"
+                value="genr"
+                // onChange={ () => '' }
+              >
+                {currencys.map((currency, index) => <option key={ index } data-testid={ currency.code } value="action">{currency.code}</option>)}
+
+              </select>
             </label>
           </div>
           <button

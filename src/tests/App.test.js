@@ -16,7 +16,7 @@ const mockedExchange = jest.spyOn(global, 'fetch').mockImplementation(() => apiR
 
 afterEach(() => jest.clearAllMocks());
 
-describe.only('1 - [PÁGINA DE LOGIN] Crie uma página inicial de login com os seguintes campos e características:', () => {
+describe('1 - [PÁGINA DE LOGIN] Crie uma página inicial de login com os seguintes campos e características:', () => {
   test('A rota para esta página deve ser \'/\'', () => {
     const { history } = renderWithRouterAndStore(<App />);
     expect(history.location.pathname).toBe('/');
@@ -99,7 +99,7 @@ describe.only('1 - [PÁGINA DE LOGIN] Crie uma página inicial de login com os s
   });
 });
 
-describe.only('2 - [PÁGINA DA CARTEIRA] Crie uma página para sua carteira com as seguintes características:', () => {
+describe('2 - [PÁGINA DA CARTEIRA] Crie uma página para sua carteira com as seguintes características:', () => {
   test('A rota para esta página deve ser \'/carteira\'', () => {
     const { history } = renderWithRouterAndStore(<App />);
     history.push('/carteira');
@@ -113,7 +113,7 @@ describe.only('2 - [PÁGINA DA CARTEIRA] Crie uma página para sua carteira com 
   });
 });
 
-describe.only('3 - [PÁGINA DA CARTEIRA] Crie um header para a página de carteira contendo as seguintes características:', () => {
+describe('3 - [PÁGINA DA CARTEIRA] Crie um header para a página de carteira contendo as seguintes características:', () => {
   const initial = initialStateHeader;
 
   test('Um elemento que exiba o email do usuário que fez login.', () => {
@@ -142,21 +142,21 @@ describe.only('3 - [PÁGINA DA CARTEIRA] Crie um header para a página de cartei
 });
 
 describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
-  test('Um campo para adicionar o valor da despesa', async () => {
+  test.only('Um campo para adicionar o valor da despesa', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const valueInput = await screen.findByTestId('value-input');
 
     expect(valueInput).toBeInTheDocument();
   });
 
-  test('Um campo para adicionar a descrição da despesa', async () => {
+  test.only('Um campo para adicionar a descrição da despesa', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const descriptionInput = await screen.findByTestId('description-input');
 
     expect(descriptionInput).toBeInTheDocument();
   });
 
-  test('Um campo para selecionar em qual moeda será registrada a despesa', async () => {
+  test.only('Um campo para selecionar em qual moeda será registrada a despesa', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const currencyInput = await screen.findByTestId('currency-input');
     const USD = screen.getByTestId('USD');
@@ -195,7 +195,7 @@ describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma
     expect(USDT).not.toBeInTheDocument();
   });
 
-  test('Um campo para selecionar qual método de pagamento será utilizado', async () => {
+  test.only('Um campo para selecionar qual método de pagamento será utilizado', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const methodInput = await screen.findByTestId('method-input');
     const moneyOption = screen.getByText(/Dinheiro/);

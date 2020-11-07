@@ -72,7 +72,7 @@ class Login extends React.Component {
               } }
             />
           </label>
-          <label htmlFor="movie_image">
+          <label htmlFor="senha-user">
             Senha
             <input
               placeholder="Digite sua senha"
