@@ -1,22 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
+import { Header } from '../components/Header';
 
 class Wallet extends React.Component {
   render() {
-    const { nomeDoExemploIcaro } = this.props;
-    return <div>{ nomeDoExemploIcaro }</div>;
+    return (
+      <div>
+        <Header />
+      </div>
+    );
   }
 }
 
-const mapStateToProps = (state) => ({
-  nomeDoExemploIcaro: state.wallet.helloWorld,
-});
-
-Wallet.propTypes = {
-  nomeDoExemploIcaro: PropTypes.shape.isRequired,
-};
-
-export default connect(
-  mapStateToProps,
-)(Wallet);
+export default Wallet;
