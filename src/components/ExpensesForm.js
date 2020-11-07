@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { expensesAction, currenciesAction, currencyAPI } from '../actions';
+import { addExpense, addCurrencies, currencyAPI } from '../actions';
 
 class ExpensesForm extends Component {
   constructor(props) {
@@ -9,11 +9,11 @@ class ExpensesForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      expenses: '',
-      currencies: '',
-      descriptionExpenses: '',
+      value: 0,
+      description: '',
+      currency: '',
       method: '',
-      category: '',
+      tag: '',
     };
   }
 
@@ -29,102 +29,115 @@ class ExpensesForm extends Component {
   }
 
   handleClick() {
-    const { userCurrency, userExpenses } = this.props;
-    const { expenses, currencies } = this.state;
-    userCurrency(currencies);
-    userExpenses(expenses);
+    const { dispatchCurrencies, dispatchExpense, expenses } = this.props;
+    const { value, description, currency, method, tag, currencies } = this.state;
+    const id = expenses.length;
+    dispatchCurrencies(currencies);
+    dispatchExpense({
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+    });
   }
 
   render() {
-    const { expenses, currencies, descriptionExpenses, method, category } = this.state;
-    const { fetchCurrencyAPI } = this.props;
-    console.log(fetchCurrencyAPI);
+    const { value, description, currency, method, tag } = this.state;
+    const { currencies } = this.props;
     return (
       <div>
         <form>
-          <label htmlFor="expenses">
+          <label htmlFor="value">
             Valor da despesa:
             <input
               type="number"
-              name="expenses"
+              name="value"
               data-testid="value-input"
-              value={ expenses }
+              value={ value }
               onChange={ this.handleChange }
             />
           </label>
-          <label htmlFor="descriptionExpenses">
+          <label htmlFor="description">
             Descrição da despesa:
             <input
               type="text"
-              name="descriptionExpenses"
+              name="description"
               data-testid="description-input"
-              value={ descriptionExpenses }
+              value={ description }
               onChange={ this.handleChange }
             />
           </label>
-          <label htmlFor="currency">
-            Moeda que a despesa foi feita:
-            <select
-              type="text"
-              name="currency"
-              data-testid="currency-input"
-              value={ currencies }
-              onChange={ this.handleChange }
-            >
-              { fetchCurrencyAPI.map((currency) => (
-                <option key={ currency } data-testid={ currency }>{currency}</option>
-              )) }
-            </select>
-          </label>
-          <label htmlFor="method">
-            Método de pagamento:
-            <select
-              name="method"
-              data-testid="method-input"
-              value={ method }
-              onChange={ this.handleChange }
-            >
-              <option value="dinheiro">Dinheiro</option>
-              <option value="credito">Cartão de crédito</option>
-              <option value="debito">Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="category">
-            Categoria da despesa:
-            <select
-              name="category"
-              data-testid="tag-input"
-              value={ category }
-              onChange={ this.handleChange }
-            >
-              <option value="alimentacao">Alimentação</option>
-              <option value="lazer">Lazer</option>
-              <option value="trabalho">Trabalho</option>
-              <option value="transporte">Transporte</option>
-              <option value="saude">Saúde</option>
-            </select>
-          </label>
-          <button type="submit" onClick={ this.handleClick }>Adicionar despesa</button>
+          <select
+            name="currency"
+            data-testid="currency-input"
+            value={ currency }
+            onChange={ this.handleChange }
+          >
+            { currencies.map((curr) => (
+              <option
+                key={ curr }
+                data-testid={ curr }
+              >
+                {curr}
+              </option>
+            )) }
+          </select>
+
+          <select
+            name="method"
+            data-testid="method-input"
+            value={ method }
+            onChange={ this.handleChange }
+          >
+            <option>Dinheiro</option>
+            <option>Cartão de crédito</option>
+            <option>Cartão de débito</option>
+          </select>
+          <select
+            name="tag"
+            data-testid="tag-input"
+            value={ tag }
+            onChange={ this.handleChange }
+          >
+            <option>Alimentação</option>
+            <option>Lazer</option>
+            <option>Trabalho</option>
+            <option>Transporte</option>
+            <option>Saúde</option>
+          </select>
+          <button
+            type="button"
+            onClick={ this.handleClick }
+          >
+            Adicionar despesa
+          </button>
         </form>
       </div>
     );
   }
 }
 const mapStateToProps = (state) => ({
-  fetchCurrencyAPI: state.wallet.currencies,
+  currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  userCurrency: (currency) => dispatch(currenciesAction(currency)),
-  userExpenses: (expenses) => dispatch(expensesAction(expenses)),
-  fetchCurrency: (currency) => dispatch(currencyAPI(currency)),
+  dispatchCurrencies: (currencies) => dispatch(addCurrencies(currencies)),
+  dispatchExpense: (expense) => dispatch(addExpense(expense)),
+  // fetchCurrency: (currency) => dispatch(currencyAPI(currency)),
 });
 
 ExpensesForm.propTypes = {
-  userCurrency: PropTypes.func.isRequired,
-  userExpenses: PropTypes.func.isRequired,
+  dispatchCurrencies: PropTypes.func.isRequired,
+  dispatchExpense: PropTypes.func.isRequired,
   fetchCurrency: PropTypes.func.isRequired,
-  fetchCurrencyAPI: PropTypes.arrayOf(PropTypes.any).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.any),
+  expenses: PropTypes.arrayOf(Object).isRequired,
+};
+ExpensesForm.defaultProps = {
+  currencies: [''],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);

@@ -1,20 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import store from '../store';
 import ExpensesForm from '../components/ExpensesForm';
 
 class Wallet extends React.Component {
   render() {
-    console.log(store);
-    const { userEmail } = this.props;
-    console.log(userEmail);
+    const { userEmail, totalExpenses } = this.props;
     return (
       <div>
         <header>
-          <h6 data-testid="email-field">{userEmail}</h6>
-          <h6 data-testid="total-field">0</h6>
-          <h6 data-testid="header-currency-fiell">BRL</h6>
+          <h3 data-testid="email-field">{userEmail}</h3>
+          <h3 data-testid="total-field">{totalExpenses.toFixed(2)}</h3>
+          <h3 data-testid="header-currency-field">BRL</h3>
         </header>
         <ExpensesForm />
       </div>);
@@ -23,9 +20,11 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
+  totalExpenses: state.wallet.totalExpenses,
 });
 Wallet.propTypes = {
   userEmail: PropTypes.string.isRequired,
+  totalExpenses: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, null)(Wallet);

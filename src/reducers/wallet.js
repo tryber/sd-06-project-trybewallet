@@ -1,15 +1,20 @@
-import { EXPENSES, CURRENCIES } from '../actions';
+import { EXPENSE, CURRENCIES } from '../actions/index';
 
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  totalExpenses: 0,
 };
 
-function reducer(state = INITIAL_STATE, action) {
+function reducerWallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case EXPENSES:
-    return { ...state, expenses: action.expenses };
+  case EXPENSE:
+    return { ...state,
+      expenses: [...state.expenses, action.expense],
+      totalExpenses: state.totalExpenses
+      + (Number(action.expense.value)
+       * action.expense.exchangeRates[action.expense.currency].ask) };
   case CURRENCIES:
     return { ...state, currencies: action.currencies };
   default:
@@ -17,4 +22,4 @@ function reducer(state = INITIAL_STATE, action) {
   }
 }
 
-export default reducer;
+export default reducerWallet;

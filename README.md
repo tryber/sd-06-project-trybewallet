@@ -315,7 +315,7 @@ Crie uma página para gerenciar a carteira de gastos em diversas moedas, e que t
       "description": "Hot Dog",
       "currency": "USD",
       "method": "Dinheiro",
-      "tag": "Alimentação",
+      "tag": "Alimentação", 
       "exchangeRates": {
         "USD": {
           "code": "USD",
