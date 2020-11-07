@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchApi, expenseAction } from '../actions';
+import { fetchApi, expenseAction, deleteExpense } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -147,6 +147,7 @@ class Wallet extends React.Component {
             </thead>
             <tbody>
               {expenses.map((item) => {
+                const { deleteId } = this.props;
                 const crrExchange = item.exchangeRates[item.currency];
                 const expenseValue = Number(crrExchange.ask);
                 const crrName = crrExchange.name;
@@ -161,6 +162,15 @@ class Wallet extends React.Component {
                     <td>{ crrName }</td>
                     <td>{ convertedValue.toFixed(2) }</td>
                     <td>Real</td>
+                    <td>
+                      <button
+                        type="button"
+                        data-testid="delete-btn"
+                        onClick={ () => deleteId(item.id) }
+                      >
+                        Deletar
+                      </button>
+                    </td>
                   </tr>
                 );
               })}
@@ -181,6 +191,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   api: () => dispatch(fetchApi()),
   newExpense: (state) => dispatch(expenseAction(state)),
+  deleteId: (id) => dispatch(deleteExpense(id)),
 });
 
 Wallet.propTypes = {
@@ -189,6 +200,7 @@ Wallet.propTypes = {
   newExpense: PropTypes.func.isRequired,
   currencies: PropTypes.objectOf(PropTypes.object).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteId: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
