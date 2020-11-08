@@ -40,6 +40,15 @@ class Table extends Component {
                   <td>{ exchange.toFixed(2) }</td>
                   <td>{ expenseValue * exchange }</td>
                   <td>{ conversionName }</td>
+                  <td>
+                    <button
+                      type="button"
+                      data-testid="delete-btn"
+                      name={ id }
+                    >
+                      Edit/Delete
+                    </button>
+                  </td>
                 </tr>
               );
             })}
@@ -49,6 +58,10 @@ class Table extends Component {
     );
   }
 }
+
+// const mapDispatchToProps = (dispatch) => ({
+//   deleteInformation: (dispatch) => dispatch(clear(dispatch)),
+// });
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
