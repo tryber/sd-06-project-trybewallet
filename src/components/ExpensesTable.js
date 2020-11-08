@@ -34,12 +34,11 @@ class ExpensesTable extends React.Component {
 function mapStateToProps(state) {
   return {
     expenses: state.wallet.expenses,
-
   };
 }
 
 ExpensesTable.propTypes = {
-  expenses: PropTypes.arrayOf(PropTypes.string).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.shape).isRequired,
 };
 
 export default connect(mapStateToProps)(ExpensesTable);
