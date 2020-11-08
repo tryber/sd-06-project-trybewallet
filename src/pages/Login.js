@@ -61,12 +61,9 @@ class Login extends React.Component {
             type="text"
             value={ email }
             placeholder="email"
-            // onChange={ (e) => this.setState({ email: e.target.value }) }
             data-testid="email-input"
             name="email"
             onChange={ this.handleChange }
-            // required
-            // validate={[this.validateRegister]}
           />
           <input
             type="password"
@@ -75,16 +72,12 @@ class Login extends React.Component {
             placeholder="password"
             name="password"
             maxLength="6"
-            // onChange={ (e) => this.setState({ senha: e.target.value }) }
-            // validate={[this.validateRegister]}
             onChange={ this.handleChange }
           />
           <Link to="/carteira">
             <button
               type="submit"
-              // onClick={ () => actionsEmailLogin({ email, senha }) }
               onClick={ this.validateRegister }
-              // onClick={ () => handleLogin(email, senha) }
               disabled={ isDisabled }
             >
               Entrar
