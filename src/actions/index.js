@@ -1,4 +1,4 @@
-import fetchCurrencyApi from '../services/fetchApi';
+import fetchApi from '../services/fetchApi';
 
 export const LOGIN = 'LOGIN';
 export const SUCESS_CURRENCIES = 'SUCESS_CURRENCIES';
@@ -21,7 +21,7 @@ export const sucessExpenses = (expenses) => ({
 
 export function currentThunk() {
   return (dispatch) => (
-    fetchCurrencyApi()
+    fetchApi()
       .then((currencies) => {
         const tempCurrencies = Object.keys(currencies);
         dispatch(sucessCurrencies(tempCurrencies.filter((curr) => (curr !== 'USDT'))));
