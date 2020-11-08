@@ -18,7 +18,7 @@ class Wallet extends React.Component {
           {email}
         </p>
         <p data-testid="total-field">
-          {totalValue}
+          {totalValue.toFixed(2)}
           {' '}
         </p>
         <select
@@ -39,6 +39,7 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   totalValue: state.wallet.total,
+  edit: state.wallet.edit,
 
 });
 

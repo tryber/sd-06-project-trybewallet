@@ -1,15 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import apiFetch, { addExpense } from '../actions/WalletForms';
+import apiFetch,
+{ addExpense, editAttribute, replaceExpense } from '../actions/WalletForms';
 
-function WalletForms({ dispatchCurrencies, currencies, expenses, dispatchExpense }) {
-  const [valueExpense, setValueExpense] = useState(0);
-  const [expenseDescription, setExpenseDescription] = useState('');
-  const [currency, setCurrency] = useState('USD');
-  const [paymentMethod, setPaymentMethod] = useState('Dinheiro');
-  const [tagExpense, setTagExpense] = useState('Alimentação');
-
+function WalletForms({ dispatchCurrencies, dispatchReplaceExpense,
+  currencies, expenses, dispatchExpense, dispatchAttribute, editExpense, edit }) {
   const mounted = useRef();
   useEffect(() => {
     async function fetchData() {
@@ -27,44 +23,38 @@ function WalletForms({ dispatchCurrencies, currencies, expenses, dispatchExpense
     setExchange();
   }, [dispatchCurrencies]);
 
-  const handleChange = (target) => {
-    setValueExpense(target.value);
-  };
-
   const handleClick = () => {
-    dispatchExpense({
-      description: expenseDescription,
-      tag: tagExpense,
-      method: paymentMethod,
-      value: valueExpense,
-      currency,
-      id: expenses.length,
-    });
+    if (edit) {
+      dispatchReplaceExpense(editExpense);
+    } else {
+      const copiedExpense = { ...editExpense, id: expenses.length };
+      dispatchExpense(copiedExpense);
+    }
   };
 
   return (
     <form>
       <input
         type="number"
-        value={ valueExpense }
-        name="expense"
-        onChange={ (e) => handleChange(e.target) }
+        value={ editExpense.value }
+        name="value"
+        onChange={ (e) => dispatchAttribute(e.target) }
         data-testid="value-input"
       />
 
       <input
         type="text"
-        value={ expenseDescription }
-        name="expense-description"
-        onChange={ (e) => setExpenseDescription(e.target.value) }
+        value={ editExpense.description }
+        name="description"
+        onChange={ (e) => dispatchAttribute(e.target) }
         data-testid="description-input"
       />
 
       <select
         type="text"
-        value={ currency }
+        value={ editExpense.currency }
         name="currency"
-        onChange={ (e) => setCurrency(e.target.value) }
+        onChange={ (e) => dispatchAttribute(e.target) }
         data-testid="currency-input"
       >
         {currencies
@@ -73,8 +63,9 @@ function WalletForms({ dispatchCurrencies, currencies, expenses, dispatchExpense
 
       <select
         data-testid="method-input"
-        value={ paymentMethod }
-        onChange={ (e) => setPaymentMethod(e.target.value) }
+        name="method"
+        value={ editExpense.method }
+        onChange={ (e) => dispatchAttribute(e.target) }
       >
         <option>Dinheiro</option>
         <option>Cartão de débito</option>
@@ -83,8 +74,9 @@ function WalletForms({ dispatchCurrencies, currencies, expenses, dispatchExpense
 
       <select
         data-testid="tag-input"
-        value={ tagExpense }
-        onChange={ (e) => setTagExpense(e.target.value) }
+        name="tag"
+        value={ editExpense.tag }
+        onChange={ (e) => dispatchAttribute(e.target) }
       >
         <option>Alimentação</option>
         <option>Lazer</option>
@@ -98,7 +90,7 @@ function WalletForms({ dispatchCurrencies, currencies, expenses, dispatchExpense
         onClick={ handleClick }
 
       >
-        Adicionar despesa
+        {edit ? 'Editar despesa' : 'Adicionar despesa'}
       </button>
     </form>
   );
@@ -107,11 +99,15 @@ function WalletForms({ dispatchCurrencies, currencies, expenses, dispatchExpense
 const mapDispatchToProps = (dispatch) => ({
   dispatchCurrencies: (currencies) => dispatch(apiFetch(currencies)),
   dispatchExpense: (expense) => dispatch(addExpense(expense)),
+  dispatchAttribute: (target) => dispatch(editAttribute(target)),
+  dispatchReplaceExpense: (id) => dispatch(replaceExpense(id)),
 });
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  editExpense: state.wallet.expense,
+  edit: state.wallet.edit,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForms);
@@ -121,11 +117,27 @@ WalletForms.defaultProps = {
   currencies: [''],
   dispatchCurrencies: () => {},
   dispatchExpense: () => {},
+  dispatchAttribute: () => {},
+  editExpense: {
+    id: 0,
+    value: 0,
+    description: '',
+    method: 'Dinheiro',
+    currency: 'USD',
+    tag: 'Alimentação',
+  },
+  edit: false,
 };
 
 WalletForms.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.any),
   currencies: PropTypes.arrayOf(PropTypes.any),
+  dispatchAttribute: PropTypes.func,
   dispatchCurrencies: PropTypes.func,
+  dispatchReplaceExpense: PropTypes.func.isRequired,
   dispatchExpense: PropTypes.func,
+  editExpense: PropTypes.shape({
+    id: PropTypes.number,
+  }),
+  edit: PropTypes.bool,
 };

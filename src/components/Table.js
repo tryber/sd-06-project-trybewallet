@@ -1,9 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { removeExpense } from '../actions/WalletForms';
+import { removeExpense, editExpense } from '../actions/WalletForms';
 
-function Table({ expenses, dispatchRemoveExpense }) {
+function Table({
+  expenses, dispatchRemoveExpense, dispatchEditingExpense }) {
+  const handleEdit = (description, tag, value, exchangeRates, currency, method, id) => {
+    dispatchEditingExpense({
+      description,
+      tag,
+      value,
+      exchangeRates,
+      currency,
+      method,
+      id });
+  };
+
   const ten = 10;
   return (
     <table>
@@ -24,8 +36,8 @@ function Table({ expenses, dispatchRemoveExpense }) {
         {expenses.length !== null && expenses
           .map(({ description, tag, value, exchangeRates, currency, method, id }, i) => (
             <tr key={ `expense ${i}` }>
-              <td>{description}</td>
-              <td>{tag}</td>
+              <td role="cell">{description}</td>
+              <td role="cell">{tag}</td>
               <td>{method}</td>
               <td>{value}</td>
               <td>{exchangeRates[currency].name}</td>
@@ -47,10 +59,11 @@ function Table({ expenses, dispatchRemoveExpense }) {
                 <button
                   data-testid="edit-btn"
                   type="button"
-                  onClick={ () => (id) }
+                  onClick={ () => handleEdit(description,
+                    tag, method, value, currency, exchangeRates, id) }
                 >
                   {' '}
-                  edit
+                  Editar
                 </button>
               </td>
             </tr>))}
@@ -66,6 +79,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchRemoveExpense: (id) => dispatch(removeExpense(id)),
+  dispatchEditingExpense: (expense) => dispatch((editExpense(expense))),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
@@ -73,9 +87,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(Table);
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.any),
   dispatchRemoveExpense: PropTypes.func,
+  dispatchEditingExpense: PropTypes.func,
+
 };
 
 Table.defaultProps = {
   expenses: [],
   dispatchRemoveExpense: () => {},
+  dispatchEditingExpense: () => {},
 };
