@@ -59,7 +59,7 @@ class Wallet extends React.Component {
     return (
       <div className="page-wallet">
         Carteira
-        <header>
+        <header className="table-header">
           <span data-testid="email-field">
             {email}
           </span>
