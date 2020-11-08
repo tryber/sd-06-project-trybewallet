@@ -43,7 +43,6 @@ export class FormWallet extends Component {
 
   handleSubmith() {
     const { expends, currencies, fetchCurrencies } = this.props;
-    const { expenses } = this.state;
     fetchCurrencies();
 
     this.setState(
@@ -56,6 +55,7 @@ export class FormWallet extends Component {
         },
       }),
       () => {
+        const { expenses } = this.state;
         expends(expenses);
         this.handleValue(this.state);
       },
@@ -99,9 +99,9 @@ export class FormWallet extends Component {
             id="value"
             type="number"
             name="value"
-            data-testid="value-input"
             value={ value }
             onChange={ (e) => this.inputChange(e.target) }
+            data-testid="value-input"
           />
         </label>
         <label htmlFor="description">
@@ -110,20 +110,20 @@ export class FormWallet extends Component {
             id="description"
             type="text"
             name="description"
-            data-testid="description-input"
             value={ description }
             onChange={ (e) => this.inputChange(e.target) }
+            data-testid="description-input"
           />
         </label>
-        <label htmlFor="text">
+        <label htmlFor="currency">
           Moeda:
           <select
             id="currency"
             type="text"
             name="currency"
-            data-testid="currency-input"
             value={ currency }
             onChange={ (e) => this.inputChange(e.target) }
+            data-testid="currency-input"
           >
             {this.currencyes()}
           </select>
@@ -149,7 +149,6 @@ export class FormWallet extends Component {
           tag:
           <select
             id="tag"
-            type="text"
             name="tag"
             value={ tag }
             onChange={ (e) => this.inputChange(e.target) }
