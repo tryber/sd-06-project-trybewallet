@@ -47,12 +47,13 @@ class Login extends React.Component {
 
   render() {
     const isEnabled = this.canBeSubmited();
+    const { email, password } = this.state;
     return (
       <div>
         <form onSubmit={ this.handleLoginChange }>
           <input
             type="email"
-            value={ this.state.value }
+            value={ email.value }
             onChange={ this.handleEmailInput }
             placeholder="email"
             data-testid="email-input"
@@ -62,7 +63,7 @@ class Login extends React.Component {
             type="password"
             placeholder="password"
             data-testid="password-input"
-            value={ this.state.value }
+            value={ password.value }
             onChange={ this.handlePasswordInput }
             minLength="6"
             required
