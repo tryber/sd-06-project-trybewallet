@@ -1,6 +1,6 @@
 export const LOGIN = 'LOGIN';
 
-export function loginAction({ email }) {
+export function user({ email }) {
   return {
     type: LOGIN,
     payload: {
