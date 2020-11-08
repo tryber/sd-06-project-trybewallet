@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addExpense, addCurrencies } from '../actions';
+import { addExpense, addCurrencies, currencyAPI } from '../actions';
 
 class ExpensesForm extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class ExpensesForm extends Component {
 
   componentDidMount() {
     const { fetchCurrency } = this.props;
-    fetchCurrency();
+    fetchCurrency(); // onde eu pego essa função?
   }
 
   handleChange({ target }) {
@@ -121,12 +121,13 @@ class ExpensesForm extends Component {
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  // fetchCurrency:
 });
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchCurrencies: (currencies) => dispatch(addCurrencies(currencies)),
   dispatchExpense: (expense) => dispatch(addExpense(expense)),
-  // fetchCurrency: (currency) => dispatch(currencyAPI(currency)),
+  fetchCurrency: (currency) => dispatch(currencyAPI(currency)),
 });
 
 ExpensesForm.propTypes = {

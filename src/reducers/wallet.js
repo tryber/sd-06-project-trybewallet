@@ -1,6 +1,5 @@
 import { EXPENSE, CURRENCIES } from '../actions/index';
 
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
@@ -23,3 +22,18 @@ function reducerWallet(state = INITIAL_STATE, action) {
 }
 
 export default reducerWallet;
+
+// expenses: [{
+//   "id": 0,
+//   "value": "3",
+//   "description": "Hot Dog",
+//   "currency": "USD",
+//   "method": "Dinheiro",
+//   "tag": "Alimentação",
+//   "exchangeRates": {
+//     "USD": {
+//       "code": "USD",
+//       "name": "Dólar Comercial",
+//       "ask": "5.6208",
+//       ...
+//     },
