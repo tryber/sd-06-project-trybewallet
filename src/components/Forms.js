@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import '../App.css';
+import PropTypes from 'prop-types';
 import { login } from '../actions';
 
 export class Forms extends Component {
