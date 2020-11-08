@@ -57,9 +57,9 @@ class Wallet extends React.Component {
     const { email, currencies } = this.props;
     const { value, description } = this.state;
     return (
-      <div className="page-wallet">
+      <section>
         Carteira
-        <header className="table-header">
+        <header>
           <span data-testid="email-field">
             {email}
           </span>
@@ -94,7 +94,7 @@ class Wallet extends React.Component {
             onChange={ this.handleInputs }
             id="currency"
           >
-            <option disabled selected value>  Moeda  </option>
+            <option disabled selected value>  Selecione a Moeda  </option>
             {currencies.map((currency) => (
               <option
                 key={ currency }
@@ -147,7 +147,7 @@ class Wallet extends React.Component {
           </button>
         </form>
         <ExpensesTable />
-      </div>
+      </section>
     );
   }
 }
