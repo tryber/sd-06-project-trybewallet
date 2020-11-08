@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FaTrashAlt } from 'react-icons/fa';
 
 const headerTable = [
   'Descrição',
@@ -57,6 +58,11 @@ class TableExpenses extends Component {
                 </td>
                 <td>
                   Real
+                </td>
+                <td>
+                  <FaTrashAlt
+                    data-testid="delete-btn"
+                  />
                 </td>
               </tr>
             );
