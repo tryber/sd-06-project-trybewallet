@@ -125,6 +125,7 @@ WalletForms.defaultProps = {
     method: 'Dinheiro',
     currency: 'USD',
     tag: 'Alimentação',
+
   },
   edit: false,
 };
@@ -138,6 +139,12 @@ WalletForms.propTypes = {
   dispatchExpense: PropTypes.func,
   editExpense: PropTypes.shape({
     id: PropTypes.number,
+    value: PropTypes.number,
+    description: PropTypes.string,
+    method: PropTypes.string,
+    tag: PropTypes.string,
+    currency: PropTypes.string,
+
   }),
   edit: PropTypes.bool,
 };
