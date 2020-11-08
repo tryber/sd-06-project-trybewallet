@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { loginAction } from '../actions/actionsCreator';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       email: '',
@@ -18,24 +18,22 @@ class Login extends React.Component {
     // this.canBeSubmitted = this.canBeSubmitted.bind(this);
   }
 
+  handleLoginChange(event) {
+    const { email } = this.state;
+    const { logIn, history } = this.props;
+
+    event.preventDefault();
+
+    logIn({ email });
+    history.push('/carteira');
+  }
+
   handleEmailInput(event) {
     this.setState({ email: event.target.value });
   }
 
   handlePasswordInput(event) {
     this.setState({ password: event.target.value });
-  }
-
-  handleLoginChange(event) {
-    if (!canBeSubmitted()) {
-      event.preventDefault();
-    } else {
-      const { email, password } = this.state;
-      const { logIn, history } = this.props;
-
-      logIn({ email, password });
-      history.push('/carteira');
-    }
   }
 
   canBeSubmited() {
@@ -46,14 +44,14 @@ class Login extends React.Component {
   }
 
   render() {
-    const isEnabled = this.canBeSubmited();
+    const active = this.canBeSubmited();
     const { email, password } = this.state;
     return (
       <div>
         <form onSubmit={ this.handleLoginChange }>
           <input
             type="email"
-            value={ email.value }
+            value={ email }
             onChange={ this.handleEmailInput }
             placeholder="email"
             data-testid="email-input"
@@ -63,13 +61,13 @@ class Login extends React.Component {
             type="password"
             placeholder="password"
             data-testid="password-input"
-            value={ password.value }
+            value={ password }
             onChange={ this.handlePasswordInput }
             minLength="6"
             required
           />
           <button
-            disabled={ !isEnabled }
+            disabled={ !active }
             type="submit"
           >
             Entrar
