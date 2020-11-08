@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Table from '../components/Table';
 import { fetchAPI, addExpenses } from '../actions/wallet';
 import './Wallet.css';
-
-import deletar from '../img/deletar.png';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -131,7 +130,6 @@ class Wallet extends React.Component {
             </select>
           </label>
           <label htmlFor="pagamento" className="idd">
-            Método de pagamento:
             <select
               data-testid="method-input"
               onChange={ this.handleInput }
@@ -167,53 +165,7 @@ class Wallet extends React.Component {
             Adicionar Despesa
           </button>
         </form>
-        <table className="centered">
-          <thead>
-            <tr>
-              <th data-field="id">Descrição</th>
-              <th data-field="name">Tag</th>
-              <th data-field="price">Método de Pagamento</th>
-              <th data-field="price">Valor</th>
-              <th data-field="price">Moeda</th>
-              <th data-field="price">Câmbio utilizado</th>
-              <th data-field="price">Valor convertido</th>
-              <th data-field="price">Moeda de conversão</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Alvin</td>
-              <td>Eclair</td>
-              <td>.87</td>
-            </tr>
-            <tr>
-              <td>Alan</td>
-              <td>Jellybean</td>
-              <td>.76</td>
-            </tr>
-            <tr>
-              <td>Jonathan</td>
-              <td>Lollipop</td>
-              <td>.00</td>
-            </tr>
-          </tbody>
-        </table>
-        <div>
-          <button type="button" data-testid="delete-btn">
-            <img
-              src={ deletar }
-              alt="excluir"
-              style={ { width: 40, borderRadius: 50 } }
-            />
-          </button>
-          <button
-            type="button"
-            data-testid="edit-btn"
-            style={ { height: 40, borderRadius: 10 } }
-          >
-            Editar despesa
-          </button>
-        </div>
+        <Table />
       </div>
     );
   }
