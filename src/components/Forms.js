@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import '../App.css';
-import store from '../store';
+import { login } from '../actions';
 
 export class Forms extends Component {
   constructor() {
@@ -11,6 +11,7 @@ export class Forms extends Component {
     this.state = {
       username: '',
       password: '',
+      isDisabled: true,
     };
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
@@ -22,9 +23,14 @@ export class Forms extends Component {
     const five = 5;
     const re = /^\w+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$/;
     if (re.test(String(username).toLowerCase()) && password.length >= five) {
-      document.querySelector('button').disabled = false;
-      store.dispatch({ type: 'ACTION_LOGIN_SUCCESS', email: username });
-    } else document.querySelector('button').disabled = true;
+      this.setState({
+        isDisabled: false,
+      });
+    } else {
+      this.setState({
+        isDisabled: true,
+      });
+    }
   }
 
   handleChangeUsername(value) {
@@ -41,7 +47,13 @@ export class Forms extends Component {
     this.formVerificated();
   }
 
+  buttonAction(username) {
+    const { loginEmail } = this.props;
+    loginEmail(username);
+  }
+
   render() {
+    const { username, isDisabled } = this.state;
     return (
       <div>
         <form>
@@ -61,7 +73,13 @@ export class Forms extends Component {
         </form>
 
         <Link to="/carteira">
-          <button type="button" disabled="true">Entrar</button>
+          <button
+            onClick={ () => this.buttonAction(username) }
+            type="button"
+            disabled={ isDisabled }
+          >
+            Entrar
+          </button>
         </Link>
       </div>
     );
@@ -72,4 +90,12 @@ const mapStateToProps = (state) => ({
   emailRedux: state.user,
 });
 
-export default connect(mapStateToProps, null)(Forms);
+const mapDispatchToProps = (dispatch) => ({
+  loginEmail: (email) => dispatch(login(email)),
+});
+
+Forms.propTypes = {
+  loginEmail: PropTypes.func,
+}.isRequired;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Forms);

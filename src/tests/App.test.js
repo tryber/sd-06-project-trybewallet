@@ -16,88 +16,88 @@ const mockedExchange = jest.spyOn(global, 'fetch').mockImplementation(() => apiR
 
 afterEach(() => jest.clearAllMocks());
 
-// describe('1 - [PÁGINA DE LOGIN] Crie uma página inicial de login com os seguintes campos e características:', () => {
-//   test('A rota para esta página deve ser \'/\'', () => {
-//     const { history } = renderWithRouterAndStore(<App />);
-//     expect(history.location.pathname).toBe('/');
-//   });
+describe('1 - [PÁGINA DE LOGIN] Crie uma página inicial de login com os seguintes campos e características:', () => {
+  test('A rota para esta página deve ser \'/\'', () => {
+    const { history } = renderWithRouterAndStore(<App />);
+    expect(history.location.pathname).toBe('/');
+  });
 
-//   test('Crie um local para que o usuário insira seu email e senha', () => {
-//     renderWithRouterAndStore(<App />, '/');
-//     const email = screen.getByTestId('email-input');
-//     const senha = screen.getByTestId('password-input');
+  test('Crie um local para que o usuário insira seu email e senha', () => {
+    renderWithRouterAndStore(<App />, '/');
+    const email = screen.getByTestId('email-input');
+    const senha = screen.getByTestId('password-input');
 
-//     expect(email).toBeInTheDocument();
-//     expect(senha).toBeInTheDocument();
-//   });
+    expect(email).toBeInTheDocument();
+    expect(senha).toBeInTheDocument();
+  });
 
-//   test('Crie um botão com o texto \'Entrar\'', () => {
-//     renderWithRouterAndStore(<App />, '/');
+  test('Crie um botão com o texto \'Entrar\'', () => {
+    renderWithRouterAndStore(<App />, '/');
 
-//     const button = screen.getByText(/Entrar/i);
-//     expect(button).toBeInTheDocument();
-//   });
+    const button = screen.getByText(/Entrar/i);
+    expect(button).toBeInTheDocument();
+  });
 
-//   test('Realize as seguintes verificações nos campos de email, senha e botão:', () => {
-//     renderWithRouterAndStore(<App />);
+  test('Realize as seguintes verificações nos campos de email, senha e botão:', () => {
+    renderWithRouterAndStore(<App />);
 
-//     const button = screen.getByText(/Entrar/i);
-//     expect(button).toBeDisabled();
+    const button = screen.getByText(/Entrar/i);
+    expect(button).toBeDisabled();
 
-//     const email = screen.getByTestId('email-input');
-//     const senha = screen.getByTestId('password-input');
+    const email = screen.getByTestId('email-input');
+    const senha = screen.getByTestId('password-input');
 
-//     userEvent.type(email, 'email');
-//     userEvent.type(senha, '123456');
-//     expect(button).toBeDisabled();
+    userEvent.type(email, 'email');
+    userEvent.type(senha, '123456');
+    expect(button).toBeDisabled();
 
-//     userEvent.type(email, 'email@com@');
-//     userEvent.type(senha, '123456');
-//     expect(button).toBeDisabled();
+    userEvent.type(email, 'email@com@');
+    userEvent.type(senha, '123456');
+    expect(button).toBeDisabled();
 
-//     userEvent.type(email, 'emailcom@');
-//     userEvent.type(senha, '123456');
-//     expect(button).toBeDisabled();
+    userEvent.type(email, 'emailcom@');
+    userEvent.type(senha, '123456');
+    expect(button).toBeDisabled();
 
-//     userEvent.type(email, 'alguem@email.com');
-//     userEvent.type(senha, '23456');
-//     expect(button).toBeDisabled();
+    userEvent.type(email, 'alguem@email.com');
+    userEvent.type(senha, '23456');
+    expect(button).toBeDisabled();
 
-//     userEvent.type(email, 'alguem@email.');
-//     userEvent.type(senha, '123456');
-//     expect(button).toBeDisabled();
+    userEvent.type(email, 'alguem@email.');
+    userEvent.type(senha, '123456');
+    expect(button).toBeDisabled();
 
-//     userEvent.type(email, 'alguem@email.com');
-//     userEvent.type(senha, '123456');
-//     expect(button).toBeEnabled();
-//   });
+    userEvent.type(email, 'alguem@email.com');
+    userEvent.type(senha, '123456');
+    expect(button).toBeEnabled();
+  });
 
-//   test('Salve o email no estado da aplicação, com a chave email, assim que o usuário logar.', () => {
-//     const { store } = renderWithRouterAndStore(<App />);
-//     const email = screen.getByTestId('email-input');
-//     const senha = screen.getByTestId('password-input');
-//     const button = screen.getByText(/Entrar/i);
+  test('Salve o email no estado da aplicação, com a chave email, assim que o usuário logar.', () => {
+    const { store } = renderWithRouterAndStore(<App />);
+    const email = screen.getByTestId('email-input');
+    const senha = screen.getByTestId('password-input');
+    const button = screen.getByText(/Entrar/i);
 
-//     userEvent.type(email, 'alguem@email.com');
-//     userEvent.type(senha, '123456');
-//     fireEvent.click(button);
+    userEvent.type(email, 'alguem@email.com');
+    userEvent.type(senha, '123456');
+    fireEvent.click(button);
 
-//     expect(store.getState().user.email).toBe('alguem@email.com');
-//   });
+    expect(store.getState().user.email).toBe('alguem@email.com');
+  });
 
-//   test('A rota deve ser mudada para \'/carteira\' após o clique no botão.', () => {
-//     const { history } = renderWithRouterAndStore(<App />);
-//     const email = screen.getByTestId('email-input');
-//     const senha = screen.getByTestId('password-input');
-//     const button = screen.getByText(/Entrar/i);
+  test('A rota deve ser mudada para \'/carteira\' após o clique no botão.', () => {
+    const { history } = renderWithRouterAndStore(<App />);
+    const email = screen.getByTestId('email-input');
+    const senha = screen.getByTestId('password-input');
+    const button = screen.getByText(/Entrar/i);
 
-//     userEvent.type(email, 'alguem@email.com');
-//     userEvent.type(senha, '123456');
-//     fireEvent.click(button);
+    userEvent.type(email, 'alguem@email.com');
+    userEvent.type(senha, '123456');
+    fireEvent.click(button);
 
-//     expect(history.location.pathname).toBe('/carteira');
-//   });
-// });
+    expect(history.location.pathname).toBe('/carteira');
+  });
+});
 
 // describe('2 - [PÁGINA DA CARTEIRA] Crie uma página para sua carteira com as seguintes características:', () => {
 //   test('A rota para esta página deve ser \'/carteira\'', () => {
@@ -141,164 +141,164 @@ afterEach(() => jest.clearAllMocks());
 //   });
 // });
 
-describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
-  test('Um campo para adicionar o valor da despesa', async () => {
-    renderWithRouterAndStore(<Wallet />, '/carteira');
-    const valueInput = await screen.findByTestId('value-input');
+// describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
+//   test('Um campo para adicionar o valor da despesa', async () => {
+//     renderWithRouterAndStore(<Wallet />, '/carteira');
+//     const valueInput = await screen.findByTestId('value-input');
 
-    expect(valueInput).toBeInTheDocument();
-  });
+//     expect(valueInput).toBeInTheDocument();
+//   });
 
-  test('Um campo para adicionar a descrição da despesa', async () => {
-    renderWithRouterAndStore(<Wallet />, '/carteira');
-    const descriptionInput = await screen.findByTestId('description-input');
+//   test('Um campo para adicionar a descrição da despesa', async () => {
+//     renderWithRouterAndStore(<Wallet />, '/carteira');
+//     const descriptionInput = await screen.findByTestId('description-input');
 
-    expect(descriptionInput).toBeInTheDocument();
-  });
+//     expect(descriptionInput).toBeInTheDocument();
+//   });
 
-  test('Um campo para selecionar em qual moeda será registrada a despesa', async () => {
-    renderWithRouterAndStore(<Wallet />, '/carteira');
-    const currencyInput = await screen.findByTestId('currency-input');
-    const USD = screen.getByTestId('USD');
-    const CAD = screen.getByTestId('CAD');
-    const EUR = screen.getByTestId('EUR');
-    const GBP = screen.getByTestId('GBP');
-    const ARS = screen.getByTestId('ARS');
-    const BTC = screen.getByTestId('BTC');
-    const LTC = screen.getByTestId('LTC');
-    const JPY = screen.getByTestId('JPY');
-    const CHF = screen.getByTestId('CHF');
-    const AUD = screen.getByTestId('AUD');
-    const CNY = screen.getByTestId('CNY');
-    const ILS = screen.getByTestId('ILS');
-    const ETH = screen.getByTestId('ETH');
-    const XRP = screen.getByTestId('XRP');
-    const USDT = screen.queryByText(/USDT/g);
+//   test('Um campo para selecionar em qual moeda será registrada a despesa', async () => {
+//     renderWithRouterAndStore(<Wallet />, '/carteira');
+//     const currencyInput = await screen.findByTestId('currency-input');
+//     const USD = screen.getByTestId('USD');
+//     const CAD = screen.getByTestId('CAD');
+//     const EUR = screen.getByTestId('EUR');
+//     const GBP = screen.getByTestId('GBP');
+//     const ARS = screen.getByTestId('ARS');
+//     const BTC = screen.getByTestId('BTC');
+//     const LTC = screen.getByTestId('LTC');
+//     const JPY = screen.getByTestId('JPY');
+//     const CHF = screen.getByTestId('CHF');
+//     const AUD = screen.getByTestId('AUD');
+//     const CNY = screen.getByTestId('CNY');
+//     const ILS = screen.getByTestId('ILS');
+//     const ETH = screen.getByTestId('ETH');
+//     const XRP = screen.getByTestId('XRP');
+//     const USDT = screen.queryByText(/USDT/g);
 
-    expect(mockedExchange).toBeCalled();
-    expect(mockedExchange).toBeCalledWith('https://economia.awesomeapi.com.br/json/all');
-    expect(currencyInput).toBeInTheDocument();
-    expect(USD).toBeInTheDocument();
-    expect(CAD).toBeInTheDocument();
-    expect(EUR).toBeInTheDocument();
-    expect(GBP).toBeInTheDocument();
-    expect(ARS).toBeInTheDocument();
-    expect(BTC).toBeInTheDocument();
-    expect(LTC).toBeInTheDocument();
-    expect(JPY).toBeInTheDocument();
-    expect(CHF).toBeInTheDocument();
-    expect(AUD).toBeInTheDocument();
-    expect(CNY).toBeInTheDocument();
-    expect(ILS).toBeInTheDocument();
-    expect(ETH).toBeInTheDocument();
-    expect(XRP).toBeInTheDocument();
-    expect(USDT).not.toBeInTheDocument();
-  });
+//     expect(mockedExchange).toBeCalled();
+//     expect(mockedExchange).toBeCalledWith('https://economia.awesomeapi.com.br/json/all');
+//     expect(currencyInput).toBeInTheDocument();
+//     expect(USD).toBeInTheDocument();
+//     expect(CAD).toBeInTheDocument();
+//     expect(EUR).toBeInTheDocument();
+//     expect(GBP).toBeInTheDocument();
+//     expect(ARS).toBeInTheDocument();
+//     expect(BTC).toBeInTheDocument();
+//     expect(LTC).toBeInTheDocument();
+//     expect(JPY).toBeInTheDocument();
+//     expect(CHF).toBeInTheDocument();
+//     expect(AUD).toBeInTheDocument();
+//     expect(CNY).toBeInTheDocument();
+//     expect(ILS).toBeInTheDocument();
+//     expect(ETH).toBeInTheDocument();
+//     expect(XRP).toBeInTheDocument();
+//     expect(USDT).not.toBeInTheDocument();
+//   });
 
-  test('Um campo para selecionar qual método de pagamento será utilizado', async () => {
-    renderWithRouterAndStore(<Wallet />, '/carteira');
-    const methodInput = await screen.findByTestId('method-input');
-    const moneyOption = screen.getByText(/Dinheiro/);
-    const creditOption = screen.getByText(/Cartão de crédito/);
-    const debitOption = screen.getByText(/Cartão de débito/);
+//   test('Um campo para selecionar qual método de pagamento será utilizado', async () => {
+//     renderWithRouterAndStore(<Wallet />, '/carteira');
+//     const methodInput = await screen.findByTestId('method-input');
+//     const moneyOption = screen.getByText(/Dinheiro/);
+//     const creditOption = screen.getByText(/Cartão de crédito/);
+//     const debitOption = screen.getByText(/Cartão de débito/);
 
-    expect(methodInput).toBeInTheDocument();
-    expect(moneyOption).toBeInTheDocument();
-    expect(creditOption).toBeInTheDocument();
-    expect(debitOption).toBeInTheDocument();
-  });
+//     expect(methodInput).toBeInTheDocument();
+//     expect(moneyOption).toBeInTheDocument();
+//     expect(creditOption).toBeInTheDocument();
+//     expect(debitOption).toBeInTheDocument();
+//   });
 
-  test('Um campo para selecionar uma categoria (tag) para a despesa.', async () => {
-    renderWithRouterAndStore(<Wallet />, '/carteira');
-    const tagInput = await screen.findByTestId('tag-input');
-    const foodOption = screen.getByText(/Alimentação/);
-    const funOption = screen.getByText(/Lazer/);
-    const workOption = screen.getByText(/Trabalho/);
-    const transportOption = screen.getByText(/Transporte/);
-    const healthOption = screen.getByText(/Saúde/);
+//   test('Um campo para selecionar uma categoria (tag) para a despesa.', async () => {
+//     renderWithRouterAndStore(<Wallet />, '/carteira');
+//     const tagInput = await screen.findByTestId('tag-input');
+//     const foodOption = screen.getByText(/Alimentação/);
+//     const funOption = screen.getByText(/Lazer/);
+//     const workOption = screen.getByText(/Trabalho/);
+//     const transportOption = screen.getByText(/Transporte/);
+//     const healthOption = screen.getByText(/Saúde/);
 
-    expect(tagInput).toBeInTheDocument();
-    expect(foodOption).toBeInTheDocument();
-    expect(funOption).toBeInTheDocument();
-    expect(workOption).toBeInTheDocument();
-    expect(transportOption).toBeInTheDocument();
-    expect(healthOption).toBeInTheDocument();
-  });
+//     expect(tagInput).toBeInTheDocument();
+//     expect(foodOption).toBeInTheDocument();
+//     expect(funOption).toBeInTheDocument();
+//     expect(workOption).toBeInTheDocument();
+//     expect(transportOption).toBeInTheDocument();
+//     expect(healthOption).toBeInTheDocument();
+//   });
 
-  test('Um botão com o texto \'Adicionar despesa\' que salva as informações da despesa no estado global e atualiza a soma de despesas no header', async () => {
-    const { store } = renderWithRouterAndStore(<Wallet />, '/carteira');
-    const addButton = await screen.findByText(/Adicionar despesa/i);
-    const valueInput = await screen.findByTestId('value-input');
-    const currencyInput = await screen.findByTestId('currency-input');
-    const methodInput = await screen.findByTestId('method-input');
-    const tagInput = await screen.findByTestId('tag-input');
-    const descriptionInput = await screen.findByTestId('description-input');
+//   test('Um botão com o texto \'Adicionar despesa\' que salva as informações da despesa no estado global e atualiza a soma de despesas no header', async () => {
+//     const { store } = renderWithRouterAndStore(<Wallet />, '/carteira');
+//     const addButton = await screen.findByText(/Adicionar despesa/i);
+//     const valueInput = await screen.findByTestId('value-input');
+//     const currencyInput = await screen.findByTestId('currency-input');
+//     const methodInput = await screen.findByTestId('method-input');
+//     const tagInput = await screen.findByTestId('tag-input');
+//     const descriptionInput = await screen.findByTestId('description-input');
 
-    expect(addButton).toBeInTheDocument();
+//     expect(addButton).toBeInTheDocument();
 
-    userEvent.type(valueInput, '10');
-    userEvent.selectOptions(currencyInput, 'USD');
-    userEvent.selectOptions(methodInput, 'Cartão de crédito');
-    userEvent.selectOptions(tagInput, 'Lazer');
-    userEvent.type(descriptionInput, 'Dez dólares');
-    fireEvent.click(addButton);
-    expect(mockedExchange).toBeCalledTimes(2);
+//     userEvent.type(valueInput, '10');
+//     userEvent.selectOptions(currencyInput, 'USD');
+//     userEvent.selectOptions(methodInput, 'Cartão de crédito');
+//     userEvent.selectOptions(tagInput, 'Lazer');
+//     userEvent.type(descriptionInput, 'Dez dólares');
+//     fireEvent.click(addButton);
+//     expect(mockedExchange).toBeCalledTimes(2);
 
-    const expectedStateExpense = [
-      {
-        id: 0,
-        value: '10',
-        currency: 'USD',
-        method: 'Cartão de crédito',
-        tag: 'Lazer',
-        description: 'Dez dólares',
-        exchangeRates: mockData,
-      },
-    ];
+//     const expectedStateExpense = [
+//       {
+//         id: 0,
+//         value: '10',
+//         currency: 'USD',
+//         method: 'Cartão de crédito',
+//         tag: 'Lazer',
+//         description: 'Dez dólares',
+//         exchangeRates: mockData,
+//       },
+//     ];
 
-    await waitFor(() => {
-      expect(valueInput).toContainHTML(0);
-    });
-    expect(store.getState().wallet.expenses).toStrictEqual(expectedStateExpense);
+//     await waitFor(() => {
+//       expect(valueInput).toContainHTML(0);
+//     });
+//     expect(store.getState().wallet.expenses).toStrictEqual(expectedStateExpense);
 
-    userEvent.type(valueInput, '20');
-    userEvent.selectOptions(currencyInput, 'EUR');
-    userEvent.selectOptions(methodInput, 'Cartão de débito');
-    userEvent.selectOptions(tagInput, 'Trabalho');
-    userEvent.type(descriptionInput, 'Vinte euros');
-    fireEvent.click(addButton);
-    expect(mockedExchange).toBeCalledTimes(3);
+//     userEvent.type(valueInput, '20');
+//     userEvent.selectOptions(currencyInput, 'EUR');
+//     userEvent.selectOptions(methodInput, 'Cartão de débito');
+//     userEvent.selectOptions(tagInput, 'Trabalho');
+//     userEvent.type(descriptionInput, 'Vinte euros');
+//     fireEvent.click(addButton);
+//     expect(mockedExchange).toBeCalledTimes(3);
 
-    const expectedStateExpense2 = [
-      {
-        id: 0,
-        value: '10',
-        currency: 'USD',
-        method: 'Cartão de crédito',
-        tag: 'Lazer',
-        description: 'Dez dólares',
-        exchangeRates: mockData,
-      },
-      {
-        id: 1,
-        value: '20',
-        currency: 'EUR',
-        method: 'Cartão de débito',
-        tag: 'Trabalho',
-        description: 'Vinte euros',
-        exchangeRates: mockData,
-      },
-    ];
+//     const expectedStateExpense2 = [
+//       {
+//         id: 0,
+//         value: '10',
+//         currency: 'USD',
+//         method: 'Cartão de crédito',
+//         tag: 'Lazer',
+//         description: 'Dez dólares',
+//         exchangeRates: mockData,
+//       },
+//       {
+//         id: 1,
+//         value: '20',
+//         currency: 'EUR',
+//         method: 'Cartão de débito',
+//         tag: 'Trabalho',
+//         description: 'Vinte euros',
+//         exchangeRates: mockData,
+//       },
+//     ];
 
-    await waitFor(() => {
-      expect(valueInput).toContainHTML(0);
-    });
-    expect(store.getState().wallet.expenses).toStrictEqual(expectedStateExpense2);
+//     await waitFor(() => {
+//       expect(valueInput).toContainHTML(0);
+//     });
+//     expect(store.getState().wallet.expenses).toStrictEqual(expectedStateExpense2);
 
-    const totalField = screen.getByTestId('total-field');
-    expect(totalField).toContainHTML('187.12')
-  });
-});
+//     const totalField = screen.getByTestId('total-field');
+//     expect(totalField).toContainHTML('187.12')
+//   });
+// });
 
 // describe('5 - [PÁGINA DA CARTEIRA] Desenvolva uma tabela com os gastos contendo as seguintes características:', () => {
 //   const initial = initialStateWithExpenses;
