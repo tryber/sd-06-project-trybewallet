@@ -8,7 +8,7 @@ class Header extends React.Component {
     return (
       <div>
         <span data-testid="email-field">
-          {`the email goes here: ${email}`}
+          {email}
         </span>
       </div>
     );
@@ -16,7 +16,7 @@ class Header extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    email: state.email,
+    email: state.user.email,
   };
 }
 Header.propTypes = {
