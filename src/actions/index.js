@@ -25,9 +25,6 @@ export const addCurrencies = (currencies) => ({
   currencies,
 });
 
-// action -> objeto com a propriedade type e mais qualquer outra chave que eu quiser
-// email->e-mail
-
 export const currencyAPI = () => async (dispatch) => {
   const APIreturn = await fetchAPI();
   const currencies = Object.keys(APIreturn).filter((key) => key !== 'USDT');

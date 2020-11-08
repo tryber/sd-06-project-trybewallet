@@ -108,7 +108,7 @@ class ExpensesForm extends Component {
             <option>Saúde</option>
           </select>
           <button
-            type="button"
+            type="submit"
             onClick={ this.handleClick }
           >
             Adicionar despesa
@@ -121,7 +121,6 @@ class ExpensesForm extends Component {
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
-  // fetchCurrency:
 });
 
 const mapDispatchToProps = (dispatch) => ({
