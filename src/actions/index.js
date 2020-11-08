@@ -30,38 +30,3 @@ export const currencyAPI = () => async (dispatch) => {
   const currencies = Object.keys(APIreturn).filter((key) => key !== 'USDT');
   dispatch(addCurrencies(currencies));
 };
-// expenses: [{
-//   "id": 0,
-//   "value": "3",
-//   "description": "Hot Dog",
-//   "currency": "USD",
-//   "method": "Dinheiro",
-//   "tag": "Alimentação",
-//   "exchangeRates": {
-//     "USD": {
-//       "code": "USD",
-//       "name": "Dólar Comercial",
-//       "ask": "5.6208",
-//       ...
-//     },
-//     "CAD": {
-//       "code": "CAD",
-//       "name": "Dólar Canadense",
-//       "ask": "4.2313",
-//       ...
-//     },
-//   }]
-// {
-//   "USD": {
-//     "code":"USD",
-//     "codein":"BRL",
-//     "name":"Dólar Comercial",
-//     "high":"5.6689",
-//     "low":"5.6071",
-//     "varBid":"-0.0166",
-//     "pctChange":"-0.29",
-//     "bid":"5.6173",
-//     "ask":"5.6183",
-//     "timestamp":"1601476370",
-//     "create_date":"2020-09-30 11:32:53"
-//     },

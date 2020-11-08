@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addExpense, addCurrencies, currencyAPI } from '../actions';
+import { addExpense, currencyAPI } from '../actions';
 
 class ExpensesForm extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class ExpensesForm extends Component {
     this.state = {
       value: 0,
       description: '',
-      currency: '',
+      currency: 'USD',
       method: '',
       tag: '',
     };
@@ -19,7 +19,7 @@ class ExpensesForm extends Component {
 
   componentDidMount() {
     const { fetchCurrency } = this.props;
-    fetchCurrency(); // onde eu pego essa função?
+    fetchCurrency();
   }
 
   handleChange({ target }) {
@@ -29,10 +29,9 @@ class ExpensesForm extends Component {
   }
 
   handleClick() {
-    const { dispatchCurrencies, dispatchExpense, expenses } = this.props;
-    const { value, description, currency, method, tag, currencies } = this.state;
+    const { dispatchExpense, expenses } = this.props;
+    const { value, description, currency, method, tag } = this.state;
     const id = expenses.length;
-    dispatchCurrencies(currencies);
     dispatchExpense({
       id,
       value,
@@ -108,7 +107,7 @@ class ExpensesForm extends Component {
             <option>Saúde</option>
           </select>
           <button
-            type="submit"
+            type="button"
             onClick={ this.handleClick }
           >
             Adicionar despesa
@@ -124,13 +123,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchCurrencies: (currencies) => dispatch(addCurrencies(currencies)),
   dispatchExpense: (expense) => dispatch(addExpense(expense)),
   fetchCurrency: (currency) => dispatch(currencyAPI(currency)),
 });
 
 ExpensesForm.propTypes = {
-  dispatchCurrencies: PropTypes.func.isRequired,
   dispatchExpense: PropTypes.func.isRequired,
   fetchCurrency: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.any),
