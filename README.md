@@ -421,7 +421,6 @@ Crie uma página para gerenciar a carteira de gastos em diversas moedas, e que t
 
     * Utilize sempre o formato `0.00` (número - ponto - duas casas decimais)
 
-
 6. Crie um botão para deletar uma despesa da tabela contendo as seguintes características:
 
     ![image](btnExcluir.gif)

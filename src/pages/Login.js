@@ -22,6 +22,7 @@ class Login extends React.Component {
 
   setStatePassword(event) {
     const { value } = event.target;
+
     this.setState({
       password: value,
     }, () => {
@@ -40,6 +41,7 @@ class Login extends React.Component {
     const { password, email } = this.state;
     const emailFormat = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
     const passwordMinLength = 6;
+
     if (password.length >= passwordMinLength && emailFormat) {
       this.setState({
         isDisabled: false,

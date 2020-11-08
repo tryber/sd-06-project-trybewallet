@@ -59,9 +59,8 @@ class Form extends Component {
   }
 
   render() {
-    const { addExpense, expenses } = this.props;
+    const { addExpense } = this.props;
     const { coins, expense } = this.state;
-    console.log(expenses);
 
     return (
       <div>

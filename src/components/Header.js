@@ -29,7 +29,7 @@ class Header extends Component {
 
   render() {
     const { userEmail } = this.props;
-    console.log(this.sumExpenses());
+
     return (
       <div>
         <div data-testid="email-field">
