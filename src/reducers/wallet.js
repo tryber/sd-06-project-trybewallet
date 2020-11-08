@@ -16,19 +16,65 @@
 //   }
 // }
 
-import { TOTAL_WALLET } from '../actions';
+// import { TOTAL_WALLET } from '../actions';
+
+// const INITIAL_STATE = {
+//   total: 0,
+// };
+
+// export default function wallet(state = INITIAL_STATE, action) {
+//   switch (action.type) {
+//   case TOTAL_WALLET:
+//     return {
+//       ...state, total: action.payload,
+//     };
+//   default:
+//     return state;
+//   }
+// }
+
+import { TOTAL_WALLET, SAVE_EXPENSE, DELETE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
-  total: 0,
+  currencyToExchange: 'BRL',
+  currentId: 0,
+  currencies: [],
+  expenses: [],
 };
 
-export default function wallet(state = INITIAL_STATE, action) {
+function deleteExpense(state, expenseId) {
+  const newExpenses = state.expenses.filter((expense) => expense.id !== expenseId);
+  return newExpenses;
+}
+
+function wallet(state = INITIAL_STATE, action) {
+  let newExpenses = [];
+  if (action.type === DELETE_EXPENSE) {
+    newExpenses = deleteExpense(state, action.expenseId);
+  }
+
   switch (action.type) {
   case TOTAL_WALLET:
-    return {
-      ...state, total: action.payload,
-    };
+    return { ...state, currencies: action.payload };
+  case SAVE_EXPENSE:
+    return ({
+      ...state,
+      currentId: state.currentId + 1,
+      expenses: [
+        ...state.expenses,
+        {
+          id: state.currentId,
+          ...action.payload,
+        }],
+    });
+  case DELETE_EXPENSE:
+    return ({
+      ...state,
+      expenses: newExpenses,
+    });
   default:
     return state;
   }
 }
+
+export default wallet;

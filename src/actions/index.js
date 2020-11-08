@@ -1,4 +1,5 @@
 // Coloque aqui suas actions
+import currencyApi from '../services/currencyApi';
 
 // salvando usuario pelo email
 export const EMAIL_LOGIN = 'EMAIL_LOGIN';
@@ -14,6 +15,14 @@ export const totalField = (payload) => ({
   payload,
 });
 
+export function fetchCurrencies() {
+  return async (dispatch) => {
+    const response = await currencyApi();
+    const currencies = Object.keys(response);
+    dispatch(totalField(currencies));
+  };
+}
+
 // salvando password
 export const SAVE_PASSWORD = 'SAVE_PASSWORD';
 export const savePassword = (password) => ({
@@ -21,6 +30,27 @@ export const savePassword = (password) => ({
   password,
 });
 
+// Salvando despesas
+export const SAVE_EXPENSE = 'SAVE_EXPENSE';
+
+export const saveExpense = (expenseData, currencies) => ({
+  type: SAVE_EXPENSE,
+  payload: { ...expenseData, exchangeRates: currencies },
+});
+
+export function registerExpense(expenseData) {
+  return async (dispatch) => {
+    const exchangeRates = await currencyApi();
+    dispatch(saveExpense(expenseData, exchangeRates));
+  };
+}
+
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+
+export const deleteExpense = (expenseId) => ({
+  type: DELETE_EXPENSE,
+  expenseId,
+});
 // export const addRegister = (value) => ({ type: 'ADD_REGISTER', data: value });
 
 // export default actionsEmailLogin;
