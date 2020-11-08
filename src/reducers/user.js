@@ -6,16 +6,18 @@ const INITIAL_STATE = {
   email: '',
 };
 
-export default function userReducers(state = INITIAL_STATE, action) {
+function userReducers(state = INITIAL_STATE, action) {
   switch (action.type) {
   case EMAIL_LOGIN:
     return {
-      ...state, email: action.email,
+      ...state, email: action.payload,
     };
   default:
     return state;
   }
 }
+
+export default userReducers;
 
 // const INITIAL_STATE = {
 //   user: {

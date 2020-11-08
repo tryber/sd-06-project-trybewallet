@@ -26,7 +26,7 @@ export default function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
   case TOTAL_WALLET:
     return {
-      ...state, total: action.total,
+      ...state, total: action.payload,
     };
   default:
     return state;

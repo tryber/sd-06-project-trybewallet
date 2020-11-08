@@ -2,79 +2,90 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { actionsEmailLogin } from '../actions/index';
+import { actionsEmailLogin, savePassword } from '../actions';
+// import userReducers from '../reducers/user';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       email: '',
-      senha: '',
-      buttonLogin: true,
+      password: '',
+      isDisabled: true,
     };
+
+    this.handleSignUp = this.handleSignUp.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.checkInput = this.checkInput.bind(this);
-    // this.handleLogin = this.handleLogin.bind(this);
+    this.verifyEmailAndPassword = this.verifyEmailAndPassword.bind(this);
+  }
+
+  handleSignUp(event) {
+    event.preventDefault();
+    const { sendEmail } = this.props;
+    const { email } = this.state;
+    sendEmail(email);
+    const { history } = this.props;
+    history.push('/carteira');
+  }
+
+  verifyEmailAndPassword() {
+    const { email, password } = this.state;
+    const emailFormat = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
+    const passwordMinLength = 6;
+
+    this.setState({ isDisabled: !(password.length >= passwordMinLength && emailFormat) });
   }
 
   handleChange({ target }) {
-    this.setState({
-      [target.name]: target.value,
-    }, () => this.checkInput());
-  }
-
-  checkInput() {
-    const { email, senha } = this.state;
-    const check = email.split('@');
-    // console.log(check);
-    const num = 6;
-    if (check.length === 2 && check[1].endsWith('.com')) {
-      if (senha.split('').length >= num) {
-        return this.setState({
-          buttonLogin: false,
-        });
-      }
-    }
-    return this.setState({
-      buttonLogin: true,
+    this.setState({ [target.name]: target.value }, () => {
+      this.verifyEmailAndPassword();
     });
+
+    const { password } = this.state;
+    const { dispatchSavePassword } = this.props;
+    dispatchSavePassword(password);
+
+    const { email } = this.state;
+    const { dispatchSaveEmail } = this.props;
+    dispatchSaveEmail(email);
   }
 
   render() {
-    // const { email, password } = this.state;
-    const { email, buttonLogin } = this.state;
-    const { handleLogin } = this.props;
+    const { email, password, isDisabled } = this.state;
 
     return (
       <div>
         <h1>Login</h1>
-        <form>
+        <form onSubmit={ this.handleSignUp }>
           <input
-            // type="email"
-            // value={ email }
-            // placeholder="email"
+            type="text"
+            value={ email }
+            placeholder="email"
             // onChange={ (e) => this.setState({ email: e.target.value }) }
             data-testid="email-input"
             name="email"
             onChange={ this.handleChange }
             // required
+            // validate={[this.validateRegister]}
           />
           <input
-            // type="password"
-            // value={ senha }
+            type="password"
+            value={ password }
             data-testid="password-input"
-            // placeholder="senha"
-            name="senha"
-            // maxLength="6"
-            // onChange={ (e) => this.setState({ password: e.target.value }) }
+            placeholder="password"
+            name="password"
+            maxLength="6"
+            // onChange={ (e) => this.setState({ senha: e.target.value }) }
+            // validate={[this.validateRegister]}
             onChange={ this.handleChange }
           />
           <Link to="/carteira">
             <button
-              type="button"
-              // onClick={ () => actionsEmailLogin({ email, password }) }
-              onClick={ () => handleLogin(email) }
-              disabled={ buttonLogin }
+              type="submit"
+              // onClick={ () => actionsEmailLogin({ email, senha }) }
+              onClick={ this.validateRegister }
+              // onClick={ () => handleLogin(email, senha) }
+              disabled={ isDisabled }
             >
               Entrar
             </button>
@@ -84,14 +95,24 @@ class Login extends React.Component {
     );
   }
 }
-// const mapStateToProps = (state) => ({ email: state.email });
 
-const mapDispatchToProps = (dispatch) => ({
-  handleLogin: (email) => dispatch(actionsEmailLogin(email)),
-});
+// const mapStateToProps = (state) => ({
+//   email: state.email,
+//   password: state.password,
+// });
 
 Login.propTypes = {
-  handleLogin: PropTypes.func.isRequired,
+  history: PropTypes.func.isRequired,
+  sendEmail: PropTypes.string.isRequired,
+  dispatchSaveEmail: PropTypes.func.isRequired,
+  dispatchSavePassword: PropTypes.func.isRequired,
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSaveEmail: (email) => dispatch(actionsEmailLogin(email)),
+  dispatchSavePassword: (password) => dispatch(savePassword(password)),
+});
+
+// // // export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 export default connect(null, mapDispatchToProps)(Login);

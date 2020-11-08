@@ -1,17 +1,27 @@
 // Coloque aqui suas actions
 
+// salvando usuario pelo email
 export const EMAIL_LOGIN = 'EMAIL_LOGIN';
-export const TOTAL_WALLET = 'TOTAL_WALLET';
-
 export const actionsEmailLogin = (email) => ({
   type: 'EMAIL_LOGIN',
-  email,
+  payload: email,
 });
 
-export const totalField = (total) => ({
+// salvando total da carteira
+export const TOTAL_WALLET = 'TOTAL_WALLET';
+export const totalField = (payload) => ({
   type: TOTAL_WALLET,
-  total,
+  payload,
 });
+
+// salvando password
+export const SAVE_PASSWORD = 'SAVE_PASSWORD';
+export const savePassword = (password) => ({
+  type: SAVE_PASSWORD,
+  password,
+});
+
+// export const addRegister = (value) => ({ type: 'ADD_REGISTER', data: value });
 
 // export default actionsEmailLogin;
 
