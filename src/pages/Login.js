@@ -1,7 +1,9 @@
 import React from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import login from '../actions';
+import { login } from '../actions';
+import logo from '../img/logo.png';
 
 class Login extends React.Component {
   constructor(props) {
@@ -9,82 +11,94 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      isDisabled: true,
+      disabled: true,
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.validation = this.validation.bind(this);
   }
 
-  handleChange({ target }) {
+  validation({ target }) {
     const { name, value } = target;
     this.setState({
       [name]: value,
     }, () => {
       const { email, password } = this.state;
-      const verifyEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
-      const passwordSize = 6;
-      if (verifyEmail && password.length >= passwordSize) {
-        this.setState({
-          isDisabled: false,
-        });
-      } else {
-        this.setState({
-          isDisabled: true,
-        });
-      }
+      const emailExpRegular = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/i;
+      const numberMinimoCaracterSenha = 6;
+      return this.setState({
+        disabled:
+        !((password.length >= numberMinimoCaracterSenha)
+        && (emailExpRegular.test(email))) });
     });
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    const { email } = this.state;
-    const { history, submitButton } = this.props;
-    submitButton(email);
-    history.push('carteira');
-  }
-
   render() {
-    const { email, password, isDisabled } = this.state;
+    const { email, password, disabled } = this.state;
+    const { formLogin } = this.props;
+
     return (
-      <form onSubmit={ this.handleSubmit }>
-        <fieldset>
-          <input
-            data-testid="email-input"
-            type="email"
-            placeholder="Email"
-            onChange={ this.handleChange }
-            value={ email }
-            name="email"
+      <div className="form-login">
+        <form>
+          <img
+            src={ logo }
+            alt="logo-trybe"
           />
+          <label
+            htmlFor="email"
+          >
+            E-mail
+            <input
+              data-testid="email-input"
+              id="email"
+              name="email"
+              type="text"
+              value={ email }
+              placeholder="exemplo@gmail.com"
+              required
+              onChange={ this.validation }
+            />
+          </label>
           <br />
+          <label
+            htmlFor="password"
+          >
+            Senha
+            <input
+              data-testid="password-input"
+              id="password"
+              name="password"
+              type="password"
+              minLength="6"
+              value={ password }
+              required
+              onChange={ this.validation }
+            />
+          </label>
           <br />
-          <input
-            data-testid="password-input"
-            type="password"
-            placeholder="Senha"
-            onChange={ this.handleChange }
-            value={ password }
-            name="password"
-          />
-          <br />
-          <br />
-          <button type="submit" disabled={ isDisabled }>
-            Entrar
-          </button>
-        </fieldset>
-      </form>
+          <Link to="/carteira">
+            <button
+              disabled={ disabled }
+              type="submit"
+              onClick={ () => formLogin(email) }
+            >
+              Entrar
+            </button>
+          </Link>
+        </form>
+      </div>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  submitButton: (email) => dispatch(login(email)),
+  formLogin: (data) => dispatch(login(data)),
 });
 
 Login.propTypes = {
-  submitButton: propTypes.func.isRequired,
-  history: propTypes.func.isRequired,
+  formLogin: PropTypes.func.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Login);
