@@ -1,72 +1,75 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { loginAction } from '../actions/actionsCreator';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       email: '',
       password: '',
     };
 
-    this.canBeSubmited = this.canBeSubmited.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.toWallet = this.toWallet.bind(this);
-  };
-  handleEmailChange = e => {
-    this.setState({ email: e.target.value });
-  };
+    this.handleEmailInput = this.handleEmailInput.bind(this);
+    this.handlePasswordInput = this.handlePasswordInput.bind(this);
+    this.handleLoginChange = this.handleLoginChange.bind(this);
+    // this.canBeSubmitted = this.canBeSubmitted.bind(this);
+  }
 
-  handlePasswordChange = e => {
-    this.setState({ password: e.target.value });
-  }; 
+  handleEmailInput(event) {
+    this.setState({ email: event.target.value });
+  }
+
+  handlePasswordInput(event) {
+    this.setState({ password: event.target.value });
+  }
+
+  handleLoginChange(event) {
+    if (!canBeSubmitted()) {
+      event.preventDefault();
+    } else {
+      const { email, password } = this.state;
+      const { logIn, history } = this.props;
+
+      logIn({ email, password });
+      history.push('/carteira');
+    }
+  }
 
   canBeSubmited() {
     const { email, password } = this.state;
     const checkEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
-    return checkEmail && password.length >= 6;
-    }
-
-  toWallet(evt) {
-   if (!this.canBeSubmitted()) {
-      evt.preventDefault();
-      return;
-   } else {
-     const { email } = this.state;
-    const { history, submitButton } = this.props;
-    submitButton(email);
-    history.push('carteira');
-    }
-  } 
+    const minimumPasswordLength = 6;
+    return checkEmail && password.length >= minimumPasswordLength;
+  }
 
   render() {
     const isEnabled = this.canBeSubmited();
     return (
       <div>
-        <form onSubmit={ this.handleSubmit }>
+        <form onSubmit={ this.handleLoginChange }>
           <input
-            type='email'
-            value={ this.state.email }
-            onChange={ this.handleEmailChange }
+            type="email"
+            value={ this.state.value }
+            onChange={ this.handleEmailInput }
             placeholder="email"
             data-testid="email-input"
             required
           />
           <input
-            type='password'
+            type="password"
             placeholder="password"
-            value={ this.state.password }
             data-testid="password-input"
-            onChange={ this.handlePasswordChange }
+            value={ this.state.value }
+            onChange={ this.handlePasswordInput }
             minLength="6"
             required
           />
           <button
-            disabled={ !isEnabled}
-            onClick={ this.toWallet }
+            disabled={ !isEnabled }
+            type="submit"
           >
             Entrar
           </button>
@@ -76,7 +79,17 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = (dispatch) => ({
-  loginAction: (e) => dispatch(loginAction(e)),
-})
-export default connect(null, mapStateToProps)(Login);
+function mapDispatchToProps(dispatch) {
+  return {
+    logIn: ({ email }) => dispatch(loginAction({ email })),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  logIn: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};

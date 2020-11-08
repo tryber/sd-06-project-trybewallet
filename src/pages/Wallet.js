@@ -4,8 +4,6 @@ class Wallet extends React.Component {
   constructor() {
     super();
     this.state = {
-      expenses: [],
-      currency: '',
     };
   }
 

@@ -1,11 +1,11 @@
 export const LOGIN = 'LOGIN';
 
-function loginAction({ email }) {
+export function loginAction({ email, password }) {
   return {
     type: LOGIN,
     payload: {
       email,
-      signedIn,
+      password,
     },
   };
 }
