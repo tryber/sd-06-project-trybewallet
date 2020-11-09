@@ -6,18 +6,6 @@ import Header from '../components/Header';
 import AddExpenseForm from '../components/AddExpenseForm';
 
 class Wallet extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      value: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'alimentação',
-      description: '',
-    };
-  }
-
   render() {
     return (
       <div>

@@ -8,9 +8,9 @@ class AddExpenseForm extends React.Component {
     super();
 
     this.state = {
-      expenseValue: '',
+      value: '',
       currency: '',
-      payMethod: '',
+      method: '',
       tag: '',
       description: '',
     };
@@ -30,7 +30,7 @@ class AddExpenseForm extends React.Component {
 
   render() {
     const { currencies } = this.props;
-    const { expenseValue, currency, payMethod, tag, description } = this.state;
+    const { value, currency, method, tag, description } = this.state;
     return (
       <div>
         <form action="">
@@ -39,10 +39,10 @@ class AddExpenseForm extends React.Component {
             Valor
             <input
               type="number"
-              name="expenseValue"
+              name="value"
               id="value-input"
               data-testid="value-input"
-              value={ expenseValue }
+              value={ value }
               onChange={ (event) => this.handleChange(event) }
             />
           </label>
@@ -56,23 +56,25 @@ class AddExpenseForm extends React.Component {
               value={ currency }
               onChange={ (event) => this.handleChange(event) }
             >
-              {/* <option value="">Selecione</option> */}
+              <option value="">Selecione</option>
               {Object.keys(currencies)
                 .filter((coin) => coin !== 'USDT')
-                .map((coin, index) => <option key={ index } data-testid={ coin }>{ coin }</option>)}
+                .map((coin, index) => (
+                  <option key={ index } data-testid={ coin }>{ coin }</option>
+                ))}
             </select>
           </label>
 
           <label htmlFor="payMethod-input">
             Método de pagamento
             <select
-              name="payMethod"
+              name="method"
               id="payMethod-input"
               data-testid="payMethod-input"
-              value={ payMethod }
+              value={ method }
               onChange={ (event) => this.handleChange(event) }
             >
-              {/* <option value="">Selecione</option> */}
+              <option value="">Selecione</option>
               <option value="Dinheiro">Dinheiro</option>
               <option value="Cartão de crédito">Cartão de crédito</option>
               <option value="Cartão de débito">Cartão de débito</option>
@@ -88,7 +90,7 @@ class AddExpenseForm extends React.Component {
               value={ tag }
               onChange={ (event) => this.handleChange(event) }
             >
-              {/* <option value="">Selecione</option> */}
+              <option value="">Selecione</option>
               <option value="Alimentação">Alimentação</option>
               <option value="Lazer">Lazer</option>
               <option value="Trabalho">Trabalho</option>

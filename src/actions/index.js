@@ -1,4 +1,3 @@
-import { response } from '../tests/mockData';
 import currencyAPI from '../services/currencyAPI';
 
 // Coloque aqui suas actions
