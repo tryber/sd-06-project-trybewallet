@@ -1,19 +1,32 @@
 const INITIAL_STATE = {
-  currencies: [],
+  currencyToExchange: 'BRL',
   expenses: [],
-  sum: 0,
-  exchange: 'BRL',
 };
 
-export default function wallet(state = INITIAL_STATE, action) {
-  switch (action.type) {
-  case 'GET_COIN':
-    return { ...state, currencies: action.currency };
-  case 'ADD_EXPEND':
-    return { ...state, expenses: [...state.expenses, action.expenses] };
-  case 'ADD_SUM_VALUE':
-    return { ...state, sum: action.value };
+const EXPENSE_HDL = 'EXPENSE_HDL';
+const EXPENSE_DEL = 'EXPENSE_DEL';
+
+const wallet = (state = INITIAL_STATE, action) => {
+  const { expenses, currencyToExchange } = state;
+  const { type, expense } = action;
+
+  switch (type) {
+  case EXPENSE_HDL:
+    return ({
+      currencyToExchange,
+      expenses: [...expenses, expense],
+    });
+  case EXPENSE_DEL:
+    return ({
+      currencyToExchange,
+      expenses: [
+        ...expenses.slice(0, expenses.findIndex((exp) => exp.id === expense.id)),
+        ...expenses.slice(expenses.findIndex((exp) => exp.id === expense.id) + 1),
+      ],
+    });
   default:
     return state;
   }
-}
+};
+
+export default wallet;

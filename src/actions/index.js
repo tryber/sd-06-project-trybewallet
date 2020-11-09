@@ -1,31 +1,56 @@
-import { response } from '../tests/mockData';
+const LOGIN = 'LOGIN';
+const EXPENSE_HDL = 'EXPENSE_HDL';
+const EXPENSE_DEL = 'EXPENSE_DEL';
 
-window.fetch = async () => ({ json: () => Promise.resolve(response) });
+const signLogin = (email) => ({ type: LOGIN, email });
 
-export const getCoin = (currency) => ({
-  type: 'GET_COIN',
-  currency,
-});
+const expenseHandle = (state) => {
+  const {
+    id,
+    value,
+    currency,
+    method,
+    tag,
+    description,
+    exchangeRates,
+  } = state;
 
-export const login = (email) => ({
-  type: 'ACTION_LOGIN_SUCCESS',
-  email,
-});
+  return ({
+    type: EXPENSE_HDL,
+    expense: {
+      id,
+      value,
+      currency,
+      method,
+      tag,
+      description,
+      exchangeRates,
+    },
+  });
+};
 
-export const addExpend = (expenses) => ({
-  type: 'ADD_EXPEND',
-  expenses,
-});
+const expensesDelete = (state) => {
+  const {
+    id,
+    value,
+    currency,
+    method,
+    tag,
+    description,
+    exchangeRates,
+  } = state;
+  return ({
+    type: EXPENSE_DEL,
+    expense: {
+      id,
+      value,
+      currency,
+      method,
+      tag,
+      description,
+      exchangeRates,
+    },
+  });
+};
 
-export const addSumValue = (value) => ({
-  type: 'ADD_SUM_VALUE',
-  value,
-});
-
-export function fetchCurrency() {
-  return async (dispatch) => {
-    const responseData = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const responseJSON = await responseData.json();
-    dispatch(getCoin(responseJSON));
-  };
-}
+export { signLogin, expenseHandle, expensesDelete };
