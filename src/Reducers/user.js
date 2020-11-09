@@ -1,4 +1,4 @@
-import LOGIN_EMAIL from '../actions';
+import { LOGIN_EMAIL } from '../actions';
 
 const initialState = {
   email: '',
