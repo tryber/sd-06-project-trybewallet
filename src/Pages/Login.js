@@ -27,7 +27,7 @@ class Login extends React.Component {
     const validEmail = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{3})$/i);
     const passLeng = 6;
     let check = true;
-    if (validEmail && password.length >= passLeng) { 
+    if (validEmail && password.length >= passLeng) {
       check = false;
     }
     return check;
@@ -71,7 +71,7 @@ class Login extends React.Component {
                 disabled={ this.checkFields() }
                 className="btn"
               >
-              Entrar
+                Entrar
               </button>
             </Link>
           </form>
