@@ -19,8 +19,8 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
-    const { currencies } = this.props;
-    currencies();
+    const { fetchCurrencies } = this.props;
+    fetchCurrencies();
   }
 
   handleChange({ target }) {
@@ -40,7 +40,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencyKey, expensesToSum } = this.props;
+    const { email, currencies, expensesToSum } = this.props;
     const sumExpenses = expensesToSum
       .reduce(((acc, curr) => acc + parseFloat((curr
         .exchangeRates[curr.currency].ask * curr.value))), 0);
@@ -92,7 +92,7 @@ class Wallet extends React.Component {
                 id="select-input"
                 data-testid="currency-input"
               >
-                {currencyKey
+                {currencies
                   .map((currency) => (
                     <option
                       key={ currency }
@@ -172,20 +172,20 @@ class Wallet extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  currencies: () => dispatch(fetchApiCurrencies()),
+  fetchCurrencies: () => dispatch(fetchApiCurrencies()),
   createExpense: (expense) => dispatch(getExpensesAPI(expense)),
 });
 const mapStateToProps = (state) => ({
   email: state.user.email,
-  currencyKey: state.wallet.currencies,
+  currencies: state.wallet.currencies,
   expensesToSum: state.wallet.expenses,
 });
 
 Wallet.propTypes = {
-  currencyKey: PropTypes.arrayOf(Object).isRequired,
+  currencies: PropTypes.arrayOf(Object).isRequired,
   expensesToSum: PropTypes.arrayOf(Object).isRequired,
   createExpense: PropTypes.func.isRequired,
-  currencies: PropTypes.func.isRequired,
+  fetchCurrencies: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
 };
 

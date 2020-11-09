@@ -1,3 +1,5 @@
+import { GET_CURRENCIES, ADD_EXPENSES } from '../actions';
+
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],

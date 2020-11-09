@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { actionCreators } from '../store/index';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { login } from '../actions';
@@ -15,7 +14,6 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.inputValidate = this.inputValidate.bind(this);
-    // this.submit = this.submit.bind(this);
   }
 
   handleChange({ target }) {
