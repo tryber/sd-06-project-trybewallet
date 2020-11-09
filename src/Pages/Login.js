@@ -12,7 +12,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-    }
+    };
   }
 
   handleChange(event) {
@@ -20,17 +20,16 @@ class Login extends React.Component {
     this.setState({
       [name]: value,
     });
-  };
+  }
 
   checkFields() {
     const { email, password } = this.state;
     const validEmail = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{3})$/i);
     const passLeng = 6;
     let check = true;
-    if( validEmail && password.length >= passLeng) { check=false }
+    if (validEmail && password.length >= passLeng) { check = false }
     return check;
   }
-
 
   render() {
     const { fieldChange } = this.props;
@@ -45,8 +44,8 @@ class Login extends React.Component {
                 name="email"
                 placeholder="email@email.com"
                 data-testid="email-input"
-                value={email}
-                onChange={this.handleChange}
+                value={ email }
+                onChange={ this.handleChange }
               />
             </div>
             <div className="form-group">
@@ -55,26 +54,25 @@ class Login extends React.Component {
                 name="password"
                 placeholder="senha"
                 data-testid="password-input"
-                value={password}
-                onChange={this.handleChange}
+                value={ password }
+                onChange={ this.handleChange }
               />
             </div>
             <Link
               to="/carteira"
-              onClick={() => {
+              onClick={ () => {
                 fieldChange(email);
-              }}
+              } }
             >
               <button
                 type="button"
-                disabled={this.checkFields()}
+                disabled={ this.checkFields() }
                 className="btn"
               >
-                Entrar
-                            </button>
+              Entrar
+              </button>
             </Link>
           </form>
-
         </div>
       </div>
     );
@@ -87,6 +85,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   fieldChange: PropTypes.func.isRequired,
-}
+};
 
 export default connect(null, mapDispatchToProps)(Login);
