@@ -1,4 +1,4 @@
-import { DELETE_DATA, EDIT_DATA, GET_DATA, SAVE_EXPENSES } from '../actions/index';
+import { DELETE_DATA, EDIT_DATA, GET_DATA, SAVE_EXPENSES } from '../actions';
 
 const initialState = {
   expenses: [],
