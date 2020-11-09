@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchData } from '../actions';
+import { fetchData } from '../actions2';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -32,6 +32,10 @@ class Wallet extends React.Component {
         [name]: value,
       },
     });
+  }
+
+  addExpense() {
+    
   }
 
   render() {
@@ -117,7 +121,7 @@ class Wallet extends React.Component {
           />
           <button
             type="button"
-            // onClick={ this.addExpense }
+            onClick={ this.addExpense }
           >
             Adicionar despesa
           </button>
