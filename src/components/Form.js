@@ -20,6 +20,7 @@ class Form extends React.Component {
         tag: 'Alimentação',
         description: '',
       },
+      total: 0,
     };
   }
 
@@ -37,12 +38,14 @@ class Form extends React.Component {
     const EXPENSES_LENGTH = Object.keys(expenses).length;
     const NEXT_ID = EXPENSES_LENGTH || 0;
     const CURRENCIES = await (await fetch('https://economia.awesomeapi.com.br/json/all')).json();
-    updateAllStates(CURRENCIES, NEXT_ID);
+    this.updateAllStates(CURRENCIES, NEXT_ID);
   }
 
   updateAllStates(currencies, id) {
     const { expenses } = this.state;
     const { registerExpense } = this.props;
+    const CURRENCIES_LIST = Object.values(currencies).flat();
+    const RATE = CURRENCIES_LIST.find((coin) => coin.code === expenses.currency).ask;
 
     this.setState(() => ({
       expenses: {
@@ -50,20 +53,21 @@ class Form extends React.Component {
         id,
         exchangeRates: currencies,
       },
+      total: RATE * expenses.value,
     }), () => {
       registerExpense(this.state);
     });
   }
 
-  /* fetchCurrency(currency) {
-    const CURRENCY = Object.keys(await (await fetch(`https://economia.awesomeapi.com.br/json/${currency}`)).json());
-    // this.setState(() => )
-  } */
   render() {
     const { expenses } = this.props;
-    const { value, description } = expenses;
+    const { value, description, total } = expenses;
     return (
       <div>
+        <div>
+          TOTAL:
+          { total }
+        </div>
         <form>
           <label htmlFor="expense">
             Value:
@@ -90,9 +94,10 @@ class Form extends React.Component {
           <br />
           <Currencies handleCurrencyChange={ this.handleCurrencyChange } />
           <br />
-          <label htmlFor="method-input" data-testid="method-input">
+          <label htmlFor="method-input">
             Payment method:
             <select
+              data-testid="method-input"
               id="method-input"
               name="method"
               onChange={ this.handleChange }
@@ -113,9 +118,10 @@ class Form extends React.Component {
             </select>
           </label>
           <br />
-          <label htmlFor="tag-input" data-testid="tag-input">
+          <label htmlFor="tag-input">
             Tag:
             <select
+              data-testid="tag-input"
               id="tag-input"
               name="tag"
               onChange={ this.handleChange }
@@ -164,6 +170,7 @@ Form.propTypes = {
     tag: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     exchangeRates: PropTypes.func.isRequired,
+    total: PropTypes.number.isRequired,
   }).isRequired,
   registerExpense: PropTypes.func.isRequired,
 };
