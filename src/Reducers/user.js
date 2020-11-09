@@ -1,4 +1,5 @@
 import { LOGIN_EMAIL } from '../actions/index';
+
 const initialState = {
   email: '',
 };

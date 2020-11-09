@@ -16,7 +16,7 @@ export default function wallet(state = initialState, action) {
       expenses: [...state.expenses, action.expense],
     };
 
-  case EDIT_DATA:
+  case EDIT_DATA: {
     const find = state.expenses.find((exp) => exp.id === action.expense.id);
     const newExpense = { ...find, ...action.expense };
     const newArray = [...state.expenses];
@@ -25,6 +25,7 @@ export default function wallet(state = initialState, action) {
       ...state,
       expenses: newArray,
     };
+  }
 
   case DELETE_DATA:
     return {

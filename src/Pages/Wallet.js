@@ -3,19 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Wallet extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      expense: {
-        value: '',
-        description: '',
-        currency: '',
-        method: '',
-        tag: '',
-      },
-    };
-  }
-
   render() {
     const { email, expenses } = this.props;
 
@@ -58,7 +45,6 @@ const mapDispatchToProps = () => ({
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   expenses: PropTypes.arrayOf(Object).isRequired,
-  currencies: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
