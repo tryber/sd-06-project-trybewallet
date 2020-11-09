@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { saveUserEmail } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -37,6 +40,7 @@ class Login extends React.Component {
 
   render() {
     const { email, password, buttonDisabled } = this.state;
+    const { addEmail } = this.props;
 
     return (
       <div className="container">
@@ -75,6 +79,7 @@ class Login extends React.Component {
                 type="submit"
                 disabled={ !buttonDisabled }
                 value="Entrar"
+                onClick={ () => addEmail(email) }
               />
             </Link>
           </div>
@@ -84,4 +89,8 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  addEmail: (email) => dispatch(saveUserEmail(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
