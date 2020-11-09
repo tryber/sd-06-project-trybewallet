@@ -12,9 +12,9 @@ const composeWithDevTools = (
     }
 );
 
-export const store = createStore(
+const store = createStore(
   rootReducers,
-  composeWithDevTools(applyMiddleware(thunk))
+  composeWithDevTools(applyMiddleware(thunk)),
 );
 
 export default store;
