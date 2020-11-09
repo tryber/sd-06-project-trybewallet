@@ -1,4 +1,4 @@
-import { CURRENCY } from '../actions';
+import { CURRENCY, EXPENSES } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -9,6 +9,11 @@ export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
   case CURRENCY:
     return { ...state, currencies: Object.keys(action.currency) };
+  case EXPENSES:
+    return {
+      ...state,
+      expenses: [...state.expenses, action.expenses],
+    };
   default:
     return state;
   }

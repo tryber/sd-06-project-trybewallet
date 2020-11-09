@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchCurrency } from '../actions';
+import { fetchCurrency, newCurrency } from '../actions';
 
 class FormWallet extends Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
+    this.handleNewExpense = this.handleNewExpense.bind(this);
 
     this.state = {
       expenses: {
@@ -28,6 +29,23 @@ class FormWallet extends Component {
     this.setState((prevState) => ({
       ...prevState,
       expenses: { ...prevState.expenses, [name]: value },
+    }));
+  }
+
+  handleNewExpense(event) {
+    event.preventDefault();
+    const { expenses } = this.state;
+    const { addNewExpense } = this.props;
+    addNewExpense(expenses);
+    this.setState((prevState) => ({
+      ...prevState,
+      expenses: { ...prevState.expenses,
+        value: 0,
+        currency: '',
+        method: '',
+        tag: '',
+        description: '',
+        id: prevState.expenses.id + 1 },
     }));
   }
 
@@ -123,6 +141,7 @@ class FormWallet extends Component {
           <div>
             <button
               type="button"
+              onClick={ this.handleNewExpense }
             >
               Adicionar Despesa
             </button>
@@ -136,10 +155,12 @@ class FormWallet extends Component {
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   currencyFunction: () => dispatch(fetchCurrency()),
+  addNewExpense: (expense) => dispatch(newCurrency(expense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormWallet);
