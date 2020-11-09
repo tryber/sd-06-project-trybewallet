@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchData } from '../actions2';
+import { fetchData } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -19,8 +19,8 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
-    const { fetchData } = this.props;
-    fetchData();
+    const { fetchCurrencyData } = this.props;
+    fetchCurrencyData();
   }
 
   handleChange(event) {
@@ -35,7 +35,7 @@ class Wallet extends React.Component {
   }
 
   addExpense() {
-    
+    console.log('addExpense');
   }
 
   render() {
@@ -138,13 +138,13 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchData: () => dispatch(fetchData()),
+  fetchCurrencyData: () => dispatch(fetchData()),
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   expenses: PropTypes.arrayOf(Object).isRequired,
-  fetchData: PropTypes.func.isRequired,
+  fetchCurrencyData: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
 };
 
