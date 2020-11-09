@@ -1,64 +1,76 @@
 import React from 'react';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useHistory } from 'react-router-dom';
-import * as yup from 'yup';
+import PropTypes from 'prop-types';
 import './LoginForm.css';
 
-const LoginForm = (props) => {
-
-  const history = useHistory();
-
-  const handleSubmit = values => {
-    console.log('Login submit', values);
-    history.push('/carteira');
+class LoginForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.checkFields = this.checkFields.bind(this);
+    this.state = {
+      email: '',
+      password: '',
+    };
   }
 
-  const validations = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().min(6).required(),
-  });
+  handleChange(event) {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value,
+    });
+  }
 
-  return (
-    <div className="login-card">
-      <Formik initialValues={{}} onSubmit={handleSubmit} validationSchema={validations}>
-        <Form className="login-form">
-          <div className="login-group">
-            <div className="form-group">
-              <Field 
-                name="email"
-                type="email"
-                data-testid="email-input"
-                className="login-field"
-                placeholder="email@email.com"
-              />
-              <ErrorMessage 
-                name="email"
-                component="span"
-                className="login-error"
-              />
-            </div>
-            <div className="form-group">
-              <Field 
-                name="password"
-                type="password"
-                data-testid="password-input"
-                className="login-field"
-                placeholder="senha"
-              />
-              <ErrorMessage 
-                name="password"
-                component="span"
-                className="login-error"
-              />
-            </div>
-            <div className="btn-wrapper">
-              <button className="btn-login" type="submit">Entrar</button>
-            </div>
+  checkFields() {
+    const { password, email } = this.state;
+    const verifyEmail = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{3})$/i);
+    const passLeng = 6;
+    let check = true
+    if (verifyEmail && password.length >= passLeng) {
+      check = false;
+    }
+    return check;
+  }
+
+  render() {
+    const { email, password } = this.state;
+    return (
+      <div className="login-card">
+        <form>
+          <div className="form-group">
+            <label htmlFor="usr-email">Email</label>
+            <input
+              className="form-control"
+              type="email"
+              name="usr-email"
+              placeholder="email@email.com"
+              data-testid="email-input"
+              value={email}
+              onChange={this.handleChange}
+            />
+            <label htmlFor="usr-password">Senha</label>
+            <input
+              className="form-control"
+              type="password"
+              name="usr-password"
+              placeholder="senha"
+              data-testid="password-input"
+              value={password}
+              onChange={this.handleChange}
+            />
           </div>
-        </Form>
-      </Formik>
-    </div>
-  )
+          <button type="button" disabled={this.checkFields} className="btn" >Entrar</button>
+        </form>
+      </div>
+    )
+  }
 }
 
-export default LoginForm;
+const mapDispatchToProps = (dispatch) => ({
+  fieldChange: (email) => dispatch(login(email))
+});
+
+LoginForm.propTypes = {
+  fieldChange: PropTypes.func.isRequired(),
+};
+
+export default connect(null, mapDispatchToProps)(LoginForm);

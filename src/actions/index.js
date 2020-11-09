@@ -34,6 +34,6 @@ export const expensesThunk = (expense) => async (dispatch, getState) => {
   } else {
     idItem = itemExpenses[itemExpenses.length - 1].id + 1;
   }
-  const upExpense = { ...expense, id: idItem, exchangeRates: apiResponse };
-  dispatch(addExpenses(upExpense));
+  const uploadExpense = { ...expense, id: idItem, exchangeRates: apiResponse };
+  dispatch(addExpenses(uploadExpense));
 };
