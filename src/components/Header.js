@@ -2,6 +2,25 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Header extends Component {
+  constructor() {
+    super();
+
+    this.totalValue = this.totalValue.bind(this);
+  }
+
+  totalValue() {
+    const { expenses } = this.props;
+
+    return expenses.reduce((acc, curr) => {
+      const { currency, exchangeRates, value } = curr;
+
+      const totalValue = (exchangeRates[currency].ask) * value;
+      const toHitParseFloat = acc + parseFloat(totalValue);
+
+      return toHitParseFloat;
+    }, 0).toFixed(2);
+  }
+
   render() {
     const { email } = this.props;
     return (
@@ -16,7 +35,8 @@ class Header extends Component {
           </div>
           <div>
             <p data-testid="total-field">
-              Despesa Total: 0
+              Despesa Total:
+              {this.totalValue()}
             </p>
           </div>
           <p data-testid="header-currency-field">
@@ -30,6 +50,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps)(Header);
