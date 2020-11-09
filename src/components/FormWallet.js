@@ -1,0 +1,121 @@
+import React, { Component } from 'react';
+
+class FormWallet extends Component {
+  constructor() {
+    super();
+    this.handleChange = this.handleChange.bind(this);
+
+    this.state = {
+      expenses: {
+        value: 0,
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+        description: '',
+        id: 0,
+      },
+    };
+  }
+
+  handleChange({ target: { name, value } }) {
+    this.setState((prevState) => ({
+      ...prevState,
+      expenses: { ...prevState.expenses, [name]: value },
+    }));
+  }
+
+  render() {
+    const { expenses } = this.state;
+    const { value, currency, method, tag, description } = expenses;
+    return (
+      <div className="form_container">
+        <form>
+          <div>
+            <label htmlFor="value">
+              Valor:
+              <input
+                type="number"
+                id="value"
+                data-testid="value-input"
+                name="value"
+                onChange={ this.handleChange }
+                value={ value }
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="currency">
+              Moeda:
+              <select
+                id="currency"
+                data-testid="currency-input"
+                name="currency"
+                value={ currency }
+                onChange={ this.handleChange }
+              >
+                Moeda
+              </select>
+            </label>
+          </div>
+          <div>
+            <label htmlFor="method">
+              Método de pagamento:
+              <select
+                id="method"
+                data-testid="method-input"
+                name="method"
+                value={ method }
+                onChange={ this.handleChange }
+              >
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Cartão de crédito">Cartão de crédito</option>
+                <option value="Cartão de débito">Cartão de débito</option>
+              </select>
+            </label>
+          </div>
+          <div>
+            <label htmlFor="tag">
+              Tag:
+              <select
+                id="tag"
+                data-testid="tag-input"
+                name="tag"
+                value={ tag }
+                onChange={ this.handleChange }
+              >
+                <option value="Alimentação">Alimentação</option>
+                <option value="Lazer">Lazer</option>
+                <option value="Trabalho">Trabalho</option>
+                <option value="Transporte">Transporte</option>
+                <option value="Saúde">Saúde</option>
+              </select>
+            </label>
+          </div>
+          <div>
+            <label htmlFor="description">
+              Descrição:
+              <input
+                type="text"
+                id="description"
+                data-testid="description-input"
+                name="description"
+                onChange={ this.handleChange }
+                value={ description }
+              />
+            </label>
+          </div>
+          <div>
+            <button
+              type="button"
+            >
+              Adicionar Despesa
+            </button>
+          </div>
+        </form>
+
+      </div>
+    );
+  }
+}
+
+export default FormWallet;
