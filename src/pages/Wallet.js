@@ -155,7 +155,7 @@ class Wallet extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {expenses.map((exp) => (
+              { expenses.map((exp) => (
                 <tr key={ exp.id }>
                   <td>{ exp.description }</td>
                   <td>{ exp.tag }</td>
