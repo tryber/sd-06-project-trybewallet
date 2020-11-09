@@ -25,8 +25,12 @@ const mapStateToProps = (state) => ({
   totalExpenses: state.wallet.totalExpenses,
 });
 Wallet.propTypes = {
-  userEmail: PropTypes.string.isRequired,
-  totalExpenses: PropTypes.number.isRequired,
+  userEmail: PropTypes.string,
+  totalExpenses: PropTypes.number,
+};
+Wallet.defaultProps = {
+  userEmail: '',
+  totalExpenses: 0,
 };
 
 export default connect(mapStateToProps, null)(Wallet);

@@ -1,27 +1,58 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-class ExpensesTable extends Component {
+class ExpenseTable extends Component {
   render() {
+    const { expensesInfo } = this.props;
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-          </tr>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            {expensesInfo.map(
+              ({ description, tag, method, value, currency, exchangeRates }, index) => (
+                <tr key={ index }>
+                  <td>{description}</td>
+                  <td>{tag}</td>
+                  <td>{method}</td>
+                  <td>{value}</td>
+                  <td>{exchangeRates[currency].name}</td>
+                  <td>{(parseFloat(exchangeRates[currency].ask)).toFixed(2)}</td>
+                  <td>{(parseFloat(value * exchangeRates[currency].ask)).toFixed(2)}</td>
+                  <td>Real</td>
+                </tr>
+              ),
+            )}
+          </tbody>
 
-        </thead>
-      </table>
+        </table>
+      </div>
     );
   }
 }
-export default ExpensesTable;
+// export default ExpenseTable;
+const mapStateToProps = (state) => ({
+  expensesInfo: state.wallet.expenses,
+});
+
+ExpenseTable.propTypes = {
+  expensesInfo: PropTypes.arrayOf(Object).isRequired,
+};
+
+export default connect(mapStateToProps, null)(ExpenseTable);
 
 //   * A tabela deve ser alimentada pelo estado da aplicação, que estará disponível na chave ***expenses*** que vem do reducer `wallet`.
 
