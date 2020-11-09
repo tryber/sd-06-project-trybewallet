@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchData } from '../actions';
+import { fetchData, newExpense } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.addExpense = this.addExpense.bind(this);
     this.state = {
       expense: {
         value: '',
@@ -35,7 +36,28 @@ class Wallet extends React.Component {
   }
 
   addExpense() {
-    console.log('addExpense');
+    const { saveFields } = this.props;
+    const { expense } = this.state;
+    const { value, description, method, currency, tag } = expense;
+    if (
+      value !== ''
+      && currency !== ''
+    ) {
+      saveFields(expense);
+      this.setState({
+        expense: {
+          value: '',
+          description: '',
+          currency: '',
+          method: '',
+          tag: '',
+        },
+      });
+    } else {
+      this.setState({
+        display: true,
+      });
+    }
   }
 
   render() {
@@ -44,8 +66,8 @@ class Wallet extends React.Component {
     const { value, currency, method, tag, description } = expense;
 
     const expensesSum = expenses
-      .reduce(((acc, curr) => acc + parseFloat((curr
-        .exchangeRates[curr.currency].ask * curr.value).toFixed(2))), 0);
+    .reduce(((acc, curr) => acc + parseFloat((curr
+      .exchangeRates[curr.currency].ask * curr.value).toFixed(2))), 0);
 
     return (
       <div>
@@ -81,8 +103,8 @@ class Wallet extends React.Component {
             onChange={ this.handleChange }
           >
             <option>Escolha</option>
-            {currencies.map((e) => (
-              <option data-testid={ e } key={ e }>{ e }</option>
+            {currencies.map((coin) => (
+              <option data-testid={ coin } key={ coin }>{ coin }</option>
             ))}
           </select>
           Pagamento:
@@ -138,6 +160,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  saveFields: (expense) => dispatch(newExpense(expense)),
   fetchCurrencyData: () => dispatch(fetchData()),
 });
 
@@ -146,6 +169,7 @@ Wallet.propTypes = {
   expenses: PropTypes.arrayOf(Object).isRequired,
   fetchCurrencyData: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
+  saveFields: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
