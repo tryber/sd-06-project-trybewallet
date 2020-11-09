@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class TableWallet extends Component {
   render() {
+    const { expenses } = this.props;
     return (
       <table>
         <thead>
@@ -18,24 +20,35 @@ class TableWallet extends Component {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>description</td>
-            <td>tag</td>
-            <td>method</td>
-            <td>value</td>
-            <td>rates</td>
-            <td>exchange</td>
-            <td>totalValue</td>
-            <td>Real</td>
-            <td>
-              <input type="submit" value="Excluir" />
-              <input type="submit" value="Editar" />
-            </td>
-          </tr>
+          {expenses.map((expense, index) => {
+            const rates = Number(expense.exchangeRates[expense.currency].ask);
+            const exchange = expense.exchangeRates[expense.currency].name;
+            const totalValue = (rates * expense.value).toFixed(2);
+            return (
+              <tr key={ index }>
+                <td>{expense.description}</td>
+                <td>{expense.tag}</td>
+                <td>{expense.method}</td>
+                <td>{expense.value}</td>
+                <td>{rates.toFixed(2)}</td>
+                <td>{exchange}</td>
+                <td>{totalValue}</td>
+                <td>Real</td>
+                <td>
+                  <input type="submit" value="Excluir" />
+                  <input type="submit" value="Editar" />
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     );
   }
 }
 
-export default TableWallet;
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+export default connect(mapStateToProps)(TableWallet);
