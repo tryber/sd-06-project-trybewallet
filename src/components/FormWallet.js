@@ -4,6 +4,8 @@ import '../css/Wallet.css';
 import { connect } from 'react-redux';
 import { addExpenseThunk, fetchCurrencies } from '../actions';
 
+// Esse é o arquivo de formulário em que estão todas as opções de filtro.
+
 class FormWallet extends React.Component {
   constructor() {
     super();
@@ -22,11 +24,14 @@ class FormWallet extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  // Faz a requisição da API logo na montagem da página.
   componentDidMount() {
     const { getCurrencies } = this.props;
     getCurrencies();
   }
 
+  // Atualiza o ID de cada despesa para cumprir o requisito que auxilia
+  // em encontrar cada linha para fazer remoção/edição.
   componentDidUpdate(prevProps) {
     const { expenses } = this.props;
     const { expense } = this.state;
@@ -43,6 +48,8 @@ class FormWallet extends React.Component {
     }
   }
 
+  // Função padrão que está no onChange de cada input para pegar o target
+  // de cada elemento digitado/selecionado.
   handleChange(e) {
     const { name, value } = e.target;
     const { expense } = this.state;

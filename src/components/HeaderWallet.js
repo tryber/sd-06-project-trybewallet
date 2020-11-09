@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import logo from '../images/logo.png';
 
+// Esse é o arquivo de header em que estão presentes o email vindo do estado global,
+// o valor total calculado na função abaixo, e a moeda de referência.
+
 class HeaderWallet extends React.Component {
   constructor() {
     super();
@@ -11,6 +14,7 @@ class HeaderWallet extends React.Component {
     this.calculateTotal = this.calculateTotal.bind(this);
   }
 
+  // Função que calcula o valor total de cada linha.
   calculateTotal() {
     const { expenses } = this.props;
     // modelo de reduce encontrado no seguinte PR: https://github.com/tryber/sd-06-project-trybewallet/blob/marioduartedev/src/pages/Wallet.js

@@ -7,6 +7,8 @@ import logo from '../images/logo.png';
 // import { actionCreators } from '../store/index';
 import { login } from '../actions';
 
+// Página em que são renderizados o formulário de login.
+
 class Login extends React.Component {
   constructor() {
     super();
@@ -20,15 +22,14 @@ class Login extends React.Component {
     this.checkInputsValidity = this.checkInputsValidity.bind(this);
   }
 
-  // Function to validate email and password with regex and length,
-  // based on saving state and setting it.
+  // Função usada para validar o email e password com regex e comprimento, baseada em // // salvar o estado e setá-lo.
   checkInputsValidity({ target }) {
     const { name, value } = target;
     this.setState({
       [name]: value,
     }, () => {
       const { email, password } = this.state;
-      // regex patter found at stackoverflow
+      // Padrão de regex encontrado no stackoverflow.
       const emailValidation = (/\S+@\S+\.\S+/).test(email);
       const passwordValidation = 6;
       if (emailValidation && passwordValidation <= password.length) {

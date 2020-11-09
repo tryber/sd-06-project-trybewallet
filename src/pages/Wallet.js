@@ -3,6 +3,8 @@ import HeaderWallet from '../components/HeaderWallet';
 import FormWallet from '../components/FormWallet';
 import TableWallet from '../components/TableWallet';
 
+// Página em que são renderizados os componentes de filtro e exibição dos resultados.
+
 class Wallet extends React.Component {
   render() {
     return (

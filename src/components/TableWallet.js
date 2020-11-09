@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import '../css/Wallet.css';
 
+// Esse é o arquivo de renderização dos resultados filtrados no formulário,
+// fazendo um map e exibindo todos os resultados presentes no estado global (wallet).
+
 class TableWallet extends React.Component {
   render() {
     const { expenses } = this.props;
