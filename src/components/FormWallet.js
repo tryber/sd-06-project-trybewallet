@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchCurrency } from '../actions';
 
 class FormWallet extends Component {
   constructor() {
@@ -17,6 +19,11 @@ class FormWallet extends Component {
     };
   }
 
+  componentDidMount() {
+    const { currencyFunction } = this.props;
+    currencyFunction();
+  }
+
   handleChange({ target: { name, value } }) {
     this.setState((prevState) => ({
       ...prevState,
@@ -25,6 +32,7 @@ class FormWallet extends Component {
   }
 
   render() {
+    const { currencies } = this.props;
     const { expenses } = this.state;
     const { value, currency, method, tag, description } = expenses;
     return (
@@ -53,7 +61,15 @@ class FormWallet extends Component {
                 value={ currency }
                 onChange={ this.handleChange }
               >
-                Moeda
+                {currencies && currencies.filter((coin) => coin !== 'USDT')
+                  .map((cur) => (
+                    <option
+                      key={ cur }
+                      data-testid={ cur }
+                      value={ cur }
+                    >
+                      { cur }
+                    </option>))}
               </select>
             </label>
           </div>
@@ -118,4 +134,12 @@ class FormWallet extends Component {
   }
 }
 
-export default FormWallet;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  currencyFunction: () => dispatch(fetchCurrency()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormWallet);
