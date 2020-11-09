@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { saveUserEmail } from '../actions';
 
@@ -92,5 +93,9 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   addEmail: (email) => dispatch(saveUserEmail(email)),
 });
+
+Login.propTypes = {
+  addEmail: PropTypes.func,
+}.isRequired;
 
 export default connect(null, mapDispatchToProps)(Login);
