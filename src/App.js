@@ -1,6 +1,13 @@
 import React from 'react';
-import Routes from './components/Routes';
 
-const App = () => <Routes />;
+function App() {
+    return (
+      <Switch>
+        <Route path="/carteira" component={ Wallet } />
+        <Route path="/" component={ Login } />
+      </Switch>
+    );
+  }
+  
 
 export default App;
