@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchData, newExpense } from '../actions';
+import { fetchData, newExpense, deleteData } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -64,10 +64,13 @@ class Wallet extends React.Component {
     const { email, expenses, currencies } = this.props;
     const { expense } = this.state;
     const { value, currency, method, tag, description } = expense;
+    const tabela = ['Descrição',
+      'Tag', 'Método de pagamento', 'Valor', 'Moeda', 'Câmbio utilizado',
+      'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
 
     const expensesSum = expenses
-    .reduce(((acc, curr) => acc + parseFloat((curr
-      .exchangeRates[curr.currency].ask * curr.value).toFixed(2))), 0);
+      .reduce(((acc, curr) => acc + parseFloat((curr
+        .exchangeRates[curr.currency].ask * curr.value).toFixed(2))), 0);
 
     return (
       <div>
@@ -92,27 +95,27 @@ class Wallet extends React.Component {
             type="number"
             name="value"
             data-testid="value-input"
-            value={ value }
-            onChange={ this.handleChange }
+            value={value}
+            onChange={this.handleChange}
           />
           Moeda:
           <select
             data-testid="currency-input"
             name="currency"
-            value={ currency }
-            onChange={ this.handleChange }
+            value={currency}
+            onChange={this.handleChange}
           >
             <option>Escolha</option>
             {currencies.map((coin) => (
-              <option data-testid={ coin } key={ coin }>{ coin }</option>
+              <option data-testid={coin} key={coin}>{coin}</option>
             ))}
           </select>
           Pagamento:
           <select
             name="method"
             data-testid="method-input"
-            value={ method }
-            onChange={ this.handleChange }
+            value={method}
+            onChange={this.handleChange}
           >
             <option>Escolha</option>
             <option>Dinheiro</option>
@@ -123,8 +126,8 @@ class Wallet extends React.Component {
           <select
             data-testid="tag-input"
             name="tag"
-            value={ tag }
-            onChange={ this.handleChange }
+            value={tag}
+            onChange={this.handleChange}
           >
             <option>Escolha</option>
             <option>Alimentação</option>
@@ -138,15 +141,50 @@ class Wallet extends React.Component {
             type="text"
             name="description"
             data-testid="description-input"
-            value={ description }
-            onChange={ this.handleChange }
+            value={description}
+            onChange={this.handleChange}
           />
           <button
             type="button"
-            onClick={ this.addExpense }
+            onClick={this.addExpense}
           >
             Adicionar despesa
           </button>
+        </div>
+        <div className="table">
+          <table>
+            <thead>
+              <tr>
+                {tabela.map((campo) => (
+                  <th key={campo} scope="col">{campo}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {expenses.map((exp) => (
+                <tr key={exp.id}>
+                  <td>{exp.description}</td>
+                  <td>{exp.tag}</td>
+                  <td>{exp.method}</td>
+                  <td>{exp.value}</td>
+                  <td>{exp.exchangeRates[exp.currency].name}</td>
+                  <td>{(parseFloat(exp.exchangeRates[exp.currency].ask)).toFixed(2)}</td>
+                  <td>{(exp.exchangeRates[exp.currency].ask * exp.value).toFixed(2)}</td>
+                  <td>Real</td>
+                  <td>
+                    <button
+                      type="button"
+                      data-testid="delete-btn"
+                      onClick={ () => deleteData(exp.id) }
+                    >
+                      Deletar
+                  </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
         </div>
       </div>
     );
@@ -162,6 +200,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   saveFields: (expense) => dispatch(newExpense(expense)),
   fetchCurrencyData: () => dispatch(fetchData()),
+  deleteData: (expense) => dispatch(deleteData(expense)),
 });
 
 Wallet.propTypes = {
@@ -170,6 +209,7 @@ Wallet.propTypes = {
   fetchCurrencyData: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
   saveFields: PropTypes.func.isRequired,
+  deleteData: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
