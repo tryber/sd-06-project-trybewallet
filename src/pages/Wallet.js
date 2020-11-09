@@ -57,14 +57,15 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, expenses, currencies } = this.props;
+    const { email, expenses, currencies, deleteData } = this.props;
     const { expense } = this.state;
     const { value, currency, method, tag, description } = expense;
     const tabela = ['Descrição',
       'Tag', 'Método de pagamento', 'Valor', 'Moeda', 'Câmbio utilizado',
       'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
 
-    const expensesSum = 0
+    const expensesSum = 0;
+
     return (
       <div>
         <nav className="user-info">
@@ -161,8 +162,12 @@ class Wallet extends React.Component {
                   <td>{ exp.method }</td>
                   <td>{ exp.value }</td>
                   <td>{ exp.exchangeRates[exp.currency].name}</td>
-                  <td>{ (parseFloat(exp.exchangeRates[exp.currency].ask)).toFixed(2) }</td>
-                  <td>{ (exp.exchangeRates[exp.currency].ask * exp.value).toFixed(2) }</td>
+                  <td>
+                    { (parseFloat(exp.exchangeRates[exp.currency].ask)).toFixed(2) }
+                  </td>
+                  <td>
+                    { (exp.exchangeRates[exp.currency].ask * exp.value).toFixed(2) }
+                  </td>
                   <td>Real</td>
                   <td>
                     <button
@@ -171,7 +176,7 @@ class Wallet extends React.Component {
                       onClick={ () => deleteData(exp.id) }
                     >
                       Deletar
-                  </button>
+                    </button>
                   </td>
                 </tr>
               )) }
