@@ -57,7 +57,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, expenses, currencies, deleteData } = this.props;
+    const { email, expenses, currencies, deleteDataField } = this.props;
     const { expense } = this.state;
     const { value, currency, method, tag, description } = expense;
     const tabela = ['Descrição',
@@ -173,7 +173,7 @@ class Wallet extends React.Component {
                     <button
                       type="button"
                       data-testid="delete-btn"
-                      onClick={ () => deleteData(exp.id) }
+                      onClick={ () => deleteDataField(exp.id) }
                     >
                       Deletar
                     </button>
@@ -198,7 +198,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   saveFields: (expense) => dispatch(newExpense(expense)),
   fetchCurrencyData: () => dispatch(fetchData()),
-  deleteData: (expense) => dispatch(deleteData(expense)),
+  deleteDataField: (expense) => dispatch(deleteData(expense)),
 });
 
 Wallet.propTypes = {
@@ -207,7 +207,7 @@ Wallet.propTypes = {
   fetchCurrencyData: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
   saveFields: PropTypes.func.isRequired,
-  deleteData: PropTypes.func.isRequired,
+  deleteDataField: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
