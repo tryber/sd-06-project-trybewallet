@@ -28,7 +28,7 @@ class Login extends React.Component {
     });
   }
 
-  // Regex utilizado a partir do link: https://www.formget.com/regular-expression-for-email/;
+  // Regex utilizado a partir do link: https://www.w3resource.com/javascript/form/email-validation.php;
   verifyEmail() {
     let statusEmail = false;
     const { email } = this.state;
@@ -64,7 +64,11 @@ class Login extends React.Component {
     const { sendEmail } = this.props;
     return (
       <div className="login-container">
-        <img src={ Logo } alt="Logo Trybe" width="200px" />
+        <img
+          src={ Logo }
+          alt="Logo Trybe"
+          width="200px"
+        />
         <input
           data-testid="email-input"
           type="email"
@@ -80,8 +84,14 @@ class Login extends React.Component {
           placeholder="Digite aqui a sua senha"
           onChange={ this.handleChange }
         />
-        <Link to="/carteira" onClick={ () => sendEmail(email) }>
-          <button type="button" disabled={ this.verifyStatusButton() }>
+        <Link
+          to="/carteira"
+          onClick={ () => sendEmail(email) }
+        >
+          <button
+            type="button"
+            disabled={ this.verifyStatusButton() }
+          >
             Entrar
           </button>
         </Link>

@@ -1,3 +1,23 @@
 .header-wallet {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.header-wallet > img {
+  padding: 20px;
+}
+
+.info-box {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+
+.expense-box {
+  margin-left: 40px;
+}
+
+/* .info-box > p {
+  font-weight: 700;
+} */

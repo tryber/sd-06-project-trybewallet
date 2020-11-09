@@ -1,31 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Logo from './images/logo-trybe.png';
 import '../styles/Wallet.css';
+import Header from '../components/Header';
+import AddExpenseForm from '../components/AddExpenseForm';
 
 class Wallet extends React.Component {
-  render() {
-    const INITIAL_VALUE = 0;
-    const { email } = this.props;
+  constructor() {
+    super();
 
+    this.state = {
+      value: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'alimentação',
+      description: '',
+    };
+  }
+
+  render() {
     return (
       <div>
-        <header className="header-wallet">
-          <img src={ Logo } alt="logomarca trybe" width="100px" />
-          <div className="info-box">
-            <p>
-              Email:
-              <span data-testid="email-field">{ email }</span>
-            </p>
-            <p>
-              despesa total:
-              <span data-testid="total-field">{ INITIAL_VALUE }</span>
-              <span data-testid="header-currency-field">BRL</span>
-            </p>
-          </div>
-        </header>
+        <Header />
+        <AddExpenseForm />
+        {/* <button type="button" onClick={() => currencyAPI() }>Teste API</button> */}
       </div>);
   }
 }
@@ -33,9 +31,5 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
 });
-
-Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
-};
 
 export default connect(mapStateToProps)(Wallet);
