@@ -13,14 +13,11 @@ class Wallet extends React.Component {
         method: '',
         tag: '',
       },
-    }
-
+    };
   }
 
   render() {
-    const { email, expenses, currencies } = this.props;
-    const { expense } = this.state;
-    const { value, currency, method, tag, description } = expense;
+    const { email, expenses } = this.props;
 
     const expensesSum = expenses
       .reduce(((acc, curr) => acc + parseFloat((curr
@@ -31,11 +28,15 @@ class Wallet extends React.Component {
         <nav className="user-info">
           <div>
             User:
-              <span data-testid="email-field"> { email } </span>
+            <span data-testid="email-field">
+              { email }
+            </span>
           </div>
           <div>
             Despesas: R$
-              <span data-testid="total-field"> { expensesSum } </span>
+            <span data-testid="total-field">
+              { expensesSum }
+            </span>
             <span data-testid="header-currency-field">BRL</span>
           </div>
         </nav>
@@ -50,14 +51,14 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = () => ({
 
-})
+});
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   expenses: PropTypes.arrayOf(Object).isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

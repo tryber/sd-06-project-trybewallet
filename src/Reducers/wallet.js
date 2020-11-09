@@ -1,4 +1,4 @@
-import { DELETE_DATA, EDIT_DATA, GET_DATA, SAVE_EXPENSES } from '../actions';
+import { DELETE_DATA, EDIT_DATA, GET_DATA, SAVE_EXPENSES } from '../actions/index';
 
 const initialState = {
   expenses: [],
@@ -6,16 +6,16 @@ const initialState = {
 };
 
 export default function wallet(state = initialState, action) {
-  switch(action.type) {
+  switch (action.type) {
   case GET_DATA:
-    return {...state, currencies: Object.keys(action.json).filter((c) => c !== 'USDT') };
+    return { ...state, currencies: Object.keys(action.json).filter((c) => c !== 'USDT') };
 
   case SAVE_EXPENSES:
     return {
       ...state,
       expenses: [...state.expenses, action.expense],
     };
-  
+
   case EDIT_DATA:
     const find = state.expenses.find((exp) => exp.id === action.expense.id);
     const newExpense = { ...find, ...action.expense };
@@ -27,9 +27,9 @@ export default function wallet(state = initialState, action) {
     };
 
   case DELETE_DATA:
-    return{
+    return {
       ...state,
-      expenses: state.expenses.filter((exp) => exp.id !== action.expense)
+      expenses: state.expenses.filter((exp) => exp.id !== action.expense),
     };
 
   default:
