@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchCurrency, newCurrency } from '../actions';
 
@@ -162,5 +163,12 @@ const mapDispatchToProps = (dispatch) => ({
   currencyFunction: () => dispatch(fetchCurrency()),
   addNewExpense: (expense) => dispatch(newCurrency(expense)),
 });
+
+FormWallet.propTypes = {
+  currencyFunction: PropTypes.func,
+  addNewExpense: PropTypes.func,
+  currencies: PropTypes.object,
+  expenses: PropTypes.object,
+}.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormWallet);
