@@ -35,13 +35,6 @@ class Login extends React.Component {
     return this.setState({ disabled: true });
   }
 
-  // submit() {
-  //   const { history } = this.props;
-  //   emailSaving;
-  //   actionCreators.login(email);
-  //   history.push('/carteira');
-  // }
-
   render() {
     const { disabled, email } = this.state;
     const { emailSaving } = this.props;
