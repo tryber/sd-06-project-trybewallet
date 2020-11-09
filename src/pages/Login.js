@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import login from '../actions';
 import PropTypes from 'prop-types';
+import login from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -27,8 +27,10 @@ class Login extends React.Component {
   validateLogin() {
     const NUM_PASSWORD = 5;
     const { email, password } = this.state;
-    this.setState({ disabled: 
-      ((/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) && password.length >= NUM_PASSWORD) });
+    this.setState({ disabled:
+      ((/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        .test(email))
+      && password.length >= NUM_PASSWORD) });
   }
 
   render() {
