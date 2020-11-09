@@ -22,10 +22,14 @@ class Form extends Component {
     this.getCurrencies = this.getCurrencies.bind(this);
     this.saveToState = this.saveToState.bind(this);
     this.saveExpensesToStore = this.saveExpensesToStore.bind(this);
+    this.editState = this.editState.bind(this);
   }
 
   componentDidMount() {
     this.getCurrencies();
+    const { edit } = this.props;
+
+    if (edit.isEditing) this.editState();
   }
 
   async getCurrencies() {
@@ -56,8 +60,19 @@ class Form extends Component {
     }));
   }
 
+  editState(target) {
+    const { edit } = this.props;
+    const { expenses } = this.state;
+    const oldState = expenses;
+    this.setState({
+      expenses: edit.expense,
+    });
+    console.log('oldState');
+  }
+
   render() {
     const { currencyList, expenses } = this.state;
+
     return (
       <form className="form">
         <label htmlFor="value-input">
@@ -144,9 +159,13 @@ class Form extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  edit: state.wallet.edit,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   saveExpenses: (expenses) => dispatch(fetchExchangeRatesAndStoreExpenses(expenses)) });
 
-export default connect(null, mapDispatchToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
 
 Form.propTypes = { saveExpenses: PropTypes.func.isRequired };
