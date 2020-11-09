@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { loginAction } from '../../actions/index';
 import PropTypes from 'prop-types';
 import './LoginForm.css';
+import { Link } from 'react-router-dom';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -58,7 +61,20 @@ class LoginForm extends React.Component {
               onChange={this.handleChange}
             />
           </div>
-          <button type="button" disabled={this.checkFields} className="btn" >Entrar</button>
+          <Link
+            to="/carteira"
+            onClick={ () => {
+              fieldChange(email);
+            } }
+          >
+            <button
+              type="button"
+              disabled={ this.checkFields() }
+              className="btn"
+            >
+              Entrar
+          </button>
+          </Link>
         </form>
       </div>
     )
@@ -66,7 +82,7 @@ class LoginForm extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  fieldChange: (email) => dispatch(login(email))
+  fieldChange: (email) => dispatch(loginAction(email))
 });
 
 LoginForm.propTypes = {
