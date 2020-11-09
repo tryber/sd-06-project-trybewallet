@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FaTrashAlt } from 'react-icons/fa';
+import { deleteExpenses } from '../actions';
 
 const headerTable = [
   'Descrição',
@@ -15,6 +16,16 @@ const headerTable = [
   'Editar/Excluir'];
 
 class TableExpenses extends Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(expenseId) {
+    const { delExpense } = this.props;
+    delExpense(expenseId);
+  }
+
   render() {
     const { expenses } = this.props;
     return (
@@ -29,10 +40,19 @@ class TableExpenses extends Component {
         </thead>
         <tbody>
           {expenses.map((expense, index) => {
-            const { value, currency, method, tag, description, exchangeRates } = expense;
+            const {
+              value,
+              currency,
+              method,
+              tag,
+              description,
+              exchangeRates,
+              id } = expense;
+
             const actualExchange = Number(exchangeRates[currency].ask);
             const { name } = exchangeRates[currency];
             const convertValue = actualExchange * value;
+
             return (
               <tr key={ index }>
                 <td>
@@ -54,7 +74,7 @@ class TableExpenses extends Component {
                   { actualExchange.toFixed(2) }
                 </td>
                 <td>
-                  { convertValue }
+                  { convertValue.toFixed(2) }
                 </td>
                 <td>
                   Real
@@ -62,6 +82,7 @@ class TableExpenses extends Component {
                 <td>
                   <FaTrashAlt
                     data-testid="delete-btn"
+                    onClick={ () => this.handleClick(id) }
                   />
                 </td>
               </tr>
@@ -75,10 +96,15 @@ class TableExpenses extends Component {
 
 TableExpenses.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  delExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(TableExpenses);
+const mapDispatchToProps = (dispatch) => ({
+  delExpense: (expenseId) => dispatch(deleteExpenses(expenseId)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableExpenses);
