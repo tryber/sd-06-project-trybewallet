@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class CurrencySearcher extends React.Component {
   constructor(props) {
@@ -39,13 +40,24 @@ class CurrencySearcher extends React.Component {
 
     return (
       <div>
-        <select name={ name } onChange={ onChange } value={ value } data-testid="currency-input">
+        <select
+          name={ name }
+          onChange={ onChange }
+          value={ value }
+          data-testid="currency-input"
+        >
           {optionItems}
         </select>
       </div>
     );
   }
 }
+
+Currencies.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  name: propTypes.string.isRequired,
+};
 
 export default CurrencySearcher;
 // https://economia.awesomeapi.com.br/json/all
