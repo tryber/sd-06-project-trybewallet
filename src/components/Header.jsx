@@ -5,12 +5,6 @@ import { Link } from 'react-router-dom';
 import trybeWallet from '../pages/trybeWallet.png';
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
   render() {
     const { email, expenses } = this.props;
     return (
@@ -21,14 +15,14 @@ class Header extends React.Component {
         <section data-testid="email-field">{ email }</section>
         <section data-testid="total-field">
           Despesa Total: R$
-          {expenses.reduce((acc, cur) => {
-            const { currency, exchangeRates, value } = cur;
-
+          {expenses.reduce((acc, expense) => {
+            const { currency, exchangeRates, value } = expense;
             const exchangeRate = exchangeRates[currency].ask;
-            const BRL = exchangeRate * value;
-
-            return acc + parseFloat(BRL);
+            const costInBRL = exchangeRate * value;
+            return acc + parseFloat(costInBRL);
           }, 0).toFixed(2)}
+        </section>
+        <section>
           <span data-testid="header-currency-field">{`${'BRL'}`}</span>
         </section>
       </nav>

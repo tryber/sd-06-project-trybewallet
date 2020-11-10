@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCurrencies } from '../actions';
+import { fetchAddCurrency, fetchCurrencies } from '../actions';
 import '../pages/wallet.css';
 
 class Form extends React.Component {
@@ -9,29 +9,31 @@ class Form extends React.Component {
     super(props);
 
     this.state = {
-      value: '',
+      id: '',
+      value: 0,
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
+      exchangeRates: {},
     };
     this.handleChange = this.handleChange.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
+    this.saveExpense = this.saveExpense.bind(this);
   }
 
   componentDidMount() {
-    const { selectCurrencies } = this.props;
-    selectCurrencies();
+    const { setCurrencies } = this.props;
+    setCurrencies();
   }
 
   handleChange({ target }) {
     this.setState({ [target.name]: target.value });
   }
 
-  // handleClick() {
-  //   const { addExpense } = this.props;
-  //   addExpense(this.state);
-  // }
+  async saveExpense() {
+    const { sendExpense } = this.props;
+    sendExpense(this.state);
+  }
 
   render() {
     const { value, description, currency, method, tag } = this.state;
@@ -103,7 +105,7 @@ class Form extends React.Component {
         </label>
         <button
           type="button"
-          onClick={ this.handleClick }
+          onClick={ this.saveExpense }
         >
           Adicionar despesa
         </button>
@@ -118,13 +120,14 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  selectCurrencies: () => dispatch(fetchCurrencies()),
+  setCurrencies: () => dispatch(fetchCurrencies()),
+  sendExpense: (expense) => dispatch(fetchAddCurrency(expense)),
 });
 
 Form.propTypes = {
-  selectCurrencies: PropTypes.func.isRequired,
+  setCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
-  // addExpense: PropTypes.func.isRequired,
+  sendExpense: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

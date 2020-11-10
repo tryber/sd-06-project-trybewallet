@@ -1,6 +1,9 @@
+import fetchAPI from '../services';
+
 export const LOGIN = 'LOGIN';
 export const SELECT_CURRENCY = 'SELECT_CURRENCY';
 export const ADD_EXPENSES = 'ADD_EXPENSES';
+export const FILTERED_EXPENSES = 'FILTERED_EXPENSES';
 
 export const selectCurrencies = (currencies) => ({
   type: SELECT_CURRENCY,
@@ -12,20 +15,33 @@ export const addExpenses = (expenses) => ({
   expenses,
 });
 
+export const filteredExpenses = (expensesFiltered) => (
+  { type: FILTERED_EXPENSES, expensesFiltered }
+);
+
 export const actionLogin = (email) => ({ type: LOGIN, email });
 
 export const fetchCurrencies = () => async (dispatch) => {
-  const responseFromAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
-  const currencies = await responseFromAPI.json();
-  dispatch(selectCurrencies(currencies));
+  const responseFromAPI = await fetchAPI();
+  const currencies = Object.keys(responseFromAPI);
+  const currenciesUSDT = currencies.filter((coin) => coin !== 'USDT');
+  dispatch(selectCurrencies(currenciesUSDT));
 };
 
-// export const fetchAddCurrency = (expense) => async (dispatch, getState) => {
-//   const { wallet: { expenses } } = getState();
-//   const INITIAL_ID = 0;
-//   const nextID = expenses.length ? expenses[expenses.length - 1].id + 1 : INITIAL_ID;
-//   const responseFromAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
-//   const exchangeRates = await responseFromAPI.json();
-//   const newExpense = { id: nextID, ...expense, exchangeRates };
-//   dispatch(addExpense(newExpense));
-// };
+export const fetchAddCurrency = (expense) => async (dispatch, getState) => {
+  const { expenses } = getState().wallet;
+  const firstID = 0;
+  const nextID = expenses.length ? expenses[expenses.length - 1].id + 1 : firstID;
+  const apiRequest = await fetchAPI();
+  const saveExpense = { id: nextID, ...expense, exchangeRates: apiRequest };
+  dispatch(addExpenses(saveExpense));
+};
+
+export function deleteExpense(idExpense) {
+  return (dispatch, getState) => {
+    const { expenses } = getState().wallet;
+    const expensesFiltered = expenses
+      .filter((expense) => expense.id !== idExpense);
+    dispatch(filteredExpenses(expensesFiltered));
+  };
+}
