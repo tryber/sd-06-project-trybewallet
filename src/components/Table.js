@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { deleteExpense } from '../actions';
 
 class Table extends Component {
   constructor(props) {
     super(props);
     this.tBody = this.tBody.bind(this);
+    this.deleteRow = this.deleteRow.bind(this);
 
     this.state = { expenses: props.expenses };
   }
 
   tBody(expense, index) {
     const { currency, description, tag, method, value, exchangeRates, id } = expense;
-    const CURRENCY_DATA = Object.values(exchangeRates).find((coin) => coin.code === currency);
-    console.log(CURRENCY_DATA);
+    const CURRENCY_DATA = Object.values(exchangeRates)
+      .find((coin) => coin.code === currency);
     return (
       <tr
         key={ `${currency}${id}${index}` }
+        id={ `${currency}${id}${index}` }
       >
         <td>{ description }</td>
         <td>{ tag }</td>
@@ -33,7 +36,24 @@ class Table extends Component {
           { CURRENCY_DATA.name }
         </td>
         <td>Real</td>
+        <td>
+          <button
+            data-testid="delete-btn"
+            onClick={ () => this.deleteRow(`${currency}${id}${index}`) }
+            type="button"
+          >
+            Delete
+          </button>
+        </td>
       </tr>);
+  }
+
+  deleteRow(key) {
+    const { eraseExpense } = this.props;
+    // console.log(ROW);
+    eraseExpense(0);
+    document.getElementById(`${key}`).remove();
+    console.log(key);
   }
 
   render() {
@@ -63,6 +83,25 @@ class Table extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({ expenses: state.wallet.expenses });
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
 
-export default connect(mapStateToProps)(Table);
+const mapDispatchToProps = (dispatch) => ({
+  eraseExpense: (id) => dispatch(deleteExpense(id)),
+});
+
+Table.propTypes = {
+  expenses: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+    currency: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    exchangeRates: PropTypes.func.isRequired,
+    total: PropTypes.number.isRequired,
+  }).isRequired,
+  eraseExpense: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

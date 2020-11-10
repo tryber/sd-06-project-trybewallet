@@ -44,8 +44,8 @@ class Form extends React.Component {
   updateAllStates(currencies, id) {
     const { expenses } = this.state;
     const { registerExpense } = this.props;
-    const CURRENCIES_LIST = Object.values(currencies).flat();
-    const RATE = CURRENCIES_LIST.find((coin) => coin.code === expenses.currency).ask;
+    const RATE = Object.values(currencies).flat()
+      .find((coin) => coin.code === expenses.currency).ask;
 
     this.setState(() => ({
       expenses: {
