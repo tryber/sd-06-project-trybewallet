@@ -50,10 +50,6 @@ class Wallet extends React.Component {
           tag: '',
         },
       });
-    } else {
-      this.setState({
-        display: true,
-      });
     }
   }
 
