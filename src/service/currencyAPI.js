@@ -53,7 +53,7 @@ class CurrencySearcher extends React.Component {
   }
 }
 
-Currencies.propTypes = {
+CurrencySearcher.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   name: propTypes.string.isRequired,
