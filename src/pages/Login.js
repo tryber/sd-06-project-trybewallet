@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { emailToState } from '../actions';
+import emailToState from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -113,5 +114,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   emailToStateDispatch: (email, log) => dispatch(emailToState(email, log)),
 });
+
+Login.propTypes = {
+  logState: PropTypes.bool.isRequired,
+  emailToStateDispatch: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
