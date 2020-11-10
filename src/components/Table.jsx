@@ -7,10 +7,10 @@ class Table extends Component {
   constructor() {
     super();
 
-    this.renderTable = this.renderTable.bind(this);
+    this.myTable = this.myTable.bind(this);
   }
 
-  renderTable(expense) {
+  myTable(expense) {
     const {
       id,
       description,
@@ -37,18 +37,6 @@ class Table extends Component {
         <td>{parseFloat(ask).toFixed(2)}</td>
         <td>{convValue}</td>
         <td>Real</td>
-        <td>
-          <button type="button" data-testid="edit-btn">
-            Editar
-          </button>
-          <button
-            type="button"
-            data-testid="delete-btn"
-            onClick={ () => removeExpenses(expense, convValue) }
-          >
-            Excluir
-          </button>
-        </td>
       </tr>
     );
   }
@@ -72,8 +60,8 @@ class Table extends Component {
           </tr>
         </thead>
         <tbody>
-          {expenses.length !== 0
-          && expenses.map((expense) => this.renderTable(expense))}
+          {expenses.length > 0
+          && expenses.map((expense) => this.myTable(expense))}
         </tbody>
       </table>
     );
@@ -84,12 +72,8 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  removeExpenses: (expense, convValue) => dispatch(removeExpense(expense, convValue)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Table);
-
 Table.propTypes = {
   expenses: PropTypes.objectOf().isRequired,
 };
+
+export default connect(mapStateToProps)(Table);
