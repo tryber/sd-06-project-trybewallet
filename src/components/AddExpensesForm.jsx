@@ -61,7 +61,10 @@ class AddExpensesForm extends Component {
     console.log(expense);
 
     const totalExpenses = Math.round(
-      (total + expense.value * expense.exchangeRates[currency].ask) * 100
+      (total
+        + expense.value
+        * expense.exchangeRates[currency].ask)
+        * 100,
     ) / 100;
 
     this.setState(() => ({
