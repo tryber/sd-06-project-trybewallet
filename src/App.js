@@ -9,7 +9,7 @@ function App() {
       Olá mundo cruel
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route exact path="/carteira" component={Wallet} />
+        <Route exact path="/carteira" component={ Wallet } />
       </Switch>
     </div>
   );
