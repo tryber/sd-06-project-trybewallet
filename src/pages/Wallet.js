@@ -24,8 +24,8 @@ const mapStateToProps = (store) => ({
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  currency: PropTypes.string.isRequired,
-  expense: PropTypes.number.isRequired,
+  currency: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  expense: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default connect(mapStateToProps)(Wallet);

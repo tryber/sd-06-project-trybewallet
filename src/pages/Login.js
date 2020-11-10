@@ -111,8 +111,8 @@ const mapDispatchToProps = (dispatch) => ({
 Login.propTypes = {
   // email: PropTypes.string.isRequired,
   sendLogin: PropTypes.func.isRequired,
-  history: propTypes.shape({
-    push: propTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func,
   }).isRequired,
 };
 
