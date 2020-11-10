@@ -58,6 +58,7 @@ class AddExpensesForm extends Component {
       tag,
       exchangeRates: await this.getCurrenciesRate(),
     };
+    console.log(expense);
 
     const totalExpenses = Math.round(
       (total + expense.value * expense.exchangeRates[currency].ask) * 100
