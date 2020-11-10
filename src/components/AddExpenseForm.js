@@ -14,7 +14,7 @@ class AddExpenseForm extends React.Component {
       method: 'Dinheiro',
       tag: 'Alimentação',
       description: '',
-      currentQuote: {},
+      exchangeRates: {},
       // addButton: false,
       // editButton: true,
     };
@@ -35,7 +35,7 @@ class AddExpenseForm extends React.Component {
       method,
       tag,
       description,
-      currentQuote,
+      exchangeRates,
     } = this.state;
     const id = expenses.length;
     const expense = {
@@ -45,7 +45,7 @@ class AddExpenseForm extends React.Component {
       method,
       tag,
       description,
-      currentQuote,
+      exchangeRates,
     };
     sendExpense(expense, total);
   }
@@ -55,18 +55,17 @@ class AddExpenseForm extends React.Component {
     const { currency, value } = this.state;
     await sendCoins();
     let ask = 0;
-    console.log(`currencies: ${Object.keys(currencies)}`);
     Object.keys(currencies).forEach((item) => {
       if (currency === item) {
         console.log(`currencies[item]: ${currencies[item]}`);
         ask = currencies[item].ask;
       }
     });
-    console.log(`ask: ${ask}`);
-    console.log(`Total: ${total}`);
-    this.setState({ currentQuote: currencies });
+    const filteredCurrencies = Object.entries(currencies)
+      .filter(([key]) => key !== 'USDT');
+    console.log(filteredCurrencies);
+    this.setState({ exchangeRates: filteredCurrencies });
     const newTotal = total + (value * ask);
-    console.log(`newTotal: ${newTotal}`);
     this.mountForm(newTotal);
   }
 
@@ -78,7 +77,6 @@ class AddExpenseForm extends React.Component {
   render() {
     const { currencies } = this.props;
     const { value, currency, method, tag, description } = this.state;
-    // const expense = { value, currency, method, tag, description };
     return (
       <div>
         <form action="">
@@ -113,12 +111,12 @@ class AddExpenseForm extends React.Component {
             </select>
           </label>
 
-          <label htmlFor="payMethod-input">
+          <label htmlFor="method-input">
             Método de pagamento
             <select
               name="method"
-              id="payMethod-input"
-              data-testid="payMethod-input"
+              id="method-input"
+              data-testid="method-input"
               value={ method }
               onChange={ (event) => this.handleChange(event) }
             >
