@@ -1,4 +1,5 @@
 import get from '../services/api';
+
 export const SAVE_USER = 'SAVE_USER';
 export const SAVE_WALLET = 'SAVE_WALLET';
 export const REQUEST_RATE = 'REQUEST_RATE';
