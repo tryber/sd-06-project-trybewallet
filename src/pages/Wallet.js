@@ -6,17 +6,16 @@ import Form from '../components/Form';
 class Wallet extends React.Component {
   totalExpenses() {
     const { expenses } = this.props;
-    const numberBasis = 10;
     if (expenses.length !== 0) {
       const total = expenses.reduce((acc, cur) => {
-        acc += parseFloat((parseFloat(cur.value, numberBasis)
-          * parseFloat(cur.exchangeRates[cur.currency].ask, numberBasis)
+        acc += parseFloat((parseFloat(cur.value)
+          * parseFloat(cur.exchangeRates[cur.currency].ask)
             .toFixed(2)).toFixed(2));
         return acc;
       }, 0);
-      return total;
+      return (<span>{ total }</span>);
     }
-    return 0;
+    return (<span>0</span>);
   }
 
   render() {

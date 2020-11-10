@@ -10,6 +10,17 @@ class Form extends React.Component {
     this.tagSelectMount = this.tagSelectMount.bind(this);
     this.paymentSelectMount = this.paymentSelectMount.bind(this);
     this.currencyMount = this.currencyMount.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.submitInfo = this.submitInfo.bind(this);
+
+    this.state = {
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      total: 0,
+    };
   }
 
   componentDidMount() {
@@ -32,8 +43,8 @@ class Form extends React.Component {
   }
 
   paymentSelectMount() {
-    const paymentMethod = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-    paymentMethod.forEach((payment) => {
+    const method = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    method.forEach((payment) => {
       const option = document.createElement('option');
       option.innerHTML = payment;
       const select = document.querySelectorAll('select')[1];
@@ -51,16 +62,9 @@ class Form extends React.Component {
     });
   }
 
-  async checkInfo(event) {
-    event.preventDefault();
-    event.persist();
-    const obj = {};
-    Object.values(event.target).forEach((input) => {
-      if (input.name !== undefined && input.name !== '') {
-        obj[input.name] = input.value;
-      }
-    });
-
+  async submitInfo(e) {
+    e.preventDefault();
+    const obj = { ...this.state };
     const currencyFetch = await fetch('https://economia.awesomeapi.com.br/json/all');
     const currencyJson = await currencyFetch.json();
     const exchangesArray = Object.values(currencyJson)
@@ -76,22 +80,58 @@ class Form extends React.Component {
     registerExpense(obj);
   }
 
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  }
+
   render() {
+    const { value, description, method,
+      tag, currency } = this.state;
     return (
       <div>
-        <form onSubmit={ (e) => this.checkInfo(e) }>
-          <input data-testid="value-input" type="number" name="value" placeholder="0" />
-          <input data-testid="description-input" type="text" name="description" />
-          <select data-testid="currency-input" name="currency">
+        <form>
+          <input
+            data-testid="value-input"
+            type="number"
+            name="value"
+            step="0.01"
+            min="0"
+            value={ value }
+            onChange={ this.handleChange }
+          />
+          <input
+            data-testid="description-input"
+            type="text"
+            name="description"
+            value={ description }
+            onChange={ this.handleChange }
+          />
+          <select
+            data-testid="currency-input"
+            name="currency"
+            value={ currency }
+            onChange={ this.handleChange }
+          >
             {' '}
           </select>
-          <select data-testid="method-input" name="method">
+          <select
+            data-testid="method-input"
+            name="method"
+            value={ method }
+            onChange={ this.handleChange }
+          >
             {' '}
           </select>
-          <select data-testid="tag-input" name="tag">
+          <select
+            data-testid="tag-input"
+            name="tag"
+            value={ tag }
+            onChange={ this.handleChange }
+          >
             {' '}
           </select>
-          <button type="submit">Adicionar Despesa</button>
+          <button type="submit" onClick={ this.submitInfo }>Adicionar Despesa</button>
         </form>
         <Table />
       </div>
