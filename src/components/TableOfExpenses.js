@@ -3,29 +3,46 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class TableOfExpenses extends Component {
+
   render() {
     const { expenses } = this.props;
+    console.log(expenses);
     return (
       <table>
         <thead>
           <tr>
+            <th>Descrição</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
             <th>Valor</th>
             <th>Moeda</th>
-            <th>Pagamento</th>
-            <th>Tag</th>
-            <th>Descrição</th>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+            <th>Editar/Excluir</th>
           </tr>
         </thead>
         <tbody>
-          {expenses.map((element, index) => (
-            <tr key={ index }>
-              <td>{element.value}</td>
-              <td>{element.currency}</td>
-              <td>{element.method}</td>
-              <td>{element.tag}</td>
-              <td>{element.description}</td>
-            </tr>
-          ))}
+          {expenses.map((element, index) => {
+            const roundValue = (value) => Math.round(value * 100) / 100;
+            return (
+              <tr key={ index }>
+                <td>{element.description}</td>
+                <td>{element.tag}</td>
+                <td>{element.method}</td>
+                <td>{element.value}</td>
+                <td>{element.exchangeRates[element.currency].name}</td>
+                <td>{roundValue(element.exchangeRates[element.currency].ask)}</td>
+                <td>
+                  {
+                    roundValue(
+                      element.value * element.exchangeRates[element.currency].ask,
+                    )
+                  }
+                </td>
+                <td>Real</td>
+              </tr>);
+          })}
         </tbody>
       </table>
     );
