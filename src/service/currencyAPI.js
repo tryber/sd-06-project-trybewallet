@@ -9,10 +9,7 @@ class CurrencySearcher extends React.Component {
       currencies: [],
     };
   }
-  // https://economia.awesomeapi.com.br/json/all
-  // https://www.dnd5eapi.co/api/classes
 
-  // https://economia.awesomeapi.com.br/json/all
   componentDidMount() {
     fetch('https://economia.awesomeapi.com.br/json/all')
       .then((response) => response.json())
