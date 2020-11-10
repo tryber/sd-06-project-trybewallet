@@ -10,8 +10,8 @@ class Wallet extends Component {
     super();
     this.handleApi = this.handleApi.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.storeExpenses = this.storeExpenses.bind(this);
-    this.totalExpenses = this.totalExpenses.bind(this);
+    this.storeExp = this.storeExp.bind(this);
+    this.totalExp = this.totalExp.bind(this);
     this.state = {
       currencies: [],
       expenses: {
@@ -29,7 +29,7 @@ class Wallet extends Component {
     this.handleApi();
   }
 
-  totalExpenses() {
+  totalExp() {
     const { expenses } = this.props;
     let sum = 0;
     expenses.forEach((expense) => {
@@ -54,7 +54,7 @@ class Wallet extends Component {
     });
   }
 
-  storeExpenses() {
+  storeExp() {
     const { saveExpenses } = this.props;
     const { expenses } = this.state;
     saveExpenses(expenses);
@@ -64,7 +64,7 @@ class Wallet extends Component {
   }
 
   render() {
-    const sum = this.totalExpenses();
+    const sum = this.totalExp();
     const { currencies, expenses: { value, description } } = this.state;
     const cSelect = currencies.map((currencie) => (
       <option key={ currencie } data-testid={ currencie } value={ currencie }>
@@ -160,7 +160,7 @@ class Wallet extends Component {
             </label>
             <button
               type="button"
-              onClick={ () => this.storeExpenses() }
+              onClick={ () => this.storeExp() }
             >
               Adicionar despesa
             </button>
