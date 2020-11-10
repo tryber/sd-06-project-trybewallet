@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchData, newExpense, deleteData } from '../actions';
+import { fetchData, newExpense } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -16,6 +16,7 @@ class Wallet extends React.Component {
         method: '',
         tag: '',
       },
+      display: false,
     };
   }
 
@@ -35,15 +36,12 @@ class Wallet extends React.Component {
     });
   }
 
-  addExpense() {
+  async addExpense() {
     const { saveFields } = this.props;
     const { expense } = this.state;
     const { value, currency } = expense;
-    if (
-      value !== ''
-      && currency !== ''
-    ) {
-      saveFields(expense);
+    if ( value !== '' && currency !== '') {
+      await saveFields(expense);
       this.setState({
         expense: {
           value: '',
@@ -52,6 +50,10 @@ class Wallet extends React.Component {
           method: '',
           tag: '',
         },
+      });
+    } else {
+      this.setState({
+        display: true,
       });
     }
   }
@@ -64,7 +66,9 @@ class Wallet extends React.Component {
       'Tag', 'Método de pagamento', 'Valor', 'Moeda', 'Câmbio utilizado',
       'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
 
-    const expensesSum = 0;
+    const expensesSum = expenses
+      .reduce(((acc, curr) => acc + parseFloat((curr
+        .exchangeRates[curr.currency].ask * curr.value).toFixed(2))), 0);
 
     return (
       <div>
@@ -90,7 +94,7 @@ class Wallet extends React.Component {
             name="value"
             data-testid="value-input"
             value={ value }
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
           />
           Moeda:
           <select
@@ -161,7 +165,7 @@ class Wallet extends React.Component {
                   <td>{ exp.tag }</td>
                   <td>{ exp.method }</td>
                   <td>{ exp.value }</td>
-                  <td>{ exp.exchangeRates[exp.currency].name}</td>
+                  <td>{ exp.exchangeRates[exp.currency].name }</td>
                   <td>
                     { (parseFloat(exp.exchangeRates[exp.currency].ask)).toFixed(2) }
                   </td>
@@ -198,7 +202,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   saveFields: (expense) => dispatch(newExpense(expense)),
   fetchCurrencyData: () => dispatch(fetchData()),
-  deleteDataField: (expense) => dispatch(deleteData(expense)),
 });
 
 Wallet.propTypes = {
@@ -207,7 +210,6 @@ Wallet.propTypes = {
   fetchCurrencyData: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
   saveFields: PropTypes.func.isRequired,
-  deleteDataField: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
