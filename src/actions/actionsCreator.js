@@ -1,6 +1,7 @@
 export const LOGIN = 'LOGIN';
 export const TOTAL_EXPENSES = 'TOTAL_EXPENSES';
 export const CURRENCY = 'CURRENCY';
+export const CREATE_EXPENSE = 'CREATE_EXPENSE';
 
 export function user({ email }) {
   return {
@@ -10,20 +11,35 @@ export function user({ email }) {
     },
   };
 }
-export function expensesReducer({ totalExpenses }) {
+
+function expenseUpdater({ value, description, currency, method, tag, exchangeRates }) {
   return {
-    type: TOTAL_EXPENSES,
+    type: CREATE_EXPENSE,
     payload: {
-      totalExpenses,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates,
     },
   };
 }
 
-export function currencyReducer({ currency }) {
-  return {
-    type: CURRENCY,
-    payload: {
-      currency,
-    },
-  };
+export function updateExpenses({ value, description, currency, method, tag }) {
+  return (
+    async (dispatch) => {
+      const endpoint = 'https://economia.awesomeapi.com.br/json/all';
+      const fetchEndpoint = await fetch(endpoint);
+      const exchangeRates = await fetchEndpoint.json();
+      dispatch(expenseUpdater({
+        value,
+        description,
+        currency,
+        method,
+        tag,
+        exchangeRates,
+      }));
+    }
+  );
 }

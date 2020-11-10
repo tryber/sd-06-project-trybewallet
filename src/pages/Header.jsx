@@ -7,21 +7,35 @@ class Header extends React.Component {
     super(props);
 
     this.state = {
-      totalExpenses: 0,
       currency: 'BRL',
     };
+
+    this.headerExpenses = this.headerExpenses.bind(this);
+  }
+
+  headerExpenses() {
+    const { expenses } = this.props;
+
+    const totalExpenses = expenses.reduce((acc, expense) => {
+      const { value, exchangeRates, currency } = expense;
+      const convertedValue = (value * exchangeRates[currency].ask);
+
+      return acc + convertedValue;
+    }, 0);
+    return totalExpenses;
   }
 
   render() {
-    const { totalExpenses, currency } = this.state;
+    const { currency } = this.state;
     const { email } = this.props;
+
     return (
       <div>
         <span data-testid="email-field">
           {email}
         </span>
         <span data-testid="total-field">
-          {totalExpenses}
+          { this.headerExpenses() }
         </span>
         <span data-testid="header-currency-field">
           {currency}
@@ -33,10 +47,13 @@ class Header extends React.Component {
 function mapStateToProps(state) {
   return {
     email: state.user.email,
+    expenses: state.wallet.expenses,
   };
 }
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  reduce: PropTypes.func.isRequired,
+  expenses: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, null)(Header);

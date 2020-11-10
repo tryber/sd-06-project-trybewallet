@@ -1,15 +1,35 @@
-import { TOTAL_EXPENSES, CURRENCY } from '../actions/actionsCreator';
+import { CREATE_EXPENSE } from '../actions/actionsCreator';
 
 const INITIAL_STATE = {
-  totalExpenses: 0,
+  currencies: [],
+  expenses: [],
 };
+
+function handleNewExpense(state, action) {
+  const { value, description, currency, method, tag, exchangeRates } = action.payload;
+
+  const { expenses } = state;
+  const id = expenses.length;
+
+  const newExpense = {
+    id,
+    value,
+    description,
+    currency,
+    method,
+    tag,
+    exchangeRates,
+  };
+
+  const updatedExpenses = [...expenses, newExpense];
+
+  return { ...state, expenses: updatedExpenses };
+}
 
 export default function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case TOTAL_EXPENSES:
-    return { ...state, ...action.payload };
-  case CURRENCY:
-    return { ...state, ...action.payload };
+  case CREATE_EXPENSE:
+    return handleNewExpense(state, action);
   default:
     return state;
   }
