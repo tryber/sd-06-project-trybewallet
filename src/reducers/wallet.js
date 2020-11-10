@@ -4,10 +4,6 @@ import { SAVE_EXPENSE, DELETE_EXPENSE, EDIT_EXPENSE } from '../actions';
 const initialState = {
   currencies: [],
   expenses: [],
-  edit: {
-    isEditing: false,
-    expense: {},
-  },
 };
 
 function wallet(state = initialState,
@@ -20,11 +16,18 @@ function wallet(state = initialState,
   case DELETE_EXPENSE:
     return {
       ...state,
-      expenses: [...state.expenses.filter((expense) => expense !== expenseToRemove)] };
+      expenses: [
+        ...state.expenses.filter((expense) => expense.id !== expenseToRemove.id)] };
   case EDIT_EXPENSE:
     return {
       ...state,
-      edit: { ...state.edit, isEditing: true, expense: expenseToEdit } };
+      expenses: state.expenses.map((expense) => {
+        if (expense.id === expenseToEdit.id) {
+          return expenseToEdit;
+        }
+        return expense;
+      }),
+    };
   default:
     return state;
   }

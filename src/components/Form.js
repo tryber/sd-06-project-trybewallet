@@ -87,10 +87,9 @@ class Form extends Component {
             <option value="Saúde">Saúde</option>
           </select>
         </label>
-        {isEditing ? (<button type="button">Editar despesa</button>) : (
-          <button type="button" onClick={ saveExpensesToStore }>
-            Adicionar despesa
-          </button>)}
+        <button type="button" onClick={ saveExpensesToStore }>
+          {isEditing ? 'Editar despesa' : 'Adicionar despesa'}
+        </button>
       </form>
     );
   }

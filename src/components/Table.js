@@ -33,7 +33,7 @@ class Table extends Component {
                 <td>{expense.method}</td>
                 <td>{expense.value}</td>
                 <td>{exchanteRate.name}</td>
-                <td>{roundValue(exchanteRate.ask)}</td>
+                <td>{roundValue(exchanteRate.ask).toFixed(2)}</td>
                 <td>{roundValue(expense.value * exchanteRate.ask)}</td>
                 <td>Real</td>
                 <td>
@@ -75,4 +75,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(Table);
 Table.propTypes = {
   deleteExpenseFromStore: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleEditClick: PropTypes.func.isRequired,
 };

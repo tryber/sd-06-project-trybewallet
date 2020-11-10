@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Form from '../components/Form';
 import Table from '../components/Table';
 import awesomeAPI from '../services/awesomeAPI';
-import { fetchExchangeRatesAndStoreExpenses } from '../actions';
+import { deleteExpense, editExpense, fetchExchangeRatesAndStoreExpenses } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -20,6 +20,7 @@ class Wallet extends React.Component {
         method: 'Dinheiro',
         tag: 'Alimentação',
       },
+      expensesBeforeEdit: {},
     };
 
     this.getCurrencies = this.getCurrencies.bind(this);
@@ -49,27 +50,32 @@ class Wallet extends React.Component {
   }
 
   saveExpensesToStore() {
-    const { expenses } = this.state;
-    const { saveExpenses } = this.props;
-    saveExpenses(expenses);
-    this.setState((prevState) => ({
-      expenses: {
-        ...prevState.expenses,
-        id: prevState.expenses.id + 1,
-        value: 0,
-        description: '',
-        currency: 'USD',
-        method: 'Dinheiro',
-        tag: 'Alimentação',
-      },
-    }));
+    const { expenses, isEditing, expensesBeforeEdit } = this.state;
+    const { saveExpenses, editExpenseFromStore } = this.props;
+    if (isEditing) {
+      editExpenseFromStore(expenses);
+      this.setState({ expenses: expensesBeforeEdit, isEditing: false });
+    } else {
+      saveExpenses(expenses);
+      this.setState((prevState) => ({
+        expenses: {
+          ...prevState.expenses,
+          id: prevState.expenses.id + 1,
+          value: 0,
+          description: '',
+          currency: 'USD',
+          method: 'Dinheiro',
+          tag: 'Alimentação',
+        },
+      }));
+    }
   }
 
   handleEditClick(expense) {
     const { expenses } = this.state;
-    const oldState = expenses;
     this.setState({
       isEditing: true,
+      expensesBeforeEdit: expenses,
       expenses: {
         id: expense.id,
         value: expense.value,
@@ -79,7 +85,6 @@ class Wallet extends React.Component {
         tag: expense.tag,
       },
     });
-    console.log(oldState);
   }
 
   updateTotalValue() {
@@ -128,6 +133,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   saveExpenses: (expenses) => dispatch(fetchExchangeRatesAndStoreExpenses(expenses)),
+  editExpenseFromStore: (expense) => dispatch(editExpense(expense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
@@ -135,4 +141,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  saveExpenses: PropTypes.func.isRequired,
+  deleteExpenseFromStore: PropTypes.func.isRequired,
 };
