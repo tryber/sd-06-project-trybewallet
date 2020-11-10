@@ -50,7 +50,6 @@ class Table extends Component {
 
   deleteRow(key) {
     const { eraseExpense } = this.props;
-    // console.log(ROW);
     eraseExpense(0);
     document.getElementById(`${key}`).remove();
     console.log(key);

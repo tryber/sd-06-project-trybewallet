@@ -33,7 +33,8 @@ class Form extends React.Component {
       { ...prev.expenses, currency: selectedCurrency } }));
   }
 
-  async handleSubmit() {
+  async handleSubmit(event) {
+    event.preventDefault();
     const { expenses } = this.props;
     const EXPENSES_LENGTH = Object.keys(expenses).length;
     const NEXT_ID = EXPENSES_LENGTH || 0;
@@ -44,8 +45,10 @@ class Form extends React.Component {
   updateAllStates(currencies, id) {
     const { expenses } = this.state;
     const { registerExpense } = this.props;
-    const RATE = Object.values(currencies).flat()
-      .find((coin) => coin.code === expenses.currency).ask;
+    console.log(currencies);
+    const RATE = currencies[expenses.currency]
+    // const RATE = Object.values(currencies).flat()
+      // .find((coin) => coin.code === expenses.currency).ask;
 
     this.setState(() => ({
       expenses: {
@@ -145,7 +148,7 @@ class Form extends React.Component {
           </label>
           <br />
           <button
-            onClick={ () => this.handleSubmit() }
+            onClick={ (e) => this.handleSubmit(e) }
             type="submit"
           >
             Adicionar Despesa
