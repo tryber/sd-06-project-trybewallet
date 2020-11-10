@@ -9,12 +9,13 @@ import {
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  total: 0,
 };
 
 function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case ADD_EXPENSE:
-    return { ...state, expenses: action.expense };
+    return { ...state, expenses: [action.expense], total: action.total };
   case REMOVE_EXPENSE:
     return { ...state, expenses: [] };
   case EDIT_EXPENSE:

@@ -14,9 +14,10 @@ export const addEmail = (email) => ({
 });
 
 // Expenses ##########
-export const addExpense = (expense) => ({
+export const addExpense = (expense, total) => ({
   type: ADD_EXPENSE,
   expense,
+  total,
 });
 
 export const removeExpense = (expense) => ({

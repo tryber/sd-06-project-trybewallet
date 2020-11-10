@@ -6,8 +6,8 @@ import Logo from '../pages/images/logo-trybe.png';
 
 class Header extends React.Component {
   render() {
-    const INITIAL_VALUE = 0;
-    const { email } = this.props;
+    const { email, total } = this.props;
+    const INITIAL_VALUE = (zeroTotal = 0) => zeroTotal;
     return (
       <div>
         <header className="header-wallet">
@@ -19,7 +19,7 @@ class Header extends React.Component {
             </p>
             <p className="expense-box">
               <strong>Despesa total: </strong>
-              <span data-testid="total-field">{ INITIAL_VALUE }</span>
+              <span data-testid="total-field">{ INITIAL_VALUE(total) }</span>
               <span data-testid="header-currency-field">BRL</span>
             </p>
           </div>
@@ -31,10 +31,13 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  value: state.wallet.expenses.value,
+  total: state.wallet.total,
 });
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  total: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);
