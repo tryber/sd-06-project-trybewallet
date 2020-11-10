@@ -7,15 +7,12 @@ const initialState = {
 
 export default function wallet(state = initialState, action) {
   switch (action.type) {
-  
   case GET_DATA:
     return { ...state, currencies: Object.keys(action.json).filter((c) => c !== 'USDT') };
-
   case SAVE_EXPENSES:
     return { ...state,
       expenses: [...state.expenses, action.expense],
     };
-
   default:
     return state;
   }

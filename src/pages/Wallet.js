@@ -16,7 +16,6 @@ class Wallet extends React.Component {
         method: '',
         tag: '',
       },
-      display: false,
     };
   }
 
@@ -40,7 +39,7 @@ class Wallet extends React.Component {
     const { saveFields } = this.props;
     const { expense } = this.state;
     const { value, currency } = expense;
-    if ( value !== '' && currency !== '') {
+    if (value !== '' && currency !== '') {
       await saveFields(expense);
       this.setState({
         expense: {
@@ -59,7 +58,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, expenses, currencies, deleteDataField } = this.props;
+    const { email, expenses, currencies } = this.props;
     const { expense } = this.state;
     const { value, currency, method, tag, description } = expense;
     const tabela = ['Descrição',
@@ -94,7 +93,7 @@ class Wallet extends React.Component {
             name="value"
             data-testid="value-input"
             value={ value }
-            onChange={this.handleChange}
+            onChange={ this.handleChange }
           />
           Moeda:
           <select
@@ -177,7 +176,6 @@ class Wallet extends React.Component {
                     <button
                       type="button"
                       data-testid="delete-btn"
-                      onClick={ () => deleteDataField(exp.id) }
                     >
                       Deletar
                     </button>
