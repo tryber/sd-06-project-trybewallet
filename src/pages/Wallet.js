@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 class Wallet extends React.Component {
   render() {
-    const { email, currency, expense } = this.props; 
+    const { email, currency, expense } = this.props;
     return (
       <div>
         TrybeWallet
@@ -26,6 +26,6 @@ Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   currency: PropTypes.string.isRequired,
   expense: PropTypes.number.isRequired,
-}
+};
 
 export default connect(mapStateToProps)(Wallet);

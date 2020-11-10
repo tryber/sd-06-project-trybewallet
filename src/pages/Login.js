@@ -77,11 +77,11 @@ class Login extends React.Component {
               if (valid.length >= count) {
                 this.setState({
                   validPassword: 'OK',
-                })
+                });
               } else {
                 this.setState({
                   validPassword: '',
-                }),
+                });
               }
               this.handleChange(e);
             } }
@@ -100,10 +100,10 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   email: state.user.email,
 });
-
+// (param) => dispatch(action(param))
 const mapDispatchToProps = (dispatch) => ({
   sendLogin: (email) => dispatch(saveLogin(email)),
 });
