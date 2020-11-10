@@ -1,77 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import awesomeAPI from '../services/awesomeAPI';
-import { fetchExchangeRatesAndStoreExpenses } from '../actions';
 
 class Form extends Component {
-  constructor() {
-    super();
-    this.state = {
-      currencyList: [],
-      expenses: {
-        id: 0,
-        value: 0,
-        description: '',
-        currency: '',
-        method: '',
-        tag: '',
-      },
-    };
-
-    this.getCurrencies = this.getCurrencies.bind(this);
-    this.saveToState = this.saveToState.bind(this);
-    this.saveExpensesToStore = this.saveExpensesToStore.bind(this);
-    this.editState = this.editState.bind(this);
-  }
-
-  componentDidMount() {
-    this.getCurrencies();
-    const { edit } = this.props;
-
-    if (edit.isEditing) this.editState();
-  }
-
-  async getCurrencies() {
-    const data = await awesomeAPI();
-    const currencyList = Object.keys(data);
-    const { expenses } = this.state;
-    this.setState({
-      currencyList,
-      expenses: { ...expenses } });
-  }
-
-  saveToState(target) {
-    const { expenses } = this.state;
-    this.setState({
-      expenses: { ...expenses, [target.name]: target.value },
-    });
-  }
-
-  saveExpensesToStore(data) {
-    const { saveExpenses } = this.props;
-    saveExpenses(data);
-    this.setState((prevState) => ({
-      expenses: {
-        ...prevState.expenses,
-        id: prevState.expenses.id + 1,
-        value: 0,
-      },
-    }));
-  }
-
-  editState(target) {
-    const { edit } = this.props;
-    const { expenses } = this.state;
-    const oldState = expenses;
-    this.setState({
-      expenses: edit.expense,
-    });
-    console.log('oldState');
-  }
-
   render() {
-    const { currencyList, expenses } = this.state;
+    const {
+      currencyList,
+      expenses,
+      handleChange,
+      saveExpensesToStore,
+      isEditing } = this.props;
 
     return (
       <form className="form">
@@ -83,7 +20,7 @@ class Form extends Component {
             id="value-input"
             value={ expenses.value }
             name="value"
-            onChange={ (e) => this.saveToState(e.target) }
+            onChange={ (e) => handleChange(e.target) }
           />
         </label>
         <label htmlFor="description-input">
@@ -91,9 +28,10 @@ class Form extends Component {
           <input
             data-testid="description-input"
             id="description-input"
+            value={ expenses.description }
             type="text"
             name="description"
-            onChange={ (e) => this.saveToState(e.target) }
+            onChange={ (e) => handleChange(e.target) }
           />
         </label>
         <label htmlFor="currency-input">
@@ -101,11 +39,10 @@ class Form extends Component {
           <select
             data-testid="currency-input"
             id="currency-input"
+            value={ expenses.currency }
             name="currency"
-            onChange={ (e) => this.saveToState(e.target) }
-            defaultValue="DEFAULT"
+            onChange={ (e) => handleChange(e.target) }
           >
-            <option disabled value="DEFAULT"> -- Moeda -- </option>
             {currencyList.map((currency) => {
               if (currency === 'USDT') return;
               return (
@@ -124,11 +61,10 @@ class Form extends Component {
           <select
             data-testid="method-input"
             name="method"
-            defaultValue="DEFAULT"
             id="method-input"
-            onChange={ (e) => this.saveToState(e.target) }
+            value={ expenses.method }
+            onChange={ (e) => handleChange(e.target) }
           >
-            <option disabled value="DEFAULT"> -- Método de pagamento -- </option>
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
             <option value="Cartão de débito">Cartão de débito</option>
@@ -139,11 +75,11 @@ class Form extends Component {
           <select
             data-testid="tag-input"
             name="tag"
-            defaultValue="DEFAULT"
+            defaultValue="Alimentação"
             id="tag-input"
-            onChange={ (e) => this.saveToState(e.target) }
+            value={ expenses.tag }
+            onChange={ (e) => handleChange(e.target) }
           >
-            <option disabled value="DEFAULT"> -- Categoria -- </option>
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
             <option value="Trabalho">Trabalho</option>
@@ -151,21 +87,27 @@ class Form extends Component {
             <option value="Saúde">Saúde</option>
           </select>
         </label>
-        <button type="button" onClick={ () => this.saveExpensesToStore(expenses) }>
-          Adicionar despesa
-        </button>
+        {isEditing ? (<button type="button">Editar despesa</button>) : (
+          <button type="button" onClick={ saveExpensesToStore }>
+            Adicionar despesa
+          </button>)}
       </form>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  edit: state.wallet.edit,
-});
+export default Form;
 
-const mapDispatchToProps = (dispatch) => ({
-  saveExpenses: (expenses) => dispatch(fetchExchangeRatesAndStoreExpenses(expenses)) });
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
-
-Form.propTypes = { saveExpenses: PropTypes.func.isRequired };
+Form.propTypes = {
+  currencyList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  expenses: PropTypes.shape({
+    currency: PropTypes.string,
+    description: PropTypes.string,
+    method: PropTypes.string,
+    tag: PropTypes.string,
+    value: PropTypes.number,
+  }).isRequired,
+  handleChange: PropTypes.func.isRequired,
+  isEditing: PropTypes.bool.isRequired,
+  saveExpensesToStore: PropTypes.func.isRequired,
+};
