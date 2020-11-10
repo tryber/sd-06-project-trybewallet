@@ -18,3 +18,5 @@ ReactDOM.render(
 );
 
 serviceWorker.unregister();
+
+/* Obrigado https://github.com/marioduartedev pela ajuda no projeto!  */
