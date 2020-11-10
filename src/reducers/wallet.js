@@ -14,8 +14,7 @@ function wallet(state = INITIAL_STATE, action) {
   case 'deleteExpense':
     return {
       ...state,
-      expenses: [...state.expenses]
-        .splice(state.expenses.indexOf(action.payload.expense), action.payload.expense),
+      expenses: state.expenses.filter((e) => e.id !== action.payload.expense.id),
     };
   default:
     return state;
