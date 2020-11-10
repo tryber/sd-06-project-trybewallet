@@ -24,14 +24,6 @@ class Wallet extends React.Component {
     });
   }
 
-  //  "id": 0,
-  //       "value": "3",
-  //       "description": "Hot Dog",
-  //       "currency": "USD",
-  //       "method": "Dinheiro",
-  //       "tag": "Alimentação",
-  //       "exchangeRates":
-
   componentDidMount() {
     this.requestCurrencys();
   }
@@ -44,9 +36,10 @@ class Wallet extends React.Component {
     });
     if (input === 'currency') {
       const curName = currencys.filter((curren) => curren.code === event.target.value)
-        .flatMap((curName) => curName.name);
-      console.log(curName);
-      this.setState({ form: { ...form, currencyName: curName[0], [input]: event.target.value } });
+        .flatMap((currName) => currName.name);
+      this.setState({ form:
+        { ...form, currencyName: curName[0], [input]: event.target.value },
+      });
     }
   }
 
@@ -63,11 +56,11 @@ class Wallet extends React.Component {
   handleSubmit(event) {
     const { form, currencys } = this.state;
     const { value, currency } = form;
-    const { fetchCurrency } = this.props;
+    const { fetchCurrency: fetchCambio } = this.props;
     const totalAsk = currencys.filter((curren) => curren.code === currency)
       .map((cur) => cur.ask);
     event.preventDefault();
-    fetchCurrency(form);
+    fetchCambio(form);
     this.setState((prevState) => ({
       total: prevState.total + (Number(value) * totalAsk),
       form: {
@@ -82,7 +75,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, fetchCurrency, expenses, currencies } = this.props;
+    const { email, expenses, currencies } = this.props;
     const { total, currencys, form: { value } } = this.state;
 
     return (
@@ -261,6 +254,9 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  fetchCurrency: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = (state) => ({

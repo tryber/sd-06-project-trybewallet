@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-class table extends Component {
+class Table extends Component {
   render() {
-    const { expenses, currencysName } = this.props;
+    const { expenses } = this.props;
     console.log(expenses);
     return (
       <div>
@@ -48,4 +49,8 @@ class table extends Component {
   }
 }
 
-export default table;
+Table.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default Table;
