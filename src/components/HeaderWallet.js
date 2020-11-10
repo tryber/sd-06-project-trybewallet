@@ -1,8 +1,8 @@
 import React from 'react';
-import '../css/Wallet.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import logo from '../images/logo.png';
+import '../css/Wallet.css';
 
 // Esse é o arquivo de header em que estão presentes o email vindo do estado global,
 // o valor total calculado na função abaixo, e a moeda de referência.
@@ -22,7 +22,7 @@ class HeaderWallet extends React.Component {
       .reduce((accumulator, current) => accumulator + parseFloat((current
         .exchangeRates[current.currency].ask * current.value)), 0);
 
-    return total;
+    return total.toFixed(2);
   }
 
   render() {

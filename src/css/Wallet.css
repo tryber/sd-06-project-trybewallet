@@ -58,37 +58,15 @@ span {
     background: linear-gradient(90deg, whitesmoke 0%, whitesmoke  15%, whitesmoke  100%);
 }
 
-.header-expenses {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    border: 1px solid black;
-    background-color: whitesmoke;
 
-}
-
-.header-expenses th {
+.expenses th,
+.expenses td {
     font-size: 1.8vw;
     padding-left: 10px;
 }
 
-.table-expenses {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-}
-
-.table-expenses td {
-    font-size: 1.8vw;
-    padding-right: 50px;
-}
-
-td.edit {
-    padding-right: 0;
-}
-
+td.edit,
 td.remove {
-    padding-right: 0;
+    margin: 0;
+    padding: 0;
 }

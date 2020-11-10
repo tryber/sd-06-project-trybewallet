@@ -12,7 +12,7 @@ class TableWallet extends React.Component {
 
     return (
       <div>
-        <table className="header-expenses">
+        <table className="expenses">
           <thead>
             <tr>
               <th>Descrição</th>
@@ -23,11 +23,10 @@ class TableWallet extends React.Component {
               <th>Câmbio utilizado</th>
               <th>Valor convertido</th>
               <th>Moeda de conversão</th>
-              <th>Editar/Excluir</th>
+              <th>Editar</th>
+              <th>Excluir</th>
             </tr>
           </thead>
-        </table>
-        <table className="table-expenses">
           <tbody>
             {expenses.map((exp) => (
               <tr key={ exp.currency }>

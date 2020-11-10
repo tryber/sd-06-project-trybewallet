@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../css/Wallet.css';
 import { connect } from 'react-redux';
 import { addExpenseThunk, fetchCurrencies } from '../actions';
+import '../css/Wallet.css';
 
 // Esse é o arquivo de formulário em que estão todas as opções de filtro.
 
