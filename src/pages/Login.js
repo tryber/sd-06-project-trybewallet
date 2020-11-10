@@ -1,5 +1,5 @@
 import React from 'react';
-// import { PropTypes } from "prop-types";
+import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { saveLogin } from '../actions';
 
@@ -56,12 +56,12 @@ class Login extends React.Component {
               if (valid === true) {
                 this.setState({
                   email: e.target.value,
-                  validEmail: 'OK',
+                  valEmail: 'OK',
                 });
               } else {
                 this.setState({
                   email: e.target.value,
-                  validEmail: '',
+                  valEmail: '',
                 });
               }
             } }
@@ -107,6 +107,14 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   sendLogin: (email) => dispatch(saveLogin(email)),
 });
+
+Login.propTypes = {
+  // email: PropTypes.string.isRequired,
+  sendLogin: PropTypes.func.isRequired,
+  history: propTypes.shape({
+    push: propTypes.func,
+  }).isRequired,
+};
 
 export default connect(
   mapStateToProps,
