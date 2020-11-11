@@ -48,7 +48,7 @@ class Login extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const { email } = this.state;
-    const { history, sendLogin } = this.props;
+    const { sendLogin } = this.props;
     sendLogin(email);
     // history.push('/carteira');
   }

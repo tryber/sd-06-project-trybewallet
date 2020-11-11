@@ -5,8 +5,8 @@ export const login = (email) => ({
   email,
 });
 // suas actions , poderia ser payload no lugar
-// de email pois traz esse valor consigo, o email e o 
-// nome da chave e dentro tem o valor email o que determina 
+// de email pois traz esse valor consigo, o email e o
+// nome da chave e dentro tem o valor email o que determina
 // é a propriedade mandada, como foi o mesmo nome ficou só um email)1:10)
 // action é um objeto com a propriedade type e qualquer outro tipo de valor que queira passar aqui
 // As actionCreate são funções que retornam um objeto
