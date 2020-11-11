@@ -1,116 +1,113 @@
-/* eslint-disable react/no-unused-state */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import login from '../actions';
+import { Link } from 'react-router-dom';
+import { login } from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
 
     this.state = {
+      btnDisable: true,
       email: '',
       senha: '',
-      isValid: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
   }
 
   handleInput({ target: { name, value } }) {
-    this.setState({
-      [name]: value,
-    }, () => this.validateInputs());
+    this.setState(
+      {
+        [name]: value,
+      },
+      () => this.validateInputs(),
+    );
   }
 
   validateInputs() {
-    const { email, senha } = this.state;
+    const email = document.getElementById('email-input').value;
+    const senha = document.getElementById('password-input').value;
     const regex = /^\w+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$/;
-    const magicNumber = 6;
-    if (senha.length >= magicNumber && regex.test(email)) {
+    const tamMinimSenha = 6;
+    if (senha.length === tamMinimSenha && regex.test(email)) {
       this.setState({
-        isValid: true,
+        btnDisable: false,
+        email,
+        senha,
+      });
+      console.log('esta funcionando');
+    } else {
+      this.setState({
+        btnDisable: true,
       });
     }
   }
 
-  handleSubmit() {
-    const { login } = this.props;
+  handleSubmit(e) {
+    e.preventDefault();
     const { email } = this.state;
-    login(email);
-  }
-
-  renderInputEmail() {
-    const { email } = this.state;
-    return (
-      <div>
-        <label htmlFor="email">
-          Email
-          <input
-            data-testid="email-input"
-            type="text"
-            className="validate"
-            value={ email }
-            onChange={ this.handleInput }
-          />
-          <br />
-        </label>
-      </div>
-    );
-  }
-
-  renderInputPassword() {
-    return (
-      <div>
-        <label htmlFor="password">
-          senha
-          <input
-            data-testid="password-input"
-            type="password"
-            className="validate"
-            value={ password }
-            onClick={ this.handleInput }
-          />
-        </label>
-      </div>
-    );
-  }
-
-  renderButtonEntrar() {
-    return (
-      <div>
-        <button
-          type="submit"
-          disabled={ !isValid }
-          onClick={ this.handleSubmit }
-        >
-          Entrar
-        </button>
-        <Link to="/wallet">Logging</Link>
-      </div>
-    );
+    const { history, sendLogin } = this.props;
+    sendLogin(email);
+    // history.push('/carteira');
   }
 
   render() {
+    const { email, btnDisable, senha } = this.state;
     return (
       <div>
-        <form>
-          { this.renderInputEmail() }
-          { this.renderInputPassword() }
-          { this.renderButtonEntrar() }
-        </form>
+        <label htmlFor="email-input">
+          Email:
+          <input
+            id="email-input"
+            type="email"
+            name="email"
+            data-testid="email-input"
+            placeholder="E-mail"
+            required
+            onChange={ this.handleInput }
+            value={ email }
+          />
+        </label>
+        <label htmlFor="password">
+          Senha:
+          <input
+            id="password-input"
+            type="password"
+            name="senha"
+            data-testid="password-input"
+            placeholder="senha"
+            required
+            onChange={ this.handleInput }
+            value={ senha }
+          />
+        </label>
+        <button
+          type="submit"
+          data-testid="my-action"
+          disabled={ btnDisable }
+          onClick={ this.handleSubmit }
+          className="btn"
+        >
+          <Link to="/carteira">
+            Entrar
+          </Link>
+        </button>
       </div>
     );
   }
 }
+// tudo dentro do mapDispatch são  funções - que  pode ter  parametro ou não.
+// (parametro) => dispatch (action) - estrutura básica
+
 const mapDispatchToProps = (dispatch) => ({
-  Login: (email) => dispatch(login(email)),
+  sendLogin: (email) => dispatch(login(email)),
 });
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  btnDisable: PropTypes.bool.isRequired,
 }.isRequired;
 
 export default connect(null, mapDispatchToProps)(Login);

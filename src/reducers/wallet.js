@@ -3,7 +3,6 @@
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  helloWord: 'helldux',
 };
 
 export default function reducer(state = INITIAL_STATE, action) {
