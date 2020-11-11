@@ -19,11 +19,28 @@ class Expenses extends Component {
 
     this.handleInput = this.handleInput.bind(this);
     this.saveExpense = this.saveExpense.bind(this);
+    this.getExpenseForEdition = this.getExpenseForEdition.bind(this);
   }
 
   componentDidMount() {
     const { setCurrency } = this.props;
     setCurrency();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { isEditing } = this.props;
+
+    if (isEditing !== null && isEditing !== prevProps.isEditing) {
+      this.getExpenseForEdition();
+    }
+  }
+
+  getExpenseForEdition() {
+    const { isEditing, expenses } = this.props;
+    const expenseForEdition = expenses.find((expense) => expense.id === isEditing);
+    this.setState({
+      ...expenseForEdition,
+    });
   }
 
   handleInput(event) {
@@ -144,12 +161,15 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   currenciesApi: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  isEditing: state.wallet.isEditing,
 });
 
 Expenses.propTypes = {
   setCurrency: propTypes.func.isRequired,
   sendExpense: propTypes.func.isRequired,
   currenciesApi: propTypes.arrayOf(propTypes.object).isRequired,
+  expenses: propTypes.arrayOf(propTypes.object).isRequired,
+  isEditing: propTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Expenses);

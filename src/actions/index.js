@@ -53,3 +53,15 @@ export const deleteSelected = (id) => ({
   type: DELETE_EXPENSE,
   id,
 });
+
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const editSelected = (expense) => ({
+  type: EDIT_EXPENSE,
+  expense,
+});
+
+export const GET_ID = 'GET_EDIT';
+export const idSelected = (id) => ({
+  type: GET_ID,
+  id,
+});
