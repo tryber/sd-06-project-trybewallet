@@ -23,7 +23,7 @@ function wallet(state = initialState,
       ...state,
       expenses: state.expenses.map((expense) => {
         if (expense.id === expenseToEdit.id) {
-          return expenseToEdit;
+          return { ...expense, ...expenseToEdit };
         }
         return expense;
       }),

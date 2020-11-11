@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Form from '../components/Form';
 import Table from '../components/Table';
 import awesomeAPI from '../services/awesomeAPI';
-import { deleteExpense, editExpense, fetchExchangeRatesAndStoreExpenses } from '../actions';
+import { editExpense, fetchExchangeRatesAndStoreExpenses } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -14,7 +14,7 @@ class Wallet extends React.Component {
       currencyList: [],
       expenses: {
         id: 0,
-        value: 0,
+        value: '0',
         description: '',
         currency: 'USD',
         method: 'Dinheiro',
@@ -142,5 +142,5 @@ Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   saveExpenses: PropTypes.func.isRequired,
-  deleteExpenseFromStore: PropTypes.func.isRequired,
+  editExpenseFromStore: PropTypes.func.isRequired,
 };

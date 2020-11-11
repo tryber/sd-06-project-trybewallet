@@ -75,7 +75,6 @@ class Form extends Component {
           <select
             data-testid="tag-input"
             name="tag"
-            defaultValue="Alimentação"
             id="tag-input"
             value={ expenses.tag }
             onChange={ (e) => handleChange(e.target) }
@@ -104,7 +103,7 @@ Form.propTypes = {
     description: PropTypes.string,
     method: PropTypes.string,
     tag: PropTypes.string,
-    value: PropTypes.number,
+    value: PropTypes.string,
   }).isRequired,
   handleChange: PropTypes.func.isRequired,
   isEditing: PropTypes.bool.isRequired,
