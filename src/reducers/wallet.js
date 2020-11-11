@@ -5,8 +5,6 @@ const INITIAL_STATE = {
 };
 
 function wallet(state = INITIAL_STATE, action) {
-  /* const exp = state.expenses;
-  console.log(Object.values(exp).flat()) */
   switch (action.type) {
   case 'ADD_EXPENSE':
     return { ...state,
