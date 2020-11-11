@@ -5,7 +5,18 @@ import PropTypes from 'prop-types';
 class Header extends React.Component {
   render() {
     const { login, expenses } = this.props;
-    const totalExpenses = expenses.reduce((acc, currentValue) => acc + currentValue, 0);
+    let totalExpenses = 0;
+
+    if (expenses.length > 0) {
+      totalExpenses = expenses.reduce((acc, currentValue) => {
+        const { currency, exchangeRates, value } = currentValue;
+
+        const exchangeRateToBRL = exchangeRates[currency].ask;
+        const valueInBRL = value * exchangeRateToBRL;
+
+        return acc + valueInBRL;
+      }, 0);
+    }
 
     return (
       <div className="header-wallet">
@@ -36,5 +47,5 @@ export default connect(
 
 Header.propTypes = {
   login: PropTypes.string.isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.number).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

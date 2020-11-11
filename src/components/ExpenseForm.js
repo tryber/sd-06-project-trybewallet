@@ -1,39 +1,104 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchAwesomeAPI } from '../actions';
+import { fetchAwesomeAPI, saveExpense } from '../actions';
 
 class ExpenseForm extends React.Component {
+  constructor() {
+    super();
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.state = {
+      id: 0,
+      value: 0,
+      currency: 'USD',
+      method: '',
+      description: '',
+      tag: '',
+      exchangeRates: {},
+    };
+  }
+
   componentDidMount() {
+    // Traz a lista de moedas da requisição
     const { fetchAPI } = this.props;
     fetchAPI();
   }
 
-  render() {
-    const { currencies } = this.props;
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  }
 
-    const currenciesDropdownList = currencies.map((currency, index) => (
+  async handleSubmit(e) {
+    e.preventDefault();
+
+    const { fetchAPI, save } = this.props;
+    const { id } = this.state;
+    const exchangeRatesFromAPI = await fetchAPI();
+
+    this.setState({ exchangeRates: exchangeRatesFromAPI.currencies });
+    save(this.state);
+
+    const nextId = id + 1;
+    this.setState({
+      id: nextId,
+      value: 0,
+      currency: 'USD',
+      method: '',
+      description: '',
+      tag: '',
+      exchangeRates: {},
+    });
+  }
+
+  render() {
+    const { handleChange, props, state } = this;
+    const { currencies } = props;
+    const { value, currency, method, description, tag } = state;
+
+    const currenciesDropdownList = currencies.map((currencyFetched, index) => (
       <option
         key={ index }
-        data-testid={ currency }
-        value={ currency }
+        data-testid={ currencyFetched }
+        value={ currencyFetched }
       >
-        { currency }
+        { currencyFetched }
       </option>
     ));
 
     return (
-      <form>
+      <form onSubmit={ this.handleSubmit }>
         {'Valor: '}
-        <input data-testid="value-input" type="number" />
+        <input
+          data-testid="value-input"
+          type="number"
+          name="value"
+          value={ value }
+          onChange={ handleChange }
+        />
 
         {'Moeda: '}
-        <select data-testid="currency-input">
+        <select
+          data-testid="currency-input"
+          name="currency"
+          value={ currency }
+          onChange={ handleChange }
+        >
           {currenciesDropdownList}
         </select>
 
         {' Método de pagamento: '}
-        <select data-testid="method-input">
+        <select
+          data-testid="method-input"
+          name="method"
+          value={ method }
+          onChange={ handleChange }
+        >
           <option value="" disabled selected>Escolha uma opção</option>
           <option value="Dinheiro">Dinheiro</option>
           <option value="Cartão de crédito">Cartão de crédito</option>
@@ -41,7 +106,12 @@ class ExpenseForm extends React.Component {
         </select>
 
         {'Tag: '}
-        <select data-testid="tag-input">
+        <select
+          data-testid="tag-input"
+          name="tag"
+          value={ tag }
+          onChange={ handleChange }
+        >
           <option value="" disabled selected>Escolha uma opção</option>
           <option value="Alimentação">Alimentação</option>
           <option value="Lazer">Lazer</option>
@@ -51,9 +121,15 @@ class ExpenseForm extends React.Component {
         </select>
 
         {' Descrição: '}
-        <input data-testid="description-input" type="text" />
+        <input
+          data-testid="description-input"
+          type="text"
+          name="description"
+          value={ description }
+          onChange={ handleChange }
+        />
 
-        <button type="button">Adicionar despesa</button>
+        <button type="submit">Adicionar despesa</button>
       </form>
     );
   }
@@ -63,9 +139,10 @@ const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
 });
 
-const mapDispatchToProps = (dispatch) => (
-  { fetchAPI: () => dispatch(fetchAwesomeAPI()) }
-);
+const mapDispatchToProps = (dispatch) => ({
+  fetchAPI: () => dispatch(fetchAwesomeAPI()),
+  save: (e) => dispatch(saveExpense(e)),
+});
 
 export default connect(
   mapStateToProps, mapDispatchToProps,
@@ -74,4 +151,5 @@ export default connect(
 ExpenseForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchAPI: PropTypes.func.isRequired,
+  save: PropTypes.func.isRequired,
 };
