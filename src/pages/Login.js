@@ -48,9 +48,9 @@ class Login extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const { email } = this.state;
-    const { sendLogin } = this.props;
+    const { sendLogin, history } = this.props;
     sendLogin(email);
-    // history.push('/carteira');
+    history.push('/carteira');
   }
 
   render() {
@@ -90,9 +90,7 @@ class Login extends React.Component {
           onClick={ this.handleSubmit }
           className="btn"
         >
-          <Link to="/carteira">
-            Entrar
-          </Link>
+          Entrar
         </button>
       </div>
     );

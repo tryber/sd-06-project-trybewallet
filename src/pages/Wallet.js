@@ -9,7 +9,7 @@ class Wallet extends React.Component {
   }
 }
 
-export default connect(Wallet);
+export default connect()(Wallet);
 
 /* ### Página da Carteira
 
