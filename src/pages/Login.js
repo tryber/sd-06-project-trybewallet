@@ -2,6 +2,8 @@ import React from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { login } from '../actions';
+import './Login.css';
+import WalletIcon from '../images/wallet.png';
 
 class Login extends React.Component {
   constructor(props) {
@@ -44,9 +46,14 @@ class Login extends React.Component {
   render() {
     const { email, password, isDisabled } = this.state;
     return (
-      <div>
-        LOGIN
-        <form onSubmit={ this.handleSignUp }>
+      <div className="login-container">
+        <h1 className="wallet-title">WALLET APP</h1>
+        <img
+          src={ WalletIcon }
+          alt="wallet icon"
+          className="wallet-icon"
+        />
+        <form onSubmit={ this.handleSignUp } className="login-form">
           <input
             type="text"
             placeholder="email"

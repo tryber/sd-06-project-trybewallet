@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import { deleteExpense } from '../actions';
+import { deleteExpense, editingExpense } from '../actions';
 
 const titles = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
   'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
@@ -9,10 +9,16 @@ const titles = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
 class Table extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleEditing = this.handleEditing.bind(this);
   }
 
-  handleClick(idExpense) {
+  handleEditing(idExpense) {
+    const { edtExpense } = this.props;
+    edtExpense(idExpense);
+  }
+
+  handleDelete(idExpense) {
     const { dltExpense } = this.props;
     dltExpense(idExpense);
   }
@@ -42,11 +48,17 @@ class Table extends React.Component {
                 <td>{ convertedValue.toFixed(2) }</td>
                 <td>Real</td>
                 <td>
-                  <button type="button" data-testid="edit-btn">Editar</button>
+                  <button
+                    type="button"
+                    data-testid="edit-btn"
+                    onClick={ () => this.handleEditing(expense.id) }
+                  >
+                    Editar
+                  </button>
                   <button
                     type="button"
                     data-testid="delete-btn"
-                    onClick={ () => this.handleClick(expense.id) }
+                    onClick={ () => this.handleDelete(expense.id) }
                   >
                     Excluir
                   </button>
@@ -73,11 +85,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dltExpense: (expenseId) => dispatch(deleteExpense(expenseId)),
+  edtExpense: (expenseEditingId) => dispatch(editingExpense(expenseEditingId)),
 });
 
 Table.propTypes = {
   expenses: propTypes.arrayOf(propTypes.object).isRequired,
   dltExpense: propTypes.func.isRequired,
+  edtExpense: propTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

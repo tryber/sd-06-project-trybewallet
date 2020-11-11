@@ -14,6 +14,9 @@ export const filteredExpenses = (expensesFiltered) => (
   { type: FILTERED_EXPENSES, expensesFiltered }
 );
 
+export const EDITING_EXPENSE = 'EDITING_EXPENSE';
+export const editingExpense = (expenseId) => ({ type: EDITING_EXPENSE, expenseId });
+
 export function fetchCurrencies() {
   return async (dispatch) => {
     const apiResponse = await fetchAPI();
@@ -44,5 +47,19 @@ export function deleteExpense(idExpense) {
     const expensesFiltered = expenses
       .filter((expense) => expense.id !== idExpense);
     dispatch(filteredExpenses(expensesFiltered));
+  };
+}
+
+export function editExpense(expense) {
+  return (dispatch, getState) => {
+    const { expenses } = getState().wallet;
+    const expensesFiltered = expenses
+      .map((item) => {
+        if (item.id === expense.id) return expense;
+        return item;
+      });
+    const removeExpenseForEdition = '';
+    dispatch(filteredExpenses(expensesFiltered));
+    dispatch(editingExpense(removeExpenseForEdition));
   };
 }
