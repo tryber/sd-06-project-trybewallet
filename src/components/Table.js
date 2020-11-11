@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import { deleteExpense, editingExpense } from '../actions';
+import { deleteExpense, editingExpense as editExpense } from '../actions';
+import './Table.css';
 
 const titles = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
   'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
@@ -11,6 +12,13 @@ class Table extends React.Component {
     super(props);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEditing = this.handleEditing.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { editingExpense } = this.props;
+    if (editingExpense !== '' && editingExpense !== prevProps.editingExpense) {
+      return true;
+    }
   }
 
   handleEditing(idExpense) {
@@ -24,7 +32,7 @@ class Table extends React.Component {
   }
 
   render() {
-    const { expenses } = this.props;
+    const { expenses, editingExpense } = this.props;
     return (
       <table id="tbl" border="1">
         <thead>
@@ -52,6 +60,7 @@ class Table extends React.Component {
                     type="button"
                     data-testid="edit-btn"
                     onClick={ () => this.handleEditing(expense.id) }
+                    disabled={ editingExpense }
                   >
                     Editar
                   </button>
@@ -59,6 +68,7 @@ class Table extends React.Component {
                     type="button"
                     data-testid="delete-btn"
                     onClick={ () => this.handleDelete(expense.id) }
+                    disabled={ editingExpense }
                   >
                     Excluir
                   </button>
@@ -70,7 +80,8 @@ class Table extends React.Component {
         <tfoot>
           <tr>
             <td>
-              TOTAL
+              Quantidade de despesas:
+              {expenses.length}
             </td>
           </tr>
         </tfoot>
@@ -81,17 +92,19 @@ class Table extends React.Component {
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
+  editingExpense: state.wallet.expenseOnEditingId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   dltExpense: (expenseId) => dispatch(deleteExpense(expenseId)),
-  edtExpense: (expenseEditingId) => dispatch(editingExpense(expenseEditingId)),
+  edtExpense: (expenseEditingId) => dispatch(editExpense(expenseEditingId)),
 });
 
 Table.propTypes = {
   expenses: propTypes.arrayOf(propTypes.object).isRequired,
   dltExpense: propTypes.func.isRequired,
   edtExpense: propTypes.func.isRequired,
+  editingExpense: propTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

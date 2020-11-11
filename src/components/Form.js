@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { addExpenseThunk, fetchCurrencies, editExpense } from '../actions';
+import './Form.css';
 
 const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const expensesCategories = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];

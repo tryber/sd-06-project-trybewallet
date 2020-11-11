@@ -8,7 +8,7 @@ body {
 }
 
 .wallet-icon {
-  max-width: 50%;
+  width: 30%;
 }
 
 .login-container {
@@ -28,7 +28,7 @@ button {
   background-color: #023e8a;
   border: none;
   color: white;
-  padding: 3px;
+  padding: 5px;
   text-align: center;
   text-decoration: none;
   margin: 3px;
@@ -37,4 +37,14 @@ button {
 
 button:disabled {
   background-color: gray;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding-bottom: 2%;
+  width: 100%;
+  color: white;
+  text-align: center;
 }

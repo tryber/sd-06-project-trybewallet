@@ -26,7 +26,9 @@ class Header extends React.Component {
               return acc + parseFloat(costInBRL);
             }, 0).toFixed(2)}
           </p>
-          <p data-testid="header-currency-field">BRL</p>
+          <p data-testid="header-currency-field">
+            BRL
+          </p>
         </div>
       </header>
     );
