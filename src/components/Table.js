@@ -8,8 +8,6 @@ class Table extends Component {
     super(props);
     this.tBody = this.tBody.bind(this);
     this.deleteRow = this.deleteRow.bind(this);
-
-    this.state = { expenses: props.expenses };
   }
 
   tBody(expense, index) {
@@ -19,7 +17,7 @@ class Table extends Component {
     return (
       <tr
         key={ `${currency}${id}${index}` }
-        id={ `${currency}${id}${index}` }
+        id={ id }
       >
         <td>{ description }</td>
         <td>{ tag }</td>
@@ -39,7 +37,7 @@ class Table extends Component {
         <td>
           <button
             data-testid="delete-btn"
-            onClick={ () => this.deleteRow(`${currency}${id}${index}`) }
+            onClick={ () => this.deleteRow(id) }
             type="button"
           >
             Delete
@@ -50,13 +48,14 @@ class Table extends Component {
 
   deleteRow(key) {
     const { eraseExpense } = this.props;
-    eraseExpense(0);
-    document.getElementById(`${key}`).remove();
-    console.log(key);
+    eraseExpense(key);
+    //document.getElementById(`${key}`).remove();
+    //console.log(key);
   }
 
   render() {
-    const { expenses } = this.state;
+    const { expenses } = this.props;
+
     return (
       <div>
         <table>
@@ -74,7 +73,11 @@ class Table extends Component {
             </tr>
           </thead>
           <tbody>
-            {Object.values(expenses).map((expense, index) => this.tBody(expense, index))}
+            {expenses
+              ? Object.values(expenses)
+                .map((exp, index) => (this.tBody(exp, index)))
+              : undefined
+            }
           </tbody>
         </table>
       </div>
