@@ -2,21 +2,33 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Table extends Component {
+  constructor() {
+    super();
+    this.state = ({
+      test: '',
+    });
+  }
+
   componentDidUpdate() {
-    const { expenses } = this.props;
-    return expenses;
+    this.updateProps();
   }
 
   handleUpdate(exp) {
     const { expenses } = this.props;
     expenses.splice(exp, 1);
     this.setState({
-      test: true,
+      test: 'ok',
     });
+  }
+
+  updateProps() {
+    const { expenses } = this.props;
+    return expenses;
   }
 
   render() {
     const { expenses } = this.props;
+    const { test } = this.state;
     return (
       <div>
         { expenses.length > 0
@@ -59,7 +71,12 @@ class Table extends Component {
               ))}
             </table>
 
-          ) : <p>Vazio</p>}
+          )
+          : (
+            <p>
+              Vazio
+              {test}
+            </p>)}
 
       </div>
     );
