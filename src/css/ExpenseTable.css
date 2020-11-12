@@ -1,0 +1,15 @@
+.expense-table {
+  margin-top: 20px;
+}
+
+table, th, tr, td {
+  border: 1px black solid;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th, tr, td {
+  padding: 3px 15px;
+}
