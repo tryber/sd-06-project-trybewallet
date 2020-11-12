@@ -54,8 +54,16 @@ class Expenses extends Component {
     const { sendExpense, isEditing, expenses, updateExpense, setId } = this.props;
     if (isEditing === null) {
       sendExpense(this.state);
+      this.setState({
+        id: 0,
+        value: '',
+        description: '',
+        currency: '',
+        method: '',
+        tag: '',
+        exchangeRates: {},
+      });
     } else {
-      console.log('oi');
       const newExpenses = expenses.filter((expense) => expense.id !== isEditing);
       newExpenses.push(this.state);
       newExpenses.sort((a, b) => a.id - b.id);
