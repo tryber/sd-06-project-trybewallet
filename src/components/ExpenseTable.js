@@ -12,7 +12,7 @@ class ExpenseTable extends Component {
       'Método de pagamento',
       'Valor',
       'Moeda',
-      'Câmbio Utilizado',
+      'Câmbio utilizado',
       'Valor convertido',
       'Moeda de conversão',
       'Editar/Excluir',
