@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import HeaderForm from '../components/HeaderForm';
-import { currenciesThunk, fetchExchangeRates } from '../actions';
+// import HeaderForm from '../components/HeaderForm';
+import { currenciesThunk, fetchExchangeRates, deleteAction } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -29,7 +29,7 @@ class Wallet extends React.Component {
 
   calculateTotal() {
     const { expenses } = this.props;
-    // the following reducer's source is: https://github.com/tryber/sd-06-project-trybewallet/blob/marioduartedev/src/pages/Wallet.js
+    // reducer's source: https://github.com/tryber/sd-06-project-trybewallet/blob/marioduartedev/src/pages/Wallet.js
     const total = expenses
       .reduce((accumulator, current) => accumulator + parseFloat((current
         .exchangeRates[current.currency].ask * current.value)), 0).toFixed(2);
@@ -49,6 +49,7 @@ class Wallet extends React.Component {
   handleClick(event) {
     event.preventDefault();
     const { expensesAction } = this.props;
+    // console.log(`expensesAction: ${expensesAction}`);
     const {
       id,
       value,
@@ -65,13 +66,12 @@ class Wallet extends React.Component {
       method,
       tag,
     };
-
     this.setState((prevState) => ({ id: prevState.id + 1 }));
     expensesAction(expense);
   }
 
   render() {
-    const { email, currencies, expenses } = this.props;
+    const { email, currencies, expenses, handleDelete } = this.props;
     const { value } = this.state;
     const tableHeaders = [
       'Descrição',
@@ -164,7 +164,7 @@ class Wallet extends React.Component {
           <button type="submit" onClick={ this.handleClick }>Adicionar despesa</button>
         </form>
         <hr />
-        <table>
+        <table className="table table-striped">
           <thead>
             <tr>
               {
@@ -194,6 +194,17 @@ class Wallet extends React.Component {
                     }
                   </td>
                   <td>Real</td>
+                  <td>
+                    <button type="button" className="btn btn-warning">EDIT</button>
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      data-testid="delete-btn"
+                      onClick={ () => handleDelete(expense.id) }
+                    >
+                      DEL
+                    </button>
+                  </td>
                 </tr>))
             }
           </tbody>
@@ -212,6 +223,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   currencyFetch: () => dispatch(currenciesThunk()),
   expensesAction: (expenses) => dispatch(fetchExchangeRates(expenses)),
+  handleDelete: (id) => dispatch(deleteAction(id)),
 });
 
 Wallet.propTypes = {
@@ -220,6 +232,7 @@ Wallet.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)).isRequired,
   expensesAction: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

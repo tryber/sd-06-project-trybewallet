@@ -27,6 +27,13 @@ export const expensesAction = (expense) => ({
   expense,
 });
 
+export const DELETE_EXPENSES = 'DELETE_EXPENSES';
+
+export const deleteAction = (id) => ({
+  type: DELETE_EXPENSES,
+  id,
+});
+
 export function fetchExchangeRates(expenseData) {
   return async (dispatch) => {
     const baseURL = 'https://economia.awesomeapi.com.br/json/all';
