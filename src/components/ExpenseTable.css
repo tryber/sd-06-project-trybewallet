@@ -1,0 +1,29 @@
+body {
+  text-align: center;
+}
+
+.table-container {
+  display: flex;
+}
+
+.expense-table {
+  text-align: center;
+}
+
+/* .table-row-heading {
+  display: flex;
+  background-color: rgb(191, 192, 192);
+  justify-content: center;
+  padding: 10px;
+}
+
+/* thead th {
+  display: flex;
+  margin: 15px 10px;
+}
+
+tbody td {
+  display: flex;
+  justify-content: space-around;
+  background-color: royalblue;
+} */ 

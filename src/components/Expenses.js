@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { currencyThunk, addThunk } from '../actions';
+import { currencyThunk, addThunk, editSelected, idSelected } from '../actions';
 import './Expenses.css';
 
 class Expenses extends Component {
@@ -9,7 +9,7 @@ class Expenses extends Component {
     super(props);
     this.state = {
       id: 0,
-      value: 0,
+      value: '',
       description: '',
       currency: '',
       method: '',
@@ -49,10 +49,29 @@ class Expenses extends Component {
     });
   }
 
-  async saveExpense(event) {
+  saveExpense(event) {
     event.preventDefault();
-    const { sendExpense } = this.props;
-    sendExpense(this.state);
+    const { sendExpense, isEditing, expenses, updateExpense, setId } = this.props;
+    if (isEditing === null) {
+      sendExpense(this.state);
+    } else {
+      console.log('oi');
+      const newExpenses = expenses.filter((expense) => expense.id !== isEditing);
+      newExpenses.push(this.state);
+      newExpenses.sort((a, b) => a.id - b.id);
+      updateExpense(newExpenses);
+      const changeId = null;
+      setId(changeId);
+      this.setState({
+        id: 0,
+        value: '',
+        description: '',
+        currency: '',
+        method: '',
+        tag: '',
+        exchangeRates: {},
+      });
+    }
   }
 
   render() {
@@ -62,7 +81,7 @@ class Expenses extends Component {
       currency,
       method,
       tag } = this.state;
-    const { currenciesApi } = this.props;
+    const { currenciesApi, isEditing } = this.props;
     return (
       <div className="expenses-container">
         <form onSubmit={ this.saveExpense }>
@@ -145,7 +164,7 @@ class Expenses extends Component {
             className="btn-expense"
             type="submit"
           >
-            Adicionar despesa
+            {isEditing !== null ? 'Editar despesa' : 'Adicionar despesa'}
           </button>
         </form>
       </div>
@@ -156,6 +175,8 @@ class Expenses extends Component {
 const mapDispatchToProps = (dispatch) => ({
   setCurrency: () => dispatch(currencyThunk()),
   sendExpense: (expense) => dispatch(addThunk(expense)),
+  updateExpense: (expense) => dispatch(editSelected(expense)),
+  setId: (id) => dispatch(idSelected(id)),
 });
 
 const mapStateToProps = (state) => ({
@@ -170,6 +191,8 @@ Expenses.propTypes = {
   currenciesApi: propTypes.arrayOf(propTypes.object).isRequired,
   expenses: propTypes.arrayOf(propTypes.object).isRequired,
   isEditing: propTypes.number.isRequired,
+  updateExpense: propTypes.func.isRequired,
+  setId: propTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Expenses);

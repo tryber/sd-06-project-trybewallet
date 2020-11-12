@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { deleteSelected, idSelected } from '../actions';
+import './ExpenseTable.css';
 
 class ExpenseTable extends Component {
   render() {
     const { expenses, deleteExpense, editExpense } = this.props;
     return (
       <div className="table-container">
-        <table>
+        <table className="expense-table">
           <thead>
-            <tr>
+            <tr className="table-row-heading">
               <th>Descrição</th>
               <th>Tag</th>
               <th>Método de pagamento</th>
@@ -29,8 +30,8 @@ class ExpenseTable extends Component {
               );
               const convertValue = exchangeCurrency * expense.value;
               return (
-                <tr key={ expense.id }>
-                  <td>{expense.description}</td>
+                <tr className="table-row-body" key={ expense.id }>
+                  <td className="td-data">{expense.description}</td>
                   <td>{expense.tag}</td>
                   <td>{expense.method}</td>
                   <td>{Math.round(expense.value * 100) / 100}</td>

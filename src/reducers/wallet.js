@@ -32,7 +32,7 @@ const walletReducer = (state = INITIAL_STATE, action) => {
   case EDIT_EXPENSE:
     return {
       ...state,
-      expenses: state.expenses.filter((expense) => expense.id !== action.id),
+      expenses: action.expense,
     };
   case GET_ID:
     return {
