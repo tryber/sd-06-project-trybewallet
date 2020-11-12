@@ -90,6 +90,7 @@ class Expenses extends Component {
       method,
       tag } = this.state;
     const { currenciesApi, isEditing } = this.props;
+    const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <div className="expenses-container">
         <form onSubmit={ this.saveExpense }>
@@ -97,22 +98,26 @@ class Expenses extends Component {
             Valor:
             <input
               className="expense-input"
+              placeholder="500"
               name="value"
               id="expense-value"
               value={ value }
               data-testid="value-input"
               onChange={ this.handleInput }
+              required
             />
           </label>
           <label htmlFor="expense-description">
             Descrição despesa:
             <input
               className="expense-input"
+              placeholder="Ex: hotel"
               name="description"
               id="expense-description"
               value={ description }
               data-testid="description-input"
               onChange={ this.handleInput }
+              required
             />
           </label>
           <label htmlFor="currency">
@@ -124,6 +129,7 @@ class Expenses extends Component {
               value={ currency }
               data-testid="currency-input"
               onChange={ this.handleInput }
+              required
             >
               {currenciesApi.map((eachCurrency) => (
                 <option
@@ -145,6 +151,7 @@ class Expenses extends Component {
               value={ method }
               data-testid="method-input"
               onChange={ this.handleInput }
+              required
             >
               <option value="Dinheiro">Dinheiro</option>
               <option value="Cartão de débito">Cartão de débito</option>
@@ -160,12 +167,13 @@ class Expenses extends Component {
               value={ tag }
               data-testid="tag-input"
               onChange={ this.handleInput }
+              required
             >
-              <option value="Alimentação">Alimentação</option>
-              <option value="Lazer">Lazer</option>
-              <option value="Trabalho">Trabalho</option>
-              <option value="Transporte">Transporte</option>
-              <option value="Saúde">Saúde</option>
+              {
+                tags.map((eachTag, index) => (
+                  <option key={ index } value={ eachTag }>{eachTag}</option>
+                ))
+              }
             </select>
           </label>
           <button

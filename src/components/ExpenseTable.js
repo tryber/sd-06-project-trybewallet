@@ -7,20 +7,24 @@ import './ExpenseTable.css';
 class ExpenseTable extends Component {
   render() {
     const { expenses, deleteExpense, editExpense } = this.props;
+    const headings = ['Descrição',
+      'Tag',
+      'Método de pagamento',
+      'Valor',
+      'Moeda',
+      'Câmbio Utilizado',
+      'Valor convertido',
+      'Moeda de conversão',
+      'Editar/Excluir',
+    ];
     return (
       <div className="table-container">
         <table className="expense-table">
           <thead>
             <tr className="table-row-heading">
-              <th>Descrição</th>
-              <th>Tag</th>
-              <th>Método de pagamento</th>
-              <th>Valor</th>
-              <th>Moeda</th>
-              <th>Câmbio utilizado</th>
-              <th>Valor convertido</th>
-              <th>Moeda de conversão</th>
-              <th>Editar/Excluir</th>
+              {headings.map((heading, index) => (
+                <th key={ index }>{heading}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
