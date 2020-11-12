@@ -27,7 +27,7 @@ class Table extends Component {
           </tr>
         </thead>
         <tbody>
-          { expenseState.map((expense) => (
+          { expenseState.map((expense, index) => (
             <tr key={ expense.id }>
               <td name={ expense.description }>{ expense.description }</td>
               <td>{ expense.tag }</td>
@@ -49,7 +49,7 @@ class Table extends Component {
                 <button
                   data-testid="delete-btn"
                   type="button"
-                  onClick={() => this.removeHandler(expense.id)}
+                  onClick={() => this.removeHandler(index)}
                 >
                   X
                 </button>
