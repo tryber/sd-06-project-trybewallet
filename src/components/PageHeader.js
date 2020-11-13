@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import '../css/PageHeader.css';
 
 class Header extends React.Component {
   render() {
@@ -18,10 +19,12 @@ class Header extends React.Component {
       }, 0);
     }
 
+    totalExpenses = (Math.round(totalExpenses * 100)) / 100;
+
     return (
       <div className="header-wallet">
         <div data-testid="email-field">
-          Isso é um header c/ o login de
+          Login:
           {` ${login}`}
         </div>
         <div data-testid="total-field">

@@ -1,21 +1,33 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import ExpenseRow from './ExpenseRow';
 import ExpenseHeader from './ExpenseHeader';
+import '../css/ExpenseTable.css';
 
 class ExpensesTable extends React.Component {
   render() {
+    const { expenses } = this.props;
+
     return (
-      <table>
-        <tr>
-          <ExpenseHeader />
-        </tr>
-        <tr>
-          <ExpenseRow label="Descrição" />
-          <ExpenseRow label="Tag" />
-        </tr>
+      <table className="expense-table">
+        <ExpenseHeader />
+        { expenses.map((expense) => (
+          <ExpenseRow key={ expense.id } expenseToRender={ expense } />
+        )) }
       </table>
     );
   }
 }
 
-export default ExpensesTable;
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+export default connect(
+  mapStateToProps,
+)(ExpensesTable);
+
+ExpensesTable.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+};

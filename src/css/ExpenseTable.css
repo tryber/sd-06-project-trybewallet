@@ -8,8 +8,20 @@ table, th, tr, td {
 
 table {
   border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  table-layout: fixed;
+  width: 95%;
 }
 
 th, tr, td {
   padding: 3px 15px;
+}
+
+th {
+  font-size: large;
+}
+
+td {
+  font-size: small;
 }
