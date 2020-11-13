@@ -13,7 +13,7 @@ class ExpenseForm extends React.Component {
     this.state = {
       id: 0,
       value: 0,
-      currency: 'USD',
+      currency: '',
       method: '',
       description: '',
       tag: '',
@@ -48,7 +48,7 @@ class ExpenseForm extends React.Component {
     this.setState({
       id: nextId,
       value: 0,
-      currency: 'USD',
+      currency: '',
       method: '',
       description: '',
       tag: '',
@@ -61,7 +61,17 @@ class ExpenseForm extends React.Component {
     const { currencies } = props;
     const { value, currency, method, description, tag } = state;
 
-    const currenciesDropdownList = currencies.map((currencyFetched, index) => (
+    const currenciesDropdownList = [(
+      <option
+        key={ currencies.length + 1 }
+        value=""
+        disabled
+      >
+        Escolha uma opção
+      </option>
+    )];
+
+    currenciesDropdownList.push(currencies.map((currencyFetched, index) => (
       <option
         key={ index }
         data-testid={ currencyFetched }
@@ -69,7 +79,7 @@ class ExpenseForm extends React.Component {
       >
         { currencyFetched }
       </option>
-    ));
+    )));
 
     return (
       <form onSubmit={ this.handleSubmit } className="expense-form">
@@ -77,6 +87,7 @@ class ExpenseForm extends React.Component {
         <input
           data-testid="value-input"
           type="number"
+          min={ 0 }
           name="value"
           value={ value }
           onChange={ handleChange }
@@ -129,7 +140,14 @@ class ExpenseForm extends React.Component {
           onChange={ handleChange }
         />
 
-        <button type="submit">Adicionar despesa</button>
+        <button
+          type="submit"
+          disabled={
+            !value || !currency || !method || !tag || !description ? 'disabled' : false
+          }
+        >
+          Adicionar despesa
+        </button>
       </form>
     );
   }
