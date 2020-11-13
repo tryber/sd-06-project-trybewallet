@@ -12,9 +12,11 @@ class ExpensesTable extends React.Component {
     return (
       <table className="expense-table">
         <ExpenseHeader />
-        { expenses.map((expense) => (
-          <ExpenseRow key={ expense.id } expenseToRender={ expense } />
-        )) }
+        <tbody>
+          { expenses.map((expense) => (
+            <ExpenseRow key={ expense.id } expenseToRender={ expense } />
+          )) }
+        </tbody>
       </table>
     );
   }

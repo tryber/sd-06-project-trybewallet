@@ -2,6 +2,7 @@ export const LOGIN = 'LOGIN';
 export const FETCH_CURRENCIES = 'FETCH_CURRENCIES';
 export const SAVE_EXPENSE = 'SAVE_EXPENSE';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 
 export const login = (email) => ({
   type: LOGIN,
@@ -31,5 +32,10 @@ export const saveExpense = (expense) => ({
 
 export const deleteExpense = (id) => ({
   type: DELETE_EXPENSE,
+  id,
+});
+
+export const editExpense = (id) => ({
+  type: EDIT_EXPENSE,
   id,
 });

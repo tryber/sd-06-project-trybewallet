@@ -1,4 +1,4 @@
-import { FETCH_CURRENCIES, SAVE_EXPENSE, DELETE_EXPENSE } from '../actions';
+import { FETCH_CURRENCIES, SAVE_EXPENSE, DELETE_EXPENSE, EDIT_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -26,6 +26,12 @@ export default function (state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: newExpenses,
+    };
+  }
+
+  case EDIT_EXPENSE: {
+    return {
+      ...state,
     };
   }
 

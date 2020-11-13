@@ -63,8 +63,8 @@ ExpenseRow.propTypes = {
     description: PropTypes.string,
     tag: PropTypes.string,
     method: PropTypes.string,
-    value: PropTypes.number,
-    currency: PropTypes.number,
+    value: PropTypes.string,
+    currency: PropTypes.string,
     exchangeRates: PropTypes.shape({
       ask: PropTypes.number,
       name: PropTypes.string,

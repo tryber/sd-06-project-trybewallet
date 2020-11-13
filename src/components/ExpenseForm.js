@@ -99,7 +99,7 @@ class ExpenseForm extends React.Component {
           value={ method }
           onChange={ handleChange }
         >
-          <option value="" disabled selected>Escolha uma opção</option>
+          <option value="" disabled>Escolha uma opção</option>
           <option value="Dinheiro">Dinheiro</option>
           <option value="Cartão de crédito">Cartão de crédito</option>
           <option value="Cartão de débito">Cartão de débito</option>
@@ -112,7 +112,7 @@ class ExpenseForm extends React.Component {
           value={ tag }
           onChange={ handleChange }
         >
-          <option value="" disabled selected>Escolha uma opção</option>
+          <option value="" disabled>Escolha uma opção</option>
           <option value="Alimentação">Alimentação</option>
           <option value="Lazer">Lazer</option>
           <option value="Trabalho">Trabalho</option>
