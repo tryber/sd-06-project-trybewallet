@@ -1,5 +1,9 @@
 .header-wallet {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin: 10px 15px 30px;
+}
+
+.login-header {
+  margin-right: 15px;
 }

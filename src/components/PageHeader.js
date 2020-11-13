@@ -23,12 +23,12 @@ class Header extends React.Component {
 
     return (
       <div className="header-wallet">
-        <div data-testid="email-field">
+        <div data-testid="email-field" className="login-header">
           Login:
           {` ${login}`}
         </div>
-        <div data-testid="total-field">
-          Total expenses:
+        <div data-testid="total-field" className="total-header">
+          Total:
           {` ${totalExpenses} `}
           <span data-testid="header-currency-field">
             BRL

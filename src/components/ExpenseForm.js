@@ -72,7 +72,7 @@ class ExpenseForm extends React.Component {
     ));
 
     return (
-      <form onSubmit={ this.handleSubmit }>
+      <form onSubmit={ this.handleSubmit } className="expense-form">
         {'Valor: '}
         <input
           data-testid="value-input"

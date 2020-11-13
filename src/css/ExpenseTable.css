@@ -2,6 +2,12 @@
   margin-top: 20px;
 }
 
+.expense-form {
+  display: flex;
+  justify-content: space-between;
+  margin: auto 15px;
+}
+
 table, th, tr, td {
   border: 1px black solid;
 }
@@ -11,7 +17,7 @@ table {
   margin-left: auto;
   margin-right: auto;
   table-layout: fixed;
-  width: 95%;
+  width: 100%;
 }
 
 th, tr, td {

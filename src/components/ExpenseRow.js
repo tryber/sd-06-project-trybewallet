@@ -1,11 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FaRegTrashAlt, FaEdit } from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { deleteExpense } from '../actions';
 
 class ExpenseRow extends React.Component {
   render() {
-    const { expenseToRender } = this.props;
-    const { description, tag, method, value, currency, exchangeRates } = expenseToRender;
+    const { expenseToRender, deleteSelected } = this.props;
+    const {
+      id,
+      description,
+      tag,
+      method,
+      value,
+      currency,
+      exchangeRates,
+    } = expenseToRender;
     const { ask: rate, name } = exchangeRates[currency];
 
     const twoDecimalValue = ((Math.round(value * 100)) / 100);
@@ -23,10 +33,15 @@ class ExpenseRow extends React.Component {
         <td>{twoDecimalConverted}</td>
         <td>Real</td>
         <td>
-          <button type="button">
+          <button
+            type="button"
+            data-testid="delete-btn"
+            name={ id }
+            onClick={ () => deleteSelected(id) }
+          >
             <FaRegTrashAlt />
           </button>
-          <button type="button">
+          <button type="button" data-testid="edit-btn">
             <FaEdit />
           </button>
         </td>
@@ -35,8 +50,16 @@ class ExpenseRow extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  deleteSelected: (e) => dispatch(deleteExpense(e)),
+});
+
+export default connect(null, mapDispatchToProps)(ExpenseRow);
+
 ExpenseRow.propTypes = {
+  deleteSelected: PropTypes.func.isRequired,
   expenseToRender: PropTypes.shape({
+    id: PropTypes.number,
     description: PropTypes.string,
     tag: PropTypes.string,
     method: PropTypes.string,
@@ -48,5 +71,3 @@ ExpenseRow.propTypes = {
     }),
   }).isRequired,
 };
-
-export default ExpenseRow;
