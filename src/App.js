@@ -1,7 +1,25 @@
-import React from 'react';
+import React, { Component } from 'react';
+// import './App.css';
+import { Switch, Route } from 'react-router-dom';
+import Login from './pages/Login';
+import Wallet from './pages/Wallet';
 
-function App() {
-  return <div>Hello, TrybeWallet!</div>;
+class App extends Component {
+  render() {
+    return (
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route exact path="/carteira" component={Wallet} />
+      </Switch>
+    );
+  }
 }
+// function App() {
+//   return <div>Hello, TrybeWallet!</div>,
+// }
 
 export default App;
+
+// referencias
+// https://www.codigofonte.com.br/codigos/validar-e-mail-via-javascript
+// 
