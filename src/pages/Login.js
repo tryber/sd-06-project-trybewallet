@@ -36,7 +36,6 @@ class Login extends React.Component {
         email,
         senha,
       });
-      console.log('esta funcionando');
     } else {
       this.setState({
         btnDisable: true,
