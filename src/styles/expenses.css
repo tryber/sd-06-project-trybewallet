@@ -1,0 +1,5 @@
+input select {
+display: flex;
+border: 1px solid #cccccc;
+padding: 10px;
+}

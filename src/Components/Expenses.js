@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import '../styles/expenses.css';
 
 class Expenses extends Component {
   render() {
