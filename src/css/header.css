@@ -7,3 +7,18 @@
   height: 100px;
   background: linear-gradient(black, gray, white, gray, black);
 }
+
+.text-name {
+  text-shadow: 1px 1px 2px white;
+  font-size: 100%;
+}
+
+.email {
+  font-size: 20px;
+  color: blue;
+  color-adjust: initial;
+}
+
+.title {
+  color: teal;
+}
