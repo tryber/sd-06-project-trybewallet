@@ -2,9 +2,17 @@ import React, { Component } from 'react';
 import '../css/expenseForm.css';
 
 class ExpenseForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      entry: {
+        id: 0,
+        value: '',
+        description: '',
+        currency: 'USD',
+      }
+    }
 
   }
 
