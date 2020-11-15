@@ -173,7 +173,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(ExpenseFormEdit);
 
 ExpenseFormEdit.propTypes = {
   idToEdit: PropTypes.string.isRequired,
-  currencies: PropTypes.arrayof(PropTypes.string).isRequired,
-  expenses: PropTypes.arrayof(PropTypes.object).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   saveEdition: PropTypes.func.isRequired,
 };
