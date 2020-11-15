@@ -102,7 +102,7 @@ class ExpenseFormEdit extends React.Component {
         <label htmlFor="methodInput">
           {' Método de pagamento: '}
           <select
-            qid="methodInput"
+            id="methodInput"
             data-testid="method-input"
             name="method"
             value={ method }
@@ -172,7 +172,7 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseFormEdit);
 
 ExpenseFormEdit.propTypes = {
-  idToEdit: PropTypes.string.isRequired,
+  idToEdit: PropTypes.number.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   saveEdition: PropTypes.func.isRequired,
