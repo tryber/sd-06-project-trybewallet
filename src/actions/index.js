@@ -3,6 +3,7 @@ export const FETCH_CURRENCIES = 'FETCH_CURRENCIES';
 export const SAVE_EXPENSE = 'SAVE_EXPENSE';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const SAVE_EDITED_EXPENSE = 'SAVE_EDITED_EXPENSE';
 
 export const login = (email) => ({
   type: LOGIN,
@@ -39,4 +40,10 @@ export const editExpense = (isEditing, idExpenseToEdit) => ({
   type: EDIT_EXPENSE,
   isEditing,
   idExpenseToEdit,
+});
+
+export const saveEditedExpense = (isEditing, editedExpense) => ({
+  type: SAVE_EDITED_EXPENSE,
+  isEditing,
+  editedExpense,
 });

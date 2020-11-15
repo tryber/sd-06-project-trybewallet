@@ -1,9 +1,15 @@
-import { FETCH_CURRENCIES, SAVE_EXPENSE, DELETE_EXPENSE, EDIT_EXPENSE } from '../actions';
+import {
+  FETCH_CURRENCIES,
+  SAVE_EXPENSE,
+  DELETE_EXPENSE,
+  EDIT_EXPENSE,
+  SAVE_EDITED_EXPENSE,
+} from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  // isEditing: false,
+  isEditing: false,
   idExpenseToEdit: '',
 };
 
@@ -36,6 +42,18 @@ export default function (state = INITIAL_STATE, action) {
       ...state,
       isEditing: action.isEditing,
       idExpenseToEdit: action.idExpenseToEdit,
+    };
+  }
+
+  case SAVE_EDITED_EXPENSE: {
+    const newExpenses = state.expenses.map((expense) => (
+      expense.id === action.editedExpense.id ? action.editedExpense : expense
+    ));
+
+    return {
+      ...state,
+      expenses: newExpenses,
+      isEditing: action.isEditing,
     };
   }
 

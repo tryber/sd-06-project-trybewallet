@@ -14,8 +14,6 @@ class ExpenseRow extends React.Component {
   editSelectedExpense(id) {
     const { edit } = this.props;
 
-    console.log(id);
-
     edit(true, id);
   }
 
