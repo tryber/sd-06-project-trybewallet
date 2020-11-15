@@ -35,7 +35,8 @@ export const deleteExpense = (id) => ({
   id,
 });
 
-export const editExpense = (id) => ({
+export const editExpense = (isEditing, idExpenseToEdit) => ({
   type: EDIT_EXPENSE,
-  id,
+  isEditing,
+  idExpenseToEdit,
 });

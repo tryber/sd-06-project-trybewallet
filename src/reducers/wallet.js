@@ -3,6 +3,8 @@ import { FETCH_CURRENCIES, SAVE_EXPENSE, DELETE_EXPENSE, EDIT_EXPENSE } from '..
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  // isEditing: false,
+  idExpenseToEdit: '',
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -32,6 +34,8 @@ export default function (state = INITIAL_STATE, action) {
   case EDIT_EXPENSE: {
     return {
       ...state,
+      isEditing: action.isEditing,
+      idExpenseToEdit: action.idExpenseToEdit,
     };
   }
 

@@ -2,9 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FaRegTrashAlt, FaEdit } from 'react-icons/fa';
 import { connect } from 'react-redux';
-import { deleteExpense } from '../actions';
+import { deleteExpense, editExpense } from '../actions';
 
 class ExpenseRow extends React.Component {
+  constructor() {
+    super();
+
+    this.editSelectedExpense = this.editSelectedExpense.bind(this);
+  }
+
+  editSelectedExpense(id) {
+    const { edit } = this.props;
+
+    console.log(id);
+
+    edit(true, id);
+  }
+
   render() {
     const { expenseToRender, deleteSelected } = this.props;
     const {
@@ -41,7 +55,12 @@ class ExpenseRow extends React.Component {
           >
             <FaRegTrashAlt />
           </button>
-          <button type="button" data-testid="edit-btn">
+          <button
+            type="button"
+            data-testid="edit-btn"
+            name={ id }
+            onClick={ () => this.editSelectedExpense(id) }
+          >
             <FaEdit />
           </button>
         </td>
@@ -52,12 +71,14 @@ class ExpenseRow extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   deleteSelected: (e) => dispatch(deleteExpense(e)),
+  edit: (isEdit, id) => dispatch(editExpense(isEdit, id)),
 });
 
 export default connect(null, mapDispatchToProps)(ExpenseRow);
 
 ExpenseRow.propTypes = {
   deleteSelected: PropTypes.func.isRequired,
+  edit: PropTypes.func.isRequired,
   expenseToRender: PropTypes.shape({
     id: PropTypes.number,
     description: PropTypes.string,

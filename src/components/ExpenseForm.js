@@ -63,17 +63,17 @@ class ExpenseForm extends React.Component {
 
     const currenciesDropdownList = [(
       <option
-        key={ currencies.length + 1 }
+        key={ 0 }
         value=""
         disabled
       >
-        Escolha uma opção
+        --
       </option>
     )];
 
     currenciesDropdownList.push(currencies.map((currencyFetched, index) => (
       <option
-        key={ index }
+        key={ index + 1 }
         data-testid={ currencyFetched }
         value={ currencyFetched }
       >
@@ -83,62 +83,76 @@ class ExpenseForm extends React.Component {
 
     return (
       <form onSubmit={ this.handleSubmit } className="expense-form">
-        {'Valor: '}
-        <input
-          data-testid="value-input"
-          type="number"
-          min={ 0 }
-          name="value"
-          value={ value }
-          onChange={ handleChange }
-        />
+        <label htmlFor="valueInput">
+          {'Valor: '}
+          <input
+            id="valueInput"
+            data-testid="value-input"
+            type="number"
+            min={ 0 }
+            name="value"
+            value={ value }
+            onChange={ handleChange }
+          />
+        </label>
 
-        {'Moeda: '}
-        <select
-          data-testid="currency-input"
-          name="currency"
-          value={ currency }
-          onChange={ handleChange }
-        >
-          {currenciesDropdownList}
-        </select>
+        <label htmlFor="currencyInput">
+          {'Moeda: '}
+          <select
+            id="currencyInput"
+            data-testid="currency-input"
+            name="currency"
+            value={ currency }
+            onChange={ handleChange }
+          >
+            {currenciesDropdownList}
+          </select>
+        </label>
 
-        {' Método de pagamento: '}
-        <select
-          data-testid="method-input"
-          name="method"
-          value={ method }
-          onChange={ handleChange }
-        >
-          <option value="" disabled>Escolha uma opção</option>
-          <option value="Dinheiro">Dinheiro</option>
-          <option value="Cartão de crédito">Cartão de crédito</option>
-          <option value="Cartão de débito">Cartão de débito</option>
-        </select>
+        <label htmlFor="methodInput">
+          {' Método de pagamento: '}
+          <select
+            data-testid="method-input"
+            name="method"
+            value={ method }
+            onChange={ handleChange }
+          >
+            <option value="" disabled>--</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
+          </select>
+        </label>
 
-        {'Tag: '}
-        <select
-          data-testid="tag-input"
-          name="tag"
-          value={ tag }
-          onChange={ handleChange }
-        >
-          <option value="" disabled>Escolha uma opção</option>
-          <option value="Alimentação">Alimentação</option>
-          <option value="Lazer">Lazer</option>
-          <option value="Trabalho">Trabalho</option>
-          <option value="Transporte">Transporte</option>
-          <option value="Saúde">Saúde</option>
-        </select>
+        <label htmlFor="tagInput">
+          {'Tag: '}
+          <select
+            id="tagInput"
+            data-testid="tag-input"
+            name="tag"
+            value={ tag }
+            onChange={ handleChange }
+          >
+            <option value="" disabled>--</option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
+          </select>
+        </label>
 
-        {' Descrição: '}
-        <input
-          data-testid="description-input"
-          type="text"
-          name="description"
-          value={ description }
-          onChange={ handleChange }
-        />
+        <label htmlFor="descriptionInput">
+          {' Descrição: '}
+          <input
+            id="descriptionInput"
+            data-testid="description-input"
+            type="text"
+            name="description"
+            value={ description }
+            onChange={ handleChange }
+          />
+        </label>
 
         <button
           type="submit"

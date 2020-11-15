@@ -12,6 +12,14 @@ table, th, tr, td {
   border: 1px black solid;
 }
 
+input[type=number] {
+  width: 70px;
+}
+
+input[type=text] {
+  width: 200px;
+}
+
 table {
   border-collapse: collapse;
   margin-left: auto;
