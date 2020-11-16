@@ -86,7 +86,7 @@ class Wallet extends React.Component {
     return (
       <section>
         Carteira
-        <header>
+        <header className="header-css-wallet">
           <span data-testid="email-field">
             {email}
           </span>
@@ -99,7 +99,7 @@ class Wallet extends React.Component {
             BRL
           </span>
         </header>
-        <form>
+        <form className="form-css-wallet">
           <br />
           <input
             data-testid="value-input"
@@ -108,7 +108,7 @@ class Wallet extends React.Component {
             id="value"
             value={ value }
           />
-          <br />
+          <p />
           <input
             data-testid="description-input"
             placeholder="Descrição da despesa"
@@ -116,25 +116,22 @@ class Wallet extends React.Component {
             id="description"
             value={ description }
           />
-          <br />
+          <p />
           <select
             placeholder="Moeda"
             onChange={ this.handleInputs }
             id="currency"
-            // data-testid="currency-input"
           >
-            <option>  Selecione a Moeda  </option>
+            <option data-testid="currency-input">  Selecione a Moeda  </option>
             {currencies.map((currency) => (
               <option
                 key={ currency }
                 value={ currency }
-                data-testid="currency-input"
-
               >
                 {currency !== 'USDT' ? currency : null}
               </option>))}
           </select>
-          <br />
+          <p />
           <select
             data-testid="method-input"
             onChange={ this.handleInputs }
@@ -151,7 +148,7 @@ class Wallet extends React.Component {
               </option>
             ))}
           </select>
-          <br />
+          <p />
           <select
             data-testid="tag-input"
             onChange={ this.handleInputs }
@@ -168,8 +165,9 @@ class Wallet extends React.Component {
               </option>
             ))}
           </select>
-          <br />
+          <p />
           <button
+            className="css-button"
             type="button"
             onClick={ this.handleButtonClick }
             disabled={ isDisabled }

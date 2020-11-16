@@ -8,33 +8,31 @@ class ExpensesTable extends React.Component {
   render() {
     const { expenses, dispatchDeleteExpense } = this.props;
     return (
-      <section className="expenses-container">
-        <table>
+      <section>
+        <table className="table-css-wallet">
           <tr>
             {expenseTable.map((header) => (
-              <th key={ header } className="table-header">{header}</th>))}
+              <th key={ header } className="table-css-expenses">{header}</th>))}
           </tr>
 
           {expenses.map((expense) => {
             const currencyAbreviation = expense.currency;
             const currency = expense.exchangeRates[currencyAbreviation].name;
-            console.log(currency);
-            console.log(expense.exchangeRates[currencyAbreviation]);
             const exchangeRate = expense.exchangeRates[currencyAbreviation].ask;
             const convertedValue = expense.value * exchangeRate;
 
             return (
               <tr key={ expense.id }>
-                <td className="table-cell">{expense.description}</td>
-                <td className="table-cell">{expense.tag}</td>
-                <td className="table-cell">{expense.method}</td>
-                <td className="table-cell">{expense.value}</td>
-                <td className="table-cell">{currency}</td>
-                <td className="table-cell">{formatValue(exchangeRate)}</td>
-                <td className="table-cell">{formatValue(convertedValue)}</td>
-                <td className="table-cell">Real</td>
+                <td className="table-expenses">{expense.description}</td>
+                <td className="table-expenses">{expense.tag}</td>
+                <td className="table-expenses">{expense.method}</td>
+                <td className="table-expenses">{expense.value}</td>
+                <td className="table-expenses">{currency}</td>
+                <td className="table-expenses">{formatValue(exchangeRate)}</td>
+                <td className="table-expenses">{formatValue(convertedValue)}</td>
+                <td className="table-expenses">Real</td>
                 <td>
-                  <div className="edit-expense-container">
+                  <div>
                     <button
                       type="button"
                       data-testid="delete-btn"

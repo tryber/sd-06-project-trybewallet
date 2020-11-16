@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actionsEmailLogin, savePassword } from '../actions';
+import './PagesCss.css';
 
 class Login extends React.Component {
   constructor() {
@@ -46,9 +47,9 @@ class Login extends React.Component {
     const { email, password, isDisabled } = this.state;
 
     return (
-      <div>
+      <div className="login-css">
         <h1>Login</h1>
-        <form>
+        <form className="form-css">
           <input
             type="text"
             value={ email }
@@ -57,6 +58,7 @@ class Login extends React.Component {
             name="email"
             onChange={ this.handleChange }
           />
+          <p />
           <input
             type="password"
             value={ password }
@@ -66,8 +68,10 @@ class Login extends React.Component {
             maxLength="6"
             onChange={ this.handleChange }
           />
+          <p />
           <Link to="/carteira">
             <button
+              className="css-button"
               type="submit"
               onClick={ this.handleChange }
               disabled={ isDisabled }
