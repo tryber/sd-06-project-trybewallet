@@ -9,6 +9,8 @@ export const login = (email) => ({
 
 export const GET_DATA = 'GET_DATA';
 export const SAVE = 'SAVE';
+export const ID_INCREMENT = 'ID_INCREMENT';
+export const TOTAL_FIELD = 'TOTAL_FIELD';
 
 function getData(responseJson) {
   return {
@@ -19,19 +21,16 @@ function getData(responseJson) {
 
 export function fetchCoinData() {
   return async (dispatch) => {
-    dispatch(getCoin());
-
     getCoin()
       .then((responseJson) => dispatch(getData(responseJson)));
   };
 }
 
-// export function fetchCoinData() {
-//   return (dispatch) => {
-//     getCoin()
-//       .then((responseJson) => dispatch(getData(responseJson)));
-//   };
-// }
+export function incrementaId() {
+  return {
+    type: ID_INCREMENT,
+  };
+}
 
 export function saveExpenses(expense) {
   return {
@@ -40,20 +39,22 @@ export function saveExpenses(expense) {
   };
 }
 
+export function totalField(expense) {
+  return {
+    type: TOTAL_FIELD,
+    expense,
+  };
+}
+
 export function newExpenses(expense) {
-  return async (dispatch, getState) => {
-    const {
-      wallet: {
-        expenses,
-      },
-    } = getState();
-    const id = expenses.length;
-    const exchangeRate = await getCoin();
-    console.log('chamando api');
+  return async (dispatch) => {
     dispatch(saveExpenses({
       ...expense,
-      exchangeRate,
-      id,
+      // exchangeRate,
+    }));
+    dispatch(incrementaId());
+    dispatch(totalField({
+      ...expense.value,
     }));
   };
 }

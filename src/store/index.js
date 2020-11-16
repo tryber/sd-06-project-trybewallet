@@ -9,7 +9,9 @@ const devTools = typeof window.__REDUX_DEVTOOLS_EXTENSION__ === 'undefined'
   : window.__REDUX_DEVTOOLS_EXTENSION__
     && window.__REDUX_DEVTOOLS_EXTENSION__();
 
-const composedThunk = compose(applyMiddleware(thunk),
-  devTools);
+const composedThunk = compose(
+  applyMiddleware(thunk),
+  window.devToolsExtension ? window.devToolsExtension() : (f) => f);
+
 const store = createStore(rootReducers, composedThunk);
 export default store;

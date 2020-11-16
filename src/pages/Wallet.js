@@ -15,6 +15,7 @@ class Wallet extends React.Component {
         currency: '',
         method: '',
         tag: '',
+        totalField: 0,
       },
     };
 
@@ -40,34 +41,30 @@ class Wallet extends React.Component {
     });
   }
 
-  async handleClick() {
-    const { newAction } = this.props;
+  async handleClick(e) {
+    e.preventDefault();
     const { expense } = this.state;
-    const { newExpences } = this.props;
     const { newExpencesWallet } = this.props;
-    console.log('Aqui', expense);
-
-    // await newAction(expense);
     await newExpencesWallet(expense);
-    this.setState({
-      expense: {
-        value: '',
-        description: '',
-        currency: '',
-        method: '',
-        tag: '',
-      },
-    });
+    // this.setState({
+    //   expense: {
+    //     value: '',
+    //     description: '',
+    //     currency: '',
+    //     method: '',
+    //     tag: '',
+    //   },
+    // });
   }
 
   render() {
-    const { value, description, currency, method, tag } = this.state;
+    const { value, description, currency, method, tag, totalField } = this.state.expense;
     const { email, currencies } = this.props;
     return (
       <div>
         <header>
           <p data-testid="email-field">{ email }</p>
-          <p data-testid="total-field">0</p>
+          <p data-testid="total-field">{ totalField }</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <hr />
@@ -124,6 +121,7 @@ class Wallet extends React.Component {
             Tag
             <select
               data-testid="tag-input"
+              name="tag"
               value={ tag }
               onChange={ this.handleChange }
             >
@@ -159,7 +157,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   // currencyFetch: () => dispatch(fetchCoinDataThunk()),
   
-  newExpencesWallet: () => dispatch(newExpenses()),
+  newExpencesWallet: (expense) => dispatch(newExpenses(expense)),
   currencyFetch: () => dispatch(fetchCoinData()),
   // newAction: (expense) => dispatch(saveExpenses(expense)),
 });
