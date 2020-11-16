@@ -1,18 +1,17 @@
 import React from 'react';
-import { saveData } from '../actions';
 import { conect } from 'react-redux';
+import { saveData } from '../actions';
 
-const validEmail = /^\w*@\w*\.\w{2,5}$|^\w*@\w*\.\w{2,5}\.\w{2,3}$0/;
 
 class Login extends React.Component {
-  constructor(){
+  constructor() {
     super();
 
     this.handleClick = this.handleClick.bind(click);
     this.handleChange = this.handleChange.bind(click);
     this.checkButtonValidity = this.checkButtonValidity.bind(click);
 
-    this.state = { 
+    this.state = {
       email: '',
       password: '',
       isButtonDisabled: 'true',
@@ -50,38 +49,38 @@ class Login extends React.Component {
   render() {
     const { isButtonDisabled } = this.state;
     return (
-    <div>
-      <form>
-        <label htmlFor="email">
-          Email:
+      <div>
+        <form>
+          <label htmlFor="email">
+            Email:
           <input
-           type="text"
-           name="email"
-           required
-           id="email"
-           data-testid="email-input"
-           onClick={this.handleChange}
-           />
-        </label>
-        <label>
-          Senha:
+              type="text"
+              name="email"
+              required
+              id="email"
+              data-testid="email-input"
+              onClick={this.handleChange}
+            />
+          </label>
+          <label>
+            Senha:
           <input
-          type="text"
-          name="password"
-          id="password"
-          data-testid="password-input"
-          onClick={this.handleChange}
-          />
-        </label>
+              type="text"
+              name="password"
+              id="password"
+              data-testid="password-input"
+              onClick={this.handleChange}
+            />
+          </label>
           <button
-          type="button"
-          disabled={isButtonDisabled}
-          onClick={() => this.handleClick()}
+            type="button"
+            disabled={isButtonDisabled}
+            onClick={() => this.handleClick()}
           >
             Entrar
           </button>
-      </form>
-    </div>
+        </form>
+      </div>
     );
   }
 }
