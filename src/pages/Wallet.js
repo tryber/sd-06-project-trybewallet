@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCoinData, saveExpenses, newExpenses, fetchCoinDataThunk } from '../actions';
+import { fetchCoinData, saveExpenses, newExpenses, fetchCoinDataThunk, getCurrencyAPI } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -26,6 +26,8 @@ class Wallet extends React.Component {
   componentDidMount() {
     const { currencyFetch } = this.props;
     currencyFetch();
+    getCurrencyAPI();
+
   }
 
   handleChange({ target }) {
@@ -33,10 +35,11 @@ class Wallet extends React.Component {
     const { name } = target;
     const { expense } = this.state;
     this.setState({
-
+      // total: expense.value,
       expense: {
         ...expense,
         [name]: value,
+        totalField: value,
       },
     });
   }
@@ -58,6 +61,7 @@ class Wallet extends React.Component {
   }
 
   render() {
+    const somaDespesa = 
     const { value, description, currency, method, tag, totalField } = this.state.expense;
     const { email, currencies } = this.props;
     return (
@@ -159,6 +163,7 @@ const mapDispatchToProps = (dispatch) => ({
   
   newExpencesWallet: (expense) => dispatch(newExpenses(expense)),
   currencyFetch: () => dispatch(fetchCoinData()),
+  getcurrencies: () => dispatch(getCurrencyAPI());
   // newAction: (expense) => dispatch(saveExpenses(expense)),
 });
 

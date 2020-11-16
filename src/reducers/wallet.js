@@ -4,7 +4,6 @@ const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   id: 0,
-  totalField: [],
 };
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -27,9 +26,10 @@ export default function (state = INITIAL_STATE, action) {
   case TOTAL_FIELD:
     return {
       ...state,
+      totalField: state.expenses.totalField + state.expenses.value,
       // numeros.reduce((total, numero) => total + numero, 0);
       // totalField: state.totalField.reduce((prev, elem) => prev + elem, 0)
-      totalField: [...state.expenses, { ...action.expense.value, totalField: state.totalField.value }],
+      // totalField: [...state.expenses, { ...action.expense.value, totalField: state.totalField.value }],
     };
   default:
     return state;
