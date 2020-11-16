@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { tableHeader, formatValue } from './walletHelpers';
+import { expenseTable, formatValue } from './fieldFormAndTable';
 import { deleteExpense } from '../actions';
 
 class ExpensesTable extends React.Component {
@@ -11,7 +11,7 @@ class ExpensesTable extends React.Component {
       <section className="expenses-container">
         <table>
           <tr>
-            {tableHeader.map((header) => (
+            {expenseTable.map((header) => (
               <th key={ header } className="table-header">{header}</th>))}
           </tr>
 

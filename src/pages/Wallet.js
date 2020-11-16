@@ -1,12 +1,12 @@
+// 2. Crie uma página para sua carteira com as seguintes características:
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchCurrencies, registerExpense } from '../actions';
-import { paymentMethods, tagOptions } from '../Components/walletHelpers';
-import ExpensesTable from '../Components/tableExpenses';
+import { paymentMethods, tagExpenses } from '../Components/fieldFormAndTable';
+import ExpensesTable from '../Components/spendTable';
 
 class Wallet extends React.Component {
-  //
   constructor() {
     super();
 
@@ -16,28 +16,54 @@ class Wallet extends React.Component {
       currency: '',
       method: '',
       tag: '',
+      isDisabled: true,
     };
 
     this.handleInputs = this.handleInputs.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.verifyRequiredFields = this.verifyRequiredFields.bind(this);
   }
 
+  // componentDidMount 1ª função a ser renderizada busca as moedas (despacha props para action)
   componentDidMount() {
     const { dispatchFetchCurrencies } = this.props;
     dispatchFetchCurrencies();
   }
 
+  // Verificar e habilita botão "Adicionar despesas"
+  verifyRequiredFields() {
+    const { value, description, currency, method, tag } = this.state;
+
+    const valueIsValid = value && value.length > 0 && value !== '0';
+    const descriptionIsValid = description && description.length > 0;
+    const currencyIsValid = currency && currency.length > 0;
+    const methodIsValid = method && method.length > 0;
+    const tagIsValid = tag && tag.length > 0;
+
+    this.setState({ isDisabled: !(
+      valueIsValid && descriptionIsValid && currencyIsValid && methodIsValid && tagIsValid
+    ) });
+  }
+
+  // Seta as informações
+  // Callback utilizada para atualizar estado imediatmente no inputs
   handleInputs(event) {
     const { value, id } = event.target;
     if (event.target.tagName === 'INPUT') {
-      this.setState({ [id]: value });
+      // Segundo paremetro setState espera uma Callback
+      this.setState({ [id]: value }, () => {
+        this.verifyRequiredFields();
+      });
     } else {
-      const { selectedIndex } = event.nativeEvent.target.options;
-      const selectedOption = event.nativeEvent.target.options[selectedIndex].innerText;
-      this.setState({ [id]: selectedOption });
+      const { selectedIndex } = event.target.options;
+      const selectedOption = event.target.options[selectedIndex].innerText;
+      this.setState({ [id]: selectedOption }, () => {
+        this.verifyRequiredFields();
+      });
     }
   }
 
+  // Adiciona despesas e desabilita botão "Adicionar despesas"
   handleButtonClick() {
     const { dispatchSaveExpense } = this.props;
     const { value, description, currency, method, tag } = this.state;
@@ -49,13 +75,14 @@ class Wallet extends React.Component {
       currency: '',
       method: '',
       tag: '',
+    }, () => {
+      this.verifyRequiredFields();
     });
   }
-  //
 
   render() {
     const { email, currencies } = this.props;
-    const { value, description } = this.state;
+    const { value, description, isDisabled } = this.state;
     return (
       <section>
         Carteira
@@ -63,9 +90,11 @@ class Wallet extends React.Component {
           <span data-testid="email-field">
             {email}
           </span>
+          <br />
           <span data-testid="total-field">
             0
           </span>
+          <br />
           <span data-testid="header-currency-field">
             BRL
           </span>
@@ -89,17 +118,18 @@ class Wallet extends React.Component {
           />
           <br />
           <select
-            data-testid="currency-input"
             placeholder="Moeda"
             onChange={ this.handleInputs }
             id="currency"
+            // data-testid="currency-input"
           >
-            <option disabled selected value>  Selecione a Moeda  </option>
+            <option>  Selecione a Moeda  </option>
             {currencies.map((currency) => (
               <option
                 key={ currency }
                 value={ currency }
-                data-testid={ currency }
+                data-testid="currency-input"
+
               >
                 {currency !== 'USDT' ? currency : null}
               </option>))}
@@ -127,8 +157,8 @@ class Wallet extends React.Component {
             onChange={ this.handleInputs }
             id="tag"
           >
-            <option disabled selected value>  Tipo de Despesa  </option>
-            {tagOptions.map((tag) => (
+            <option>  Tipo de Despesa  </option>
+            {tagExpenses.map((tag) => (
               <option
                 key={ tag }
                 value={ tag }
@@ -142,6 +172,7 @@ class Wallet extends React.Component {
           <button
             type="button"
             onClick={ this.handleButtonClick }
+            disabled={ isDisabled }
           >
             Adicionar despesa
           </button>
@@ -152,46 +183,24 @@ class Wallet extends React.Component {
   }
 }
 
+// mapStateToProps = mapeia as entidades armazenadas nos estados para props
 const mapStateToProps = (state) => ({
   email: state.user.email,
-  //
   currencies: state.wallet.currencies,
-  //
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
-  //
   dispatchFetchCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   dispatchSaveExpense: PropTypes.func.isRequired,
-  //
 };
 
-//
+// mapDispatchToProps = dispacha ação para o reducer através da action
 const mapDispatchToProps = (dispatch) => ({
   dispatchFetchCurrencies: () => dispatch(fetchCurrencies()),
   dispatchSaveExpense: (expenseData) => dispatch(registerExpense(expenseData)),
 });
 
+// connect = acessa store do Redux
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
-
-//
-// export default connect(mapStateToProps, null)(Wallet);
-
-// export default Wallet;
-
-// class Wallet extends React.Component {
-//   render() {
-//     const { nomeQueEuQuiser } = this.props;
-//     return <div>{ nomeQueEuQuiser }</div>;
-//   }
-// }
-
-// const mapStateToProps = (state) => ({
-//   nomeQueEuQuiser: state.wallet.helloWorld,
-// });
-
-// export default connect(
-//   mapStateToProps,
-// )(Wallet);

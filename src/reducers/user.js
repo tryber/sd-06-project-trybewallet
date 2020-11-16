@@ -18,21 +18,3 @@ function userReducers(state = INITIAL_STATE, action) {
 }
 
 export default userReducers;
-
-// const INITIAL_STATE = {
-//   user: {
-//     email: '',
-//   },
-// };
-
-// const userReducers = (state = INITIAL_STATE, action) => {
-//   // retorna um novo estado baseado no type da action
-//   switch (action.type) {
-//   case EMAIL_LOGIN:
-//     return { ...state, email: action.email };
-//   default:
-//     return state;
-//   }
-// };
-
-// export default userReducers;

@@ -1,8 +1,11 @@
+// Metodos de pagamentos
 export const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 
-export const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+// Categoria TAG para desespesa
+export const tagExpenses = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
-export const tableHeader = [
+// Tabela de Gastos
+export const expenseTable = [
   'Descrição',
   'Tag',
   'Método de pagamento',

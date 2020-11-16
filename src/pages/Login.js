@@ -1,9 +1,9 @@
+// 1. Crie uma página inicial de login com os seguintes campos e características:
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actionsEmailLogin, savePassword } from '../actions';
-// import userReducers from '../reducers/user';
 
 class Login extends React.Component {
   constructor() {
@@ -14,20 +14,11 @@ class Login extends React.Component {
       isDisabled: true,
     };
 
-    this.handleSignUp = this.handleSignUp.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.verifyEmailAndPassword = this.verifyEmailAndPassword.bind(this);
   }
 
-  handleSignUp(event) {
-    event.preventDefault();
-    const { sendEmail } = this.props;
-    const { email } = this.state;
-    sendEmail(email);
-    const { history } = this.props;
-    history.push('/carteira');
-  }
-
+  // Função que verifica formato do e-mail (.com) e senha de 6 dígitos
   verifyEmailAndPassword() {
     const { email, password } = this.state;
     const emailFormat = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
@@ -36,6 +27,7 @@ class Login extends React.Component {
     this.setState({ isDisabled: !(password.length >= passwordMinLength && emailFormat) });
   }
 
+  // Função que confirma verificação para habilitar butão "Entrar", dispacha, salva email e password
   handleChange({ target }) {
     this.setState({ [target.name]: target.value }, () => {
       this.verifyEmailAndPassword();
@@ -56,7 +48,7 @@ class Login extends React.Component {
     return (
       <div>
         <h1>Login</h1>
-        <form onSubmit={ this.handleSignUp }>
+        <form>
           <input
             type="text"
             value={ email }
@@ -77,7 +69,7 @@ class Login extends React.Component {
           <Link to="/carteira">
             <button
               type="submit"
-              onClick={ this.validateRegister }
+              onClick={ this.handleChange }
               disabled={ isDisabled }
             >
               Entrar
@@ -89,23 +81,17 @@ class Login extends React.Component {
   }
 }
 
-// const mapStateToProps = (state) => ({
-//   email: state.email,
-//   password: state.password,
-// });
-
+// Props Validation
 Login.propTypes = {
-  history: PropTypes.func.isRequired,
-  sendEmail: PropTypes.string.isRequired,
   dispatchSaveEmail: PropTypes.func.isRequired,
   dispatchSavePassword: PropTypes.func.isRequired,
 };
 
+// mapDispatchToProps = dispacha ação para o reducer através da action
 const mapDispatchToProps = (dispatch) => ({
   dispatchSaveEmail: (email) => dispatch(actionsEmailLogin(email)),
   dispatchSavePassword: (password) => dispatch(savePassword(password)),
 });
 
-// // // export default connect(mapStateToProps, mapDispatchToProps)(Login);
-
+// connect = acessa store do Redux
 export default connect(null, mapDispatchToProps)(Login);

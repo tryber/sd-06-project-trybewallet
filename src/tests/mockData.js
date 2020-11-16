@@ -1,3 +1,4 @@
+// API for do AR - MOCK - esboçar funcionalidade - simulação manual
 export const response = {
   USD: {
     code: 'USD',
