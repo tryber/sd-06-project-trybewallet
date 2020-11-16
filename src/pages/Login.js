@@ -1,33 +1,30 @@
 import React from 'react';
-import { conect } from 'react-redux';
-import { saveData } from '../actions';
-
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { storeEmail } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
-    this.handleClick = this.handleClick.bind(click);
-    this.handleChange = this.handleChange.bind(click);
-    this.checkButtonValidity = this.checkButtonValidity.bind(click);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.checkBtnValidity = this.checkBtnValidity.bind(this);
 
-    this.state = {
-      email: '',
-      password: '',
-      isButtonDisabled: 'true',
-    };
+    this.state = { email: '', password: '', isBtnDisabled: true, redirect: false };
   }
 
   handleClick() {
-    const { save, history } = this.props;
+    const { saveEmail } = this.props;
     const { email } = this.state;
-    save(email);
-    history.push('./carteira');
+    saveEmail(email);
+    this.setState({ redirect: true });
   }
 
-  checkButtonValidity() {
+  checkBtnValidity() {
     const { email, password } = this.state;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const testEmail = emailRegex.test(email);
     const passwordMinLength = 5;
     const testPassword = (password.length >= passwordMinLength);
@@ -37,56 +34,59 @@ class Login extends React.Component {
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({ [name]: value });
-    const buttonValidity = this.checkButtonValidity();
-    if (buttonValidity) {
-      this.setState({ isButtonDisabled: false });
+    const btnValidity = this.checkBtnValidity();
+    if (btnValidity) {
+      this.setState({ isBtnDisabled: false });
     } else {
-      this.setState({ isButtonDisabled: true });
+      this.setState({ isBtnDisabled: true });
     }
   }
 
-
   render() {
-    const { isButtonDisabled } = this.state;
+    const { isBtnDisabled, redirect } = this.state;
+    if (redirect) return <Redirect to="/carteira" />;
     return (
-      <div>
-        <form>
-          <label htmlFor="email">
-            Email:
+      <form>
+        <label htmlFor="email">
+          Email:
           <input
-              type="text"
-              name="email"
-              required
-              id="email"
-              data-testid="email-input"
-              onClick={this.handleChange}
-            />
-          </label>
-          <label>
-            Senha:
+            type="text"
+            required
+            name="email"
+            id="email"
+            data-testid="email-input"
+            onChange={ this.handleChange }
+          />
+        </label>
+        <label htmlFor="password">
+          Password:
           <input
-              type="text"
-              name="password"
-              id="password"
-              data-testid="password-input"
-              onClick={this.handleChange}
-            />
-          </label>
-          <button
-            type="button"
-            disabled={isButtonDisabled}
-            onClick={() => this.handleClick()}
-          >
-            Entrar
-          </button>
-        </form>
-      </div>
+            type="text"
+            required
+            name="password"
+            id="password"
+            data-testid="password-input"
+            onChange={ this.handleChange }
+          />
+        </label>
+        <button
+          type="button"
+          disabled={ isBtnDisabled }
+          onClick={ () => this.handleClick() }
+        >
+          Entrar
+        </button>
+      </form>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  save: (email) => dispatch(saveData(email)),
+  saveEmail: (email) => dispatch(storeEmail(email)),
 });
 
-export default conect(null, mapDispatchToProps)(Login);
+Login.propTypes = {
+  saveEmail: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
