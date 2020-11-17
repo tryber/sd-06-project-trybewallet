@@ -1,5 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom/extend-expect';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { response as mockData, initialStateHeader, initialStateWithExpenses } from './mockData';
 import App from '../App';
