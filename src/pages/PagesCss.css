@@ -1,0 +1,60 @@
+body {
+  text-align: -webkit-center;
+}
+
+.login-css {
+  background-color: green ;
+  width: 50%;
+  text-align: -webkit-center;
+  margin-top: 10%;
+  border: ridge;
+  border-top-width: 7px;
+  border-right-width: 7px;
+  border-bottom-width: 7px;
+  border-left-width: 7px;
+}
+
+.form-css {
+  text-align-last: center;
+}
+
+.css-button {
+  padding: 10px;
+  color: green;
+  border-radius: 10px;
+  font-weight: 900;
+  transition-duration: 0.8s;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.form-css-wallet, .header-css-wallet {
+  background-color: green ;
+  width: 50%;
+  text-align: -webkit-center;
+  margin-top: 1%;
+  border: ridge;
+  border-top-width: 7px;
+  border-right-width: 7px;
+  border-bottom-width: 7px;
+  border-left-width: 7px;
+  text-align-last: center;
+}
+
+.table-css-wallet {
+  /* background-color: green ;
+  width: 50%; */
+  text-align: -webkit-center;
+  margin-top: 1%;
+  border: ridge;
+  border-top-width: 7px;
+  border-right-width: 7px;
+  border-bottom-width: 7px;
+  border-left-width: 7px;
+  text-align-last: center;
+}
+
+.table-css-expenses, .table-expenses {
+  outline-style: auto;
+  text-align: center;
+}
