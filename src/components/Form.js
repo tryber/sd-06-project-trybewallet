@@ -5,11 +5,19 @@ class Form extends React.Component {
     return (
       <form>
         <label htmlFor="value">
-          R$
+          Valor
           <input
             data-testid="value-input"
             id="value"
             type="number"
+          />
+        </label>
+        <label htmlFor="description">
+          Descrição:
+          <input
+            data-testid="description-input"
+            id="description"
+            type="text"
           />
         </label>
       </form>
