@@ -384,7 +384,7 @@ describe('6 - [PÁGINA DA CARTEIRA] Crie um botão para deletar uma despesa da t
     expect(store.getState().wallet.expenses).toStrictEqual(newExpenses);
   });
 });
-
+/*
 describe('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela contendo as seguintes características:', () => {
   const initial = initialStateWithExpenses;
 
@@ -451,3 +451,4 @@ describe('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela contendo
     expect(store.getState().wallet.expenses).toStrictEqual(newExpenses);
   });
 });
+*/

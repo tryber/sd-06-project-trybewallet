@@ -1,0 +1,56 @@
+.Email {
+    width: 100%;
+    height: 55px;
+    border: 1px solid black;
+    background-color: #ffe0cc
+}
+
+.Despesas-totais {
+    width: 100%;
+    height: 55px;
+    border: 1px solid black; 
+}
+
+.flag {
+    width: 100%;
+    height: 55px;
+    border: 1px solid black;
+    background-color: #ffe0cc 
+}
+
+.input-valor-despesa {
+    border-radius: 10px;
+    width: 80px;
+    margin-left: 10px;
+    height: 30px;
+    margin-top: 10px;
+}
+
+.form {
+    width: 100%;
+    height: 60px;
+    border: 1px solid black;
+}
+
+.idd{
+    margin-left: 10px;
+}
+
+.input-descricao-despesa {
+    border-radius: 10px;
+    width: 200px;
+    margin-left: 10px;
+    height: 30px;
+    margin-top: 10px;
+}
+
+.button {
+    margin-top: 20px;
+    margin-left: 100px;
+    width: 239px;
+    height: 36px;
+    top: 124px;
+    left: -185px;
+    border-radius: 10px;
+    background-color: #b3ffb3
+}
