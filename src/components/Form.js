@@ -3,9 +3,16 @@ import React from 'react';
 class Form extends React.Component {
   render() {
     return (
-      <div>
-        <p>Formulário</p>
-      </div>
+      <form>
+        <label htmlFor="value">
+          R$
+          <input
+            data-testid="value-input"
+            id="value"
+            type="number"
+          />
+        </label>
+      </form>
     );
   }
 }
