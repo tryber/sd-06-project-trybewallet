@@ -1,0 +1,50 @@
+body {
+  margin: 5%;
+  background-color: #a8dadc;
+}
+
+.wallet-title {
+  color: white
+}
+
+.wallet-icon {
+  width: 30%;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5%;
+}
+
+.login-form {
+  flex-direction: column;
+  display: flex;
+  width: 30%;
+}
+
+button {
+  background-color: #023e8a;
+  border: none;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  margin: 3px;
+  border-radius: 5px;
+}
+
+button:disabled {
+  background-color: gray;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding-bottom: 2%;
+  width: 100%;
+  color: white;
+  text-align: center;
+}

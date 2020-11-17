@@ -1,0 +1,14 @@
+label {
+  margin: 3px;
+}
+
+input {
+  border: 1px solid lightslategrey;
+  border-radius: 5px;
+}
+
+select {
+  border: 1px solid lightslategrey;
+  background-color: white;
+  border-radius: 5px;
+}
