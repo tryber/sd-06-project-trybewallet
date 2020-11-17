@@ -1,0 +1,12 @@
+header {
+  font-size: 10pt;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 50px;
+}
+
+.header-info {
+  margin-right: 20px;
+}

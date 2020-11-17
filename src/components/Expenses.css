@@ -1,0 +1,50 @@
+.table-wrap {
+  display: flex;
+  justify-content: center;
+  font-size: 11pt;
+  color: rgb(20, 41, 43);
+}
+
+.table-wrap table {
+  width: 95%;
+}
+
+.th_items {
+  padding: 8px;
+}
+
+.table-titles {
+  height: 30px;
+  background-color: rgb(223, 240, 239);
+}
+
+.tr_items {
+  height: 30px;
+  text-align: center;
+}
+
+.tr_items:hover {
+  background-color: rgba(211, 240, 238, 0.308);
+}
+
+.edit-button, .del-button {
+  background-color: rgb(223, 190, 2);
+  border: none;
+  border-radius: 3px;
+  color: white;
+  padding: 5px 8px;
+  outline: none;
+  margin-right: 5px;
+}
+
+.del-button {
+  background-color: rgb(223, 2, 2);
+}
+
+.del-button:hover {
+  background-color: rgb(150, 0, 0);
+}
+
+.edit-button:hover {
+  background-color: rgb(190, 163, 6);
+}

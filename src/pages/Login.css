@@ -1,0 +1,80 @@
+a {
+  text-decoration: none;
+}
+
+.login-form {
+  background-color: white;
+  border: 2px solid rgb(33, 92, 107);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 20px;
+  width: 300px;
+  box-shadow: 0 0  4px rgb(10, 63, 63);
+}
+
+.login-form input {
+  border: 1px solid grey;
+  border-radius: 2px;
+  padding: 10px;
+  margin-top: 3px;
+  opacity: 0.5;
+  text-align: center;
+  font-size: 12pt;
+}
+
+.bt-send {
+  background-color: darkcyan;
+  border: 1px solid rgb(52, 134, 155);
+  border-radius: 2px;
+  color: white;
+  font-family: 'Inconsolata', sans-serif;
+  font-size: 14pt;
+  padding: 10px;
+  margin-top: 3px;
+  display: flex;
+  justify-content: center;
+}
+
+.bt-send a {
+  color: white;
+}
+
+.bt-send:hover {
+  background-color: rgb(18, 163, 163);
+}
+
+.bt-send:disabled {
+  background-color: rgb(177, 177, 177);
+  border: 1px solid rgb(150, 150, 150);
+  color: rgb(216, 216, 216);
+}
+
+.logo-vbwallet {
+  text-align: center;
+  padding: 10px;
+  font-family: 'Inconsolata', sans-serif;
+  font-size: 40pt;
+  margin-bottom: 30px;
+}
+
+.logo-small {
+  font-size: 22pt;
+  margin-bottom: 0;
+}
+
+.vb-logo {
+  color: darkcyan;
+}
+
+.wallet-logo {
+  color: rgb(37, 172, 172);
+}
+
+.error-msg {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 5px;
+  color: tomato;
+  padding: 12px 20px;
+  margin-bottom: 10px;
+}
