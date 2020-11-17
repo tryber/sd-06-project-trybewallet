@@ -1,0 +1,19 @@
+body {
+  text-align: center;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0px;
+  font-size: 18px;
+  color: rgb(233, 196, 106);
+  background-color: rgb(38, 70, 83);
+  height: 50px;
+}
+
+.header-child {
+  margin: 20px;
+}

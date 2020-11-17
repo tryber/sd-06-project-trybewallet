@@ -1,0 +1,25 @@
+body {
+  text-align: center;
+}
+
+.expenses-container {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: gray;
+  height: 60px;
+}
+
+.expense-input, .currency-select, .method-select, .tag-select {
+  margin: 15px 10px;
+  font-size: 15px;
+}
+
+.btn-expense {
+  cursor: pointer;
+  border: none;
+  background-color: darkgray;
+  color: white;
+  font-size: 15px;
+  margin: 4px 2px;
+  padding: 5px 5px;
+}

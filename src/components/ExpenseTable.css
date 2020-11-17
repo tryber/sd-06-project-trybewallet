@@ -1,0 +1,44 @@
+body {
+  text-align: center;
+}
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.expense-table {
+  width: 100%;
+}
+
+.expense-table th, .expense-table td {
+  text-align: center; 
+  padding: 0.25em;
+}
+
+tr.table-row-heading {
+  background-color: rgb(191, 192, 192);
+}
+
+.expense-table tr { 
+  border-bottom: 1px solid #DDD;
+}
+
+td.edit-btn, td.delete-btn { 
+  text-align: right;
+}
+
+button { 
+  border-radius: 3px; 
+  border: none; 
+  margin: 0 0.25em; 
+  transition: all 0.3s;
+}
+
+button:hover { 
+  box-shadow: 0 0 4px rgba(3,3,3,0.8); 
+  opacity: 0.9;
+}
+
