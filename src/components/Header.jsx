@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import trybeWallet from '../pages/trybeWallet.png';
+import './header.css';
 
 class Header extends React.Component {
   render() {
@@ -12,7 +13,7 @@ class Header extends React.Component {
         <Link className="header-link" to="/">
           <img src={ trybeWallet } alt="Logo" width="100px" />
         </Link>
-        <section data-testid="email-field">{ `Email:${email}` }</section>
+        <section data-testid="email-field">{ `Email: ${email}` }</section>
         <section data-testid="total-field">
           Despesa Total: R$
           {expenses.reduce((acc, expense) => {

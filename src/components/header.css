@@ -7,12 +7,3 @@
   justify-content: space-between;
   padding: 8px;
 }
-
-.form {
-  align-items: baseline;
-  background-color: darkgray;
-  display: flex;
-  flex-direction: row;
-  height: 80px;
-  justify-content: space-between;
-}

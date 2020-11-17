@@ -39,11 +39,11 @@ export const fetchAddCurrency = (expense) => async (dispatch, getState) => {
 };
 
 // tentando já passar próximo requisito
-export function deleteExpense(idExpense) {
+export function deleteExpense(expenseId) {
   return (dispatch, getState) => {
     const { expenses } = getState().wallet;
     const expensesFiltered = expenses
-      .filter((expense) => expense.id !== idExpense);
+      .filter((expense) => expense.id !== expenseId);
     dispatch(filteredExpenses(expensesFiltered));
   };
 }

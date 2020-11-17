@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchAddCurrency, fetchCurrencies } from '../actions';
-import '../pages/wallet.css';
+import './form.css';
 
 class Form extends React.Component {
   constructor(props) {
@@ -45,8 +45,20 @@ class Form extends React.Component {
           <input
             type="text"
             data-testid="value-input"
+            id="value"
             name="value"
             value={ value }
+            onChange={ this.handleChange }
+          />
+        </label>
+        <label htmlFor="valor">
+          Descrição
+          <input
+            type="text"
+            data-testid="description-input"
+            value={ description }
+            id="description"
+            name="description"
             onChange={ this.handleChange }
           />
         </label>
@@ -55,6 +67,7 @@ class Form extends React.Component {
           <select
             data-testid="currency-input"
             value={ currency }
+            id="currency"
             name="currency"
             onChange={ this.handleChange }
           >
@@ -69,6 +82,7 @@ class Form extends React.Component {
         <label htmlFor="method">
           <select
             data-testid="method-input"
+            id="method"
             name="method"
             value={ method }
             onChange={ this.handleChange }
@@ -82,6 +96,7 @@ class Form extends React.Component {
         <label htmlFor="tag">
           <select
             data-testid="tag-input"
+            id="tag"
             name="tag"
             value={ tag }
             onChange={ this.handleChange }
@@ -92,16 +107,6 @@ class Form extends React.Component {
             <option>Transporte</option>
             <option>Saúde</option>
           </select>
-        </label>
-        <label htmlFor="valor">
-          Descrição
-          <input
-            type="text"
-            data-testid="description-input"
-            value={ description }
-            name="description"
-            onChange={ this.handleChange }
-          />
         </label>
         <button
           type="button"
@@ -121,7 +126,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrencies: () => dispatch(fetchCurrencies()),
-  sendExpense: (expense) => dispatch(fetchAddCurrency(expense)),
+  sendExpense: (expenses) => dispatch(fetchAddCurrency(expenses)),
 });
 
 Form.propTypes = {

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { deleteExpense } from '../actions';
+import './table.css';
 
 const titles = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
   'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
@@ -20,7 +21,7 @@ class Table extends React.Component {
   render() {
     const { expenses } = this.props;
     return (
-      <table id="tbl" border="1">
+      <table border="1">
         <thead>
           <tr>
             {titles.map((title) => <td key={ title }>{ title }</td>)}
@@ -55,13 +56,6 @@ class Table extends React.Component {
             );
           })}
         </tbody>
-        <tfoot>
-          <tr>
-            <td>
-              TOTAL
-            </td>
-          </tr>
-        </tfoot>
       </table>
     );
   }
