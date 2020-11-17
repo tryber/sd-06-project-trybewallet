@@ -1,4 +1,4 @@
-import { ADD_EXPENSES, SELECT_CURRENCY } from '../actions';
+import { ADD_EXPENSES, SELECT_CURRENCY, FILTERED_EXPENSES } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -14,6 +14,8 @@ function wallet(state = INITIAL_STATE, action) {
     };
   case SELECT_CURRENCY:
     return { ...state, currencies: action.currencies };
+  case FILTERED_EXPENSES:
+    return { ...state, expenses: action.expensesFiltered };
   default:
     return state;
   }

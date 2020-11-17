@@ -12,7 +12,7 @@ class Header extends React.Component {
         <Link className="header-link" to="/">
           <img src={ trybeWallet } alt="Logo" width="100px" />
         </Link>
-        <section data-testid="email-field">{ email }</section>
+        <section data-testid="email-field">{ `Email:${email}` }</section>
         <section data-testid="total-field">
           Despesa Total: R$
           {expenses.reduce((acc, expense) => {
@@ -21,9 +21,7 @@ class Header extends React.Component {
             const costInBRL = exchangeRate * value;
             return acc + parseFloat(costInBRL);
           }, 0).toFixed(2)}
-        </section>
-        <section>
-          <span data-testid="header-currency-field">{`${'BRL'}`}</span>
+          <span data-testid="header-currency-field">{` ${'BRL'}`}</span>
         </section>
       </nav>
     );

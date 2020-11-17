@@ -28,6 +28,7 @@ export const fetchCurrencies = () => async (dispatch) => {
   dispatch(selectCurrencies(currenciesUSDT));
 };
 
+// lógica do Gui, em auxílio no plantão do Ícaro
 export const fetchAddCurrency = (expense) => async (dispatch, getState) => {
   const { expenses } = getState().wallet;
   const firstID = 0;
@@ -37,6 +38,7 @@ export const fetchAddCurrency = (expense) => async (dispatch, getState) => {
   dispatch(addExpenses(saveExpense));
 };
 
+// tentando já passar próximo requisito
 export function deleteExpense(idExpense) {
   return (dispatch, getState) => {
     const { expenses } = getState().wallet;
