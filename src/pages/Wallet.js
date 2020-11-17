@@ -232,7 +232,6 @@ Wallet.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   editData: PropTypes.func.isRequired,
   addData: PropTypes.func.isRequired,
-  rates: PropTypes.arrayOf(PropTypes.string).isRequired,
   total: PropTypes.number,
   email: PropTypes.string.isRequired,
 };
