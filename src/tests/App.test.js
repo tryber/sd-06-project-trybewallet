@@ -141,7 +141,7 @@ describe('3 - [PÁGINA DA CARTEIRA] Crie um header para a página de carteira co
   });
 });
 
-describe.only('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
+describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
   test('Um campo para adicionar o valor da despesa', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const valueInput = await screen.findByTestId('value-input');
@@ -268,8 +268,6 @@ describe.only('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adiciona
     userEvent.type(descriptionInput, 'Vinte euros');
     fireEvent.click(addButton);
     expect(mockedExchange).toBeCalledTimes(3);
-    
-    console.log("teste");
 
     const expectedStateExpense2 = [
       {
