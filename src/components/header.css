@@ -1,0 +1,9 @@
+.header-nav {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 50px;
+  justify-content: space-between;
+  padding: 8px;
+}

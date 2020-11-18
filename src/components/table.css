@@ -1,0 +1,13 @@
+thead {
+  background-color:  #48A46A;
+  color: white;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+}
+
+ tbody button {
+ width: 50%; 
+}
