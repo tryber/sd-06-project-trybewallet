@@ -9,7 +9,7 @@ class Form extends React.Component {
     super(props);
 
     this.state = {
-      id: 0,
+      id: '',
       value: 0,
       description: '',
       currency: 'USD',

@@ -25,31 +25,34 @@ export const actionLogin = (email) => ({ type: LOGIN, email });
 
 export const editingExpense = (expenseId) => ({ type: EDITING_EXPENSE, expenseId });
 
-export const fetchCurrencies = () => async (dispatch) => {
-  const responseFromAPI = await fetchAPI();
-  const currencies = Object.keys(responseFromAPI);
-  const currenciesUSDT = currencies.filter((coin) => coin !== 'USDT');
-  dispatch(selectCurrencies(currenciesUSDT));
-};
+export function fetchCurrencies() {
+  return async (dispatch) => {
+    const responseFromAPI = await fetchAPI();
+    const currencies = Object.keys(responseFromAPI);
+    const currenciesUSDT = currencies.filter((coin) => coin !== 'USDT');
+    dispatch(selectCurrencies(currenciesUSDT));
+  };
+}
 
 // lógica do Gui, em auxílio no plantão do Ícaro
-export const fetchAddCurrency = (expenseUser) => async (dispatch, getState) => {
-  const { expenses } = getState().wallet;
-  const apiRequest = await fetchAPI();
-  let idExpense = 0;
-  if (expenses.length === 0) {
-    idExpense = 0;
-  } else {
-    idExpense = expenses[expenses.length - 1].id + 1;
-  }
-  const saveExpense = {
-    id: idExpense,
-    ...expenseUser,
-    exchangeRates: apiRequest,
+export function fetchAddCurrency(expenseUser) {
+  return async (dispatch, getState) => {
+    const responseFromAPI = await fetchAPI();
+    const { expenses } = getState().wallet;
+    let idExpense = 0;
+    if (expenses.length === 0) {
+      idExpense = 0;
+    } else {
+      idExpense = expenses[expenses.length - 1].id + 1;
+    }
+    const saveExpense = {
+      ...expenseUser,
+      id: idExpense,
+      exchangeRates: responseFromAPI,
+    };
+    dispatch(addExpenses(saveExpense));
   };
-  dispatch(addExpenses(saveExpense));
-};
-
+}
 // tentando já passar próximo requisito
 export function deleteExpense(expenseId) {
   return (dispatch, getState) => {
