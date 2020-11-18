@@ -79,9 +79,9 @@ class Wallet extends React.Component {
             placeholder="Valor="
           />
 
-          <label htmlFor="currency">
+          <span>
             Moeda
-          </label>
+          </span>
           <select
             data-testid="currency-input"
             name="currency"
@@ -100,9 +100,9 @@ class Wallet extends React.Component {
             ))}
           </select>
 
-          <label htmlFor="method">
+          <span>
             Método de pagamento
-          </label>
+          </span>
           <select
             id="method"
             data-testid="method-input"
@@ -116,13 +116,13 @@ class Wallet extends React.Component {
             <option value="Cartão de débito">Cartão de débito</option>
           </select>
 
-          <label htmlFor="tag">
+          <span>
             Tag
-          </label>
+          </span>
           <select
             data-testid="tag-input"
             name="tag"
-            value={tag}
+            value={ tag }
             onChange={ this.handleChange }
           >
             <option value="Initial">Escolha</option>
