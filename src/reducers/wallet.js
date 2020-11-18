@@ -1,9 +1,10 @@
-import { GET_DATA, SAVE, ID_INCREMENT, TOTAL_FIELD } from '../actions';
+import { GET_DATA, SAVE, ID_INCREMENT, TOTAL_FIELD, EXCHANGE_DATA } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   id: 0,
+  totalField: 0,
 };
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -26,10 +27,12 @@ export default function (state = INITIAL_STATE, action) {
   case TOTAL_FIELD:
     return {
       ...state,
-      totalField: state.expenses.totalField + state.expenses.value,
-      // numeros.reduce((total, numero) => total + numero, 0);
-      // totalField: state.totalField.reduce((prev, elem) => prev + elem, 0)
-      // totalField: [...state.expenses, { ...action.expense.value, totalField: state.totalField.value }],
+      totalField: (parseFloat((state.expenses)
+        .reduce(((acc, elem) => acc + (elem.value) * elem.exchangeRates[elem.currency].ask), 0)).toFixed(2)),
+    };
+  case EXCHANGE_DATA:
+    return {
+      ...state,
     };
   default:
     return state;

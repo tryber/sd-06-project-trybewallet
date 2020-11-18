@@ -12,6 +12,7 @@ export const SAVE = 'SAVE';
 export const ID_INCREMENT = 'ID_INCREMENT';
 export const TOTAL_FIELD = 'TOTAL_FIELD';
 export const CURRENCIES = 'CURRENCIES';
+export const EXCHANGE_DATA = 'EXCHANGE_DATA';
 
 function getData(responseJson) {
   return {
@@ -47,30 +48,21 @@ export function totalField(expense) {
   };
 }
 
-export const currenciesApi = (currencies) => ({
-  type: 'CURRENCIES',
-  currencies,
+export const exchangeData = (exchangeRates) => ({
+  type: EXCHANGE_DATA,
+  exchangeRates,
 });
-
-export function getCurrency() {
-  const currencies = fetchCoinData;
-  dispatch(currencies);
-}
-
-export const getCurrencyAPI = () => async (dispatch) => {
-  const responseAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
-  const currencies = await responseAPI.json();
-  dispatch(currenciesAPI(currencies));
-};
 
 export function newExpenses(expense) {
   return async (dispatch) => {
+    const exchangeRates = await getCoin();
+
     dispatch(saveExpenses({
       ...expense,
-      // exchangeRate,
+      exchangeRates,
     }));
-    dispatch(fetchCoinData());
+    // dispatch(fetchCoinData());
     dispatch(incrementaId());
-    dispatch(totalField());
+    dispatch(totalField(expense));
   };
 }
