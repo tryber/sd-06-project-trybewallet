@@ -34,6 +34,13 @@ export const deleteAction = (id) => ({
   id,
 });
 
+export const EDIT_EXPENSES = 'EDIT_EXPENSES';
+
+export const editAction = (expense) => ({
+  type: EDIT_EXPENSES,
+  expense,
+});
+
 export function fetchExchangeRates(expenseData) {
   return async (dispatch) => {
     const baseURL = 'https://economia.awesomeapi.com.br/json/all';

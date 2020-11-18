@@ -18,3 +18,7 @@ theatabled {
   border-style: inset;
   border-width: 5px;
 }
+
+.btn-submit {
+  color:black;
+}
