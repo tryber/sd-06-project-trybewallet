@@ -41,7 +41,7 @@ class Form extends React.Component {
           </select>
         </label>
         <label htmlFor="tag">
-          Tipo de despeza:
+          Categoria de despesa:
           <select
             id="tag"
             type="text"
