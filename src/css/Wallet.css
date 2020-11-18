@@ -1,0 +1,37 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding: 10px 15px 0px 15px;
+  border-width: 0px 0px 1px 10px;
+  border-style: solid;
+  border-color: rgb(187, 185, 185);
+  background-color: rgb(247, 248, 247);
+  box-shadow: 2px 5px #888888;
+}
+
+.form {
+  display: flex;
+  padding: 10px;
+  color: rgb(235, 232, 232);
+  font-size: 1.2em;
+  align-items: center;
+}
+
+.form-control {
+  margin-right: 20px;
+  margin-left: 5px;
+}
+
+.bold {
+  font-weight: bolder;
+}
+
+.alert {
+  background-color: rgb(190, 190, 190);
+  height: 50px;
+  color: red;
+  text-align: center;
+  font-size: 1.3em;
+}
