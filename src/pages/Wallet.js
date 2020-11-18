@@ -55,7 +55,8 @@ class Wallet extends React.Component {
           currency: 'USD',
           method: '',
           tag: '',
-    }});
+        }
+      });
     }
   }
 
