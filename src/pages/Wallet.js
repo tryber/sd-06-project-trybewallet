@@ -66,7 +66,7 @@ class Wallet extends React.Component {
       <div>
         <header>
           <p data-testid="email-field">{ email }</p>
-          <p data-testid="total-field">{ totalField }</p>
+          <p data-testid="total-field">{ totalField || '0' }</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <hr />
