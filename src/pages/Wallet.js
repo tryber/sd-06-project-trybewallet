@@ -11,12 +11,11 @@ class Wallet extends React.Component {
 
     this.state = {
       expense: {
-        value: 0,
+        value: '',
         description: '',
-        currency: '',
+        currency: 'USD',
         method: '',
         tag: '',
-        totalField: 0,
       },
     };
 
@@ -37,7 +36,8 @@ class Wallet extends React.Component {
     this.setState({
       expense: {
         ...expense,
-        [name]: name === 'value' ? (1 * value) : value,
+        // [name]: name === 'value' ? (1 * value) : value,
+        [name]: value,
       },
     });
   }
@@ -46,12 +46,24 @@ class Wallet extends React.Component {
     e.preventDefault();
     const { expense } = this.state;
     const { newExpencesWallet } = this.props;
-    await newExpencesWallet(expense);
+    if (expense.value && expense.description && expense.tag !== 0) {
+      await newExpencesWallet(expense);
+      this.setState({
+        expense: {
+          value: '',
+          description: '',
+          currency: 'USD',
+          method: '',
+          tag: '',
+        },
+      });
+    }
   }
 
   render() {
     // const { value, description, currency, method, tag } = this.state;
-    const { currency, method, tag } = this.state;
+    const { expense } = this.state;
+    const { value, description, currency, method, tag } = expense;
     const { email, currencies, totalField } = this.props;
     return (
       <div>
@@ -69,6 +81,7 @@ class Wallet extends React.Component {
             onChange={ this.handleChange }
             data-testid="description-input"
             placeholder="Descrição="
+            value={ description }
           />
 
           <input
@@ -77,11 +90,12 @@ class Wallet extends React.Component {
             onChange={ this.handleChange }
             data-testid="value-input"
             placeholder="Valor="
+            value={ value }
           />
 
-          <label htmlFor="currency">
+          <span>
             Moeda
-          </label>
+          </span>
           <select
             data-testid="currency-input"
             name="currency"
@@ -100,9 +114,9 @@ class Wallet extends React.Component {
             ))}
           </select>
 
-          <label htmlFor="method">
+          <span>
             Método de pagamento
-          </label>
+          </span>
           <select
             id="method"
             data-testid="method-input"
@@ -116,13 +130,13 @@ class Wallet extends React.Component {
             <option value="Cartão de débito">Cartão de débito</option>
           </select>
 
-          <label htmlFor="tag">
+          <span>
             Tag
-          </label>
+          </span>
           <select
             data-testid="tag-input"
             name="tag"
-            value={tag}
+            value={ tag }
             onChange={ this.handleChange }
           >
             <option value="Initial">Escolha</option>
@@ -167,3 +181,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
+
+// totalField
+// handleclick

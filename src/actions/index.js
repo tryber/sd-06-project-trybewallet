@@ -63,7 +63,7 @@ export const exchangeData = (exchangeRates) => ({
 export const delExpense = (expense) => ({ //-------------------------------------
   type: 'DEL_EXPENSE',
   expense,
-  // convValue,
+  convValue,
 });
 
 // export function getCurrency() {
