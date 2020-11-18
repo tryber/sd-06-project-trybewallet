@@ -14,6 +14,7 @@ const INITIAL_STATE = {
   id: 0,
   totalField: 0,
 };
+
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
   case GET_DATA:
@@ -22,11 +23,13 @@ export default function (state = INITIAL_STATE, action) {
       currencies: Object.keys(action.responseJson)
         .filter((coin) => coin !== 'USDT'),
     };
+
   case SAVE:
     return {
       ...state,
       expenses: [...state.expenses, { ...action.expense, id: state.id }],
     };
+
   case ID_INCREMENT:
     return {
       ...state,

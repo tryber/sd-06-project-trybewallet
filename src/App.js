@@ -18,4 +18,4 @@ export default App;
 // youtube = tantaum de canal - principal rocketseat
 // foruns em redes sociais
 // discord = tantaum de gente
-// agradecimento especial a Paulo Lins!
+// agradecimento especial a Paulo Lins, sem ele nao tinha saido do zero
