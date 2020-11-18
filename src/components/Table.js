@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { delExpense } from '../actions';
+// import { delExpense } from '../actions';
+import * as actions from './actions';
 
 class Table extends Component {
   constructor() {
     super();
-    this.renderTable = this.renderTable.bind(this);
+    this.tableBody = this.tableBody.bind(this);
   }
 
-  renderTable(expense) {
+  tableBody(expense) {
     const { delExpense } = this.props;
     const {
       id,
@@ -77,7 +78,7 @@ class Table extends Component {
         </thead>
         <tbody>
           {expenses.length !== 0
-          && expenses.map((expense) => this.renderTable(expense))}
+          && expenses.map((expense) => this.tableBody(expense))}
         </tbody>
       </table>
     );
