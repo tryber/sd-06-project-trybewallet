@@ -1,7 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { response as mockData, initialStateHeader, initialStateWithExpenses } from './mockData';
+import { response as mockData, initialStateHeader, initialStateWithexpenses } from './mockData';
 import App from '../App';
 import Wallet from '../pages/Wallet';
 
@@ -244,7 +244,7 @@ describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma
     fireEvent.click(addButton);
     expect(mockedExchange).toBeCalledTimes(2);
 
-    const expectedStateExpense = [
+    const expectedStateexpenses = [
       {
         id: 0,
         value: '10',
@@ -259,7 +259,7 @@ describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma
     await waitFor(() => {
       expect(valueInput).toContainHTML(0);
     });
-    expect(store.getState().wallet.expenses).toStrictEqual(expectedStateExpense);
+    expect(store.getState().wallet.expenses).toStrictEqual(expectedStateexpenses);
 
     userEvent.type(valueInput, '20');
     userEvent.selectOptions(currencyInput, 'EUR');
@@ -269,7 +269,7 @@ describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma
     fireEvent.click(addButton);
     expect(mockedExchange).toBeCalledTimes(3);
 
-    const expectedStateExpense2 = [
+    const expectedStateexpenses2 = [
       {
         id: 0,
         value: '10',
@@ -293,7 +293,7 @@ describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma
     await waitFor(() => {
       expect(valueInput).toContainHTML(0);
     });
-    expect(store.getState().wallet.expenses).toStrictEqual(expectedStateExpense2);
+    expect(store.getState().wallet.expenses).toStrictEqual(expectedStateexpenses2);
 
     const totalField = screen.getByTestId('total-field');
     expect(totalField).toContainHTML('187.12')
@@ -301,7 +301,7 @@ describe('4 - [PÁGINA DA CARTEIRA] Desenvolva um formulário para adicionar uma
 });
 
 describe('5 - [PÁGINA DA CARTEIRA] Desenvolva uma tabela com os gastos contendo as seguintes características:', () => {
-  const initial = initialStateWithExpenses;
+  const initial = initialStateWithexpenses;
 
   test('A tabela deve possuir um cabeçalho com os campos Descrição, Tag, Método de pagamento, Valor, Moeda, Câmbio utilizado, Valor convertido e Moeda de conversão', () => {
     renderWithRouterAndStore(<Wallet />, '/carteira', initial);
@@ -349,7 +349,7 @@ describe('5 - [PÁGINA DA CARTEIRA] Desenvolva uma tabela com os gastos contendo
 });
 
 describe('6 - [PÁGINA DA CARTEIRA] Crie um botão para deletar uma despesa da tabela contendo as seguintes características:', () => {
-  const initial = initialStateWithExpenses;
+  const initial = initialStateWithexpenses;
 
   test('O botão deve estar dentro do último item da linha da tabela e deve possuir `data-testid="delete-btn"`', () => {
     renderWithRouterAndStore(<Wallet />, '/carteira', initial);
@@ -369,7 +369,7 @@ describe('6 - [PÁGINA DA CARTEIRA] Crie um botão para deletar uma despesa da t
     expect(screen.getByRole('cell', { name: '6.57' })).toBeInTheDocument();
     expect(screen.getByRole('cell', { name: '131.37' })).toBeInTheDocument();
     expect(screen.getByRole('cell', { name: 'Real' })).toBeInTheDocument();
-    const newExpenses = [
+    const newexpenses = [
       {
         id: 1,
         value: '20',
@@ -381,12 +381,12 @@ describe('6 - [PÁGINA DA CARTEIRA] Crie um botão para deletar uma despesa da t
       },
     ];
 
-    expect(store.getState().wallet.expenses).toStrictEqual(newExpenses);
+    expect(store.getState().wallet.expenses).toStrictEqual(newexpenses);
   });
 });
 
 describe('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela contendo as seguintes características:', () => {
-  const initial = initialStateWithExpenses;
+  const initial = initialStateWithexpenses;
 
   test('O botão deve estar dentro do último item da linha da tabela e deve possuir `data-testid="edit-btn"`', () => {
     renderWithRouterAndStore(<Wallet />, '/carteira', initial);
@@ -427,7 +427,7 @@ describe('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela contendo
     expect(screen.getAllByRole('cell', { name: '420.41' })[0]).toBeInTheDocument();
     expect(screen.getAllByRole('cell', { name: 'Real' })[0]).toBeInTheDocument();
 
-    const newExpenses = [
+    const newexpenses = [
       {
         id: 0,
         value: '100',
@@ -448,6 +448,6 @@ describe('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela contendo
       },
     ];
 
-    expect(store.getState().wallet.expenses).toStrictEqual(newExpenses);
+    expect(store.getState().wallet.expenses).toStrictEqual(newexpenses);
   });
 });
