@@ -56,8 +56,8 @@ class Wallet extends React.Component {
     return (
       <div>
         <header>
-          <p data-testid="email-field">{ email }</p>
-          <p data-testid="total-field" Value="0">{ totalField }</p>
+          <p data-testid="email-field">{email}</p>
+          <p data-testid="total-field" Value="0">{totalField}</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <h1>TrybeWallet</h1>
@@ -66,7 +66,7 @@ class Wallet extends React.Component {
           <input
             type="text"
             name="description"
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
             data-testid="description-input"
             placeholder="Descrição="
           />
@@ -74,62 +74,67 @@ class Wallet extends React.Component {
           <input
             type="number"
             name="value"
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
             data-testid="value-input"
             placeholder="Valor="
           />
 
-          <label htmlFor="moeda">
+          <label htmlFor="currency">
             Moeda
-            <select
-              data-testid="currency-input"
-              name="currency"
-              value={ currency }
-              onChange={ this.handleChange }
-            >
-              <option>Escolha</option>
-              {currencies.map((moeda) => (
-                <option
-                  data-testid={ moeda }
-                  value={ moeda }
-                  key={ moeda }
-                >
-                  {moeda}
-                </option>
-              ))}
-            </select>
           </label>
-          <label htmlFor="met_pagamento">
+
+          <select
+            data-testid="currency-input"
+            name="currency"
+            value={currency}
+            onChange={this.handleChange}
+          >
+            <option>Escolha</option>
+            {currencies.map((moeda) => (
+              <option
+                data-testid={moeda}
+                value={moeda}
+                key={moeda}
+              >
+                {moeda}
+              </option>
+            ))}
+          </select>
+
+          <label htmlFor="method">
             Método de pagamento
-            <select
-              data-testid="method-input"
-              name="method"
-              value={ method }
-              onChange={ this.handleChange }
-            >
-              <option value="initial">Escolha</option>
-              <option value="bill">Dinheiro</option>
-              <option value="credit">Cartão de crédito</option>
-              <option value="debt">Cartão de débito</option>
-            </select>
           </label>
+          <select
+            data-testid="method-input"
+            name="method"
+            value={method}
+            onChange={this.handleChange}
+          >
+            <option value="Initial">Escolha</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
+          </select>
+
+
           <label htmlFor="tag">
             Tag
-            <select
-              data-testid="tag-input"
-              name="tag"
-              value={ tag }
-              onChange={ this.handleChange }
-            >
-              <option value="initial">Escolha</option>
-              <option value="alimentacao">Alimentação</option>
-              <option value="lazer">Lazer</option>
-              <option value="trabalho">Trabalho</option>
-              <option value="trasporte">Transporte</option>
-              <option value="saude">Saúde</option>
-            </select>
           </label>
-          <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
+          <select
+            data-testid="tag-input"
+            name="tag"
+            value={tag}
+            onChange={this.handleChange}
+          >
+            <option value="Initial">Escolha</option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Trasporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
+          </select>
+
+          <button type="button" onClick={this.handleClick}>Adicionar despesa</button>
         </form>
         <Table />
       </div>

@@ -97,5 +97,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(Table);
 
 Table.propTypes = {
   expenses: PropTypes.objectOf().isRequired,
-  delExpense: PropTypes.func.isRequired,
+  delExpenseTst: PropTypes.func.isRequired,
 };
