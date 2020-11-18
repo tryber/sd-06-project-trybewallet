@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { delExpense } from '../actions';
-import * as actions from './actions';
+import { delExpense } from '../actions';
+// import * as actions from '../actions';
+// import { delExpense } as actions from '../actions';
 
 class Table extends Component {
   constructor() {
