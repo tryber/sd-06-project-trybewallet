@@ -5,7 +5,7 @@ class Form extends React.Component {
     return (
       <form>
         <label htmlFor="value">
-          Valor
+          Valor:
           <input
             data-testid="value-input"
             id="value"
@@ -19,6 +19,26 @@ class Form extends React.Component {
             id="description"
             type="text"
           />
+        </label>
+        <label htmlFor="currency">
+          Moeda:
+          <input
+            data-testid="currency-input"
+            id="currency"
+            type="text"
+          />
+        </label>
+        <label htmlFor="method">
+          Método de pagamento:
+          <select
+            id="method"
+            type="text"
+            data-testid="method-input"
+          >
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
+          </select>
         </label>
       </form>
     );
