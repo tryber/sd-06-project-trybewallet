@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchAddCurrency, fetchCurrencies } from '../actions';
+import { fetchAddCurrency, fetchCurrencies, editExpense } from '../actions';
 import './form.css';
 
 class Form extends React.Component {
@@ -9,7 +9,7 @@ class Form extends React.Component {
     super(props);
 
     this.state = {
-      id: '',
+      id: 0,
       value: 0,
       description: '',
       currency: 'USD',
@@ -18,7 +18,7 @@ class Form extends React.Component {
       exchangeRates: {},
     };
     this.handleChange = this.handleChange.bind(this);
-    this.saveExpense = this.saveExpense.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -26,22 +26,42 @@ class Form extends React.Component {
     setCurrencies();
   }
 
+  componentDidUpdate(prevProps) {
+    const { editingExpense } = this.props;
+    if (editingExpense !== '' && editingExpense !== prevProps.editingExpense) {
+      this.getExpenseForEdition();
+    }
+  }
+
+  getExpenseForEdition() {
+    const { editingExpense, expenses } = this.props;
+    const expenseForEdition = expenses.find((expense) => expense.id === editingExpense);
+    this.setState({
+      ...expenseForEdition,
+    });
+  }
+
   handleChange({ target }) {
     this.setState({ [target.name]: target.value });
   }
 
-  async saveExpense() {
-    const { sendExpense } = this.props;
-    sendExpense(this.state);
+  async handleClick(event) {
+    event.preventDefault();
+    const { editingExpense, sendExpense, sendExpenseEdited } = this.props;
+    if (editingExpense !== '') {
+      sendExpenseEdited(this.state);
+    } else {
+      sendExpense(this.state);
+    }
   }
 
   render() {
     const { value, description, currency, method, tag } = this.state;
-    const { currencies } = this.props;
+    const { currencies, editingExpense } = this.props;
     return (
-      <form className="form">
+      <form className="form" onSubmit={ this.handleClick }>
+        Valor
         <label htmlFor="value">
-          Valor
           <input
             type="text"
             data-testid="value-input"
@@ -51,8 +71,8 @@ class Form extends React.Component {
             onChange={ this.handleChange }
           />
         </label>
+        Descrição
         <label htmlFor="valor">
-          Descrição
           <input
             type="text"
             data-testid="description-input"
@@ -108,12 +128,9 @@ class Form extends React.Component {
             <option>Saúde</option>
           </select>
         </label>
-        <button
-          type="button"
-          onClick={ this.saveExpense }
-        >
-          Adicionar despesa
-        </button>
+        {editingExpense !== ''
+          ? <button type="submit">Editar despesa</button>
+          : <button type="submit"> Adicionar despesa</button>}
       </form>
     );
   }
@@ -122,17 +139,22 @@ class Form extends React.Component {
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  editingExpense: state.wallet.expenseEditingId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrencies: () => dispatch(fetchCurrencies()),
   sendExpense: (expenses) => dispatch(fetchAddCurrency(expenses)),
+  sendExpenseEdited: (expense) => dispatch(editExpense(expense)),
 });
 
 Form.propTypes = {
   setCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
   sendExpense: PropTypes.func.isRequired,
+  sendExpenseEdited: PropTypes.func.isRequired,
+  editingExpense: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
