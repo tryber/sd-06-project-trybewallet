@@ -1,0 +1,18 @@
+header {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(27, 27, 27);
+  color: white;
+  
+  img {
+    max-width: 150px;
+  }
+  div {
+    width: 35%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10pt;
+  }
+}

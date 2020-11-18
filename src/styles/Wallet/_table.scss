@@ -1,0 +1,35 @@
+table {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  border-collapse:collapse;
+  color: white;
+  font-weight: 600;
+
+  th {
+    padding: 15px;
+    background-color: var(--roxo);
+
+    &:nth-child(1) {
+      width: 20%;
+    }
+  }
+
+  td {
+    padding: 15px;
+
+    &:nth-child(2n + 1) {
+      background-color: var(--tab-primary);
+    }
+
+    &:nth-child(2n + 2) {
+      background-color: var(--tab-secundary);
+    }
+  }
+
+
+  
+
+  
+}
