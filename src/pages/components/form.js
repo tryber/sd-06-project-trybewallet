@@ -40,7 +40,11 @@ class Form extends React.Component {
             <option value="saude">Saúde</option>
           </select>
         </label>
-        <input type="button" onClick={ () => allCurrencies() } value="Adicionar despesa" />
+        <input
+          type="button"
+          onClick={ () => allCurrencies() }
+          value="Adicionar despesa"
+        />
       </div>
     );
   }
