@@ -1,0 +1,54 @@
+.form-login-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-box {
+  border: inset 2px 2px 5px rgb(121, 115, 115);
+  border-radius: 10px;
+  margin: 2%;
+  min-height: 5vh;
+  padding: 1% 2%;
+}
+
+.input-box:hover {
+  background-color: #C1F340;
+}
+
+.link-button-box {
+  background-color: #2C4CBE;
+  border: inset 2px 2px 5px rgb(0, 0, 0);
+  border-radius: 5px;
+  margin: 5% 15%;
+  min-height: 8vh;
+  padding: 1% 2%;
+}
+
+.link-button-box:hover {
+  background-color: #84E8EC;
+}
+
+.button-box {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  width: 100%;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
