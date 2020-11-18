@@ -5,7 +5,7 @@ import {
   GET_DATA, SAVE,
   ID_INCREMENT,
   TOTAL_FIELD,
-  EXCHANGE_DATA
+  EXCHANGE_DATA,
 } from '../actions';
 
 const INITIAL_STATE = {

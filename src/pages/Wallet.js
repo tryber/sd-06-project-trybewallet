@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Table from '../components/Table';
 import { connect } from 'react-redux';
+import Table from '../components/Table';
 // import { saveExpenses, fetchCoinDataThunk, getCurrencyAPI } from '../actions';
-import { fetchCoinData, newExpenses  } from '../actions';
+import { fetchCoinData, newExpenses } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -28,7 +28,6 @@ class Wallet extends React.Component {
     const { currencyFetch } = this.props;
     currencyFetch();
     // getCurrencyAPI();
-
   }
 
   handleChange({ target }) {
@@ -63,7 +62,7 @@ class Wallet extends React.Component {
         </header>
         <h1>TrybeWallet</h1>
         <form>
-        
+          
           <input
             type="text"
             name="description"
@@ -71,7 +70,7 @@ class Wallet extends React.Component {
             data-testid="description-input"
             placeholder="Descrição="
           />
-          
+
           <input
             type="number"
             name="value"
@@ -90,9 +89,13 @@ class Wallet extends React.Component {
             >
               <option>Escolha</option>
               {currencies.map((moeda) => (
-                <option data-testid={ moeda }
-                value={ moeda }
-                key={ moeda }>{moeda}</option>
+                <option 
+                  data-testid={ moeda }
+                  value={ moeda }
+                  key={ moeda }
+                >
+                  {moeda}
+                </option>
               ))}
             </select>
           </label>

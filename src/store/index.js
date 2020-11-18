@@ -11,7 +11,7 @@ const devTools = typeof window.__REDUX_DEVTOOLS_EXTENSION__ === 'undefined'
 
 const composedThunk = compose(
   applyMiddleware(thunk),
-  window.devToolsExtension ? window.devToolsExtension() : (f) => f
+  window.devToolsExtension ? window.devToolsExtension() : (f) => f,
 );
 
 const store = createStore(rootReducers, composedThunk);

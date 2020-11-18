@@ -91,7 +91,7 @@ const mapDispatchToProps = (dispatch) => ({
   delExpense: (expense, convValue) => dispatch(delExpense(expense, convValue)),
 });
 
-  export default connect(mapStateToProps, mapDispatchToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
 
 Table.propTypes = {
   expenses: PropTypes.objectOf().isRequired,
