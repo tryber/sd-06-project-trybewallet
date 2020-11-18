@@ -17,7 +17,7 @@ class Table extends Component {
       id,
       description,
       method,
-      tag,
+      Tag,
       value,
       currency,
       exchangeRates,
@@ -32,7 +32,7 @@ class Table extends Component {
     return (
       <tr id={ id }>
         <td>{description}</td>
-        <td>{tag}</td>
+        <td>{Tag}</td>
         <td>{method}</td>
         <td>{value}</td>
         <td>{name}</td>
