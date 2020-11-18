@@ -62,7 +62,7 @@ class Wallet extends React.Component {
         </header>
         <h1>TrybeWallet</h1>
         <form>
-          
+
           <input
             type="text"
             name="description"
@@ -89,7 +89,7 @@ class Wallet extends React.Component {
             >
               <option>Escolha</option>
               {currencies.map((moeda) => (
-                <option 
+                <option
                   data-testid={ moeda }
                   value={ moeda }
                   key={ moeda }
