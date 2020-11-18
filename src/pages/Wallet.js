@@ -47,6 +47,7 @@ class Wallet extends React.Component {
     const { expense } = this.state;
     const { newExpencesWallet } = this.props;
     if (expense.value && expense.description && expense.tag !== 0) {
+    // if (expense.value || expense.description || expense.tag !== 0) {
       await newExpencesWallet(expense);
       this.setState({
         expense: {
