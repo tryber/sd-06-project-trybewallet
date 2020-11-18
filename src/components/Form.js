@@ -40,6 +40,20 @@ class Form extends React.Component {
             <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
+        <label htmlFor="tag">
+          Tipo de despeza:
+          <select
+            id="tag"
+            type="text"
+            data-testid="tag-input"
+          >
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
+          </select>
+        </label>
       </form>
     );
   }
