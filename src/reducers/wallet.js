@@ -9,6 +9,8 @@ export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case 'SELECTCURRENCY':
     return { ...state, currencies: action.currency };
+  case 'ADDEXPENSE':
+    return { ...state, expenses: action.expense };
   default:
     return state;
   }

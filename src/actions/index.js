@@ -2,10 +2,12 @@ export const LOGIN = 'LOGIN';
 export const SELECTCURRENCY = 'SELECTCURRENCY';
 export const ADDEXPENSE = 'ADDEXPENSE';
 
-export const login = (email) => ({
-  type: LOGIN,
-  email,
-});
+export function login(email) {
+  return {
+    type: LOGIN,
+    email,
+  };
+}
 
 export function actionSelectCurrency(currency) {
   return {
@@ -14,10 +16,12 @@ export function actionSelectCurrency(currency) {
   };
 }
 
-export const addExpense = (expense) => ({
-  type: ADDEXPENSE,
-  expense,
-});
+export function addExpense(expense) {
+  return {
+    type: ADDEXPENSE,
+    expense,
+  };
+}
 
 export function fetchCurrency() {
   return async (dispatch) => {

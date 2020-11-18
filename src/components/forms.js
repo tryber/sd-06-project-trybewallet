@@ -7,8 +7,8 @@ class Forms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      total: 0,
       expenses: {
+        id: 0,
         value: 0,
         description: '',
         currency: 'USD',
@@ -42,14 +42,12 @@ class Forms extends React.Component {
 
   handleSubmit() {
     const { fetchCurrencies, currencies, addExpenses } = this.props;
-    const { expenses: { value, currency }, total } = this.state;
-    const sumOfExpenses = total + parseFloat(value * currencies[currency].ask);
 
     fetchCurrencies();
     this.setState((prevState) => ({
       ...prevState,
-      expenses: { ...prevState.expenses, exchangeRates: { ...currencies } },
-      total: sumOfExpenses,
+      expenses: { ...prevState.expenses,
+        exchangeRates: { ...currencies } },
     }), () => addExpenses(this.state));
   }
 
@@ -60,69 +58,68 @@ class Forms extends React.Component {
     return (
       <div>
         <form>
-          <label htmlFor="InputValue">
+          <span>
             Valor da Despesa:
-            <input
-              data-testid="value-input"
-              value={ value }
-              type="number"
-              min="0"
-              onChange={ (event) => this.setState({ expenses: event.target.value }) }
-            />
-          </label>
+          </span>
+          <input
+            data-testid="value-input"
+            value={ value }
+            type="number"
+            onChange={ (event) => this.setState({ expenses: event.target.value }) }
+          />
           <br />
-          <label htmlFor="InputDescription">
+          <span>
             Descrição da Despesa:
-            <input
-              data-testid="description-input"
-              type="text"
-              value={ description }
-              onChange={ (event) => this.setState({ description: event.target.value }) }
-            />
-          </label>
+          </span>
+          <input
+            data-testid="description-input"
+            value={ description }
+            onChange={ (event) => this.setState({ description: event.target.value }) }
+          />
           <br />
-          <label htmlFor="InputCurrencyDescription">
+          <span>
             Moeda de Despesa:
-            <select
-              data-testid="currency-input"
-              name="currency"
-              value={ currency }
-              onChange={ (event) => this.setState({ currency: event.target.value }) }
-            >
-              {this.handleCurrencies()}
-            </select>
-          </label>
+          </span>
+          <select
+            data-testid="currency-input"
+            name="currency"
+            value={ currency }
+            onChange={ (event) => this.setState({ currency: event.target.value }) }
+          >
+            {this.handleCurrencies()}
+          </select>
           <br />
-          <label htmlFor="InputPayment">
+          <span>
             Método de Pagamento:
-            <select
-              data-testid="method-input"
-              value={ method }
-              onChange={ (event) => this.method({ method: event.target.value }) }
-            >
-              <option value="Dinheiro">Dinheiro</option>
-              <option value="Cartão de crédito">Cartão de crédito</option>
-              <option value="Cartão de débito">Cartão de débito</option>
-            </select>
-          </label>
+          </span>
+          <select
+            data-testid="method-input"
+            value={ method }
+            onChange={ (event) => this.setState({ method: event.target.value }) }
+          >
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
+          </select>
           <br />
-          <label htmlFor="Tag">
+          <span>
             TAG:
-            <select
-              data-testid="tag-input"
-              value={ tag }
-            >
-              <option value="Alimentação">Alimentação</option>
-              <option value="Lazer">Lazer</option>
-              <option value="Trabalho">Trabalho</option>
-              <option value="Transporte">Transporte</option>
-              <option value="Saúde">Saúde</option>
-            </select>
-          </label>
+          </span>
+          <select
+            data-testid="tag-input"
+            value={ tag }
+            onChange={ (event) => this.setState({ tag: event.target.value }) }
+          >
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
+          </select>
         </form>
         <button
           type="button"
-          onClick={ () => this.handleSubmit }
+          onClick={ this.handleSubmit }
         >
           Adicionar despesa
         </button>
@@ -138,14 +135,14 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: (state) => dispatch(fetchCurrency(state)),
-  addExpenses: (state) => dispatch(addExpense(state)),
+  addExpenses: (state) => dispatch(addExpense([state.expenses])),
 });
 
 Forms.propTypes = {
-  fetchCurrencies: PropTypes.func.isRequired,
   addExpenses: PropTypes.func.isRequired,
-  currenciesKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fetchCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.objectOf().isRequired,
+  currenciesKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Forms);
