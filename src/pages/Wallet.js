@@ -54,7 +54,7 @@ class Wallet extends React.Component {
           method: '',
           tag: '',
         },
-      })
+      });
     }
   }
 
@@ -103,7 +103,7 @@ class Wallet extends React.Component {
             {currencies.map((moeda) => (
               <option
                 data-testid={ moeda }
-                value= { moeda }
+                value = { moeda }
                 key={ moeda }
               >
                 { moeda}

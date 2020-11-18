@@ -28,7 +28,8 @@ export default function (state = INITIAL_STATE, action) {
     return {
       ...state,
       totalField: (parseFloat((state.expenses)
-        .reduce(((acc, elem) => acc + (elem.value) * elem.exchangeRates[elem.currency].ask), 0)).toFixed(2)),
+        .reduce(((acc, elem) => acc + (elem.value) * elem.exchangeRates[elem.currency].ask), 0))
+        .toFixed(2)),
     };
   case EXCHANGE_DATA:
     return {

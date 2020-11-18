@@ -11,7 +11,8 @@ const rootReducers = combineReducers({ user, wallet });
 
 const composedThunk = compose(
   applyMiddleware(thunk),
-  window.devToolsExtension ? window.devToolsExtension() : (f) => f);
+  window.devToolsExtension ? window.devToolsExtension() : (f) => f,
+);
 
 const store = createStore(rootReducers, composedThunk);
 export default store;
