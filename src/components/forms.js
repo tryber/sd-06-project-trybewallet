@@ -1,22 +1,62 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import propTypes from 'prop-types';
-// import { selectCurrency, addExpenses} from '../actions';
+import PropTypes from 'prop-types';
+import { fetchCurrency, addExpense } from '../actions';
 
 class Forms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      expenses: 0,
-      description: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
+      total: 0,
+      expenses: {
+        value: 0,
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+        exchangeRates: [],
+      },
     };
+
+    this.handleCurrencies = this.handleCurrencies.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    const { fetchCurrencies } = this.props;
+    fetchCurrencies();
+  }
+
+  handleCurrencies() {
+    const { currenciesKeys } = this.props;
+    const filteredCurrencies = currenciesKeys.filter((currency) => currency !== 'USDT');
+
+    return (
+      filteredCurrencies.map((currency) => (
+        <option key={ currency } value={ currency } data-testid={ currency }>
+          {currency}
+        </option>
+      ))
+    );
+  }
+
+  handleSubmit() {
+    const { fetchCurrencies, currencies, addExpenses } = this.props;
+    const { expenses: { value, currency }, total } = this.state;
+    const sumOfExpenses = total + parseFloat(value * currencies[currency].ask);
+
+    fetchCurrencies();
+    this.setState((prevState) => ({
+      ...prevState,
+      expenses: { ...prevState.expenses, exchangeRates: { ...currencies } },
+      total: sumOfExpenses,
+    }), () => addExpenses(this.state));
   }
 
   render() {
-    const { expenses, description, currency, method, tag } = this.state;
+    const {
+      expenses: { value, description, currency, method, tag },
+    } = this.state;
     return (
       <div>
         <form>
@@ -24,7 +64,7 @@ class Forms extends React.Component {
             Valor da Despesa:
             <input
               data-testid="value-input"
-              value={ expenses }
+              value={ value }
               type="number"
               min="0"
               onChange={ (event) => this.setState({ expenses: event.target.value }) }
@@ -45,12 +85,14 @@ class Forms extends React.Component {
             Moeda de Despesa:
             <select
               data-testid="currency-input"
+              name="currency"
               value={ currency }
               onChange={ (event) => this.setState({ currency: event.target.value }) }
             >
-              USD
+              {this.handleCurrencies()}
             </select>
           </label>
+          <br />
           <label htmlFor="InputPayment">
             Método de Pagamento:
             <select
@@ -63,6 +105,7 @@ class Forms extends React.Component {
               <option value="Cartão de débito">Cartão de débito</option>
             </select>
           </label>
+          <br />
           <label htmlFor="Tag">
             TAG:
             <select
@@ -79,6 +122,7 @@ class Forms extends React.Component {
         </form>
         <button
           type="button"
+          onClick={ () => this.handleSubmit }
         >
           Adicionar despesa
         </button>
@@ -88,7 +132,20 @@ class Forms extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  walletProps: state.wallet.expenses,
+  currenciesKeys: Object.keys(state.wallet.currencies),
+  currencies: state.wallet.currencies,
 });
 
-export default connect(mapStateToProps, null)(Forms);
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrencies: (state) => dispatch(fetchCurrency(state)),
+  addExpenses: (state) => dispatch(addExpense(state)),
+});
+
+Forms.propTypes = {
+  fetchCurrencies: PropTypes.func.isRequired,
+  addExpenses: PropTypes.func.isRequired,
+  currenciesKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currencies: PropTypes.objectOf().isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Forms);

@@ -3,13 +3,12 @@
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  helloWorld: 'Wallet Page',
 };
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case '':
-    return;
+  case 'SELECTCURRENCY':
+    return { ...state, currencies: action.currency };
   default:
     return state;
   }

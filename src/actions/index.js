@@ -7,10 +7,12 @@ export const login = (email) => ({
   email,
 });
 
-export const selectCurrency = (currency) => ({
-  type: SELECTCURRENCY,
-  currency,
-});
+export function actionSelectCurrency(currency) {
+  return {
+    type: SELECTCURRENCY,
+    currency,
+  };
+}
 
 export const addExpense = (expense) => ({
   type: ADDEXPENSE,
@@ -21,6 +23,6 @@ export function fetchCurrency() {
   return async (dispatch) => {
     const infoAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
     const infoJSON = await infoAPI.json();
-    dispatch(selectCurrency(infoJSON));
+    dispatch(actionSelectCurrency(infoJSON));
   };
 }
