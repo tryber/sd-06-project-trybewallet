@@ -1,14 +1,15 @@
-import { CURRENCY, EXPENSES, FUNC_CURRENCIES } from '../actions';
+import { EXPENSES, OK_CURRENCIES } from '../actions';
 
 const INITIAL_STATE = {
-  currencies: ['BRL'],
+  currencies: [],
   expenses: [],
-  apiCurrence: '',
+  isFetching: false,
+  apiCurrencies: '',
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case CURRENCY:
+  case OK_CURRENCIES:
     return {
       ...state,
       currencies: action.currencies,
@@ -18,11 +19,11 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: [...state.expenses, action.expense],
     };
-  case FUNC_CURRENCIES:
-    return {
-      ...state,
-      apiCurrence: action.apiCurrence,
-    };
+  // case REQUEST_CURRENCIES:
+  //   return {
+  //     ...state,
+  //     isFetching: true,
+  //   };
   default:
     return state;
   }

@@ -1,8 +1,6 @@
-function fetchApi() {
-  const urlAPi = 'https://economia.awesomeapi.com.br/json/all';
-  fetch(urlAPi)
-    .then((response) => response.json())
-    .then((data) => ([data]));
-}
+const urlAPi = 'https://economia.awesomeapi.com.br';
+
+const fetchApi = () => fetch(`${urlAPi}/json/all`)
+  .then((response) => response.json());
 
 export default fetchApi;
