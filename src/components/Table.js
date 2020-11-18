@@ -12,7 +12,7 @@ class Table extends Component {
   }
 
   tableBody(expense) {
-    const { delExpense } = this.props;
+    const { delExpenseTst } = this.props;
     const {
       id,
       description,
@@ -41,12 +41,12 @@ class Table extends Component {
         <td>Real</td>
         <td>
           <button type="button" data-testid="edit-btn">
-            Editar
+            Editar despesa
           </button>
           <button
             type="button"
             data-testid="delete-btn"
-            onClick={ () => delExpense(expense, convValue) }
+            onClick={ () => delExpenseTst(expense, convValue) }
           >
             Excluir
           </button>
@@ -90,7 +90,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  delExpense: (expense, convValue) => dispatch(delExpense(expense, convValue)),
+  delExpenseTst: (expense, convValue) => dispatch(delExpense(expense, convValue)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
