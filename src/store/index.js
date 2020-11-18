@@ -1,11 +1,18 @@
-import { applyMiddleware, createStore, compose } from 'redux';
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import rootReducer from '../reducers';
-// ou import reducer from '../reducers';
+import user from '../reducers/user';
+import wallet from '../reducers/wallet';
 
-export default store = createStore(
-  rootReducer,
-  compose(applyMiddleware(thunk),
-  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  // )
+const rootReducers = combineReducers({ user, wallet });
+const devTools = typeof window.__REDUX_DEVTOOLS_EXTENSION__ === 'undefined'
+  ? (a) => a
+  : window.__REDUX_DEVTOOLS_EXTENSION__
+    && window.__REDUX_DEVTOOLS_EXTENSION__();
+
+const composedThunk = compose(
+  applyMiddleware(thunk),
+  window.devToolsExtension ? window.devToolsExtension() : (f) => f
 );
+
+const store = createStore(rootReducers, composedThunk);
+export default store;

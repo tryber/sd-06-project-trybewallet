@@ -1,68 +1,77 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.validateLogin = this.validateLogin.bind(this);
     this.state = {
       email: '',
       password: '',
-      // isDisabled: true,
+      disabled: false,
     };
-    // bind
-    this.handleOnChange = this.handleOnChange.bind(this);
-    this.buttonSubmit = this.buttonSubmit.bind(this);
   }
-  
-  handleOnChange(event) {
-    const name = event.target.name;
-    const value = event.target.value;
-    this.setState( { [name]: value })
-  };
 
-  buttonSubmit() {
-    const { email } = this.state;
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
+    this.validateLogin();
+  }
+
+  validateLogin() {
+    const NUM_PASSWORD = 5;
+    const { email, password } = this.state;
+    this.setState({ disabled:
+      ((/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        .test(email))
+      && password.length >= NUM_PASSWORD) });
   }
 
   render() {
+    const { userLogin } = this.props;
+    const { disabled } = this.state;
+    const { email } = this.state;
     return (
       <div>
-        <h1>Login</h1>
-
         <input
-          type="email"
           name="email"
-          onChange={this.handleOnChange}
+          type="email"
           data-testid="email-input"
-          placeholder="e-mail"
-          minlength="6"
-          required
+          placeholder="Digite seu email"
+          onChange={ this.handleChange }
         />
-
         <input
-          type="password"
           name="password"
-          onChange={this.handleOnChange}
+          type="password"
           data-testid="password-input"
-          placeholder="senha"
-          minlength="6"
-          required
+          placeholder="Digite sua senha"
+          onChange={ this.handleChange }
         />
-
         <Link to="/carteira">
           <button
-            type="submit"
-            // disabled={isDisabled}
-            onClick={this.buttonSubmit}
+            type="button"
+            disabled={ !disabled }
+            onClick={ () => userLogin(email) }
           >
             Entrar
           </button>
         </Link>
-
       </div>
-    )
+    );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  userLogin: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  userLogin: (email) => dispatch(login(email)) });
+
+export default connect(null, mapDispatchToProps)(Login);
