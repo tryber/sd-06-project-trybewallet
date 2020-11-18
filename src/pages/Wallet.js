@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Table from '../components/Table';
 // import { saveExpenses, fetchCoinDataThunk, getCurrencyAPI } from '../actions';
-import { fetchCoinData, newExpenses, totalField } from '../actions';
+import { fetchCoinData, newExpenses } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -55,13 +55,13 @@ class Wallet extends React.Component {
           currency: 'USD',
           method: '',
           tag: '',
-      }})
+    }});
     }
   }
 
   render() {
     // const { value, description, currency, method, tag } = this.state;
-    const { value, description, currency, method, tag } = this.state.expense;
+    const { value, description, currency, method, tag } = this.state;
     const { email, currencies, totalField } = this.props;
     return (
       <div>
