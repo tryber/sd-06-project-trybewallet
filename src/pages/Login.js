@@ -44,7 +44,7 @@ class Login extends React.Component {
             type="email"
             name="email"
             value={ email }
-            onSubmit={ (event) => this.setState({ email: event.target.value }) }
+            onChange={ (event) => this.setState({ email: event.target.value }) }
             placeholder="alguem@alguem.com"
           />
         </label>
@@ -56,7 +56,7 @@ class Login extends React.Component {
             type="password"
             name="password"
             value={ password }
-            onSubmit={ (event) => this.setState({ password: event.target.value }) }
+            onChange={ (event) => this.setState({ password: event.target.value }) }
             placeholder="123456...¯\_(ツ)_/¯"
           />
         </label>

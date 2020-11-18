@@ -65,7 +65,7 @@ class Forms extends React.Component {
             data-testid="value-input"
             value={ value }
             type="number"
-            onChange={ (event) => this.setState({ expenses: event.target.value }) }
+            onChange={ (event) => this.setState({ value: event.target.value }) }
           />
           <br />
           <span>
