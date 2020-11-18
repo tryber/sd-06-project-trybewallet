@@ -26,6 +26,7 @@ class Wallet extends React.Component {
     this.calculateTotal = this.calculateTotal.bind(this);
     this.editButton = this.editButton.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+    this.buttons = this.buttons.bind(this);
   }
 
   componentDidMount() {
@@ -107,9 +108,35 @@ class Wallet extends React.Component {
     });
   }
 
+  buttons() {
+    const { editMode } = this.state;
+    if (editMode) {
+      return (
+        <button
+          className="btn-submit"
+          style={ { backgroundColor: '#E0A800' } }
+          type="submit"
+          onClick={ this.handleEdit }
+        >
+          Editar despesa
+        </button>
+      );
+    }
+    return (
+      <button
+        className="btn-submit"
+        style={ { backgroundColor: '#888888' } }
+        type="submit"
+        onClick={ this.handleAdd }
+      >
+        Adicionar despesa
+      </button>
+    );
+  }
+
   render() {
     const { email, currencies, expenses, handleDelete } = this.props;
-    const { value, description, editMode } = this.state;
+    const { value, description } = this.state;
     const tableHeaders = [
       'Descrição',
       'Tag',
@@ -200,9 +227,22 @@ class Wallet extends React.Component {
             </select>
           </label>
           {
-            editMode
-              ? <button className="btn-submit" style={ { backgroundColor: '#E0A800' } } type="submit" onClick={ this.handleEdit }>Editar despesa</button>
-              : <button className="btn-submit" style={ { backgroundColor: '#888888' } } type="submit" onClick={ this.handleAdd }>Adicionar despesa</button>
+            // editMode ? <button
+            //   className="btn-submit"
+            //   style={ { backgroundColor: '#E0A800' } }
+            //   type="submit"
+            //   onClick={ this.handleEdit }
+            // >
+            //   Editar despesa
+            // </button> : <button
+            //   className="btn-submit"
+            //   style={ { backgroundColor: '#888888' } }
+            //   type="submit"
+            //   onClick={ this.handleAdd }
+            // >
+            //   Adicionar despesa
+            // </button>
+            this.buttons()
           }
         </form>
         <hr />
