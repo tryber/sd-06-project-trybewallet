@@ -59,7 +59,7 @@ export default function (state = INITIAL_STATE, action) {
     const filteredExpenses = state.expenses.filter(
       (item) => item.id !== action.expense.id,
     );
-    const Total = state.totalField - action.expense.value;//valor final do gast
+    const Total = state.totalField - action.expense.value;// valor final do gas
     return {
       ...state,
       expenses: [...filteredExpenses],

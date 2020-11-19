@@ -16,8 +16,9 @@ class Wallet extends React.Component {
         currency: 'USD',
         method: '',
         tag: '',
+        // endValue: value * exchangeRates[elem.currency],
       },
-      totalField: 0,
+      // totalField: 0,// lint
     };
 
     this.handleClick = this.handleClick.bind(this);
