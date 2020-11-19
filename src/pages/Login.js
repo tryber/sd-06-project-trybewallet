@@ -61,7 +61,6 @@ class Login extends React.Component {
   btnLog() {
     const { emailToStateDispatch } = this.props;
     const { email } = this.state;
-    console.log(email);
     emailToStateDispatch(email, true);
   }
 
