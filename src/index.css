@@ -11,3 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+theatabled {
+  color:green;
+  font-weight: 500;
+  border-style: inset;
+  border-width: 5px;
+}
+
+.btn-submit {
+  color:black;
+}
