@@ -95,7 +95,8 @@ class Wallet extends React.Component {
     });
   }
 
-  async handleEdit() {
+  async handleEdit(event) {
+    event.preventDefault();
     const { changeExpense } = this.props;
     const { value, currency, method, tag, description, id } = this.state;
     await changeExpense({ value, currency, method, tag, description, id });
