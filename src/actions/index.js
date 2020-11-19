@@ -41,5 +41,5 @@ export const expensesThunk = (expense) => async (dispatch, getState) => {
   itemId = expensesItens[expensesItens.length - 1].id + 1;
 
   const dispExpense = { ...expense, id: itemId, exchangeRates: responseApi };
-  dispatch()
+  dispatch(expensesAdd(dispExpense));
 };
