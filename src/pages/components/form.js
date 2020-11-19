@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 class Form extends React.Component {
   render() {
     const { allCurrencies } = this.props;
+    const categories = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <div>
         <input data-testid="value-input" />
@@ -33,11 +34,18 @@ class Form extends React.Component {
         </label>
         <label htmlFor="tag">
           <select id="tag" data-testid="tag-input">
-            <option value="alimentacao">Alimentação</option>
+            {categories.map((category) => (
+              <option
+                value={ category }
+                key={ category }
+              >
+                { category }
+              </option>))}
+            {/* <option value="alimentacao">Alimentação</option>
             <option value="lazer">Lazer</option>
             <option value="trabalho">Trabalho</option>
             <option value="transporte">Transporte</option>
-            <option value="saude">Saúde</option>
+            <option value="saude">Saúde</option> */}
           </select>
         </label>
         <input
