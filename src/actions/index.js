@@ -25,3 +25,7 @@ export const currencyThunk = () => (dispatch) => {
       dispatch(apiOk(currencies));
     });
 };
+
+export const expensesThunk = () => (dispatch) => {
+  
+}
