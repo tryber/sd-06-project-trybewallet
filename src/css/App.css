@@ -1,0 +1,8 @@
+:root {
+  --main-bkgrdcolor: rgb(246, 254, 250);
+}
+
+body {
+  background-color: var(--main-bkgrdcolor);
+  margin: 0;
+}

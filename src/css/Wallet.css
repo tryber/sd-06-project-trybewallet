@@ -1,0 +1,72 @@
+.header {
+  align-items: center;
+  background-color: rgb(21, 26, 23);
+  color: var(--main-bkgrdcolor);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.header-right {
+  align-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 70%;
+}
+
+header h2 {
+  align-self: stretch;
+  color: var(--main-bkgrdcolor);
+  font-family: serif;
+  font-size: 1em;
+  font-weight: 300;
+  margin: 0 15px 0;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.trybe-logo {
+  align-self: flex-start;
+  background-color: var(--main-bkgrdcolor);
+  border-radius: 0 10px 0 10px;
+  display: inline-block;
+  padding: 0 34px 0 18px;
+  margin: 0 10px;
+}
+
+.trybe-logo img {
+  height: 60px;
+}
+
+.header-form {
+  align-items: center;
+  background-color: rgb(21, 26, 23);
+  color: var(--main-bkgrdcolor);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+}
+
+.header-inner-wrapper {
+  background-color: rgb(32, 37, 34);
+  border-radius: 8px;
+  font-size: 1.2em;
+  padding: 6px 15px;
+}
+
+.total-expense-wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  min-width: 170px;
+}
+
+.total-expenses {
+  color: rgb(230, 247, 220);
+  font-style: italic;
+  font-weight: 600;
+  margin: 0 7px;
+}
