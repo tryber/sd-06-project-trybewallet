@@ -12,7 +12,7 @@ class Table extends Component {
       'Valor convertido', 'Moeda de conversão', 'Editar/Excluir',
     ];
     return (
-      <table>
+      <table className="table table-striped table-dark">
         <thead>
           <tr>
             { campos.map((campo, i) => (<th key={ i }>{ campo }</th>)) }

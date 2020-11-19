@@ -1,4 +1,4 @@
-import { GET_DATA, SAVE, ID_INCREMENT, TOTAL_FIELD, EXCHANGE_DATA } from '../actions';
+import { GET_DATA, SAVE, ID_INCREMENT, TOTAL_FIELD, EXCHANGE_DATA, DELETE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -31,6 +31,11 @@ export default function (state = INITIAL_STATE, action) {
         .reduce(((acc, elem) => acc + (elem.value) * elem
           .exchangeRates[elem.currency].ask), 0))
         .toFixed(2)),
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== action.id),
     };
   case EXCHANGE_DATA:
     return {

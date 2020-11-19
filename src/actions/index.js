@@ -13,6 +13,7 @@ export const ID_INCREMENT = 'ID_INCREMENT';
 export const TOTAL_FIELD = 'TOTAL_FIELD';
 export const CURRENCIES = 'CURRENCIES';
 export const EXCHANGE_DATA = 'EXCHANGE_DATA';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 function getData(responseJson) {
   return {
@@ -41,10 +42,16 @@ export function saveExpenses(expense) {
   };
 }
 
-export function totalField(expense) {
+export function totalField() {
   return {
     type: TOTAL_FIELD,
-    expense,
+  };
+}
+
+export function deleteExpense({ id }) {
+  return {
+    type: DELETE_EXPENSE,
+    id,
   };
 }
 
@@ -52,6 +59,11 @@ export const exchangeData = (exchangeRates) => ({
   type: EXCHANGE_DATA,
   exchangeRates,
 });
+
+// export const updateExpenses = (expenses) => ({
+//   type: UPDATE_EXPENSES,
+//   expenses: [...expenses],
+// });
 
 export function newExpenses(expense) {
   return async (dispatch) => {
@@ -63,6 +75,20 @@ export function newExpenses(expense) {
     }));
     // dispatch(fetchCoinData());
     dispatch(incrementaId());
-    dispatch(totalField(expense));
+    dispatch(totalField());
   };
 }
+
+// export function updateExpenses(expenses) {
+//   return async (dispatch) => {
+//     const exchangeRates = await getCoin();
+
+//     dispatch(saveExpenses({
+//       ...expense,
+//       exchangeRates,
+//     }));
+//     // dispatch(fetchCoinData());
+//     dispatch(incrementaId());
+//     dispatch(totalField(expense));
+//   };
+// }
