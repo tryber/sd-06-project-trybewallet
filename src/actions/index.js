@@ -14,6 +14,11 @@ export const requestCurrencies = () => ({
   type: REQUEST_CURRENCIES,
 });
 
+export const expensesAdd = (expenses) => ({
+  type: EXPENSES,
+  expenses,
+});
+
 export const apiOk = (currencies) => ({
   type: OK_CURRENCIES,
   currencies,
@@ -26,6 +31,15 @@ export const currencyThunk = () => (dispatch) => {
     });
 };
 
-export const expensesThunk = () => (dispatch) => {
-  
-}
+export const expensesThunk = (expense) => async (dispatch, getState) => {
+  const responseApi = await fetchApi();
+  const expensesItens = getState().wallet.expenses;
+  let itemId = 0;
+  if (expensesItens.length === 0) {
+    itemId = 0;
+  }
+  itemId = expensesItens[expensesItens.length - 1].id + 1;
+
+  const dispExpense = { ...expense, id: itemId, exchangeRates: responseApi };
+  dispatch()
+};
