@@ -17,7 +17,7 @@ class Table extends Component {
       id,
       description,
       method,
-      Tag,
+      tag,
       value,
       currency,
       exchangeRates,
@@ -32,7 +32,7 @@ class Table extends Component {
     return (
       <tr id={ id }>
         <td>{description}</td>
-        <td>{Tag}</td>
+        <td>{tag}</td>
         <td>{method}</td>
         <td>{value}</td>
         <td>{name}</td>
@@ -78,8 +78,9 @@ class Table extends Component {
           </tr>
         </thead>
         <tbody>
-          {expenses.length !== 0
-          && expenses.map((expense) => this.tableBody(expense))}
+          {/* {expenses.length !== 0
+          && expenses.map((expense) => this.tableBody(expense))} */}
+          {expenses.map((expense) => this.tableBody(expense))}
         </tbody>
       </table>
     );

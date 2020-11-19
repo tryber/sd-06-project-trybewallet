@@ -59,13 +59,16 @@ export default function (state = INITIAL_STATE, action) {
     const filteredExpenses = state.expenses.filter(
       (item) => item.id !== action.expense.id,
     );
-    const newTotal = state.total - action.convValue;
+    const Total = state.totalField - action.expense.value;//valor final do gast
     return {
       ...state,
       expenses: [...filteredExpenses],
-      total: newTotal,
+      totalField: Total,
     };
   }
+  // case DEL_EXPENSE:
+  //   return { ...state,
+  //     expenses: state.expenses.filter((exp) => exp.id !== action.expense) };
 
   default:
     return state;
