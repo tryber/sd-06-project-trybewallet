@@ -1,4 +1,6 @@
-import { GET_DATA, SAVE, ID_INCREMENT, TOTAL_FIELD, EXCHANGE_DATA, DELETE_EXPENSE } from '../actions';
+import { GET_DATA, SAVE, ID_INCREMENT,
+  TOTAL_FIELD, EXCHANGE_DATA, DELETE_EXPENSE }
+  from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],

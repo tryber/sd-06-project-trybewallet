@@ -46,6 +46,8 @@ class TableBody extends Component {
 
 TableBody.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleta: PropTypes.func.isRequired,
+  update: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
