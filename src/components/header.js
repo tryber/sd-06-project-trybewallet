@@ -7,13 +7,12 @@ class Header extends React.Component {
     super(props);
     this.state = {
       currency: 'BRL',
-      total: 0,
     };
   }
 
   render() {
-    const { emailLogin } = this.props;
-    const { currency, total } = this.state;
+    const { emailLogin, storeTotal } = this.props;
+    const { currency } = this.state;
     return (
       <header>
         <div>
@@ -22,7 +21,7 @@ class Header extends React.Component {
         </div>
         <div data-testid="total-field">
           Despesas totais:
-          { total }
+          { storeTotal }
         </div>
         <div data-testid="header-currency-field">
           Moeda:
@@ -35,17 +34,17 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => ({
   emailLogin: state.user.email,
-  expenses: state.wallet.expenses,
+  storeTotal: state.total.total,
 });
 
 Header.propTypes = {
   emailLogin: PropTypes.string,
-  // expenses: PropTypes.number,
+  storeTotal: PropTypes.number,
 };
 
 Header.defaultProps = {
   emailLogin: 'email',
-  // expenses: 0,
+  storeTotal: 0,
 };
 
 export default connect(mapStateToProps, null)(Header);

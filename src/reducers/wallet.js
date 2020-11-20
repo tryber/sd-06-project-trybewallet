@@ -10,7 +10,7 @@ export default function reducer(state = INITIAL_STATE, action) {
   case 'SELECTCURRENCY':
     return { ...state, currencies: action.currency };
   case 'ADDEXPENSE':
-    return { ...state, expenses: action.expense };
+    return { ...state, expenses: state.expenses.concat(action.expense) };
   default:
     return state;
   }

@@ -1,6 +1,7 @@
 export const LOGIN = 'LOGIN';
 export const SELECTCURRENCY = 'SELECTCURRENCY';
 export const ADDEXPENSE = 'ADDEXPENSE';
+export const ADDTOTAL = 'ADDTOTAL';
 
 export function login(email) {
   return {
@@ -20,6 +21,12 @@ export function addExpense(expense) {
   return {
     type: ADDEXPENSE,
     expense,
+  };
+}
+export function addTotal(newTotal) {
+  return {
+    type: ADDTOTAL,
+    newTotal,
   };
 }
 
