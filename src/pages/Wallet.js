@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCoinData, newExpenses } from '../actions';
+import { editExpenses, fetchCoinData, newExpenses } from '../actions';
 import Table from './Table';
 
 class Wallet extends React.Component {
@@ -28,6 +28,10 @@ class Wallet extends React.Component {
     currencyFetch();
   }
 
+  // handleClickEdit() => {
+  //   chama state no state.expenses[id]
+  // }
+
   handleChange({ target }) {
     const { value } = target;
     const { name } = target;
@@ -43,7 +47,11 @@ class Wallet extends React.Component {
   async handleClick(e) {
     e.preventDefault();
     const { expense } = this.state;
-    const { newExpencesWallet } = this.props;
+    const { newExpencesWallet, isEditing, editExpenses } = this.props;
+    console.log(this.props)
+    if (isEditing ) {
+      console.log('editando')
+    }
     if (expense.value && expense.description && expense.tag !== 0) {
       await newExpencesWallet(expense);
       this.setState({
@@ -58,15 +66,26 @@ class Wallet extends React.Component {
     }
   }
 
+  handleEditing() {
+    const { isEditing, editExpenses } = this.state.props;
+    if (isEditing === true) {
+      this.setState({
+        editExpenses,
+     });
+
+    }
+      console.log('oi');
+  }
+
   render() {
     const { expense } = this.state;
     const { value, description, currency, method, tag } = expense;
-    const { email, currencies, totalField } = this.props;
+    const { email, currencies, totalField, isEditing } = this.props;
     return (
       <div>
         <header>
-          <p data-testid="email-field">{ email }</p>
-          <p data-testid="total-field">{ totalField || '0' }</p>
+          <p data-testid="email-field">{email}</p>
+          <p data-testid="total-field">{totalField || '0'}</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <hr />
@@ -141,7 +160,7 @@ class Wallet extends React.Component {
             <option value="Saúde">Saúde</option>
           </select>
 
-          <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
+          <button type="button" onClick={ this.handleClick }>{isEditing ? 'Editar despesa' : 'Adicionar despesa'}</button>
         </form>
         <Table />
       </div>
@@ -163,16 +182,17 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
   totalField: state.wallet.totalField,
-
+  editExpense: state.wallet.expenses,
+  isEditing: state.wallet.isEditing,
+  editExpenses: state.wallet.editExpenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   // currencyFetch: () => dispatch(fetchCoinDataThunk()),
-
+  
   newExpencesWallet: (expense) => dispatch(newExpenses(expense)),
   currencyFetch: () => dispatch(fetchCoinData()),
-  // getcurrencies: () => dispatch(getCurrencyAPI());
-  // newAction: (expense) => dispatch(saveExpenses(expense)),
+  edit: (expense) => dispatch(editExpenses(expense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

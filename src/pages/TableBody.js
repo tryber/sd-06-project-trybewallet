@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteExpense, totalField } from '../actions';
+import { deleteExpense, totalField, editExpenses } from '../actions';
 
 class TableBody extends Component {
-  render() {
-    const { expenses, deleta, update } = this.props;
+  editando(e) {
+    this.props.edita()
+    const { editExpense } = this.props
+     console.log('teste', editExpense )
+     console.log('teste111', e.id)
+  }
 
+  render() {
+    const { expenses, deleta, update, edita } = this.props;
     return (
       <tbody>
         {
           expenses ? expenses.map((item) => (
+          <>
             <tr key={ item.currency }>
               <td>{item.description}</td>
               <td>{item.tag}</td>
@@ -36,6 +43,10 @@ class TableBody extends Component {
                 excluir
               </button>
             </tr>
+              <button data-testid="edit-btn" type="button" onClick={ (e) => this.editando(e) }>
+                Editar despesa
+              </button>
+             </> 
           ))
             : ''
         }
@@ -50,9 +61,15 @@ TableBody.propTypes = {
   update: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = (state) => ({
+  expense: state,
+  editExpense: state.wallet.expenses,
+})
+
 const mapDispatchToProps = (dispatch) => ({
   deleta: (id) => dispatch(deleteExpense(id)),
   update: () => dispatch(totalField()),
+  edita: () => dispatch(editExpenses()),
 });
 
-export default connect(null, mapDispatchToProps)(TableBody);
+export default connect(mapStateToProps, mapDispatchToProps)(TableBody);

@@ -1,5 +1,5 @@
 import { GET_DATA, SAVE, ID_INCREMENT,
-  TOTAL_FIELD, EXCHANGE_DATA, DELETE_EXPENSE }
+  TOTAL_FIELD, EXCHANGE_DATA, DELETE_EXPENSE, EDIT_EXPENSE, IS_EDITING }
   from '../actions';
 
 const INITIAL_STATE = {
@@ -7,6 +7,8 @@ const INITIAL_STATE = {
   expenses: [],
   id: 0,
   totalField: 0,
+  isEditing: false,
+  editExpenses: null,
 };
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -43,6 +45,18 @@ export default function (state = INITIAL_STATE, action) {
     return {
       ...state,
     };
+  case EDIT_EXPENSE:
+    return {
+      ...state,
+      isEditing: true,
+      editExpenses: state.expenses.find((expense) => expense.id === action.id),//pegar as despesas referente ao id escolhido = pos no array
+    };
+
+    case IS_EDITING:
+      return {
+        ...state,
+        isEditing: true,
+      }
   default:
     return state;
   }

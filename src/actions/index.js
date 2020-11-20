@@ -14,6 +14,8 @@ export const TOTAL_FIELD = 'TOTAL_FIELD';
 export const CURRENCIES = 'CURRENCIES';
 export const EXCHANGE_DATA = 'EXCHANGE_DATA';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const IS_EDITING = 'IS_EDITING';
 
 function getData(responseJson) {
   return {
@@ -60,10 +62,14 @@ export const exchangeData = (exchangeRates) => ({
   exchangeRates,
 });
 
-// export const updateExpenses = (expenses) => ({
-//   type: UPDATE_EXPENSES,
-//   expenses: [...expenses],
-// });
+export const editExpenses = (expenses) => ({
+  type: EDIT_EXPENSE,
+  expenses,
+});
+
+export const changeEdit = (expense) => ({
+  type: IS_EDITING,
+});
 
 export function newExpenses(expense) {
   return async (dispatch) => {
@@ -80,15 +86,15 @@ export function newExpenses(expense) {
 }
 
 // export function updateExpenses(expenses) {
-//   return async (dispatch) => {
-//     const exchangeRates = await getCoin();
-
+  //   return async (dispatch) => {
+    //     const exchangeRates = await getCoin();
+    // dispatch(editExpenses(expenses));
+    
 //     dispatch(saveExpenses({
 //       ...expense,
 //       exchangeRates,
 //     }));
-//     // dispatch(fetchCoinData());
-//     dispatch(incrementaId());
+//   
 //     dispatch(totalField(expense));
 //   };
 // }
