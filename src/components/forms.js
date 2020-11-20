@@ -63,9 +63,10 @@ class Forms extends React.Component {
           </span>
           <input
             data-testid="value-input"
+            name="value"
             value={ value }
             type="number"
-            onChange={ (event) => this.setState({ value: event.target.value }) }
+            onChange={ (event) => this.setState({ expenses: event.target.value }) }
           />
           <br />
           <span>
@@ -73,6 +74,7 @@ class Forms extends React.Component {
           </span>
           <input
             data-testid="description-input"
+            name="description"
             value={ description }
             onChange={ (event) => this.setState({ description: event.target.value }) }
           />
@@ -94,6 +96,7 @@ class Forms extends React.Component {
           </span>
           <select
             data-testid="method-input"
+            name="method"
             value={ method }
             onChange={ (event) => this.setState({ method: event.target.value }) }
           >
@@ -107,6 +110,7 @@ class Forms extends React.Component {
           </span>
           <select
             data-testid="tag-input"
+            name="tag"
             value={ tag }
             onChange={ (event) => this.setState({ tag: event.target.value }) }
           >
