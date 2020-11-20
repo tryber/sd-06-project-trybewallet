@@ -1,26 +1,42 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-import { expensesThunk } from '../../actions';
+import { currencyThunk, expensesThunk } from '../../actions';
 
 class Form extends React.Component {
   constructor() {
     super();
     this.state = {
       id: 0,
-      value: 0,
+      value: '',
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
+      exchangeRates: {},
     };
-
+    this.handleChange = this.handleChange.bind(this);
     this.addExpensesToRedux = this.addExpensesToRedux.bind(this);
+  }
+
+  // componentDidMount() {
+  //   const { getCurrency } = this.props;
+  //   getCurrency();
+  // }
+
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   }
 
   addExpensesToRedux(e) {
     e.preventDefault();
-    const { getExpenses } = this.props;
+    const { getExpenses, getCurrency } = this.props;
+    console.log(this.state);
+    getCurrency();
     getExpenses(this.state);
   }
 
@@ -29,10 +45,34 @@ class Form extends React.Component {
     const categories = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <div>
-        <input data-testid="value-input" />
-        <input data-testid="description-input" />
+        <label htmlFor="value">
+          Valor:
+          <input
+            data-testid="value-input"
+            id="value"
+            name="value"
+            type="number"
+            className="value"
+            placeholder="$"
+            min="0"
+            step="0.01"
+            onChange={ (event) => this.handleChange(event) }
+          />
+        </label>
+        <input
+          data-testid="description-input"
+          type="text"
+          name="description"
+          id="description"
+          onChange={ (event) => this.handleChange(event) }
+        />
         <label htmlFor="currency">
-          <select id="currency" data-testid="currency-input">
+          <select
+            id="currency"
+            name="currency"
+            onChange={ this.handleChange }
+            data-testid="currency-input"
+          >
             {Object.keys(allCurrencies)
               .filter((currency) => currency !== 'USDT')
               .map((currency) => (
@@ -46,15 +86,27 @@ class Form extends React.Component {
               ))}
           </select>
         </label>
-        <label htmlFor="pay">
-          <select id="pay" data-testid="method-input">
+        <label htmlFor="method">
+          <select
+            data-testid="method-input"
+            id="method"
+            name="method"
+            className="method"
+            onChange={ (event) => this.handleChange(event) }
+          >
             <option value="dinheiro">Dinheiro</option>
             <option value="card">Cartão de crédito</option>
             <option value="cardDeb">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="tag">
-          <select id="tag" data-testid="tag-input">
+          <select
+            data-testid="tag-input"
+            id="tag"
+            name="tag"
+            className="tag"
+            onChange={ (event) => this.handleChange(event) }
+          >
             {categories.map((category) => (
               <option
                 value={ category }
@@ -69,11 +121,12 @@ class Form extends React.Component {
             <option value="saude">Saúde</option> */}
           </select>
         </label>
-        <input
-          type="button"
+        <button
+          type="submit"
           onClick={ this.addExpensesToRedux }
-          value="Adicionar despesa"
-        />
+        >
+          Adicionar despesa
+        </button>
       </div>
     );
   }
@@ -86,11 +139,13 @@ const mapStateToProps = (states) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getExpenses: () => dispatch(expensesThunk()),
+  getCurrency: () => dispatch(currencyThunk()),
 });
 
 Form.propTypes = {
   allCurrencies: PropTypes.shape(PropTypes.any.isRequired).isRequired,
   getExpenses: PropTypes.func.isRequired,
+  getCurrency: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
