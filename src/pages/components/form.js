@@ -1,8 +1,29 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import { expensesThunk } from '../../actions';
 
 class Form extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      id: 0,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    };
+
+    this.addExpensesToRedux = this.addExpensesToRedux.bind(this);
+  }
+
+  addExpensesToRedux(e) {
+    e.preventDefault();
+    const { getExpenses } = this.props;
+    getExpenses(this.state);
+  }
+
   render() {
     const { allCurrencies } = this.props;
     const categories = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -50,7 +71,7 @@ class Form extends React.Component {
         </label>
         <input
           type="button"
-          onClick={ () => allCurrencies() }
+          onClick={ this.addExpensesToRedux }
           value="Adicionar despesa"
         />
       </div>
@@ -59,11 +80,17 @@ class Form extends React.Component {
 }
 
 const mapStateToProps = (states) => ({
+  expenses: states.wallet.expenses,
   allCurrencies: states.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getExpenses: () => dispatch(expensesThunk()),
 });
 
 Form.propTypes = {
   allCurrencies: PropTypes.shape(PropTypes.any.isRequired).isRequired,
+  getExpenses: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

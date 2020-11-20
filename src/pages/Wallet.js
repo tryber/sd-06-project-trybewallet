@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from './components/form';
-import { currencyThunk } from '../actions';
+import { currencyThunk, expensesThunk } from '../actions';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -14,7 +14,7 @@ class Wallet extends React.Component {
     const { email, expense } = this.props;
     return (
       <div>
-        <Form />
+        <Form addExpensesToRedux={ this.addExpensesToRedux } />
         TrybeWallet
         <div data-testid="email-field">{email}</div>
         <div data-testid="total-field" value="0">{expense}</div>
@@ -32,11 +32,13 @@ const mapStateToProps = (store) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
   getCurrency: () => dispatch(currencyThunk()),
+  getExpenses: () => dispatch(expensesThunk()),
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   getCurrency: PropTypes.func.isRequired,
+  getExpenses: PropTypes.func.isRequired,
   // currency: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   expense: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
 };
