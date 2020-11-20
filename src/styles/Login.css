@@ -1,0 +1,116 @@
+.login-container {
+  margin-top: 50px;
+  width: 360px;
+}
+
+.login-container h3 {
+  text-align: center;
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 40px;
+  padding: 0;
+}
+
+.field-container {
+  align-items: center;
+  border: 1.5px solid #f8f8f2ff;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 490px;
+  justify-content: space-around;
+  margin: 0;
+  padding: 4px;
+}
+
+.image-login {
+  animation: bounce 3s forwards infinite;
+  transform-origin: center bottom;
+  background-image: url("./finance.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: '';
+  margin-top: 8px;
+  min-height: 240px;
+  min-width: 280px;
+}
+
+@keyframes bounce {
+  from,
+  33%,
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+
+  33%, /*inicia novamente*/
+  43% {
+    transform: translate3d(0, -10px, 0) scaleY(1.0) rotateZ(-10deg);
+  }
+
+  60% {
+    transform: translate3d(0, 0, 0) scaleY(1);
+  }
+
+  70% {
+    transform: translate3d(0, -5px, 0) scaleY(1.02);
+  }
+
+  80% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.field-inputs {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 90px;
+}
+
+.field-inputs input {
+  background-color: #f8f8f2ff;
+  border: none;
+  border-radius: 4px;
+  color: #282a36ff;
+  height: 20px;
+  outline: none;
+  padding: 4px 8px;
+  width: 200px;
+}
+
+.btn-login {
+  background-color: #50fa7bff;
+  border: none;
+  border-bottom: 3px solid #1b9239;
+  border-left: 2px solid #1b9239;
+  border-radius: 4px;
+  color: #282a36ff;
+  cursor: pointer;
+  font-weight: bold;
+  height: 30px;
+  margin-bottom: 20px;
+  outline: none;
+  padding: 8px;
+  width: 150px;
+}
+
+.btn-login:active {
+  background-color: #50fa7bff;
+  border: none;
+  border-bottom: 1px solid #3fd163;
+  border-left: 1px solid #3fd163;
+  color: #555555;
+  transform: translateY(2px);
+}
+
+.btn-login button:disabled,
+button[disabled] {
+  background-color: #cccccc;
+  border: none;
+  border-radius: 4px;
+  color: #666666;
+  cursor: default;
+}

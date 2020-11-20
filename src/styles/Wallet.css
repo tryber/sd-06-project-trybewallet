@@ -1,0 +1,115 @@
+/* WALLET HEADER */
+
+.wallet-header {
+  align-self: flex-start;
+  box-sizing: border-box;
+  width: 100vw;
+}
+
+.header-nav {
+  align-items: center;
+  background: linear-gradient(0deg, #282a36ff 5%, #353847 40%);
+  border-bottom: 3px solid #6272a4ff;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 60px;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.header-link {
+  color: #f8f8f2ff;
+  margin: 0 50px 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+.header-link h3 {
+  font-size: 40px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+.header-email-expenses {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 45%;
+}
+
+.header-expenses {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 230px;
+}
+
+/* WALLET BODY */
+
+.wallet-fieldset {
+  align-items: center;
+  background-color: #f8f8f2ff;
+  border: none;
+  box-sizing: border-box;
+  color: #282a36ff;
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  justify-content: space-around;
+  padding: 40px 0;
+}
+
+.wallet-forms {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.wallet-forms input, select {
+  box-shadow: 1px 1px 3px #44475a80;
+  border: none;
+  border-radius: 3px;
+  color: #282a36ff;
+  font-size: 13px;
+  font-weight: bold;
+  margin: 0 6px;
+  outline: none;
+  padding: 4px 8px;
+}
+
+.quantity {
+  width: 60px;
+}
+
+.wallet-forms label {
+  color: #282a36ff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.btn-wallet {
+  background-color: #50fa7bff;
+  border: none;
+  border-bottom: 2px solid #3fd163;
+  border-left: 2px solid #3fd163;
+  border-radius: 4px;
+  color: #282a36ff;
+  cursor: pointer;
+  font-weight: bold;
+  height: 30px;
+  outline: none;
+  padding: 8px;
+  width: 150px;
+}
+
+.btn-wallet:active {
+  background-color: #50fa7bff;
+  border: none;
+  border-bottom: 1px solid #3fd163;
+  border-left: 1px solid #3fd163;
+  color: #555555;
+  transform: translateY(2px);
+}
