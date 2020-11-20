@@ -1,22 +1,27 @@
-import React from 'react';
+import React, { useDebugValue } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-import { currencyThunk, expensesThunk } from '../../actions';
+import { expensesAdd } from '../../actions';
 
 class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-      id: 0,
-      value: '',
-      description: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
-      exchangeRates: {},
+      expenses: {
+        value: '',
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+        exchangeRates: {},
+      },
+      total: 0,
     };
     this.handleChange = this.handleChange.bind(this);
     this.addExpensesToRedux = this.addExpensesToRedux.bind(this);
+    this.handleCurrencyChange = this.handleCurrencyChange.bind(this);
+    this.updateAllStates = this.updateAllStates.bind(this);
+
   }
 
   // componentDidMount() {
@@ -32,16 +37,39 @@ class Form extends React.Component {
     }));
   }
 
-  addExpensesToRedux(e) {
+  handleChangeCurrency(selectCurr) {
+    this.setState((prev) => ({ expenses:
+    { ...prev.expenses, currency: selectCurr } }));
+  }
+
+async aaddExpensesToRedux(e) {
     e.preventDefault();
-    const { getExpenses, getCurrency } = this.props;
-    console.log(this.state);
-    getCurrency();
-    getExpenses(this.state);
+    const { expenses } = this.props;
+    const EXPENSES_LENGTH = Object.key(expenses).length;
+    const NEXT_ID = EXPENSES_LENGTH || 0;
+    const CURRENCIES = await (await fetch('https://economia.awesomeapi.com.br/json/all')).json();
+    updateAllState(CURRENCIES, NEXT_ID);
+  }
+
+  updateAllState(currencies, id) {
+    const { expenses } = this.state;
+    const { regExpense } = this.props;
+    const rate = currencies[expenses.currency].ask;
+    this.setState(() => ({
+      expenses: {
+        ...expenses,
+        id,
+        exchangeRates: currencies,
+      },
+      total: rate * expenses.value,
+    }), () => {
+      regExpense(this.state);
+    });
   }
 
   render() {
-    const { allCurrencies } = this.props;
+    const { expenses } = this.props;
+    const { value, description, total } = expenses;
     const categories = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <div>
@@ -54,6 +82,7 @@ class Form extends React.Component {
             type="number"
             className="value"
             placeholder="$"
+            value={ value }
             min="0"
             step="0.01"
             onChange={ (event) => this.handleChange(event) }
@@ -64,6 +93,7 @@ class Form extends React.Component {
           type="text"
           name="description"
           id="description"
+          value={ description }
           onChange={ (event) => this.handleChange(event) }
         />
         <label htmlFor="currency">
@@ -122,8 +152,8 @@ class Form extends React.Component {
           </select>
         </label>
         <button
+          onClick={ (e) => this.addExpensesToRedux(e) }
           type="submit"
-          onClick={ this.addExpensesToRedux }
         >
           Adicionar despesa
         </button>
@@ -134,18 +164,23 @@ class Form extends React.Component {
 
 const mapStateToProps = (states) => ({
   expenses: states.wallet.expenses,
-  allCurrencies: states.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getExpenses: () => dispatch(expensesThunk()),
-  getCurrency: () => dispatch(currencyThunk()),
+  regExpenses: (expense) => dispatch(expensesAdd1(expense)),
 });
 
 Form.propTypes = {
-  allCurrencies: PropTypes.shape(PropTypes.any.isRequired).isRequired,
-  getExpenses: PropTypes.func.isRequired,
-  getCurrency: PropTypes.func.isRequired,
+  expenses: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+    currency: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    exchangeRates: PropTypes.func.isRequired,
+    total: PropTypes.number.isRequired,
+  }).isRequired,
+  regExpense: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
