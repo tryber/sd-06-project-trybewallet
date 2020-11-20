@@ -27,7 +27,7 @@ class Table extends Component {
     );
 
     const { name, ask } = currentCurrency;
-    const convValue = (ask * value).toFixed(2);
+    const endValue= (ask * value).toFixed(2);
 
     return (
       <tr id={ id }>
@@ -37,7 +37,7 @@ class Table extends Component {
         <td>{value}</td>
         <td>{name}</td>
         <td>{parseFloat(ask).toFixed(2)}</td>
-        <td>{convValue}</td>
+        <td>{endValue}</td>
         <td>Real</td>
         <td>
           <button type="button" data-testid="edit-btn">
@@ -46,7 +46,8 @@ class Table extends Component {
           <button
             type="button"
             data-testid="delete-btn"
-            onClick={ () => delExpenseTst(expense, convValue) }
+            // onClick={ () => delExpenseTst(expense, convValue) }
+            onClick={ () => delExpenseTst(expense) }
           >
             Excluir
           </button>
@@ -91,7 +92,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  delExpenseTst: (expense, convValue) => dispatch(delExpense(expense, convValue)),
+  delExpenseTst: (expense, endValue) => dispatch(delExpense(expense, endValue)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

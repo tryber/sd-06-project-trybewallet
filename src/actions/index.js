@@ -15,6 +15,7 @@ export const TOTAL_FIELD = 'TOTAL_FIELD';
 export const CURRENCIES = 'CURRENCIES';
 export const DEL_EXPENSE = 'DEL_EXPENSE';
 export const EXCHANGE_DATA = 'EXCHANGE_DATA';
+// export const EDIT_EXPENSE = 'EDIT_EXPENSE'
 
 function getData(responseJson) {
   return {
@@ -63,9 +64,14 @@ export const exchangeData = (exchangeRates) => ({
 export const delExpense = (expense) => ({ //-------------------------------------
   type: 'DEL_EXPENSE',
   expense,
-  // convValue,
+  // endValue,
 });
 
+// export const editExpense = (expense) => ({ //-------------------------------------
+//   type: 'EDIT_EXPENSE',
+//   expense,
+
+// });
 // export function getCurrency() {
 //   const currencies = fetchCoinData;
 //   dispatch(currencies);

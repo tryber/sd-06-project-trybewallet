@@ -44,6 +44,20 @@ class Wallet extends React.Component {
     });
   }
 
+  // editExpense() {
+  //   const { expense } = this.state;
+  //   if (expense.value && expense.description && expense.tag !== 0) {
+  //     this.setState({
+  //       expense: {
+  //         value: '',
+  //         description: '',
+  //         currency: '',
+  //         method: '',
+  //         tag: '',
+  //         // endValue: value * exchangeRates[elem.currency],
+  //       },
+  //     }
+    
   async handleClick(e) {
     e.preventDefault();
     const { expense } = this.state;
@@ -69,6 +83,7 @@ class Wallet extends React.Component {
     const { expense } = this.state;
     const { value, description, currency, method, tag } = expense;
     const { email, currencies, totalField } = this.props;
+    // const { email, currencies, totalField, isEditing } = this.props;
     return (
       <div>
         <header>
@@ -98,7 +113,7 @@ class Wallet extends React.Component {
           />
 
           <span>
-            Moeda
+            moeda
           </span>
           <select
             data-testid="currency-input"
@@ -119,7 +134,7 @@ class Wallet extends React.Component {
           </select>
 
           <span>
-            Método de pagamento
+            método de pagamento
           </span>
           <select
             id="method"
@@ -135,7 +150,7 @@ class Wallet extends React.Component {
           </select>
 
           <span>
-            Tag
+            tag
           </span>
           <select
             data-testid="tag-input"
@@ -152,6 +167,7 @@ class Wallet extends React.Component {
           </select>
 
           <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
+          {/* <button type="button" onClick={ this.handleClick }>Editar despesa</button> */}
         </form>
         <Table />
       </div>

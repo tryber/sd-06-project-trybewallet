@@ -6,6 +6,7 @@ import {
   ID_INCREMENT,
   TOTAL_FIELD,
   EXCHANGE_DATA,
+  // EDIT_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -66,6 +67,12 @@ export default function (state = INITIAL_STATE, action) {
       totalField: Total,
     };
   }
+
+  // case EDIT_EXPENSE: {
+  //   ...state,
+  //   editExpense: state.expense.find()
+  // }
+
   // case DEL_EXPENSE:
   //   return { ...state,
   //     expenses: state.expenses.filter((exp) => exp.id !== action.expense) };
