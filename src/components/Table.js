@@ -27,7 +27,7 @@ class Table extends Component {
     );
 
     const { name, ask } = currentCurrency;
-    const endValue= (ask * value).toFixed(2);
+    const endValue = (ask * value).toFixed(2);
 
     return (
       <tr id={ id }>

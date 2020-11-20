@@ -57,7 +57,7 @@ class Wallet extends React.Component {
   //         // endValue: value * exchangeRates[elem.currency],
   //       },
   //     }
-    
+
   async handleClick(e) {
     e.preventDefault();
     const { expense } = this.state;
@@ -167,7 +167,7 @@ class Wallet extends React.Component {
           </select>
 
           <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
-          {/* <button type="button" onClick={ this.handleClick }>Editar despesa</button> */}
+          {/* <button type="button" onClick={ this.handleClick }>Editar</button> */}
         </form>
         <Table />
       </div>
