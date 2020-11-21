@@ -168,8 +168,12 @@ Forms.propTypes = {
   addExpenses: PropTypes.func.isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
   actionAddTotal: PropTypes.func.isRequired,
-  currencies: PropTypes.objectOf().isRequired,
+  currencies: PropTypes.objectOf(PropTypes.any).isRequired,
   currenciesKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
+
+// Forms.defaultProps = {
+//   currencies: {},
+// };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Forms);
