@@ -27,7 +27,6 @@ class Form extends React.Component {
 
   handleChange({ target, nativeEvent }) {
     const { name, value } = target;
-    console.log(name);
     if (name === 'method' || name === 'tag') {
       const { options, options: { selectedIndex } } = nativeEvent.target;
       console.log(options[selectedIndex].innerHTML);

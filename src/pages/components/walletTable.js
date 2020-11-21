@@ -7,12 +7,12 @@ class Table extends Component {
   constructor(props) {
     super(props);
     this.tBody = this.tBody.bind(this);
-    this.deleteRow = this.deleteRow.bind(this);
+    this.delRow = this.delRow.bind(this);
   }
 
   tBody(expense, index) {
     const { currency, description, tag, method, value, exchangeRates, id } = expense;
-    const CURRENCY_DATA = Object.values(exchangeRates)
+    const currencyData = Object.values(exchangeRates)
       .find((coin) => coin.code === currency);
     return (
       <tr
@@ -25,19 +25,19 @@ class Table extends Component {
         <td>{ value }</td>
         <td>{ currency }</td>
         <td>
-          { Math.round(100 * CURRENCY_DATA.ask) / 100 }
+          { Math.round(100 * currencyData.ask) / 100 }
         </td>
         <td>
-          { Math.round(100 * CURRENCY_DATA.ask * expense.value) / 100 }
+          { Math.round(100 * currencyData.ask * expense.value) / 100 }
         </td>
         <td>
-          { CURRENCY_DATA.name }
+          { currencyData.name }
         </td>
         <td>Real</td>
         <td>
           <button
             data-testid="delete-btn"
-            onClick={ () => this.deleteRow(id) }
+            onClick={ () => this.delRow(id) }
             type="button"
           >
             Delete
@@ -46,9 +46,9 @@ class Table extends Component {
       </tr>);
   }
 
-  deleteRow(key) {
-    const { eraseExpense } = this.props;
-    eraseExpense(key);
+  delRow(id) {
+    const { clearExpenses } = this.props;
+    clearExpenses(id);
   }
 
   render() {
@@ -74,7 +74,7 @@ class Table extends Component {
             {
               expenses
                 ? Object.values(expenses)
-                  .map((exp, index) => (this.tBody(exp, index)))
+                  .map((expense, index) => (this.tBody(expense, index)))
                 : undefined
             }
           </tbody>
@@ -89,7 +89,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  eraseExpense: (id) => dispatch(expensesDel(id)),
+  clearExpenses: (id) => dispatch(expensesDel(id)),
 });
 
 Table.propTypes = {
@@ -102,7 +102,7 @@ Table.propTypes = {
     exchangeRates: PropTypes.func.isRequired,
     total: PropTypes.number.isRequired,
   }).isRequired,
-  eraseExpense: PropTypes.func.isRequired,
+  clearExpenses: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

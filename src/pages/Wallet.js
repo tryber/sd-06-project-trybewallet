@@ -2,14 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from './components/form';
-// import { currencyThunk } from '../actions';
+import Table from './components/walletTable';
 
 class Wallet extends React.Component {
-  // componentDidMount() {
-  //   const { getCurrency } = this.props;
-  //   getCurrency();
-  // }
-
   render() {
     const { email, total } = this.props;
     return (
@@ -21,6 +16,7 @@ class Wallet extends React.Component {
           { total || 0 }
         </span>
         <Form />
+        <Table />
       </div>
     );
   }
