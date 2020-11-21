@@ -17,7 +17,10 @@ class TableBody extends Component {
               <td>{expense.method}</td>
               <td>{expense.value}</td>
               <td>{expense.exchangeRates[expense.currency].name}</td>
-              <td>{parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)}</td>
+              <td>
+                {parseFloat(expense.exchangeRates[expense.currency].ask)
+                  .toFixed(2)}
+              </td>
               <td>
                 {
                   (expense.exchangeRates[expense.currency].ask * expense.value).toFixed(2)

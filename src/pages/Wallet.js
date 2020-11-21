@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCoinData, newExpense, editExpense, replaceExpense } from '../actions';
+import { fetchCoinData, newExpense, replaceExpense } from '../actions';
 import Table from './Table';
 
 class Wallet extends React.Component {
@@ -169,7 +169,9 @@ class Wallet extends React.Component {
             <option value="Saúde">Saúde</option>
           </select>
 
-          <button type="button" onClick={ this.handleClick }>{ isEditing ? 'Editar despesa' : 'Adicionar despesa' }</button>
+          <button type="button" onClick={ this.handleClick }>
+            { isEditing ? 'Editar despesa' : 'Adicionar despesa' }
+          </button>
         </form>
         <Table editExpense={ this.handleClickExpense } />
       </div>
@@ -185,6 +187,7 @@ Wallet.propTypes = {
   totalField: PropTypes.number.isRequired,
   isEditing: PropTypes.bool,
   dispatchReplaceExpense: PropTypes.func.isRequired,
+  stateExpense: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 Wallet.defaultProps = {
