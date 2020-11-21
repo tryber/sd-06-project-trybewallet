@@ -19,11 +19,28 @@ class Wallet extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClickExpense = this.handleClickExpense.bind(this);
+    this.setDataInForms = this.setDataInForms.bind(this);
+    this.resetExpensesDataInForms = this.resetExpensesDataInForms.bind(this);
   }
 
   componentDidMount() {
     const { currencyFetch } = this.props;
     currencyFetch();
+  }
+
+  componentDidUpdate(prevProps) {
+    this.setEditDataInForms(prevProps);
+  }
+
+  setEditDataInForms(prevProps) {
+    const { isEditing, stateExpense } = this.props;
+    if (prevProps.isEditing !== isEditing) {
+      if (isEditing) {
+        this.setState({ expense: stateExpense });
+      } else { 
+        this.resetExpensesDataInForms();
+      }
+    }
   }
 
   handleChange({ target }) {
@@ -44,6 +61,18 @@ class Wallet extends React.Component {
     dispatchReplaceExpense(expense);
   }
 
+  resetExpensesDataInForms() {
+    this.setState({
+      expense: {
+        value: '',
+        description: '',
+        currency: 'USD',
+        method: '',
+        tag: '',
+      }
+    });
+  }
+
   async handleClick(e) {
     e.preventDefault();
     const { expense } = this.state;
@@ -52,20 +81,12 @@ class Wallet extends React.Component {
       this.handleClickExpense();
     } else if (expense.value && expense.description && expense.tag !== 0) {
       await dispatchNewExpense(expense);
-      this.setState({
-        expense: {
-          value: '',
-          description: '',
-          currency: 'USD',
-          method: '',
-          tag: '',
-        },
-      });
+      this.resetExpensesDataInFroms();
+      };
     }
-  }
 
   render() {
-    const { expense } = this.props;
+    const { expense } = this.state;
     const { value, description, currency, method, tag } = expense;
     const { email, currencies, totalField, isEditing } = this.props;
     return (
@@ -153,7 +174,7 @@ class Wallet extends React.Component {
       </div>
     );
   }
-}
+
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   currencies: PropTypes.number.isRequired,
@@ -172,7 +193,7 @@ const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   totalField: state.wallet.totalField,
   isEditing: state.wallet.isEditing,
-  expense: state.wallet.expense,
+  stateExpenses: state.wallet.expense,
 });
 const mapDispatchToProps = (dispatch) => ({
   dispatchReplaceExpense: (expense) => dispatch(replaceExpense(expense)),
