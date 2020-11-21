@@ -22,6 +22,11 @@ class Table extends Component {
     );
   }
 }
+
+Table.propTypes = {
+  editExpense: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
