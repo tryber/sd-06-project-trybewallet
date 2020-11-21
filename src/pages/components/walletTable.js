@@ -71,10 +71,11 @@ class Table extends Component {
             </tr>
           </thead>
           <tbody>
-            {expenses
-              ? Object.values(expenses)
-                .map((exp, index) => (this.tBody(exp, index)))
-              : undefined
+            {
+              expenses
+                ? Object.values(expenses)
+                  .map((exp, index) => (this.tBody(exp, index)))
+                : undefined
             }
           </tbody>
         </table>
