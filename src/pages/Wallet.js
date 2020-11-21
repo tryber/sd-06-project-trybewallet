@@ -19,7 +19,7 @@ class Wallet extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClickExpense = this.handleClickExpense.bind(this);
-    this.setDataInForms = this.setDataInForms.bind(this);
+    this.setEditDataInForms = this.setEditDataInForms.bind(this);
     this.resetExpensesDataInForms = this.resetExpensesDataInForms.bind(this);
   }
 
@@ -37,7 +37,7 @@ class Wallet extends React.Component {
     if (prevProps.isEditing !== isEditing) {
       if (isEditing) {
         this.setState({ expense: stateExpense });
-      } else { 
+      } else {
         this.resetExpensesDataInForms();
       }
     }
@@ -56,8 +56,9 @@ class Wallet extends React.Component {
   }
 
   handleClickExpense() {
-    const { dispatchReplaceExpense, expense } = this.props;
-    console.log('handleClickExpense', expense)
+    const { dispatchReplaceExpense } = this.props;
+    const { expense } = this.state;
+    console.log('handleClickExpense', expense);
     dispatchReplaceExpense(expense);
   }
 
@@ -69,7 +70,7 @@ class Wallet extends React.Component {
         currency: 'USD',
         method: '',
         tag: '',
-      }
+      },
     });
   }
 
@@ -81,9 +82,9 @@ class Wallet extends React.Component {
       this.handleClickExpense();
     } else if (expense.value && expense.description && expense.tag !== 0) {
       await dispatchNewExpense(expense);
-      this.resetExpensesDataInFroms();
-      };
+      this.resetExpensesDataInForms();
     }
+  }
 
   render() {
     const { expense } = this.state;
@@ -174,6 +175,7 @@ class Wallet extends React.Component {
       </div>
     );
   }
+}
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
@@ -193,7 +195,7 @@ const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   totalField: state.wallet.totalField,
   isEditing: state.wallet.isEditing,
-  stateExpenses: state.wallet.expense,
+  stateExpense: state.wallet.expense,
 });
 const mapDispatchToProps = (dispatch) => ({
   dispatchReplaceExpense: (expense) => dispatch(replaceExpense(expense)),

@@ -8,6 +8,13 @@ const INITIAL_STATE = {
   expenses: [],
   id: 0,
   totalField: 0,
+  expense: {
+    value: '',
+    description: '',
+    currency: 'USD',
+    method: '',
+    tag: '',
+  },
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -60,7 +67,7 @@ export default function (state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: novaExpenses,
-    }
+    };
   default:
     return state;
   }
