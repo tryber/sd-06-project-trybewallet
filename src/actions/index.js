@@ -11,10 +11,7 @@ export const saveLogin = (email) => ({
   email,
 });
 
-export const requestCurrencies = () => ({
-  type: REQUEST_CURRENCIES,
-});
-
+// {expenses: {…}, total: 29889.7885}
 export const expensesAdd = (expenses) => ({
   type: EXPENSES,
   expenses,
@@ -29,24 +26,3 @@ export const apiOk = (currencies) => ({
   type: OK_CURRENCIES,
   currencies,
 });
-
-// export const currencyThunk = () => (dispatch) => {
-//   fetchApi()
-//     .then((currencies) => {
-//       dispatch(apiOk(currencies));
-//     });
-// };
-
-// export const expensesThunk = (expense) => async (dispatch, getState) => {
-//   const responseApi = await fetchApi();
-//   console.log('expense da action', getState());
-//   const expensesItens = getState().wallet.expenses;
-//   let itemId = 0;
-//   if (expensesItens.length === 0) {
-//     itemId = 0;
-//   } else {
-//     itemId = expensesItens[expensesItens.length - 1].id + 1;
-//   }
-//   const dispExpense = { ...expense, id: itemId, exchangeRates: responseApi };
-//   dispatch(expensesAdd(dispExpense));
-};
