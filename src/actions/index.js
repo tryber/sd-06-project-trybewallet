@@ -6,7 +6,6 @@ export const login = (email) => ({
   type: LOGIN,
   email,
 });
-
 export const GET_DATA = 'GET_DATA';
 export const SAVE = 'SAVE';
 export const ID_INCREMENT = 'ID_INCREMENT';
