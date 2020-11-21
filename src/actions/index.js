@@ -62,14 +62,19 @@ export const exchangeData = (exchangeRates) => ({
   exchangeRates,
 });
 
-export const editExpenses = (expenses) => ({
-  type: EDIT_EXPENSE,
-  expenses,
-});
+export function editExpense(expense) {
+  return {
+    type: EDIT_EXPENSE,
+    expense,
+  };
+}
 
-export const changeEdit = (expense) => ({
-  type: IS_EDITING,
-});
+// export function changeEdit(expense) {
+//   return {
+//   type: IS_EDITING,
+//   expense,
+//   };
+// }
 
 export function newExpenses(expense) {
   return async (dispatch) => {
@@ -82,6 +87,7 @@ export function newExpenses(expense) {
     // dispatch(fetchCoinData());
     dispatch(incrementaId());
     dispatch(totalField());
+    dispatch(editExpense(expense));
   };
 }
 

@@ -5,7 +5,8 @@ import TableBody from './TableBody';
 
 class Table extends Component {
   render() {
-    const { expenses, editExpense } = this.props;
+    const { expenses } = this.props;
+
     const campos = [
       'Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda', 'Câmbio utilizado',
       'Valor convertido', 'Moeda de conversão', 'Editar/Excluir',
@@ -17,15 +18,18 @@ class Table extends Component {
             { campos.map((campo, i) => (<th key={ i }>{ campo }</th>)) }
           </tr>
         </thead>
-        <TableBody handleClickExpense={ editExpense } expenses={ expenses } />
+        <TableBody expenses={ expenses } />
       </table>
     );
   }
 }
+
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
+
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
+
 export default connect(mapStateToProps)(Table);

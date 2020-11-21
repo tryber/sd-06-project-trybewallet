@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteExpense, totalField, editExpense } from '../actions';
+import { deleteExpense, totalField, editExpenses } from '../actions';
+
 class TableBody extends Component {
+  editando(e) {
+    this.props.edita()
+    const { editExpense } = this.props
+     console.log('teste', editExpense )
+     console.log('teste111', e )
+  }
+
   render() {
-    const { expenses, deleta, update, handleClickExpense } = this.props;
+    const { expenses, deleta, update, edita } = this.props;
     return (
       <tbody>
         {
           expenses ? expenses.map((item) => (
+          <>
             <tr key={ item.currency }>
               <td>{item.description}</td>
               <td>{item.tag}</td>
@@ -33,14 +42,11 @@ class TableBody extends Component {
               >
                 excluir
               </button>
-              <button
-                data-testid="edit-btn"
-                onClick={ () => handleClickExpense(item) }
-                type="button"
-              >
-                Editar
-              </button>
             </tr>
+              <button data-testid="edit-btn" type="button" onClick={ (e) => this.editando(e) }>
+                Editar despesa
+              </button>
+             </> 
           ))
             : ''
         }
@@ -48,14 +54,22 @@ class TableBody extends Component {
     );
   }
 }
+
 TableBody.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   deleta: PropTypes.func.isRequired,
   update: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  expense: state,
+  editExpense: state.wallet.expenses,
+})
+
 const mapDispatchToProps = (dispatch) => ({
   deleta: (id) => dispatch(deleteExpense(id)),
   update: () => dispatch(totalField()),
-  edit: (id) => dispatch(editExpense(id)),
+  edita: () => dispatch(editExpenses()),
 });
-export default connect(null, mapDispatchToProps)(TableBody);
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableBody);

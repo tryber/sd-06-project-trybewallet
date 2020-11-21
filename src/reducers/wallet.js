@@ -10,7 +10,9 @@ const INITIAL_STATE = {
   isEditing: false,
   editExpenses: null,
 };
+
 export default function (state = INITIAL_STATE, action) {
+  const novaExpenses = [...state.expenses]
   switch (action.type) {
   case GET_DATA:
     return {
@@ -46,17 +48,20 @@ export default function (state = INITIAL_STATE, action) {
       ...state,
     };
   case EDIT_EXPENSE:
+    novaExpenses[action.expense.id] = action.expense;
     return {
       ...state,
       isEditing: true,
-      editExpenses: state.expenses.find((expense) => expense.id === action.id),//pegar as despesas referente ao id escolhido = pos no array
+      expenses: novaExpenses,
+    
+      // expenses: [...state.expenses, state.expenses[action.id]: action.expense]};
     };
 
-    case IS_EDITING:
-      return {
-        ...state,
-        isEditing: true,
-      }
+  case IS_EDITING:
+    return {
+      ...state,
+      isEditing: true,
+    };
   default:
     return state;
   }
