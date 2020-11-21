@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCoinData, newExpenses, editExpense } from '../actions';
+import { fetchCoinData, newExpense, editExpense, replaceExpense } from '../actions';
 import Table from './Table';
 
 class Wallet extends React.Component {
@@ -15,10 +15,10 @@ class Wallet extends React.Component {
         method: '',
         tag: '',
       },
-      isEditing: false,
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClickExpense = this.handleClickExpense.bind(this);
   }
 
   componentDidMount() {
@@ -38,27 +38,20 @@ class Wallet extends React.Component {
     });
   }
 
-  handleClickExpense(item) {
-    console.log('edit expense', item);
-    const teste = item.id;
-    this.setState({
-      isEditing: true,
-      expense: {
-        value: item.value,
-        description: item.description,
-        currency: item.currency,
-        method: item.method,
-        tag: item.tag,
-      },
-    }, (expense) => console.log({ ...expense, teste }));
+  handleClickExpense() {
+    const { dispatchReplaceExpense, expense } = this.props;
+    console.log('handleClickExpense', expense)
+    dispatchReplaceExpense(expense);
   }
 
   async handleClick(e) {
     e.preventDefault();
     const { expense } = this.state;
-    const { newExpencesWallet } = this.props;
-    if (expense.value && expense.description && expense.tag !== 0) {
-      await newExpencesWallet(expense);
+    const { dispatchNewExpense, isEditing } = this.props;
+    if (isEditing) {
+      this.handleClickExpense();
+    } else if (expense.value && expense.description && expense.tag !== 0) {
+      await dispatchNewExpense(expense);
       this.setState({
         expense: {
           value: '',
@@ -67,15 +60,14 @@ class Wallet extends React.Component {
           method: '',
           tag: '',
         },
-        isEditing: false,
       });
     }
   }
 
   render() {
-    const { expense, isEditing } = this.state;
+    const { expense } = this.props;
     const { value, description, currency, method, tag } = expense;
-    const { email, currencies, totalField, expenses } = this.props;
+    const { email, currencies, totalField, isEditing } = this.props;
     return (
       <div>
         <header>
@@ -154,9 +146,10 @@ class Wallet extends React.Component {
             <option value="Transporte">Transporte</option>
             <option value="Saúde">Saúde</option>
           </select>
-          <button type="button" onClick={ this.handleClick }>{isEditing ? 'Editar Despesa' : 'Adicionar despesa'}</button>
+
+          <button type="button" onClick={ this.handleClick }>{ isEditing ? 'Editar despesa' : 'Adicionar despesa' }</button>
         </form>
-        <Table editExpense={ this.handleClickExpense.bind(this) } />
+        <Table editExpense={ this.handleClickExpense } />
       </div>
     );
   }
@@ -164,24 +157,27 @@ class Wallet extends React.Component {
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   currencies: PropTypes.number.isRequired,
-  // map: PropTypes.func.isRequired,
   currencyFetch: PropTypes.func.isRequired,
-  // newAction: PropTypes.func.isRequired,
-  newExpencesWallet: PropTypes.func.isRequired,
+  dispatchNewExpense: PropTypes.func.isRequired,
   totalField: PropTypes.number.isRequired,
+  isEditing: PropTypes.bool,
+  dispatchReplaceExpense: PropTypes.func.isRequired,
+};
+
+Wallet.defaultProps = {
+  isEditing: false,
 };
 const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
   totalField: state.wallet.totalField,
-  expenses: state.wallet.expenses,
+  isEditing: state.wallet.isEditing,
+  expense: state.wallet.expense,
 });
 const mapDispatchToProps = (dispatch) => ({
-  // currencyFetch: () => dispatch(fetchCoinDataThunk()),
-  newExpencesWallet: (expense) => dispatch(newExpenses(expense)),
+  dispatchReplaceExpense: (expense) => dispatch(replaceExpense(expense)),
+  dispatchNewExpense: (expense) => dispatch(newExpense(expense)),
   currencyFetch: () => dispatch(fetchCoinData()),
-  dispatchExpense: (expense) => dispatch(editExpense(expense)),
-  // getcurrencies: () => dispatch(getCurrencyAPI());
-  // newAction: (expense) => dispatch(saveExpenses(expense)),
+
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

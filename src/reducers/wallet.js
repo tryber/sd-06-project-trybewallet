@@ -1,5 +1,6 @@
 import { GET_DATA, SAVE, ID_INCREMENT,
-  TOTAL_FIELD, EXCHANGE_DATA, DELETE_EXPENSE, EDIT_EXPENSE, IS_EDITING }
+  TOTAL_FIELD, EXCHANGE_DATA, DELETE_EXPENSE,
+  EDIT_EXPENSE, REPLACE_EXPENSE }
   from '../actions';
 
 const INITIAL_STATE = {
@@ -7,12 +8,10 @@ const INITIAL_STATE = {
   expenses: [],
   id: 0,
   totalField: 0,
-  isEditing: false,
-  editExpenses: null,
 };
 
 export default function (state = INITIAL_STATE, action) {
-  const novaExpenses = [...state.expenses]
+  const novaExpenses = [...state.expenses];
   switch (action.type) {
   case GET_DATA:
     return {
@@ -48,20 +47,20 @@ export default function (state = INITIAL_STATE, action) {
       ...state,
     };
   case EDIT_EXPENSE:
+    console.log(action.expense.id);
+    console.log(action.expense);
+    return {
+      ...state,
+      expense: state.expenses.find((expense) => expense.id === action.expense.id),
+      isEditing: action.isEditing,
+    };
+  case REPLACE_EXPENSE:
     novaExpenses[action.expense.id] = action.expense;
+    console.log(novaExpenses);
     return {
       ...state,
-      isEditing: true,
       expenses: novaExpenses,
-    
-      // expenses: [...state.expenses, state.expenses[action.id]: action.expense]};
-    };
-
-  case IS_EDITING:
-    return {
-      ...state,
-      isEditing: true,
-    };
+    }
   default:
     return state;
   }

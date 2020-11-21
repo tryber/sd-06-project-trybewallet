@@ -15,7 +15,7 @@ export const CURRENCIES = 'CURRENCIES';
 export const EXCHANGE_DATA = 'EXCHANGE_DATA';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 export const EDIT_EXPENSE = 'EDIT_EXPENSE';
-export const IS_EDITING = 'IS_EDITING';
+export const REPLACE_EXPENSE = 'REPLACE_EXPENSE';
 
 function getData(responseJson) {
   return {
@@ -37,7 +37,7 @@ export function incrementaId() {
   };
 }
 
-export function saveExpenses(expense) {
+export function saveExpense(expense) {
   return {
     type: SAVE,
     expense,
@@ -62,45 +62,27 @@ export const exchangeData = (exchangeRates) => ({
   exchangeRates,
 });
 
-export function editExpense(expense) {
-  return {
-    type: EDIT_EXPENSE,
-    expense,
-  };
-}
+export const editExpense = (expense) => ({
+  type: EDIT_EXPENSE,
+  expense,
+  isEditing: true,
+});
 
-// export function changeEdit(expense) {
-//   return {
-//   type: IS_EDITING,
-//   expense,
-//   };
-// }
+export const replaceExpense = (expense) => ({
+  type: REPLACE_EXPENSE,
+  expense,
+});
 
-export function newExpenses(expense) {
+export function newExpense(expense) {
   return async (dispatch) => {
     const exchangeRates = await getCoin();
 
-    dispatch(saveExpenses({
+    dispatch(saveExpense({
       ...expense,
       exchangeRates,
     }));
     // dispatch(fetchCoinData());
     dispatch(incrementaId());
     dispatch(totalField());
-    dispatch(editExpense(expense));
   };
 }
-
-// export function updateExpenses(expenses) {
-  //   return async (dispatch) => {
-    //     const exchangeRates = await getCoin();
-    // dispatch(editExpenses(expenses));
-    
-//     dispatch(saveExpenses({
-//       ...expense,
-//       exchangeRates,
-//     }));
-//   
-//     dispatch(totalField(expense));
-//   };
-// }
