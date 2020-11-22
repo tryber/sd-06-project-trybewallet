@@ -5,6 +5,8 @@ export const OK_CURRENCIES = 'OK_CURRENCIES';
 export const EXPENSES = 'EXPENSES';
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const DEL_EXPENSES = 'DEL_EXPENSES';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const ADD_ID = 'ADD_ID';
 
 export const saveLogin = (email) => ({
   type: SAVELOGIN,
@@ -25,4 +27,9 @@ export const expensesDel = (expenses) => ({
 export const apiOk = (currencies) => ({
   type: OK_CURRENCIES,
   currencies,
+});
+
+export const editExpense = (expenses) => ({
+  type: EDIT_EXPENSE,
+  expenses,
 });

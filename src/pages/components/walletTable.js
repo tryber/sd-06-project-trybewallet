@@ -3,6 +3,24 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { expensesDel } from '../../actions';
 
+const object = {
+  USD: 'Dólar Comercial',
+  CAD: 'Dólar Canadense',
+  EUR: 'Euro',
+  GBP: 'Libra Esterlina',
+  ARS: 'Peso Argentino',
+  BTC: 'Bitcoin',
+  LTC: 'Litecoin',
+  JPY: 'Iene Japonês',
+  CHF: 'Franco Suíço',
+  AUD: 'Dólar Australiano',
+  CNY: 'Yuan Chinês',
+  ILS: 'Novo Shekel Israelense',
+  ETH: 'Ethereum',
+  XRP: 'Ripple',
+
+};
+
 class Table extends Component {
   constructor(props) {
     super(props);
@@ -10,34 +28,57 @@ class Table extends Component {
     this.delRow = this.delRow.bind(this);
   }
 
-  tBody(expense, index) {
-    const { currency, description, tag, method, value, exchangeRates, id } = expense;
+  editing(type, id) {
+    const { editExpense } = this.props;
+    editExpense(type, id);
+  }
+
+  tBody(expense) {
+    const {
+      description,
+      tag,
+      method,
+      value,
+      exchangeRates,
+      id,
+      currency,
+    } = expense;
     const currencyData = Object.values(exchangeRates)
       .find((coin) => coin.code === currency);
     return (
       <tr
-        key={ `${currency}${id}${index}` }
+        key={ id }
         id={ id }
       >
-        <td>{ description }</td>
-        <td>{ tag }</td>
-        <td>{ method }</td>
-        <td>{ value }</td>
-        <td>{ currency }</td>
+        <td className="descTb">{ description }</td>
+        <td className="tagTb">{ tag }</td>
+        <td className="methodTb">{ method }</td>
+        <td className="valueTb">{ value }</td>
+        <td className="moedaTb">{ object[currency] }</td>
         <td>
-          { Math.round(100 * currencyData.ask) / 100 }
+          {/* {parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)} */}
+          { (Math.round(100 * currencyData.ask) / 100).toFixed(2) }
         </td>
         <td>
-          { Math.round(100 * currencyData.ask * expense.value) / 100 }
-        </td>
-        <td>
-          { currencyData.name }
+          {/* {parseFloat(expense.exchangeRates[expense.currency].ask * expense.value) */}
+          {/* .toFixed(2)} */}
+          { (Math.round(100 * currencyData.ask * value) / 100).toFixed(2) }
         </td>
         <td>Real</td>
         <td>
           <button
+            data-testid="edit-btn"
+            type="button"
+            onClick={ () => {
+              this.editing('edit', id);
+            } }
+          >
+            Editar
+          </button>
+          {/* <Form nameBtn="Editar despesa" /> */}
+          <button
             data-testid="delete-btn"
-            onClick={ () => this.delRow(id) }
+            onClick={ () => this.delRow(expense.id) }
             type="button"
           >
             Delete
@@ -56,7 +97,8 @@ class Table extends Component {
 
     return (
       <div>
-        <table>
+
+        <table className="tabela">
           <thead>
             <tr>
               <th>Descrição</th>
@@ -73,9 +115,9 @@ class Table extends Component {
           <tbody>
             {
               expenses
-                ? Object.values(expenses)
-                  .map((expense, index) => (this.tBody(expense, index)))
-                : undefined
+                ? expenses
+                  .map((expense) => (this.tBody(expense)))
+                : 'deu erro'
             }
           </tbody>
         </table>
@@ -93,16 +135,18 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Table.propTypes = {
-  expenses: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-    currency: PropTypes.string.isRequired,
-    tag: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    exchangeRates: PropTypes.func.isRequired,
-    total: PropTypes.number.isRequired,
-  }).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.objectOf({
+    id: PropTypes.number,
+    value: PropTypes.number,
+    currency: PropTypes.string,
+    tag: PropTypes.string,
+    description: PropTypes.string,
+    exchangeRates: PropTypes.func,
+    total: PropTypes.number,
+  })).isRequired,
   clearExpenses: PropTypes.func.isRequired,
+  editExpense: PropTypes.func.isRequired,
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

@@ -20,12 +20,12 @@ class Currencies extends React.Component {
   }
 
   async fetchCurrencies() {
-    const CURRENCIES = Object.keys(
-      await (await fetch('https://economia.awesomeapi.com.br/json/all')).json(),
+    const currenciesResponse = await (await fetch('https://economia.awesomeapi.com.br/json/all')).json();
+    const currencies = Object.values(currenciesResponse);
+    const FILTERED_CURRENCIES = currencies.filter(
+      (currency) => currency.name !== 'Dólar Turismo',
     );
-    const FILTERED_CURRENCIES = CURRENCIES.filter(
-      (currency) => currency !== 'USDT',
-    );
+    console.log(FILTERED_CURRENCIES);
     this.setState({ currencies: FILTERED_CURRENCIES });
   }
 
@@ -46,16 +46,17 @@ class Currencies extends React.Component {
         <select
           data-testid="currency-input"
           id="currencies"
-          onChange={ handleChange }
+          name="currencies"
+          onChange={ (event) => handleChange(event) }
         >
           {currencies.map((currency) => (
             <option
-              data-testid={ currency }
-              key={ currency }
-              value={ currency }
-              name="currency"
+              data-testid={ currency.code }
+              key={ currency.name }
+              value={ currency.code }
+              name={ currency.name }
             >
-              { currency }
+              { currency.code }
             </option>
           ))}
         </select>

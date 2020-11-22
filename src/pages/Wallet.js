@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from './components/form';
-import Table from './components/walletTable';
 
 class Wallet extends React.Component {
   render() {
@@ -15,8 +14,7 @@ class Wallet extends React.Component {
         <span data-testid="total-field">
           { total || 0 }
         </span>
-        <Form />
-        <Table />
+        <Form nameBtn="adicionar despesa" />
       </div>
     );
   }
