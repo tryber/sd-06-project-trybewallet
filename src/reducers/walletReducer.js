@@ -12,10 +12,14 @@ const INITIAL_STATE = {
   total: 0,
 };
 
-function walletReducer(state = INITIAL_STATE, action) {
+function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
   case ADD_EXPENSE:
-    return { ...state, expenses: [action.expense], total: action.total };
+    return {
+      ...state,
+      expenses: [...state.expenses, action.expense],
+      total: action.total,
+    };
   case REMOVE_EXPENSE:
     return { ...state, expenses: [] };
   case EDIT_EXPENSE:
@@ -27,4 +31,4 @@ function walletReducer(state = INITIAL_STATE, action) {
   }
 }
 
-export default walletReducer;
+export default wallet;

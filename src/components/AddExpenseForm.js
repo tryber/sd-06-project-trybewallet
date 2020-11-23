@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { sendCurrencyThunk, addExpense } from '../actions/index';
 // import walletReducer from '../reducers/walletReducer';
 
-class AddExpenseForm extends React.Component {
+class AddExpenseForm extends Component {
   constructor() {
     super();
 
@@ -57,14 +57,12 @@ class AddExpenseForm extends React.Component {
     let ask = 0;
     Object.keys(currencies).forEach((item) => {
       if (currency === item) {
-        console.log(`currencies[item]: ${currencies[item]}`);
         ask = currencies[item].ask;
       }
     });
-    const filteredCurrencies = Object.entries(currencies)
-      .filter(([key]) => key !== 'USDT');
-    console.log(filteredCurrencies);
-    this.setState({ exchangeRates: filteredCurrencies });
+    // const filteredCurrencies = Object.entries(currencies)
+    //   .filter(([key]) => key !== 'USDT');
+    this.setState({ exchangeRates: currencies });
     const newTotal = total + (value * ask);
     this.mountForm(newTotal);
   }
