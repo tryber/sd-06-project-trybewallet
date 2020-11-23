@@ -1,11 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { refactoreTotal } from '../actions';
 
 class Table extends React.Component {
-  // constructor() {
-  //   super()
-  // }
+  constructor() {
+    super();
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleDelete(target) {
+    const { actionRemoveTotal, storeTotal } = this.props;
+    const newTotal = (storeTotal - target.name).toFixed(2);
+    actionRemoveTotal({ total: newTotal });
+    target.parentNode.parentNode.remove();
+  }
 
   render() {
     const { storeExpenses } = this.props;
@@ -54,6 +63,11 @@ class Table extends React.Component {
                 <button
                   type="button"
                   data-testid="delete-btn"
+                  name={
+                    (parseFloat(expense.exchangeRates[expense.currency].ask)
+                    * expense.value).toFixed(2)
+                  }
+                  onClick={ (event) => this.handleDelete(event.target) }
                 >
                   Deleta despesa
                 </button>
@@ -68,14 +82,21 @@ class Table extends React.Component {
 
 const mapStateToProps = (state) => ({
   storeExpenses: state.wallet.expenses,
+  storeTotal: state.total.total,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actionRemoveTotal: (state) => dispatch(refactoreTotal(state.total)),
 });
 
 Table.propTypes = {
   storeExpenses: PropTypes.arrayOf(PropTypes.any),
+  actionRemoveTotal: PropTypes.objectOf.isRequired,
+  storeTotal: PropTypes.number.isRequired,
 };
 
 Table.defaultProps = {
   storeExpenses: {},
 };
 
-export default connect(mapStateToProps, null)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
