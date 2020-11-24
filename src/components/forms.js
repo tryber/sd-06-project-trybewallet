@@ -48,9 +48,14 @@ class Forms extends React.Component {
       expenses: { value, currency },
     } = this.state;
     fetchCurrencies();
-    const cambio = parseFloat(value) * parseFloat(currencies[currency].ask);
-    const newTotal = (parseFloat(total) + cambio).toFixed(2);
-    this.setState({ total: newTotal }, () => actionAddTotal(this.state));
+
+    const cambio = value * currencies[currency].ask;
+    console.log(currencies[currency].ask);
+    const newTotal = (total + cambio).toFixed(2);
+    console.log(newTotal);
+    // this.setState({ total: newTotal }, () => actionAddTotal(this.state));
+    actionAddTotal(parseFloat(newTotal));
+
     this.setState((prevState) => ({
       ...prevState,
       expenses: { ...prevState.expenses,
@@ -156,12 +161,13 @@ class Forms extends React.Component {
 const mapStateToProps = (state) => ({
   currenciesKeys: Object.keys(state.wallet.currencies),
   currencies: state.wallet.currencies,
+  total: state.wallet.total,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: (state) => dispatch(fetchCurrency(state)),
   addExpenses: (state) => dispatch(addExpense([state.expenses])),
-  actionAddTotal: (state) => dispatch(addTotal(state.total)),
+  actionAddTotal: (state) => dispatch(addTotal(state)),
 });
 
 Forms.propTypes = {

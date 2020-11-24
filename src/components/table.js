@@ -1,19 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { refactoreTotal } from '../actions';
+import { deleteExpense } from '../actions';
 
 class Table extends React.Component {
   constructor() {
     super();
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
-  handleDelete(target) {
-    const { actionRemoveTotal, storeTotal } = this.props;
-    const newTotal = (storeTotal - target.name).toFixed(2);
-    actionRemoveTotal({ total: newTotal });
-    target.parentNode.parentNode.remove();
+  handleDelete(expense) {
+    const { actionRefactoreTotal, storeTotal, deleteExpense } = this.props;
+    // const newTotal = (storeTotal - target.name).toFixed(2);
+    // actionRefactoreTotal({ total: newTotal });
+    deleteExpense(expense);
+    // target.parentNode.parentNode.remove();
+  }
+
+  handleEdit(target) {
+    console.log(target.parentNode.parentNode.key);
   }
 
   render() {
@@ -57,6 +63,7 @@ class Table extends React.Component {
                 <button
                   type="button"
                   data-testid="edit-btn"
+                  onClick={ (event) => this.handleEdit(event.target) }
                 >
                   Editar despesa
                 </button>
@@ -67,7 +74,7 @@ class Table extends React.Component {
                     (parseFloat(expense.exchangeRates[expense.currency].ask)
                     * expense.value).toFixed(2)
                   }
-                  onClick={ (event) => this.handleDelete(event.target) }
+                  onClick={ () => this.handleDelete(expense) }
                 >
                   Deleta despesa
                 </button>
@@ -82,16 +89,16 @@ class Table extends React.Component {
 
 const mapStateToProps = (state) => ({
   storeExpenses: state.wallet.expenses,
-  storeTotal: state.total.total,
+  storeTotal: state.wallet.total,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  actionRemoveTotal: (state) => dispatch(refactoreTotal(state.total)),
+  deleteExpense: (expense) => dispatch(deleteExpense(expense)),
 });
 
 Table.propTypes = {
   storeExpenses: PropTypes.arrayOf(PropTypes.any),
-  actionRemoveTotal: PropTypes.objectOf.isRequired,
+  actionRefactoreTotal: PropTypes.objectOf().isRequired,
   storeTotal: PropTypes.number.isRequired,
 };
 

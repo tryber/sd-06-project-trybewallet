@@ -27,6 +27,8 @@ export function addExpense(expense) {
 }
 
 export function deleteExpense(expense) {
+  // const newExpenses = expense.filter((expense) => expense ==! expense.id);
+  // objeto nao funciona filter;
   return {
     type: DELETEEXPENSE,
     expense,
@@ -34,18 +36,19 @@ export function deleteExpense(expense) {
 }
 
 export function addTotal(newTotal) {
+  console.log(newTotal);
   return {
     type: ADDTOTAL,
     newTotal,
   };
 }
 
-export function refactoreTotal(newTotal) {
-  return {
-    type: REFACTORETOTAL,
-    newTotal,
-  };
-}
+// export function refactoreTotal(newTotal) {
+//   return {
+//     type: REFACTORETOTAL,
+//     newTotal,
+//   };
+// }
 
 export function fetchCurrency() {
   return async (dispatch) => {

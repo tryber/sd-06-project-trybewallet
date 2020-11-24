@@ -6,5 +6,4 @@ import total from './total';
 export default combineReducers({
   user,
   wallet,
-  total,
 });
