@@ -36,7 +36,6 @@ export function deleteExpense(expense) {
 }
 
 export function addTotal(newTotal) {
-  console.log(newTotal);
   return {
     type: ADDTOTAL,
     newTotal,
