@@ -1,125 +1,205 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchingSaveExpense, fetchingCurrencies } from '../actions/index';
+import '../styles/expenses.css';
+import thunkGetApi from '../services/ServicesApi';
 
 class Expenses extends Component {
+  constructor() {
+    super();
+    this.handleInput = this.handleInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.state = {
+      expenses: {
+        id: '',
+        value: 0,
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+        exchangeRates: {},
+      },
+    };
+  }
+
+  componentDidMount() {
+    const { fetchCurrenciesSuccess } = this.props;
+    fetchCurrenciesSuccess();
+  }
+
+  handleInput({ target }) {
+    const { name, value } = target;
+    this.setState({
+      ...this.state,
+      expenses: {
+        ...this.state.expenses,
+        [name]: value,
+      },
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { sendExpenseApi } = this.props;
+    sendExpenseApi(this.state); // thunk
+  }
+
   render() {
+    const { value, description, currency, method, tag } = this.state.expenses;
+    const { currencies, expenses } = this.props;
+    const { handleInput, handleSubmit } = this;
     return (
-      <form className="despesas">
-        <fieldset>
-          <div>
-            <label htmlFor="expense-value">
-              Valor da despesa:
-              <input
-                name="value"
-                data-testid="value-input"
-                // value={ value }
-                // onChange={ handleInput }
-              />
-            </label>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div>
-            <label htmlFor="description">
-              descrição da despesa:
-              <input
-                name="value"
-                data-testid="description-input"
-                // value={ value }
-                // onChange={ handleInput }
-              />
-            </label>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div>
-            <label htmlFor="currency">
-              Moeda:
-              <select
-                name="currency"
-                data-testid="currency-input"
-                // value={ value }
-                // onChange={ handleInput }
-              >
-                {this.handleOptions}
-              </select>
-            </label>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div>
-            <label htmlFor="method">
-              Forma de Pagamento:
-              <select
-                name="method"
-                data-testid="method-input"
-                // value={ value }
-                // onChange={ handleInput }
-              >
-                <option value="dinehiro">Dinheiro</option>
-                <option value="Cartão de crédito">Cartão de crédito</option>
-                <option value="Cartão de débito">Cartão de débito</option>
-              </select>
-            </label>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div>
-            <label htmlFor="tag">
-              Tipo:
-              <select
-                name="tag"
-                data-testid="tag-input"
-                // value={ value }
-                // onChange={ handleInput }
-              >
-                <option value="Alimentação">Alimentação</option>
-                <option value="Lazer">Lazer</option>
-                <option value="Trabalho">Trabalho</option>
-                <option value="Transporte">Transporte</option>
-                <option value="Saúde">Saúde</option>
+      <div>
+        <form className="despesas">
+          <div className="container">
+            <div className="input">
+              <label htmlFor="expense-value">
+                Valor da despesa:
+                <input
+                  name="value"
+                  data-testid="value-input"
+                  value={ value }
+                  onChange={ handleInput }
+                />
+              </label>
+            </div>
+            <div className="input">
+              <label htmlFor="description">
+                Descrição:
+                <input
+                  name="description"
+                  data-testid="value-input"
+                  value={ description }
+                  onChange={ handleInput }
+                />
+              </label>
+            </div>
 
-              </select>
-            </label>
+            <div className="input">
+              <label htmlFor="currency">
+                Moeda:
+                <select
+                  name="currency"
+                  data-testid="currency-input"
+                  value={ currency }
+                  onChange={ handleInput }
+                >
+                  {currencies.map((currency) => (
+                    <option data-testid="currency" key={ currency }>
+                      { currency }
+                    </option>
+                  ))}
+
+                  {/* {buscar as moedas} */}
+                </select>
+              </label>
+            </div>
+
+            <div className="input">
+              <label htmlFor="method">
+                Forma de Pagamento:
+                <select
+                  name="method"
+                  data-testid="method-input"
+                  value={ method }
+                  onChange={ handleInput }
+                >
+                  <option value="dinehiro">Dinheiro</option>
+                  <option value="Cartão de crédito">Cartão de crédito</option>
+                  <option value="Cartão de débito">Cartão de débito</option>
+                </select>
+              </label>
+            </div>
+
+            <div className="input">
+              <label htmlFor="tag">
+                Tipo:
+                <select
+                  name="tag"
+                  data-testid="tag-input"
+                  value={ tag }
+                  onChange={ handleInput }
+                >
+                  <option value="Alimentação">Alimentação</option>
+                  <option value="Lazer">Lazer</option>
+                  <option value="Trabalho">Trabalho</option>
+                  <option value="Transporte">Transporte</option>
+                </select>
+              </label>
+            </div>
+
+            <button
+              type="button"
+              className="btn btn-primary btn-sm"
+              onClick={ handleSubmit }
+              data-testid="value-input"
+            >
+              Adicionar Despesa
+            </button>
           </div>
-        </fieldset>
+        </form>
 
-      </form>
-
+        <tbody>
+          <table className="table">
+            <thead className="thead-dark">
+              {expenses.map((expense) => (
+                <tr key={ expense }>
+                  <td>{expense.value}</td>
+                  <td>{expense.description}</td>
+                  <td>{expense.currency}</td>
+                  <td>{expense.method}</td>
+                  <td>{expense.tag}</td>
+                  <td>
+                    <button
+                      type="button"
+                      data-testid="edit-btn"
+                      onClick={ () => ('editar') }
+                    >
+                      Editar
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      data-testid="delete-btn"
+                      onClick={ () => ('deletar') }
+                    >
+                      Excluir
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </thead>
+          </table>
+        </tbody>
+      </div>
     );
   }
 }
 
-export default connect()(Expenses);
+Expenses.propTypes = {
+  currencies: PropTypes.number.isRequired,
+  map: PropTypes.func.isRequired,
+  fetchCurrenciesSuccess: PropTypes.func.isRequired,
+  sendExpenseApi: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+  currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrenciesSuccess: () => dispatch(fetchingCurrencies()),
+  sendExpenseApi: (expenses) => dispatch(fetchingSaveExpense(expenses)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Expenses);
 
 /* #### Formulário de adição de Despesa
-
-4. Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:
-
-  * Um campo para adicionar valor da despesa.
-    * Adicione o atributo `data-testid="value-input"`.
-
-  * Um campo para adicionar a descrição da despesa.
-    * Adicione o atributo `data-testid="description-input"`.
-
-  * Um campo para adicionar em qual moeda será registrada a despesa.
-    * Adicione o atributo `data-testid="currency-input"`
-    * Este campo deve ser um dropdown. a pessoa usuária deve poder escolher entre os campos: 'USD', 'CAD', 'EUR', 'GBP', 'ARS', 'BTC', 'LTC', 'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH' e 'XRP'.
-
-    * Os valores do campo de moedas devem ser puxados através da requisição à API.
-      * Adicione um atributo *data-testid* para cada uma das opções acima com o câmbio correspondente, como por exemplo `data-testid="USD"`.
-      * O endpoint utilizado deve ser: https://economia.awesomeapi.com.br/json/all .
-      * Remova das informações trazidas pela API a opção 'USDT' (Dólar Turismo).
-
-  * Um campo para adicionar qual método de pagamento será utilizado.
-    * Adicione o atributo `data-testid="method-input"`.
-    * Este campo deve ser um dropdown. A pessoa usuária deve poder escolher entre os campos: 'Dinheiro', 'Cartão de crédito' e 'Cartão de débito'.
-
-  * Um campo para selecionar uma categoria (tag) para a despesa.
-    * Este campo deve ser um dropdown. a pessoa usuária deve poder escolher entre os campos: 'Alimentação', 'Lazer', 'Trabalho', 'Transporte' e 'Saúde'.
-    * Adicione o atributo `data-testid="tag-input"`.
-    * Ao ser clicado, o botão deve fazer uma requisição à API para trazer o câmbio mais atualizado possível.
-
   * Um botão com o texto \'Adicionar despesa\' que salva as informações da despesa no estado global e atualiza a soma de despesas no header.
     * Desenvolva a funcionalidade do botão "Adicionar despesa" de modo que ao clicar no botão, as seguintes ações sejam executadas:
     * Os valores dos campos devem ser salvos no estado da aplicação, na chave ***expenses***, dentro de um array contendo todos gastos que serão adicionados:
