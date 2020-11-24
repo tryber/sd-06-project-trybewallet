@@ -2,6 +2,7 @@ export const LOGIN = 'LOGIN';
 export const SELECTCURRENCY = 'SELECTCURRENCY';
 export const ADDEXPENSE = 'ADDEXPENSE';
 export const ADDTOTAL = 'ADDTOTAL';
+export const DELETETOTAL = 'DELETETOTAL';
 export const DELETEEXPENSE = 'DELETEEXPENSE';
 export const REFACTORETOTAL = 'REFACTORETOTAL';
 
@@ -27,11 +28,17 @@ export function addExpense(expense) {
 }
 
 export function deleteExpense(expense) {
-  // const newExpenses = expense.filter((expense) => expense ==! expense.id);
-  // objeto nao funciona filter;
   return {
     type: DELETEEXPENSE,
     expense,
+  };
+}
+
+export function deleteTotal(newTotal) {
+  console.log(newTotal);
+  return {
+    type: DELETETOTAL,
+    newTotal,
   };
 }
 
@@ -41,13 +48,6 @@ export function addTotal(newTotal) {
     newTotal,
   };
 }
-
-// export function refactoreTotal(newTotal) {
-//   return {
-//     type: REFACTORETOTAL,
-//     newTotal,
-//   };
-// }
 
 export function fetchCurrency() {
   return async (dispatch) => {

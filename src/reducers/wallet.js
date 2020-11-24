@@ -17,6 +17,8 @@ export default function reducer(state = INITIAL_STATE, action) {
       expenses: state.expenses.filter((expense) => expense.id !== action.expense.id) };
   case 'ADDTOTAL':
     return { ...state, total: state.total + action.newTotal };
+  case 'DELETETOTAL':
+    return { ...state, total: state.total - parseFloat(action.newTotal) };
   default:
     return state;
   }

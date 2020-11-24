@@ -49,8 +49,8 @@ class Forms extends React.Component {
     } = this.state;
     fetchCurrencies();
 
-    const cambio = value * currencies[currency].ask;
-    const newTotal = (total + cambio).toFixed(2);
+    const cambio = parseFloat(value * currencies[currency].ask);
+    const newTotal = (parseFloat(total + cambio)).toFixed(2);
     // this.setState({ total: newTotal }, () => actionAddTotal(this.state));
     actionAddTotal(parseFloat(newTotal));
 

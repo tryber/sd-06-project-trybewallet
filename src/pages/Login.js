@@ -16,7 +16,6 @@ class Login extends React.Component {
   }
 
   handleLogin() {
-    console.log('clicou', this.props);
     const { email } = this.state;
     const { add } = this.props;
     add(email);
