@@ -80,7 +80,7 @@ class AddExpenseForm extends Component {
         <form action="">
 
           <label htmlFor="value-input">
-            Valor
+            Valore
             <input
               type="number"
               name="value"
@@ -92,7 +92,7 @@ class AddExpenseForm extends Component {
           </label>
 
           <label htmlFor="currency-input">
-            Moeda
+            Moedo
             <select
               name="currency"
               id="currency-input"
@@ -110,7 +110,7 @@ class AddExpenseForm extends Component {
           </label>
 
           <label htmlFor="method-input">
-            Método de pagamento
+            Metodo de pagamento
             <select
               name="method"
               id="method-input"
@@ -144,7 +144,7 @@ class AddExpenseForm extends Component {
           </label>
 
           <label htmlFor="description-input">
-            Descrição
+            Descricão da despesa
             <input
               type="text"
               name="description"
@@ -188,7 +188,7 @@ const mapDispatchToProps = (dispatch) => ({
 AddExpenseForm.propTypes = {
   sendCoins: PropTypes.func.isRequired,
   sendExpense: PropTypes.func.isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currencies: PropTypes.objectOf(PropTypes.objectOf()).isRequired,
   expenses: PropTypes.objectOf(PropTypes.number).isRequired,
   total: PropTypes.number.isRequired,
 };

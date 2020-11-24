@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import '../styles/Wallet.css';
 import Header from '../components/Header';
 import AddExpenseForm from '../components/AddExpenseForm';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   render() {
@@ -11,7 +12,7 @@ class Wallet extends React.Component {
       <div>
         <Header />
         <AddExpenseForm />
-        {/* <button type="button" onClick={() => currencyAPI() }>Teste API</button> */}
+        <Table />
       </div>);
   }
 }
