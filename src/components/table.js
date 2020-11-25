@@ -16,7 +16,6 @@ class Table extends React.Component {
     // actionRefactoreTotal({ total: newTotal });
     actionDeleteExpense(expense);
     actionDeleteTotal(expense);
-    // target.parentNode.parentNode.remove();
   }
 
   handleEdit(target) {

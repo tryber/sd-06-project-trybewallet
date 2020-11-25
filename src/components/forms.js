@@ -15,7 +15,7 @@ class Forms extends React.Component {
         currency: 'USD',
         method: 'Dinheiro',
         tag: 'Alimentação',
-        exchangeRates: [],
+        exchangeRates: {},
       },
     };
 
@@ -44,24 +44,26 @@ class Forms extends React.Component {
   handleSubmit() {
     const { fetchCurrencies, currencies, addExpenses, actionAddTotal } = this.props;
     const { id, total } = this.state;
-    const {
-      expenses: { value, currency },
-    } = this.state;
-    fetchCurrencies();
+    // const {
+    //   expenses: { value, currency }
+    // } = this.state;
 
-    const cambio = parseFloat(value * currencies[currency].ask);
-    const newTotal = (parseFloat(total + cambio)).toFixed(2);
-    // this.setState({ total: newTotal }, () => actionAddTotal(this.state));
-    actionAddTotal(parseFloat(newTotal));
+    // const cambio = parseFloat(value * currencies[currency].ask);
+    // const newTotal = (parseFloat(total + cambio)).toFixed(2);
+    // this.setState({ total: newTotal });
+    console.log(this.state.expenses);
+    addExpenses({ ...this.state.expenses, id, exchangeRates: { ...currencies } });
 
-    this.setState((prevState) => ({
-      ...prevState,
-      expenses: { ...prevState.expenses,
-        id,
-        exchangeRates: { ...currencies } },
-    }),
-    () => addExpenses(this.state));
+    // this.setState((prevState) => ({
+    //   ...prevState,
+    //   expenses: { ...prevState.expenses,
+    //     id,
+    //     exchangeRates: { ...currencies } },
+    // }),
+    // () => addExpenses(this.state),
+    // () => actionAddTotal(parseFloat(newTotal)));
     this.setState({ id: id + 1 });
+    actionAddTotal();
   }
 
   render() {
@@ -169,7 +171,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Forms.propTypes = {
-  currencies: PropTypes.objectOf(PropTypes.any).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
   currenciesKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
   addExpenses: PropTypes.func.isRequired,
