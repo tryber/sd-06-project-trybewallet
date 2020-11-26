@@ -1,12 +1,14 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 // import { GET_DATA, SAVE, ID_INCREMENT, TOTAL_FIELD } from '../actions';
 import {
-  DEL_EXPENSE,
-  GET_DATA, SAVE,
+  GET_DATA,
+  SAVE,
   ID_INCREMENT,
   TOTAL_FIELD,
   EXCHANGE_DATA,
-  // EDIT_EXPENSE,
+  DELETE_EXPENSE,
+  EDIT_EXPENSE,
+  REPLACE_EXPENSE,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -14,9 +16,17 @@ const INITIAL_STATE = {
   expenses: [],
   id: 0,
   totalField: 0,
+  expense: {
+    value: '',
+    description: '',
+    currency: 'USD',
+    method: '',
+    tag: '',
+  },
 };
 
 export default function (state = INITIAL_STATE, action) {
+  const novaExpenses = [...state.expenses];
   switch (action.type) {
   case GET_DATA:
     return {
@@ -56,7 +66,7 @@ export default function (state = INITIAL_STATE, action) {
       ...state,
     };
   // // ------------------------------------------------------------------------
-  case DEL_EXPENSE: {
+  case DELETE_EXPENSE: {
     const filteredExpenses = state.expenses.filter(
       (item) => item.id !== action.expense.id,
     );
@@ -67,15 +77,33 @@ export default function (state = INITIAL_STATE, action) {
       totalField: Total,
     };
   }
-
-  // case EDIT_EXPENSE: {
+  // return {
   //   ...state,
-  //   editExpense: state.expense.find()
-  // }
+  //   expenses: state.expenses.filter((expense) => expense.id !== action.id),
+  // };
 
-  // case DEL_EXPENSE:
-  //   return { ...state,
-  //     expenses: state.expenses.filter((exp) => exp.id !== action.expense) };
+  case EDIT_EXPENSE:
+    return {
+      ...state,
+      expense: state.expenses.find((expense) => expense.id === action.expense.id),
+      isEditing: action.isEditing,
+    };
+
+  case REPLACE_EXPENSE:
+    novaExpenses[action.expense.id] = action.expense;
+    return {
+      ...state,
+      expenses: novaExpenses,
+    };
+
+    // case EDIT_EXPENSE: {
+    //   ...state,
+    //   editExpense: state.expense.find()
+    // }
+
+    // case DEL_EXPENSE:
+    //   return { ...state,
+    //     expenses: state.expenses.filter((exp) => exp.id !== action.expense) };
 
   default:
     return state;
