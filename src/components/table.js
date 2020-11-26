@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteExpense,
   totalHeader,
-  fetchCurrency,
   addExpense,
   isEditing } from '../actions';
 
@@ -238,7 +237,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   actionDeleteExpense: (expense) => dispatch(deleteExpense(expense)),
   actionTotalHeader: (state) => dispatch(totalHeader(state)),
-  fetchCurrencies: (state) => dispatch(fetchCurrency(state)),
   addExpenses: (state) => dispatch(addExpense(state)),
   actionIsEditing: (state) => dispatch(isEditing(state)),
 });
@@ -247,7 +245,6 @@ Table.propTypes = {
   storeExpenses: PropTypes.arrayOf(PropTypes.any),
   actionDeleteExpense: PropTypes.func.isRequired,
   actionTotalHeader: PropTypes.func.isRequired,
-  fetchCurrencies: PropTypes.func.isRequired,
   currenciesKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   addExpenses: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
