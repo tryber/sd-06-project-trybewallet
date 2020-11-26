@@ -9,12 +9,12 @@ class ExpenseForm extends React.Component {
     this.state = {
       expense: 0,
       selectedCurrency: 'USD',
-      // paymentMethod: 'Dinheiro',
+      paymentMethod: 'Dinheiro',
       // tag: '',
       description: '',
     };
     this.handleChange = this.handleChange.bind(this);
-    this.createCurrencyOptions = this.createCurrencyOptions.bind(this);
+    // this.createCurrencyOptions = this.createCurrencyOptions.bind(this);
   }
 
   componentDidMount() {
@@ -29,20 +29,20 @@ class ExpenseForm extends React.Component {
     });
   }
 
-  createCurrencyOptions(list) {
-    list.map(({ code }) => (
-      <option
-        key={ `${code}` }
-        data-testid={ `${code}` }
-        value={ `${code}` }
-      >
-        { `${code}` }
-      </option>
-    ));
-  }
+  // createCurrencyOptions(list) {
+  //   list.map(({ code }) => (
+  //     <option
+  //       key={ `${code}` }
+  //       data-testid={ `${code}` }
+  //       value={ `${code}` }
+  //     >
+  //       { `${code}` }
+  //     </option>
+  //   ));
+  // }
 
   render() {
-    const { expense, description, selectedCurrency } = this.state;
+    const { expense, description, selectedCurrency, paymentMethod } = this.state;
     const { currencyList, isFetching } = this.props;
     if (isFetching) {
       return <h1>LOADING INFORMATION...</h1>;
@@ -78,23 +78,35 @@ class ExpenseForm extends React.Component {
             value={ selectedCurrency }
             onChange={ this.handleChange }
           >
-            { currencyList.length !== 0
-              && currencyList.map(({ code }) => (
-                <option
-                  key={ `${code}` }
-                  data-testid={ `${code}` }
-                  value={ `${code}` }
-                >
-                  { `${code}` }
-                </option>
-              )) }
+            { currencyList.map(({ code }) => (
+              <option
+                key={ `${code}` }
+                data-testid={ `${code}` }
+                value={ `${code}` }
+              >
+                { `${code}` }
+              </option>
+            )) }
+          </select>
+        </label>
+        <label htmlFor="currency">
+          Moeda :
+          <select
+            name="paymentMethod"
+            type="select"
+            data-testid="method-input"
+            value={ paymentMethod }
+            onChange={ this.handleChange }
+          >
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
       </form>
     );
   }
 }
-
 
 ExpenseForm.propTypes = {
   currencyList: PropTypes.arrayOf(PropTypes.shape()),
