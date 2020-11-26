@@ -1,7 +1,7 @@
 export const LOGIN = 'LOGIN';
 export const SELECTCURRENCY = 'SELECTCURRENCY';
 export const ADDEXPENSE = 'ADDEXPENSE';
-export const ADDTOTAL = 'ADDTOTAL';
+export const TOTALHEADER = 'TOTALHEADER';
 export const DELETEEXPENSE = 'DELETEEXPENSE';
 
 export function login(email) {
@@ -32,10 +32,9 @@ export function deleteExpense(expense) {
   };
 }
 
-export function addTotal(newTotal) {
-  console.log(newTotal);
+export function totalHeader(newTotal) {
   return {
-    type: ADDTOTAL,
+    type: TOTALHEADER,
     newTotal,
   };
 }

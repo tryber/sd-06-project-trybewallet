@@ -8,22 +8,7 @@ class Header extends React.Component {
     this.state = {
       currency: 'BRL',
     };
-    // this.handleTotal = this.handleTotal.bind(this);
   }
-
-  // handleTotal() {
-  //   const { storeExpenses } = this.props;
-  //   console.log(storeExpenses);
-  //   const arrayCambioExpenses = [storeExpenses
-  //     .map((expense) => (parseFloat(expense.exchangeRates[expense.currency].ask)
-  //       .toFixed(2)))];
-
-  //   console.log(arrayCambioExpenses);
-
-  //   const reducer = (accumulator, currentValue) => accumulator + currentValue;
-  //   const newTotal = (arrayCambioExpenses.reduce(reducer)).toFixed(2);
-  //   return newTotal;
-  // }
 
   render() {
     const { emailLogin, storeTotal } = this.props;
@@ -50,13 +35,11 @@ class Header extends React.Component {
 const mapStateToProps = (state) => ({
   emailLogin: state.user.email,
   storeTotal: state.wallet.total,
-  // storeExpenses: state.wallet.expenses,
 });
 
 Header.propTypes = {
   emailLogin: PropTypes.string.isRequired,
   storeTotal: PropTypes.number.isRequired,
-  // storeExpenses: PropTypes.arrayOf.isRequired,
 };
 
 export default connect(mapStateToProps, null)(Header);

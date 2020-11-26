@@ -15,7 +15,7 @@ export default function reducer(state = INITIAL_STATE, action) {
   case 'DELETEEXPENSE':
     return { ...state,
       expenses: state.expenses.filter((expense) => expense.id !== action.expense.id) };
-  case 'ADDTOTAL':
+  case 'TOTALHEADER':
     return { ...state,
       total: state
         .expenses

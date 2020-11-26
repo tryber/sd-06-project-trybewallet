@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurrency, addExpense, addTotal } from '../actions';
+import { fetchCurrency, addExpense, totalHeader } from '../actions';
 
 class Forms extends React.Component {
   constructor(props) {
@@ -41,11 +41,11 @@ class Forms extends React.Component {
   }
 
   handleSubmit() {
-    const { currencies, addExpenses, actionAddTotal } = this.props;
+    const { currencies, addExpenses, actionTotalHeader } = this.props;
     const { id, expenses } = this.state;
 
     addExpenses({ ...expenses, id, exchangeRates: { ...currencies } });
-    actionAddTotal({ ...expenses, id, exchangeRates: { ...currencies } });
+    actionTotalHeader({ ...expenses, id, exchangeRates: { ...currencies } });
     this.setState({ id: id + 1 });
   }
 
@@ -149,7 +149,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: (state) => dispatch(fetchCurrency(state)),
   addExpenses: (state) => dispatch(addExpense(state)),
-  actionAddTotal: (state) => dispatch(addTotal(state)),
+  actionTotalHeader: (state) => dispatch(totalHeader(state)),
 });
 
 Forms.propTypes = {
@@ -157,7 +157,7 @@ Forms.propTypes = {
   currenciesKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
   addExpenses: PropTypes.func.isRequired,
-  actionAddTotal: PropTypes.objectOf.isRequired,
+  actionTotalHeader: PropTypes.objectOf.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Forms);
