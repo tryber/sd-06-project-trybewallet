@@ -57,7 +57,7 @@ class Login extends React.Component {
           <label htmlFor="password">
             Password:
             <input
-              type="text"
+              type="password"
               name="password"
               data-testid="password-input"
               onChange={ this.handleChange }

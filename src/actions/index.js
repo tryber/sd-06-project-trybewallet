@@ -17,9 +17,9 @@ export const fetchCurrencyList = () => (
   async (dispatch) => {
     dispatch(fetchingList());
 
-    const currencyList = await getCurrencyList();
-    Object.keys(currencyList).forEach((currency) => (
-      dispatch(addCurrency(currencyList[`${currency}`]))
-    ));
+    const currencyList = await getCurrencyList('USDT');
+    const currencyArray = Object.keys(currencyList)
+      .map((currency) => currencyList[`${currency}`]);
+    dispatch(addCurrency(currencyArray));
   }
 );

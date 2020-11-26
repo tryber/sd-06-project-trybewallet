@@ -14,10 +14,12 @@ class ExpenseForm extends React.Component {
       description: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.createCurrencyOptions = this.createCurrencyOptions.bind(this);
   }
 
   componentDidMount() {
-    fetchCurrencyList();
+    const { currencies } = this.props;
+    currencies();
   }
 
   handleChange({ target }) {
@@ -25,6 +27,18 @@ class ExpenseForm extends React.Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  createCurrencyOptions(list) {
+    list.map(({ code }) => (
+      <option
+        key={ `${code}` }
+        data-testid={ `${code}` }
+        value={ `${code}` }
+      >
+        { `${code}` }
+      </option>
+    ));
   }
 
   render() {
@@ -58,31 +72,29 @@ class ExpenseForm extends React.Component {
         <label htmlFor="currency">
           Moeda :
           <select
-            name="currency"
+            name="selectedCurrency"
             type="select"
             data-testid="currency-input"
             value={ selectedCurrency }
             onChange={ this.handleChange }
           >
-            { currencyList.forEach((currency) => {
-              const { code } = currency;
-              console.log(currency);
-              return (
+            { currencyList.length !== 0
+              && currencyList.map(({ code }) => (
                 <option
-                  key={ code }
-                  data-testid={ code }
-                  value={ code }
+                  key={ `${code}` }
+                  data-testid={ `${code}` }
+                  value={ `${code}` }
                 >
                   { `${code}` }
                 </option>
-              );
-            }) }
+              )) }
           </select>
         </label>
       </form>
     );
   }
 }
+
 
 ExpenseForm.propTypes = {
   currencyList: PropTypes.arrayOf(PropTypes.shape()),
@@ -96,6 +108,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   expense: (object) => dispatch(addExpense(object)),
+  currencies: () => dispatch(fetchCurrencyList()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
