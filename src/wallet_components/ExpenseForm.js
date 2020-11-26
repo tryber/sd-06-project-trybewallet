@@ -10,7 +10,7 @@ class ExpenseForm extends React.Component {
       expense: 0,
       selectedCurrency: 'USD',
       paymentMethod: 'Dinheiro',
-      // tag: '',
+      tag: '',
       description: '',
     };
     this.handleChange = this.handleChange.bind(this);
@@ -42,7 +42,7 @@ class ExpenseForm extends React.Component {
   // }
 
   render() {
-    const { expense, description, selectedCurrency, paymentMethod } = this.state;
+    const { expense, description, selectedCurrency, paymentMethod, tag } = this.state;
     const { currencyList, isFetching } = this.props;
     if (isFetching) {
       return <h1>LOADING INFORMATION...</h1>;
@@ -69,7 +69,7 @@ class ExpenseForm extends React.Component {
             onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="currency">
+        <label htmlFor="selectedCurrency">
           Moeda :
           <select
             name="selectedCurrency"
@@ -89,8 +89,8 @@ class ExpenseForm extends React.Component {
             )) }
           </select>
         </label>
-        <label htmlFor="currency">
-          Moeda :
+        <label htmlFor="paymentMethod">
+          Metodo de pagamento :
           <select
             name="paymentMethod"
             type="select"
@@ -101,6 +101,22 @@ class ExpenseForm extends React.Component {
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
             <option value="Cartão de débito">Cartão de débito</option>
+          </select>
+        </label>
+        <label htmlFor="tag">
+          Categoria :
+          <select
+            name="tag"
+            type="select"
+            data-testid="tag-input"
+            value={ tag }
+            onChange={ this.handleChange }
+          >
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
       </form>
