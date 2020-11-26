@@ -3,6 +3,7 @@ export const SELECTCURRENCY = 'SELECTCURRENCY';
 export const ADDEXPENSE = 'ADDEXPENSE';
 export const TOTALHEADER = 'TOTALHEADER';
 export const DELETEEXPENSE = 'DELETEEXPENSE';
+export const IS_EDITING = 'IS_EDITING';
 
 export function login(email) {
   return {
@@ -36,6 +37,13 @@ export function totalHeader(newTotal) {
   return {
     type: TOTALHEADER,
     newTotal,
+  };
+}
+
+export function isEditing(condition) {
+  return {
+    type: IS_EDITING,
+    condition,
   };
 }
 

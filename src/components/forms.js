@@ -41,19 +41,18 @@ class Forms extends React.Component {
   }
 
   handleSubmit() {
-    const { currencies, addExpenses, actionTotalHeader } = this.props;
+    const { currencies, addExpenses, actionTotalHeader, fetchCurrencies } = this.props;
     const { id, expenses } = this.state;
 
+    fetchCurrencies();
     addExpenses({ ...expenses, id, exchangeRates: { ...currencies } });
     actionTotalHeader({ ...expenses, id, exchangeRates: { ...currencies } });
     this.setState({ id: id + 1 });
   }
 
   render() {
-    const {
-      expenses: { value, description, currency, method, tag },
-    } = this.state;
     const { expenses } = this.state;
+    const { value, description, currency, method, tag } = expenses;
     return (
       <div>
         <form>
@@ -157,7 +156,7 @@ Forms.propTypes = {
   currenciesKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
   addExpenses: PropTypes.func.isRequired,
-  actionTotalHeader: PropTypes.objectOf.isRequired,
+  actionTotalHeader: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Forms);

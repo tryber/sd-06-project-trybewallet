@@ -1,13 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteExpense, totalHeader, fetchCurrency, addExpense } from '../actions';
+import { deleteExpense,
+  totalHeader,
+  fetchCurrency,
+  addExpense,
+  isEditing } from '../actions';
 
 class Table extends React.Component {
   constructor() {
     super();
     this.state = {
-      checked: false,
       id: 0,
       expenses: {
         value: 0,
@@ -23,10 +26,10 @@ class Table extends React.Component {
     this.handleSubmitEdit = this.handleSubmitEdit.bind(this);
   }
 
-  componentDidMount() {
-    const { fetchCurrencies } = this.props;
-    fetchCurrencies();
-  }
+  // componentDidMount() {
+  //   const { fetchCurrencies } = this.props;
+  //   fetchCurrencies();
+  // }
 
   handleCurrencies() {
     const { currenciesKeys } = this.props;
@@ -47,28 +50,27 @@ class Table extends React.Component {
     actionTotalHeader(expense);
   }
 
-  handleForms(expense) {
-    const { actionDeleteExpense } = this.props;
-    actionDeleteExpense(expense);
-    console.log(expense);
+  handleForms(expenses) {
+    const { actionDeleteExpense, actionIsEditing } = this.props;
+    actionDeleteExpense(expenses);
+    console.log(expenses);
+    actionIsEditing(true);
     this.setState({
-      checked: true, id: expense.id,
+      id: expenses.id, expenses,
     });
   }
 
   handleSubmitEdit() {
-    const { actionTotalHeader, addExpenses, currencies } = this.props;
+    const { actionTotalHeader, addExpenses, currencies, actionIsEditing } = this.props;
     const { id, expenses } = this.state;
     addExpenses({ ...expenses, id, exchangeRates: { ...currencies } });
     actionTotalHeader({ ...expenses, id, exchangeRates: { ...currencies } });
-    this.setState({
-      checked: false,
-    });
+    actionIsEditing(false);
   }
 
   render() {
-    const { storeExpenses } = this.props;
-    const { checked, expenses } = this.state;
+    const { storeExpenses, checked } = this.props;
+    const { expenses } = this.state;
     const {
       expenses: { value, description, currency, method, tag },
     } = this.state;
@@ -164,63 +166,63 @@ class Table extends React.Component {
     const renderForms = checked ? editForms : null;
     // TABELA ANTES DO EDITAR ABAIXO, SEPARANDO VISUALMENTE----------------------------------------------------------------------
     return (
-      <table>
-        <div>
-          {renderForms}
-        </div>
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
-        </thead>
-        <tbody>
-          { storeExpenses.map((expense) => (
-            <tr key={ expense.id }>
-              <td>{ expense.description }</td>
-              <td>{ expense.tag }</td>
-              <td>{ expense.method }</td>
-              <td>{ expense.value }</td>
-              <td>{ expense.exchangeRates[expense.currency].name }</td>
-              <td>
-                {
-                  parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)
-                }
-              </td>
-              <td>
-                {
-                  (parseFloat(expense.exchangeRates[expense.currency].ask)
-                  * expense.value).toFixed(2)
-                }
-              </td>
-              <td>Real</td>
-              <td>
-                <button
-                  type="button"
-                  data-testid="edit-btn"
-                  onClick={ () => this.handleForms(expense) }
-                >
-                  Editar despesa
-                </button>
-                <button
-                  type="button"
-                  data-testid="delete-btn"
-                  onClick={ () => this.handleDelete(expense) }
-                >
-                  Deletar despesa
-                </button>
-              </td>
+      <div>
+        {renderForms}
+        <table>
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
             </tr>
-          )) }
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            { storeExpenses.map((expense) => (
+              <tr key={ expense.id }>
+                <td>{ expense.description }</td>
+                <td>{ expense.tag }</td>
+                <td>{ expense.method }</td>
+                <td>{ expense.value }</td>
+                <td>{ expense.exchangeRates[expense.currency].name }</td>
+                <td>
+                  {
+                    parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)
+                  }
+                </td>
+                <td>
+                  {
+                    (parseFloat(expense.exchangeRates[expense.currency].ask)
+                    * expense.value).toFixed(2)
+                  }
+                </td>
+                <td>Real</td>
+                <td>
+                  <button
+                    type="button"
+                    data-testid="edit-btn"
+                    onClick={ () => this.handleForms(expense) }
+                  >
+                    Editar
+                  </button>
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    onClick={ () => this.handleDelete(expense) }
+                  >
+                    Deletar
+                  </button>
+                </td>
+              </tr>
+            )) }
+          </tbody>
+        </table>
+      </div>
     );
   }
 }
@@ -230,6 +232,7 @@ const mapStateToProps = (state) => ({
   storeTotal: state.wallet.total,
   currenciesKeys: Object.keys(state.wallet.currencies),
   currencies: state.wallet.currencies,
+  checked: state.wallet.checked,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -237,16 +240,19 @@ const mapDispatchToProps = (dispatch) => ({
   actionTotalHeader: (state) => dispatch(totalHeader(state)),
   fetchCurrencies: (state) => dispatch(fetchCurrency(state)),
   addExpenses: (state) => dispatch(addExpense(state)),
+  actionIsEditing: (state) => dispatch(isEditing(state)),
 });
 
 Table.propTypes = {
   storeExpenses: PropTypes.arrayOf(PropTypes.any),
-  actionDeleteExpense: PropTypes.objectOf().isRequired,
-  actionTotalHeader: PropTypes.objectOf().isRequired,
+  actionDeleteExpense: PropTypes.func.isRequired,
+  actionTotalHeader: PropTypes.func.isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
   currenciesKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   addExpenses: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
+  actionIsEditing: PropTypes.func.isRequired,
+  checked: PropTypes.objectOf().isRequired,
 };
 
 Table.defaultProps = {
