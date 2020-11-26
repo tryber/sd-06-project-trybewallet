@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteExpense, deleteTotal } from '../actions';
+import { deleteExpense } from '../actions';
 
 class Table extends React.Component {
   constructor() {
@@ -11,11 +11,10 @@ class Table extends React.Component {
   }
 
   handleDelete(expense) {
-    const { actionDeleteExpense, actionDeleteTotal } = this.props;
+    const { actionDeleteExpense } = this.props;
     // const newTotal = (storeTotal - target.name).toFixed(2);
     // actionRefactoreTotal({ total: newTotal });
     actionDeleteExpense(expense);
-    actionDeleteTotal(expense);
   }
 
   handleEdit(target) {
@@ -94,13 +93,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   actionDeleteExpense: (expense) => dispatch(deleteExpense(expense)),
-  actionDeleteTotal: (expense) => dispatch(deleteTotal(expense)),
 });
 
 Table.propTypes = {
   storeExpenses: PropTypes.arrayOf(PropTypes.any),
   actionDeleteExpense: PropTypes.objectOf().isRequired,
-  actionDeleteTotal: PropTypes.objectOf().isRequired,
 };
 
 Table.defaultProps = {

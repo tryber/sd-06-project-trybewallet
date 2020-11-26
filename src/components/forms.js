@@ -8,7 +8,6 @@ class Forms extends React.Component {
     super(props);
     this.state = {
       id: 0,
-      total: 0,
       expenses: {
         value: 0,
         description: '',
@@ -42,28 +41,12 @@ class Forms extends React.Component {
   }
 
   handleSubmit() {
-    const { fetchCurrencies, currencies, addExpenses, actionAddTotal } = this.props;
-    const { id, total } = this.state;
-    // const {
-    //   expenses: { value, currency }
-    // } = this.state;
+    const { currencies, addExpenses, actionAddTotal } = this.props;
+    const { id, expenses } = this.state;
 
-    // const cambio = parseFloat(value * currencies[currency].ask);
-    // const newTotal = (parseFloat(total + cambio)).toFixed(2);
-    // this.setState({ total: newTotal });
-    console.log(this.state.expenses);
-    addExpenses({ ...this.state.expenses, id, exchangeRates: { ...currencies } });
-
-    // this.setState((prevState) => ({
-    //   ...prevState,
-    //   expenses: { ...prevState.expenses,
-    //     id,
-    //     exchangeRates: { ...currencies } },
-    // }),
-    // () => addExpenses(this.state),
-    // () => actionAddTotal(parseFloat(newTotal)));
+    addExpenses({ ...expenses, id, exchangeRates: { ...currencies } });
+    actionAddTotal({ ...expenses, id, exchangeRates: { ...currencies } });
     this.setState({ id: id + 1 });
-    actionAddTotal();
   }
 
   render() {
@@ -161,12 +144,11 @@ class Forms extends React.Component {
 const mapStateToProps = (state) => ({
   currenciesKeys: Object.keys(state.wallet.currencies),
   currencies: state.wallet.currencies,
-  total: state.wallet.total,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: (state) => dispatch(fetchCurrency(state)),
-  addExpenses: (state) => dispatch(addExpense([state.expenses])),
+  addExpenses: (state) => dispatch(addExpense(state)),
   actionAddTotal: (state) => dispatch(addTotal(state)),
 });
 
@@ -175,11 +157,7 @@ Forms.propTypes = {
   currenciesKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
   addExpenses: PropTypes.func.isRequired,
-  actionAddTotal: PropTypes.func.isRequired,
+  actionAddTotal: PropTypes.objectOf.isRequired,
 };
-
-// Forms.defaultProps = {
-//   currencies: {},
-// };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Forms);

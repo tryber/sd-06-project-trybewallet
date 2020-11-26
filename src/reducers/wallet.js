@@ -16,9 +16,13 @@ export default function reducer(state = INITIAL_STATE, action) {
     return { ...state,
       expenses: state.expenses.filter((expense) => expense.id !== action.expense.id) };
   case 'ADDTOTAL':
-    return { ...state, total: state.expenses.reduce((total, atual) => {
-      return atual.value * atual.exchangeRates[atual.currency].ask + total
-    }, 0) };
+    return { ...state,
+      total: state
+        .expenses
+        .reduce(
+          (total, atual) => (atual.value * atual.exchangeRates[atual.currency]
+            .ask + total), 0,
+        ).toFixed(2) };
   default:
     return state;
   }
