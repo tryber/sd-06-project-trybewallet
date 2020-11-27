@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import { deleteExpense,
   totalHeader,
   addExpense,
-  isEditing } from '../actions';
+  isEditing,
+  editingExpense,
+  setId,
+} from '../actions';
 
 class Table extends React.Component {
   constructor() {
@@ -24,11 +27,6 @@ class Table extends React.Component {
     this.handleForms = this.handleForms.bind(this);
     this.handleSubmitEdit = this.handleSubmitEdit.bind(this);
   }
-
-  // componentDidMount() {
-  //   const { fetchCurrencies } = this.props;
-  //   fetchCurrencies();
-  // }
 
   handleCurrencies() {
     const { currenciesKeys } = this.props;
@@ -51,16 +49,20 @@ class Table extends React.Component {
 
   handleForms(expenses) {
     const { actionDeleteExpense, actionIsEditing } = this.props;
-    actionDeleteExpense(expenses);
-    console.log(expenses);
     actionIsEditing(true);
     this.setState({
       id: expenses.id, expenses,
     });
+    actionDeleteExpense(expenses);
   }
 
   handleSubmitEdit() {
-    const { actionTotalHeader, addExpenses, currencies, actionIsEditing } = this.props;
+    const { actionTotalHeader,
+      addExpenses,
+      currencies,
+      actionIsEditing,
+      actionEditingExpense,
+    } = this.props;
     const { id, expenses } = this.state;
     addExpenses({ ...expenses, id, exchangeRates: { ...currencies } });
     actionTotalHeader({ ...expenses, id, exchangeRates: { ...currencies } });
@@ -78,7 +80,7 @@ class Table extends React.Component {
       <div>
         <form>
           <h2>
-            Editar despesa:
+            Edite:
           </h2>
           <span>
             Valor da Despesa:
@@ -239,6 +241,8 @@ const mapDispatchToProps = (dispatch) => ({
   actionTotalHeader: (state) => dispatch(totalHeader(state)),
   addExpenses: (state) => dispatch(addExpense(state)),
   actionIsEditing: (state) => dispatch(isEditing(state)),
+  actionEditingExpense: (state) => dispatch(editingExpense(state)),
+  actionSetId: (number) => dispatch(setId(number)),
 });
 
 Table.propTypes = {
@@ -250,6 +254,7 @@ Table.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
   actionIsEditing: PropTypes.func.isRequired,
   checked: PropTypes.objectOf().isRequired,
+  actionEditingExpense: PropTypes.func.isRequired,
 };
 
 Table.defaultProps = {

@@ -4,6 +4,8 @@ export const ADDEXPENSE = 'ADDEXPENSE';
 export const TOTALHEADER = 'TOTALHEADER';
 export const DELETEEXPENSE = 'DELETEEXPENSE';
 export const IS_EDITING = 'IS_EDITING';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const SET_ID = 'SET_ID';
 
 export function login(email) {
   return {
@@ -44,6 +46,20 @@ export function isEditing(condition) {
   return {
     type: IS_EDITING,
     condition,
+  };
+}
+
+export function editingExpense(newExpense) {
+  return {
+    type: EDIT_EXPENSE,
+    newExpense,
+  };
+}
+
+export function setId(newId) {
+  return {
+    type: SET_ID,
+    newId,
   };
 }
 

@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   expenses: [],
   total: 0,
   checked: false,
+  idEdit: 0,
 };
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -28,6 +29,29 @@ export default function reducer(state = INITIAL_STATE, action) {
     return { ...state,
       checked: action.condition,
     };
+  case 'EDIT_EXPENSE':
+    return {
+      ...state,
+      expenses: [...state.expenses, action.newExpense],
+      // expenses: state.expenses.forEach((expense) => {
+      //   const { expenses, currencies, idEdit } = state;
+      //   if (expense.id === state.idEdit) {
+      //     return { ...expenses, idEdit, exchangeRates: { ...currencies } };
+      //   }
+      // }),
+
+      // const newStore = storeExpenses.forEach((expense) => {
+      //   const compare = expense.id;
+      //   if (compare === id) {
+      //     return { ...expenses, id, exchangeRates: { ...currencies } };
+      //   }
+      // });
+
+      // expenses: state.expenses.find((expense) => expense.id === action.newExpense.id),
+      // expense: action.newExpense,
+    };
+  case 'SET_ID':
+    return { ...state, idEdit: action.newId };
   default:
     return state;
   }
