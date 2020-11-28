@@ -48,23 +48,24 @@ class Table extends React.Component {
   }
 
   handleForms(expenses) {
-    const { actionDeleteExpense, actionIsEditing } = this.props;
+    const { actionIsEditing, actionSetId } = this.props;
     actionIsEditing(true);
+    actionSetId(expenses.id);
     this.setState({
       id: expenses.id, expenses,
     });
-    actionDeleteExpense(expenses);
+    // actionDeleteExpense(expenses);
   }
 
   handleSubmitEdit() {
     const { actionTotalHeader,
-      addExpenses,
       currencies,
       actionIsEditing,
       actionEditingExpense,
     } = this.props;
     const { id, expenses } = this.state;
-    addExpenses({ ...expenses, id, exchangeRates: { ...currencies } });
+    // addExpenses({ ...expenses, id, exchangeRates: { ...currencies } });
+    actionEditingExpense({ ...expenses, id, exchangeRates: { ...currencies } });
     actionTotalHeader({ ...expenses, id, exchangeRates: { ...currencies } });
     actionIsEditing(false);
   }
@@ -250,11 +251,11 @@ Table.propTypes = {
   actionDeleteExpense: PropTypes.func.isRequired,
   actionTotalHeader: PropTypes.func.isRequired,
   currenciesKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
-  addExpenses: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
   actionIsEditing: PropTypes.func.isRequired,
   checked: PropTypes.objectOf().isRequired,
   actionEditingExpense: PropTypes.func.isRequired,
+  actionSetId: PropTypes.func.isRequired,
 };
 
 Table.defaultProps = {
