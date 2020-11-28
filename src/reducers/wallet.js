@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   total: 0,
+  id: 0,
 };
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -21,7 +22,8 @@ export default function reducer(state = INITIAL_STATE, action) {
     return (
       {
         ...state,
-        expenses: [...state.expenses, action.expenses],
+        expenses: [...state.expenses, { ...action.expenses, id: state.id }],
+        id: state.id + 1,
       }
     );
   default:

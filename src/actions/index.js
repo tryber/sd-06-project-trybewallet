@@ -27,18 +27,11 @@ export const expensesSave = (expenses) => ({
   expenses,
 });
 
-// export const fetchingSaveExpense = (userExpenses) => (dispatch) => {
-//   getApi().then((expenses) => {
-//     dispatch(expensesAdd(expenses));
-//   });
-// };
-
 export function fetchingSaveExpense(expenses) {
   return async (dispatch, getState) => {
     const apiResponse = await getApi();
-    const { expenses } = getState().wallet;
     const newExpense = { ...expenses, exchangeRates: apiResponse }; // junção do que foi digitado com a api e a chave denominada conforme requisito
-    return (dispatch(expensesSave(newExpense)));
+    (dispatch(expensesSave(newExpense)));
   };
 }
 
