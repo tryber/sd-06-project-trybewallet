@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addExpense, fetchCurrencyList } from '../actions';
+import { dispatchExpense, fetchCurrencyList } from '../actions';
 
 class ExpenseForm extends React.Component {
   constructor() {
     super();
     this.state = {
       id: 0,
-      value: '',
+      value: '0',
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
@@ -31,24 +31,20 @@ class ExpenseForm extends React.Component {
     });
   }
 
-  async handleAddExpense() {
-    const { expense, currencies, currencyList } = this.props;
-    await currencies();
+  handleAddExpense() {
+    const { expense } = this.props;
     const expenseToAdd = {
       ...this.state,
-      exchangeRates: currencyList[0],
     };
     expense(expenseToAdd);
-    this.setState((prevState) => {
-      return {
-        value: '',
-        description: '',
-        currency: 'USD',
-        method: 'Dinheiro',
-        tag: '',
-        id: prevState.id + 1,
-      };
-    });
+    this.setState((prevState) => ({
+      value: '0',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: '',
+      id: prevState.id + 1,
+    }));
   }
 
   handleCurrencyOptionCreation() {
@@ -57,9 +53,9 @@ class ExpenseForm extends React.Component {
       const currencyArray = Object.keys(currencyList[0])
         .map((currency) => currencyList[0][`${currency}`]);
       return (
-        currencyArray.map(({ code }) => (
+        currencyArray.map(({ code }, index) => (
           <option
-            key={ `${code}` }
+            key={ `${index}-${code}` }
             data-testid={ `${code}` }
             value={ `${code}` }
           >
@@ -164,7 +160,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  expense: (object) => dispatch(addExpense(object)),
+  expense: (object) => dispatch(dispatchExpense(object)),
   currencies: () => dispatch(fetchCurrencyList()),
 });
 

@@ -21,3 +21,13 @@ export const fetchCurrencyList = () => (
     dispatch(addCurrency(currencyList));
   }
 );
+
+export const dispatchExpense = (value) => (
+  async (dispatch) => {
+    const currencyList = await getCurrencyList('USDT');
+    await dispatch(addExpense({
+      ...value,
+      exchangeRates: currencyList,
+    }));
+  }
+);
