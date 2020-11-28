@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 class WalletHeader extends React.Component {
   render() {
     const { userEmail, expenses } = this.props;
-    const totalExpense = expenses.reduce((acc, cur) => acc + cur, 0);
+    const totalExpense = expenses.reduce((acc, cur) => acc + parseInt(cur.value, 10), 0);
     const localCurrency = 'BRL';
     return (
       <header>
@@ -16,7 +16,7 @@ class WalletHeader extends React.Component {
           <span data-testid="email-field">{ userEmail }</span>
         </div>
         <div>
-          <span data-testid="total-field">{ totalExpense }</span>
+          <span data-testid="total-field">{ parseInt(totalExpense, 10) }</span>
           <span data-testid="header-currency-field">{ localCurrency }</span>
         </div>
       </header>
@@ -31,7 +31,7 @@ const mapStateToProps = (state) => ({
 
 WalletHeader.propTypes = {
   userEmail: PropTypes.string.isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.number).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 export default connect(mapStateToProps)(WalletHeader);

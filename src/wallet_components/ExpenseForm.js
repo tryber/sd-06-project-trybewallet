@@ -7,14 +7,16 @@ class ExpenseForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      expense: 0,
-      selectedCurrency: 'USD',
-      paymentMethod: 'Dinheiro',
-      tag: '',
+      id: 0,
+      value: 0,
       description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: '',
     };
     this.handleChange = this.handleChange.bind(this);
-    // this.createCurrencyOptions = this.createCurrencyOptions.bind(this);
+    this.handleAddExpense = this.handleAddExpense.bind(this);
+    this.handleCurrencyOptionCreation = this.handleCurrencyOptionCreation.bind(this);
   }
 
   componentDidMount() {
@@ -29,33 +31,50 @@ class ExpenseForm extends React.Component {
     });
   }
 
-  // createCurrencyOptions(list) {
-  //   list.map(({ code }) => (
-  //     <option
-  //       key={ `${code}` }
-  //       data-testid={ `${code}` }
-  //       value={ `${code}` }
-  //     >
-  //       { `${code}` }
-  //     </option>
-  //   ));
-  // }
+  async handleAddExpense() {
+    const { expense, currencies, currencyList } = this.props;
+    await currencies();
+    const expenseToAdd = {
+      ...this.state,
+      exchangeRates: currencyList,
+    };
+    expense(expenseToAdd);
+  }
+
+  handleCurrencyOptionCreation() {
+    const { isFetching, currencyList } = this.props;
+    if (!isFetching && currencyList.length !== 0) {
+      const currencyArray = Object.keys(currencyList[0])
+        .map((currency) => currencyList[0][`${currency}`]);
+      return (
+        currencyArray.map(({ code }) => (
+          <option
+            key={ `${code}` }
+            data-testid={ `${code}` }
+            value={ `${code}` }
+          >
+            { `${code}` }
+          </option>
+        ))
+      );
+    }
+  }
 
   render() {
-    const { expense, description, selectedCurrency, paymentMethod, tag } = this.state;
-    const { currencyList, isFetching } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    const { isFetching } = this.props;
     if (isFetching) {
       return <h1>LOADING INFORMATION...</h1>;
     }
     return (
       <form>
-        <label htmlFor="expense">
+        <label htmlFor="value">
           Valor:
           <input
-            name="expense"
+            name="value"
             type="number"
             data-testid="value-input"
-            value={ expense }
+            value={ value }
             onChange={ this.handleChange }
           />
         </label>
@@ -69,33 +88,25 @@ class ExpenseForm extends React.Component {
             onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="selectedCurrency">
+        <label htmlFor="currency">
           Moeda :
           <select
-            name="selectedCurrency"
+            name="currency"
             type="select"
             data-testid="currency-input"
-            value={ selectedCurrency }
+            value={ currency }
             onChange={ this.handleChange }
           >
-            { currencyList.map(({ code }) => (
-              <option
-                key={ `${code}` }
-                data-testid={ `${code}` }
-                value={ `${code}` }
-              >
-                { `${code}` }
-              </option>
-            )) }
+            { this.handleCurrencyOptionCreation() }
           </select>
         </label>
-        <label htmlFor="paymentMethod">
+        <label htmlFor="method">
           Metodo de pagamento :
           <select
-            name="paymentMethod"
+            name="method"
             type="select"
             data-testid="method-input"
-            value={ paymentMethod }
+            value={ method }
             onChange={ this.handleChange }
           >
             <option value="Dinheiro">Dinheiro</option>
@@ -119,6 +130,9 @@ class ExpenseForm extends React.Component {
             <option value="Saúde">Saúde</option>
           </select>
         </label>
+        <button type="button" onClick={ () => this.handleAddExpense() }>
+          Adicionar despesa
+        </button>
       </form>
     );
   }

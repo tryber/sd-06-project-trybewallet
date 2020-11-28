@@ -12,7 +12,7 @@ function walletReducer(state = INITIAL_STATE, action) {
   case ADD_CURRENCY:
     return {
       ...state,
-      currencies: [...state.currencies, ...action.value],
+      currencies: [action.value],
       fetchingList: false,
     };
   case FETCHING_LIST:

@@ -18,8 +18,6 @@ export const fetchCurrencyList = () => (
     dispatch(fetchingList());
 
     const currencyList = await getCurrencyList('USDT');
-    const currencyArray = Object.keys(currencyList)
-      .map((currency) => currencyList[`${currency}`]);
-    dispatch(addCurrency(currencyArray));
+    dispatch(addCurrency(currencyList));
   }
 );
