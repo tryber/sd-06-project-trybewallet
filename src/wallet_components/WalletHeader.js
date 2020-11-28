@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 
 class WalletHeader extends React.Component {
   render() {
+    const decimalBase = 10;
     const { userEmail, expenses } = this.props;
     const totalExpense = expenses
       .reduce((acc, cur) => (
-        acc + (parseInt(cur.value, 10) * parseInt(
+        acc + (parseFloat(cur.value, decimalBase) * parseFloat(
           cur.exchangeRates[`${cur.currency}`].ask,
-          10,
+          decimalBase,
         ))), 0);
     const localCurrency = 'BRL';
     return (
@@ -21,7 +22,7 @@ class WalletHeader extends React.Component {
           <span data-testid="email-field">{ userEmail }</span>
         </div>
         <div>
-          <span data-testid="total-field">{ parseInt(totalExpense, 10) }</span>
+          <span data-testid="total-field">{ totalExpense.toFixed(2) }</span>
           <span data-testid="header-currency-field">{ localCurrency }</span>
         </div>
       </header>

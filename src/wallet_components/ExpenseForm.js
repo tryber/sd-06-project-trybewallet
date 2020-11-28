@@ -8,7 +8,7 @@ class ExpenseForm extends React.Component {
     super();
     this.state = {
       id: 0,
-      value: 0,
+      value: '',
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
@@ -39,6 +39,16 @@ class ExpenseForm extends React.Component {
       exchangeRates: currencyList[0],
     };
     expense(expenseToAdd);
+    this.setState((prevState) => {
+      return {
+        value: '',
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: '',
+        id: prevState.id + 1,
+      };
+    });
   }
 
   handleCurrencyOptionCreation() {
@@ -72,6 +82,7 @@ class ExpenseForm extends React.Component {
           Valor:
           <input
             name="value"
+            id="value"
             type="number"
             data-testid="value-input"
             value={ value }
@@ -82,6 +93,7 @@ class ExpenseForm extends React.Component {
           Descrição:
           <input
             name="description"
+            id="description"
             type="text"
             data-testid="description-input"
             value={ description }
@@ -93,6 +105,7 @@ class ExpenseForm extends React.Component {
           <select
             name="currency"
             type="select"
+            id="currency"
             data-testid="currency-input"
             value={ currency }
             onChange={ this.handleChange }
@@ -104,6 +117,7 @@ class ExpenseForm extends React.Component {
           Metodo de pagamento :
           <select
             name="method"
+            id="method"
             type="select"
             data-testid="method-input"
             value={ method }
@@ -118,6 +132,7 @@ class ExpenseForm extends React.Component {
           Categoria :
           <select
             name="tag"
+            id="tag"
             type="select"
             data-testid="tag-input"
             value={ tag }
