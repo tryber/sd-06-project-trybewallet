@@ -1,5 +1,10 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { FETCH_CURRENCIES_SUCCESS, EXPENSES_SAVE } from '../actions/index';
+import {
+  FETCH_CURRENCIES_SUCCESS,
+  EXPENSES_SAVE,
+  ADDTOTAL,
+  SUBTOTAL,
+} from '../actions/index';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -24,6 +29,20 @@ export default function reducer(state = INITIAL_STATE, action) {
         ...state,
         expenses: [...state.expenses, { ...action.expenses, id: state.id }],
         id: state.id + 1,
+      }
+    );
+  case ADDTOTAL:
+    return (
+      {
+        ...state,
+        total: state.total + action.total,
+      }
+    );
+  case SUBTOTAL:
+    return (
+      {
+        ...state,
+        total: state.total - action.total,
       }
     );
   default:

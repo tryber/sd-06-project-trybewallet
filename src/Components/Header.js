@@ -12,12 +12,12 @@ class Header extends Component {
           <div className="col-md-6">
             <img src="trybeLOgo.png" className="img-responsive" alt="Imagem Responsiva" />
           </div>
-          <span className="name-login">
+          <div className="name-login">
             Email:
-          </span>
+          </div>
           <span data-testid="email-field">{email}</span>
           <br />
-          <span>Despesa Total: </span>
+          <div>Despesa Total: </div>
           <span data-testid="total-field" value="0">{total}</span>
           <br />
           <span data-testid="header-currency-field"> BRL</span>

@@ -27,6 +27,20 @@ export const expensesSave = (expenses) => ({
   expenses,
 });
 
+export const ADDTOTAL = 'ADDTOTAL';
+
+export const addTotal = (total) => ({
+  type: ADDTOTAL,
+  total,
+});
+
+export const SUBTOTAL = 'SUBTOTAL';
+
+export const subTotal = (total) => ({
+  type: SUBTOTAL,
+  total,
+});
+
 export function fetchingSaveExpense(expenses) {
   return async (dispatch, getState) => {
     const apiResponse = await getApi();

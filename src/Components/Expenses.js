@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchingSaveExpense, fetchingCurrencies } from '../actions/index';
+import { fetchingSaveExpense, fetchingCurrencies, addTotal } from '../actions/index';
 import '../styles/expenses.css';
 
 class Expenses extends Component {
@@ -26,7 +26,6 @@ class Expenses extends Component {
   componentDidMount() {
     const { fetchCurrenciesSuccess } = this.props;
     fetchCurrenciesSuccess();
-    console.log(fetchCurrenciesSuccess, '"currencie"');
   }
 
   handleInput({ target }) {
@@ -42,13 +41,22 @@ class Expenses extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { sendExpenseApi } = this.props;
+    const { sendExpenseApi, sendAddTotal } = this.props;
     const { expenses } = this.state;
     sendExpenseApi(expenses); // thunk
+    const valueTotalNumber = Number(expenses.value);
+    sendAddTotal(valueTotalNumber);
   }
 
   render() {
-    const { value, description, currency, method, tag } = this.state.expenses;
+    const { value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates,
+    } = this.state.expenses;
+
     const { currencies, expenses } = this.props;
     const { handleInput, handleSubmit } = this;
     return (
@@ -59,7 +67,9 @@ class Expenses extends Component {
               <label htmlFor="expense-value">
                 Valor da despesa:
                 <input
+                  id="expense-value"
                   name="value"
+                  type="number"
                   data-testid="value-input"
                   value={ value }
                   onChange={ handleInput }
@@ -70,6 +80,7 @@ class Expenses extends Component {
               <label htmlFor="description">
                 Descrição:
                 <input
+                  id="description"
                   name="description"
                   data-testid="description-input"
                   value={ description }
@@ -77,19 +88,23 @@ class Expenses extends Component {
                 />
               </label>
             </div>
-
             <div className="input">
               <label htmlFor="currency">
                 Moeda:
                 <select
+                  id="currency"
                   name="currency"
                   data-testid="currency-input"
                   value={ currency }
                   onChange={ handleInput }
                 >
-                  {currencies.map((currency) => (
-                    <option data-testid="USD" key={ currency }>
-                      { currency }
+                  {currencies.map((currencyMap) => (
+                    <option
+                      value={ currencyMap }
+                      data-testid={ currencyMap }
+                      key={ currencyMap }
+                    >
+                      { currencyMap }
                     </option>
                   ))}
 
@@ -102,12 +117,13 @@ class Expenses extends Component {
               <label htmlFor="method">
                 Forma de Pagamento:
                 <select
+                  id="method"
                   name="method"
                   data-testid="method-input"
                   value={ method }
                   onChange={ handleInput }
                 >
-                  <option value="dinehiro">Dinheiro</option>
+                  <option value="Dinheiro">Dinheiro</option>
                   <option value="Cartão de crédito">Cartão de crédito</option>
                   <option value="Cartão de débito">Cartão de débito</option>
                 </select>
@@ -117,6 +133,7 @@ class Expenses extends Component {
               <label htmlFor="tag">
                 Tipo:
                 <select
+                  id="tag"
                   name="tag"
                   data-testid="tag-input"
                   value={ tag }
@@ -126,6 +143,7 @@ class Expenses extends Component {
                   <option value="Lazer">Lazer</option>
                   <option value="Trabalho">Trabalho</option>
                   <option value="Transporte">Transporte</option>
+                  <option value="Saúde">Saúde</option>
                 </select>
               </label>
             </div>
@@ -134,9 +152,8 @@ class Expenses extends Component {
               type="button"
               className="btn btn-primary btn-sm"
               onClick={ handleSubmit }
-              data-testid="value-input"
             >
-              Adicionar Despesa
+              Adicionar despesa
             </button>
           </div>
         </form>
@@ -145,13 +162,13 @@ class Expenses extends Component {
             <tr>
               <th scope="col">Descrição</th>
               <th scope="col">Tag</th>
-              <th scope="col">Método de Pagamento</th>
+              <th scope="col">Método de pagamento</th>
               <th scope="col">Valor</th>
               <th scope="col">Moeda</th>
               <th scope="col">Câmbio utilizado</th>
               <th scope="col">Valor convertido</th>
               <th scope="col">Moeda de conversão</th>
-              <th scope="col">editar / excluir</th>
+              <th scope="col">editar/excluir</th>
             </tr>
           </thead>
           <tbody>
@@ -163,9 +180,13 @@ class Expenses extends Component {
                 <td>{expense.method}</td>
                 <td>{expense.value}</td>
                 <td>{expense.currency}</td>
-                <td>{expense.currency}</td>
-                <td>{expense.value}</td>
-                <td>{expense.value}</td>
+                <td>{expense.exchangeRates[expense.currency].name}</td>
+                <td>
+                  {
+                    parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)
+                  }
+                </td>
+                <td id="coin">{parseFloat(expense.exchangeRates[expense.currency].ask * expense.value).toFixed(2)}</td>
                 <td>
                   <button
                     type="button"
@@ -199,6 +220,7 @@ Expenses.propTypes = {
   map: PropTypes.func.isRequired,
   fetchCurrenciesSuccess: PropTypes.func.isRequired,
   sendExpenseApi: PropTypes.func.isRequired,
+  sendAddTotal: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -210,6 +232,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrenciesSuccess: () => dispatch(fetchingCurrencies()),
   sendExpenseApi: (expenses) => dispatch(fetchingSaveExpense(expenses)),
+  sendAddTotal: (total) => dispatch(addTotal(total)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Expenses);
