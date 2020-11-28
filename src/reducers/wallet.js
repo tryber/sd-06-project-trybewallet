@@ -1,4 +1,4 @@
-import { ADD_EXPENSE, ADD_CURRENCY, FETCHING_LIST } from '../actions';
+import { ADD_EXPENSE, ADD_CURRENCY, FETCHING_LIST, REMOVE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = { currencies: [], expenses: [], fetchingList: false };
 
@@ -8,6 +8,11 @@ function walletReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: [...state.expenses, action.value],
+    };
+  case REMOVE_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses.filter((_, index) => index !== action.value)],
     };
   case ADD_CURRENCY:
     return {
