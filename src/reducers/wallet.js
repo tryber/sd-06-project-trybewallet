@@ -2,26 +2,37 @@ import types from '../services/actionTypes';
 
 const INITIAL_STATE = {
   currencies: [],
-  // expenses: [],
+  expenses: [],
 };
 
 export default function wallet(state = INITIAL_STATE, action) {
-  switch (action) {
-  // case 'SEARCH_SUCCESS':
-  //   return { ...state, currencies };
-  // case 'SEARCH_FAIL':
-  //   return { ...state, error };
-  // case types.REQUEST:
-  //   return {
-  //     ...state,
-  //   };
+  switch (action.type) {
   case types.RESPONSE:
     return {
       ...state,
-      currencies: action.prices,
-      // expenses: action.expenses,
+      currencies: Object.keys(action.prices),
+      // expenses: action.prices,
+    };
+  case types.EXPENSES:
+    return {
+      ...state,
+      expenses: [...state.expenses,
+        {
+          ...action.objExpenses,
+          exchangeRates: action.objApi,
+        },
+      ],
     };
   default:
     return state;
   }
 }
+
+// case 'SEARCH_SUCCESS':
+//   return { ...state, currencies };
+// case 'SEARCH_FAIL':
+//   return { ...state, error };
+// case types.REQUEST:
+//   return {
+//     ...state,
+//   };
