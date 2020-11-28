@@ -12,7 +12,7 @@ class ExpenseForm extends React.Component {
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
-      tag: '',
+      tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleAddExpense = this.handleAddExpense.bind(this);
@@ -42,7 +42,7 @@ class ExpenseForm extends React.Component {
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
-      tag: '',
+      tag: 'Alimentação',
       id: prevState.id + 1,
     }));
   }
