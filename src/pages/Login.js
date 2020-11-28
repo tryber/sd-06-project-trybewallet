@@ -46,7 +46,6 @@ class Login extends React.Component {
             type="password"
             data-testid="email-input"
             placeholder="Password"
-            minlength="6"
             value={ password }
             required="required"
           />
