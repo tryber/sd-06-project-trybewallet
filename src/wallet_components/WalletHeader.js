@@ -5,7 +5,12 @@ import PropTypes from 'prop-types';
 class WalletHeader extends React.Component {
   render() {
     const { userEmail, expenses } = this.props;
-    const totalExpense = expenses.reduce((acc, cur) => acc + parseInt(cur.value, 10), 0);
+    const totalExpense = expenses
+      .reduce((acc, cur) => (
+        acc + (parseInt(cur.value, 10) * parseInt(
+          cur.exchangeRates[`${cur.currency}`].ask,
+          10,
+        ))), 0);
     const localCurrency = 'BRL';
     return (
       <header>

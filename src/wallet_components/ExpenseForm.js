@@ -36,7 +36,7 @@ class ExpenseForm extends React.Component {
     await currencies();
     const expenseToAdd = {
       ...this.state,
-      exchangeRates: currencyList,
+      exchangeRates: currencyList[0],
     };
     expense(expenseToAdd);
   }
