@@ -1,10 +1,5 @@
-@font-face {
-  font-family: 'AnotherDanger';
-  src: local('AnotherDanger'), url(../styles/fonts/AnotherDangerDemo.otf);
-}
-
 body{
-  background: url(./img/login.gif) no-repeat;
+  background: url(trybeWallet.png) no-repeat;
   background-size: cover;
   color: white;
   font-family: sans-serif;
@@ -13,7 +8,7 @@ body{
 .container {
   align-items: center;
   display: flex;
-  flex-flow: column wrap;
+  /* flex-flow: column wrap; */
 }
 
 .name-login {
@@ -67,52 +62,44 @@ body{
   margin: 0 10px;
 }
 
-.btn {
-  width: 100%;
-  background: none;
-  border: 2px solid #4caf50;
-  color: white;
-  padding: 5px;
-  font-size: 18px;
-  cursor: pointer;
-  margin: 12px 0;
-  outline: none;
-}
 
-.btn:hover:enabled {
-  background-color: #4caf50;
-  color: black;
-}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 
-.trivia-neon {
-  animation: animate 5s linear infinite;
-  color: #0e3742;
-  font-family: 'AnotherDanger', monospace;
-  font-size: 6em;
-  letter-spacing: 15px;
-  line-height: 0.70em;
-  margin-left: 5%;
-  outline: nome;
-  text-align: center;
-  text-transform: uppercase;
-  width: 100%;
-}
 
-@keyframes animate
-{
-  0%, 18%, 20%, 50.1%, 60%, 65.1%, 80%, 90.1%, 92%
-  {
-    color:  #4caf50;
-    box-shadow: nome;
-  }
-  18.1%, 26.1%,30%,50%,60.1%,65%,80.1%,90%,92.1%,100%
-  {
-    color: #ffffff;
-    box-shadow: 0 0 10px  #58b15b,
-    0 0 20px  #58b15b,
-    0 0 40px  #58b15b,
-    0 0 80px #58b15b,
-    0 0 160px #58b15b,
-  }
-}
+
+ 
+ 
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
 

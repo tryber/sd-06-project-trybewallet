@@ -30,10 +30,10 @@ class Expenses extends Component {
 
   handleInput({ target }) {
     const { name, value } = target;
+    const { expenses } = this.state;
     this.setState({
-      ...this.state,
       expenses: {
-        ...this.state.expenses,
+        ...expenses,
         [name]: value,
       },
     });
@@ -44,7 +44,7 @@ class Expenses extends Component {
     const { sendExpenseApi, sendAddTotal } = this.props;
     const { expenses } = this.state;
     sendExpenseApi(expenses); // thunk
-    const valueTotalNumber = Number(expenses.value);
+    const valueTotalNumber = total;
     sendAddTotal(valueTotalNumber);
   }
 
@@ -54,8 +54,7 @@ class Expenses extends Component {
       currency,
       method,
       tag,
-      exchangeRates,
-    } = this.state.expenses;
+    } = this.state;
 
     const { currencies, expenses } = this.props;
     const { handleInput, handleSubmit } = this;
@@ -182,11 +181,13 @@ class Expenses extends Component {
                 <td>{expense.currency}</td>
                 <td>{expense.exchangeRates[expense.currency].name}</td>
                 <td>
-                  {
-                    parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)
-                  }
+                  {parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)}
                 </td>
-                <td id="coin">{parseFloat(expense.exchangeRates[expense.currency].ask * expense.value).toFixed(2)}</td>
+                <td
+                  id="coin"
+                >
+                  {parseFloat(expense.exchangeRates[expense.currency].ask * expense.value).toFixed(2)}
+                </td>
                 <td>
                   <button
                     type="button"

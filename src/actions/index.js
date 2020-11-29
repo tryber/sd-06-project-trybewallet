@@ -42,7 +42,7 @@ export const subTotal = (total) => ({
 });
 
 export function fetchingSaveExpense(expenses) {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     const apiResponse = await getApi();
     const newExpense = { ...expenses, exchangeRates: apiResponse }; // junção do que foi digitado com a api e a chave denominada conforme requisito
     (dispatch(expensesSave(newExpense)));
