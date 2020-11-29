@@ -66,7 +66,12 @@ class Table extends React.Component {
               </td>
               <td>Real</td>
               <td>
-                <button type="button">Editar</button>
+                <button
+                  type="button"
+                  data-testid="edit-btn"
+                >
+                  Editar despesa
+                </button>
                 <button
                   data-testid="delete-btn"
                   type="button"
