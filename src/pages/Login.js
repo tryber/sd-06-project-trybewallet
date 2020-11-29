@@ -4,10 +4,31 @@ import { Link } from 'react-router-dom';
 class Login extends React.Component {
   constructor(props) {
     super(props);
+
+    this.imputChanged = this.imputChanged.bind(this);
+
     this.state = {
       email: '',
       password: '',
+      buttonDisabled: false,
     };
+  }
+
+  imputChanged({ target }) {
+    const { email, password } = target;
+    this.setState({ email, password });
+    this.imputValidated();
+  }
+
+  imputValidated() {
+    const { email, password } = this.state;
+
+    const emailValidated = /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/g.test(email);
+    const passLength = 5
+
+    this.setState({
+      buttonDisabled: password.length >= passLength && emailValidated,
+    });
   }
 
   render() {
