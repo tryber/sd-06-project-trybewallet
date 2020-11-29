@@ -28,7 +28,7 @@ class Login extends React.Component {
     const { email, password } = this.state;
 
     const emailValidated = /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/g.test(email);
-    const passLength = 5
+    const passLength = 5;
 
     this.setState({
       buttonValidation: password.length >= passLength && emailValidated,
@@ -40,24 +40,24 @@ class Login extends React.Component {
     return (
       <form>
         <div>
-          <label>
+          <label htmlFor="email">
             Email:
             <input
               type="email"
               name="email"
               value={ email }
-              onChange={this.imputChanged}
+              onChange={ this.imputChanged }
               placeholder="Email"
               data-testid="email-input"
             />
           </label>
-          <label>
+          <label htmlFor="password">
             Senha:
             <input
               type="password"
               name="password"
               value={ password }
-              onChange={this.imputChanged}
+              onChange={ this.imputChanged }
               placeholder="Password"
               data-testid="password-input"
             />
@@ -66,7 +66,7 @@ class Login extends React.Component {
         <Link to="/carteira">
           <input
             type="submit"
-            disabled={!buttonValidation}
+            disabled={ !buttonValidation }
             value="Entrar"
             // onClick={() => addEmail(email)}
           />

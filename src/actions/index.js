@@ -2,6 +2,6 @@
 export const USER = 'USER';
 
 export const addName = (name) => ({
-  type:USER,
+  type: USER,
   name,
-});recentimente
+});
