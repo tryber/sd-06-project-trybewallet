@@ -10,13 +10,17 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      buttonDisabled: false,
+      buttonValidation: false,
     };
   }
 
   imputChanged({ target }) {
-    const { email, password } = target;
-    this.setState({ email, password });
+    const { name, value } = target;
+
+    this.setState({
+      [name]: value,
+    });
+
     this.imputValidated();
   }
 
@@ -27,12 +31,12 @@ class Login extends React.Component {
     const passLength = 5
 
     this.setState({
-      buttonDisabled: password.length >= passLength && emailValidated,
+      buttonValidation: password.length >= passLength && emailValidated,
     });
   }
 
   render() {
-    // const { email, password } = this.props;
+    const { email, password, buttonValidation } = this.state;
     return (
       <form>
         <div>
@@ -40,9 +44,10 @@ class Login extends React.Component {
             Email:
             <input
               type="email"
-              onChange={(e) => this.setState({ email: e.target.value })}
+              name="email"
+              value={ email }
+              onChange={this.imputChanged}
               placeholder="Email"
-              required
               data-testid="email-input"
             />
           </label>
@@ -50,18 +55,18 @@ class Login extends React.Component {
             Senha:
             <input
               type="password"
-              required
-              minlength="6"
-              data-testid="password-input"
+              name="password"
+              value={ password }
+              onChange={this.imputChanged}
               placeholder="Password"
-              onChange={(e) => this.setState({ password: e.target.value })}
+              data-testid="password-input"
             />
           </label>
         </div>
         <Link to="/carteira">
           <input
             type="submit"
-            // disabled={!buttonDisabled}
+            disabled={!buttonValidation}
             value="Entrar"
             // onClick={() => addEmail(email)}
           />
