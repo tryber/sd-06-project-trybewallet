@@ -21,7 +21,13 @@ function wallet(state = INITIAL_STATE, action) {
       total: action.total,
     };
   case REMOVE_EXPENSE:
-    return { ...state, expenses: [] };
+    console.log('state.total', state.total);
+    console.log('action.total', action.total);
+    return {
+      ...state,
+      ...action.expense,
+      total: state.total - action.total,
+    };
   case EDIT_EXPENSE:
     return { ...state, expenses: [] };
   case ADD_CURRENCY:

@@ -1,8 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { removeExpense } from '../actions';
 
 class Table extends Component {
+  constructor() {
+    super();
+
+    this.excludeCost = this.excludeCost.bind(this);
+  }
+
+  excludeCost({ target }) {
+    const { expenses, deleteExpense } = this.props;
+    const selectedID = +target.id;
+    const filteredExpenses = expenses.filter((expense) => expense.id !== selectedID);
+
+    const
+      selectedExpenseValue = document.querySelector('.converted-value').innerHTML;
+
+    const newTableExpenses = {
+      expenses: filteredExpenses,
+    };
+
+    deleteExpense(newTableExpenses, selectedExpenseValue);
+  }
+
   render() {
     const { expenses } = this.props;
 
@@ -44,7 +66,7 @@ class Table extends Component {
                 <td>{ value }</td>
                 <td>{ name }</td>
                 <td>{ exchangeRate }</td>
-                <td className="converted">{ convertedValue }</td>
+                <td className="converted-value">{ convertedValue }</td>
                 <td>Real</td>
                 <td>
                   <button
@@ -58,7 +80,7 @@ class Table extends Component {
                     id={ id }
                     type="button"
                     data-testid="delete-btn"
-                    onClick={ this.excludeExpense }
+                    onClick={ this.excludeCost }
                   >
                     Excluir
                   </button>
@@ -76,8 +98,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  deleteExpense: (expense, total) => dispatch(removeExpense(expense, total)),
+});
+
 Table.propTypes = {
   expenses: PropTypes.arrayOf().isRequired,
+  deleteExpense: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

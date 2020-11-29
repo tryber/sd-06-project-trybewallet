@@ -1,4 +1,5 @@
 import currencyAPI from '../services/currencyAPI';
+import { response } from '../tests/mockData';
 
 // Coloque aqui suas actions
 export const ADD_EMAIL = 'ADD_EMAIL';
@@ -20,9 +21,10 @@ export const addExpense = (expense, total) => ({
   total,
 });
 
-export const removeExpense = (expense) => ({
+export const removeExpense = (expense, total) => ({
   type: REMOVE_EXPENSE,
   expense,
+  total,
 });
 
 export const editExpense = (expense) => ({
@@ -41,3 +43,5 @@ export const sendCurrencyThunk = () => (dispatch) => {
   currencyAPI()
     .then((currencies) => dispatch(addCurrency(currencies)));
 };
+
+export const sendCurrencyMock = () => (dispatch) => dispatch(addCurrency(response));
