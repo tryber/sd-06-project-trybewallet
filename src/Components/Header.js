@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../styles/App.css';
+import { addTotal } from '../actions/index';
 
 class Header extends Component {
   render() {
-    const { email, total } = this.props;
+    const { email, expenses } = this.props;
+    const valueTotalNumber = expenses.reduce((result, expense) => (
+      result + (parseFloat(expense.exchangeRates[expense.currency].ask * expense.value))
+    ), 0);
+
     return (
       <header>
         <div className="container">
@@ -18,7 +23,7 @@ class Header extends Component {
           <span data-testid="email-field">{email}</span>
           <br />
           <div>Despesa Total: </div>
-          <span data-testid="total-field" value="0">{total}</span>
+          <span data-testid="total-field" value="0">{valueTotalNumber}</span>
           <br />
           <span data-testid="header-currency-field"> BRL</span>
         </div>
@@ -30,11 +35,16 @@ class Header extends Component {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   total: state.wallet.total,
+  expenses: state.wallet.expenses,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  sendAddTotal: (total) => dispatch(addTotal(total)),
 });
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
-  total: PropTypes.number.isRequired,
+  expenses: PropTypes.arrayOf.isRequired,
 };
 
-export default connect(mapStateToProps, null)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

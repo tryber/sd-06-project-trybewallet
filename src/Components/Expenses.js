@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchingSaveExpense, fetchingCurrencies, addTotal } from '../actions/index';
+import { fetchingSaveExpense, fetchingCurrencies } from '../actions/index';
 import '../styles/expenses.css';
 
 class Expenses extends Component {
@@ -41,19 +41,29 @@ class Expenses extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { sendExpenseApi, sendAddTotal } = this.props;
-    const { expenses } = this.state;
-    sendExpenseApi(expenses); // thunk
-    const valueTotalNumber = total;
-    sendAddTotal(valueTotalNumber);
+    const { sendExpenseApi } = this.props;
+    const { expenses: expensesToSend } = this.state;
+    sendExpenseApi(expensesToSend); // thunk
+    this.setState({
+      expenses: {
+        id: '',
+        value: 0,
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+        exchangeRates: {},
+      },
+    });
   }
 
   render() {
-    const { value,
+    const { expenses: { value,
       description,
       currency,
       method,
       tag,
+    },
     } = this.state;
 
     const { currencies, expenses } = this.props;
@@ -167,7 +177,7 @@ class Expenses extends Component {
               <th scope="col">Câmbio utilizado</th>
               <th scope="col">Valor convertido</th>
               <th scope="col">Moeda de conversão</th>
-              <th scope="col">editar/excluir</th>
+              <th scope="col">Editar/Excluir</th>
             </tr>
           </thead>
           <tbody>
@@ -178,16 +188,17 @@ class Expenses extends Component {
                 <td>{expense.tag}</td>
                 <td>{expense.method}</td>
                 <td>{expense.value}</td>
-                <td>{expense.currency}</td>
                 <td>{expense.exchangeRates[expense.currency].name}</td>
-                <td>
-                  {parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)}
-                </td>
                 <td
                   id="coin"
                 >
-                  {parseFloat(expense.exchangeRates[expense.currency].ask * expense.value).toFixed(2)}
+                  {parseFloat(expense.exchangeRates[expense.currency].ask * expense.value)
+                    .toFixed(2)}
                 </td>
+                <td>
+                  {parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)}
+                </td>
+                <td>Real</td>
                 <td>
                   <button
                     type="button"
@@ -221,7 +232,6 @@ Expenses.propTypes = {
   map: PropTypes.func.isRequired,
   fetchCurrenciesSuccess: PropTypes.func.isRequired,
   sendExpenseApi: PropTypes.func.isRequired,
-  sendAddTotal: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -233,7 +243,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrenciesSuccess: () => dispatch(fetchingCurrencies()),
   sendExpenseApi: (expenses) => dispatch(fetchingSaveExpense(expenses)),
-  sendAddTotal: (total) => dispatch(addTotal(total)),
+  // sendAddTotal: (total) => dispatch(addTotal(total)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Expenses);
