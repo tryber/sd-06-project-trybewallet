@@ -1,8 +1,12 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 import { LOADING_CURRENCIES, CURRENCIES_LOADED, NEW_CURRENCY_SELECTED, TOTAL_MONEY_SPENT,
   NEW_PAYMENT_METHOD, NEW_SELECTED_TAG, NEW_EXPENSE,
-  NEW_VALUE_SPENT, NEW_DESCRIPTION } from '../actions/currencyOptions';
+  NEW_VALUE_SPENT, NEW_DESCRIPTION, DELETE_EXPENSE } from '../actions/currencyOptions';
 import expenseCreator from '../services/expenseCreator';
+
+const expenseFilter = (itemToRemove, total) => (
+  total.filter((expense) => JSON.stringify(expense.id) !== itemToRemove)
+);
 
 const INITIAL_STATE = {
   loading: true,
@@ -34,6 +38,8 @@ function wallet(state = INITIAL_STATE, action) {
     return { ...state, moneySpent: action.moneySpent };
   case NEW_EXPENSE:
     return { ...state, expenses: expenseCreator(state, action.currentCotation) };
+  case DELETE_EXPENSE:
+    return { ...state, expenses: expenseFilter(action.id, state.expenses) };
   case TOTAL_MONEY_SPENT:
     return { ...state, totalMoneySpent: action.total };
   default:

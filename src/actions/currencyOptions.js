@@ -9,6 +9,7 @@ export const NEW_EXPENSE = 'NEW_EXPENSE';
 export const NEW_VALUE_SPENT = 'NEW_VALUE_SPENT';
 export const NEW_DESCRIPTION = 'NEW_DESCRIPTION';
 export const TOTAL_MONEY_SPENT = 'TOTAL_MONEY_SPENT';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export function newCurrencySelected(selectedCurrency) {
   return { type: NEW_CURRENCY_SELECTED, selectedCurrency };
@@ -41,6 +42,10 @@ export function newDescription(description) {
 function currenciesLoaded(response) {
   const currencies = [response];
   return { type: CURRENCIES_LOADED, currencies };
+}
+
+export function expenseDeleter(id) {
+  return { type: DELETE_EXPENSE, id };
 }
 
 export function totalMoneySpent(expenses) {

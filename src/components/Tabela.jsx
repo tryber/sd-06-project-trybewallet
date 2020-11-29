@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 const Tabela = (props) => {
   const { expenses } = props;
-  console.log(expenses)
   return (
     <table>
       <thead>

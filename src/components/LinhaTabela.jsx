@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { expenseDeleter } from '../actions/currencyOptions';
+import { connect } from 'react-redux';
 
 const LinhaTabela = (props) => {
-  const { currency, description, method, value, tag, exchangeRates } = props.expense;
+  const { deleteExpense } = props;
+  const { currency, description, method, value, tag, exchangeRates, id } = props.expense;
   const cambio = parseFloat(exchangeRates[currency].ask);
   const decimalValue = parseFloat(value);
   const totalGasto = cambio * decimalValue;
@@ -16,9 +19,23 @@ const LinhaTabela = (props) => {
         <td>{ `${ cambio.toFixed(2) }` }</td>
         <td>{ `${ totalGasto.toFixed(2) }` }</td>
         <td>Real</td>
+        <td>
+          <button
+            type="button"
+            data-testid="delete-btn"
+            value={ id }
+            onClick={ ({ target: { value } }) => deleteExpense(value)}
+          >
+            Deletar
+          </button>
+        </td>
       </tr>
     );
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  deleteExpense: (value) => dispatch(expenseDeleter(value)),
+});
 
 LinhaTabela.propTypes = {
   planeta: PropTypes.shape({
@@ -38,4 +55,4 @@ LinhaTabela.propTypes = {
   }).isRequired,
 };
 
-export default LinhaTabela;
+export default connect(null, mapDispatchToProps)(LinhaTabela);
