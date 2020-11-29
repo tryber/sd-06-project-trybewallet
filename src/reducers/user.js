@@ -1,16 +1,16 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
-// import { USER } from '../actions';
+import { EMAIL } from '../actions';
 
-const initialState = {
+const INITIAL_STATE = {
   user: {
     email: '',
   },
 };
 
-function userReducer(state = initialState, action) {
+function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'LOGIN':
-    return action.value;
+  case EMAIL:
+    return { ...state, email: action.value };
   default:
     return state;
   }

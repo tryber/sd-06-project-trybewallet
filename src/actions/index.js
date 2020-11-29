@@ -1,7 +1,7 @@
 // Coloque aqui suas actions
-export const USER = 'USER';
+export const EMAIL = 'EMAIL';
 
-export const addName = (name) => ({
-  type: USER,
-  name,
+export const saveEmail = (email) => ({
+  type: EMAIL,
+  email,
 });
