@@ -9,11 +9,11 @@ import store from './store';
 // import Wallet from './pages/Wallet';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Provider store={ store }>
+  <Provider store={ store }>
+    <BrowserRouter>
       <App />
-    </Provider>
-  </BrowserRouter>,
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root'),
 );
 

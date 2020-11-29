@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import Login from '../pages/Login';
 import Wallet from '../pages/Wallet';
 
-export default class AppRouter extends React.Component {
+export default class Router extends React.Component {
   render() {
     return (
       <Switch>
