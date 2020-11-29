@@ -50,7 +50,8 @@ class Table extends React.Component {
               </td>
               <td>Real</td>
               <td>
-                <button data-testid="delete-btn">Deletar</button>
+                <button type="button">Editar</button>
+                <button data-testid="delete-btn" type="button">Excluir</button>
               </td>
             </tr>
           ))}
