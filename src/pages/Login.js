@@ -1,43 +1,19 @@
 import React from 'react';
-import md5 from 'crypto-js/md5';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
-
-    this.validateEmail = this.validateEmail.bind(this);
-
     this.state = {
       email: '',
       password: '',
-      validEmail: false,
-      validName: false,
     };
   }
 
-  validateEmail({ target }) {
-    const email = target.value;
-    const hash = md5(email);
-    const validator = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-    const isValid = validator.test(String(email).toLowerCase());
-    if (isValid) {
-      this.setState({
-        validEmail: true,
-        hash: hash.words,
-      });
-      this.handleHash();
-    } else {
-      this.setState({
-        validEmail: false,
-        hash: '',
-      });
-    }
-  }
-
   render() {
-    const { email, password } = this.props;
+    // const { email, password } = this.props;
     return (
-      <div>
+      <form>
         <div>
           <label>
             Email:
@@ -61,15 +37,17 @@ class Login extends React.Component {
             />
           </label>
         </div>
-        <button type="submit">Entrar</button>
-      </div>
+        <Link to="/carteira">
+          <input
+            type="submit"
+            // disabled={!buttonDisabled}
+            value="Entrar"
+            // onClick={() => addEmail(email)}
+          />
+        </Link>
+      </form>
     );
   }
 }
-
-Login.propTypes = {
-  email: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-};
 
 export default Login;
