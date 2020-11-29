@@ -49,6 +49,9 @@ class Table extends React.Component {
                 }
               </td>
               <td>Real</td>
+              <td>
+                <button data-testid="delete-btn">Deletar</button>
+              </td>
             </tr>
           ))}
         </tbody>
