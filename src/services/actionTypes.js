@@ -3,6 +3,7 @@ const types = {
   REQUEST: 'REQUEST',
   RESPONSE: 'RESPONSE',
   EXPENSES: 'EXPENSES',
+  DELETE_EXPENSE: 'DELETE_EXPENSE',
 };
 
 export default types;

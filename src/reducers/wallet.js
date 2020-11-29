@@ -13,6 +13,11 @@ export default function wallet(state = INITIAL_STATE, action) {
       currencies: Object.keys(action.prices),
       // expenses: action.prices,
     };
+  case types.DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter((item) => (item.id !== action.id)),
+    };
   case types.EXPENSES:
     return {
       ...state,

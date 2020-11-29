@@ -39,6 +39,12 @@ export const fetchExchangeRatesAction = (objExpenses) => async (dispatch) => {
   dispatch(addExpenses(objExpenses, objApi));
 };
 
+export const deleteExpenseAction = (id) => (
+  {
+    type: types.DELETE_EXPENSE,
+    id,
+  });
+
 // export const success = (prices) => ({
 //   type: types.RESPONSE,
 //   prices,
