@@ -13,11 +13,16 @@ class ExpensesTable extends React.Component {
     this.createEntries = this.createEntries.bind(this);
     this.createEditExcludeButtons = this.createEditExcludeButtons.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.editClick = this.editClick.bind(this);
   }
 
   onClick(toRemove) {
     const { deleteExpense } = this.props;
     deleteExpense(toRemove);
+  }
+
+  editClick(toEdit) {
+    console.log(toEdit);
   }
 
   createHeaders() {
@@ -49,6 +54,8 @@ class ExpensesTable extends React.Component {
       <div className="edit-exclude-container">
         <button
           type="button"
+          data-testid="edit-btn"
+          onClick={ () => this.editClick(removedit) }
         >
           <img
             className="table-btn"
