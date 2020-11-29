@@ -25,7 +25,8 @@ class Form extends React.Component {
 
   handleChange(event) {
     const { value, name } = event.target;
-    this.setState({ [name]: value,
+    this.setState({
+      [name]: value,
     });
   }
 
@@ -39,7 +40,7 @@ class Form extends React.Component {
   }
 
   render() {
-    const { currenciesState } = this.props;
+    const { currenciesState, btnEditState } = this.props;
     const { value } = this.state;
     return (
       <form>
@@ -114,9 +115,19 @@ class Form extends React.Component {
             <option value="Saúde">Saúde</option>
           </select>
         </label>
-        <button onClick={ this.handleClick } type="button">
-          Adicionar despesa
-        </button>
+        {
+          (btnEditState)
+            ? (
+              <button type="button">
+                Editar despesa
+              </button>
+            )
+            : (
+              <button onClick={ this.handleClick } type="button">
+                Adicionar despesa
+              </button>
+            )
+        }
       </form>
     );
   }
@@ -124,6 +135,7 @@ class Form extends React.Component {
 
 const mapStateToProps = (state) => ({
   currenciesState: state.wallet.currencies,
+  btnEditState: state.wallet.btnEdit,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -135,6 +147,7 @@ Form.propTypes = {
   currenciesState: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
   fetchExchangeRates: PropTypes.func.isRequired,
+  btnEditState: PropTypes.bool.isRequired,
 };
 
 export default connect(

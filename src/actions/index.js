@@ -45,6 +45,12 @@ export const deleteExpenseAction = (id) => (
     id,
   });
 
+export const editBtnAction = (toogle) => (
+  {
+    type: types.EDIT_BTN,
+    toogle,
+  });
+
 // export const success = (prices) => ({
 //   type: types.RESPONSE,
 //   prices,

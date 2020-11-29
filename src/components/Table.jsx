@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteExpenseAction } from '../actions';
+import { deleteExpenseAction, editBtnAction } from '../actions';
 
 class Table extends React.Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   handleClick(event) {
@@ -17,6 +18,13 @@ class Table extends React.Component {
         deleteExpense(element.id);
       }
     });
+  }
+
+  handleEdit() {
+    // const { expensesState: { expenses } } = this.props;
+    const { editBtn } = this.props;
+    const toogle = true;
+    editBtn(toogle);
   }
 
   render() {
@@ -68,9 +76,11 @@ class Table extends React.Component {
               <td>
                 <button
                   type="button"
+                  name={ element.id }
+                  onClick={ this.handleEdit }
                   data-testid="edit-btn"
                 >
-                  Editar despesa
+                  Editar
                 </button>
                 <button
                   data-testid="delete-btn"
@@ -95,6 +105,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (id) => dispatch(deleteExpenseAction(id)),
+  editBtn: (toogle) => dispatch(editBtnAction(toogle)),
 });
 
 Table.propTypes = {
@@ -102,6 +113,7 @@ Table.propTypes = {
     expenses: PropTypes.arrayOf.isRequired,
   }).isRequired,
   deleteExpense: PropTypes.func.isRequired,
+  editBtn: PropTypes.func.isRequired,
 };
 
 export default connect(

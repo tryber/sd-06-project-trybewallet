@@ -3,6 +3,7 @@ import types from '../services/actionTypes';
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  btnEdit: false,
 };
 
 export default function wallet(state = INITIAL_STATE, action) {
@@ -17,6 +18,11 @@ export default function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: state.expenses.filter((item) => (item.id !== action.id)),
+    };
+  case types.EDIT_BTN:
+    return {
+      ...state,
+      btnEdit: action.toogle,
     };
   case types.EXPENSES:
     return {
