@@ -45,10 +45,17 @@ export const deleteExpenseAction = (id) => (
     id,
   });
 
-export const editBtnAction = (toogle) => (
+export const editBtnAction = (toogle, objExpenses) => (
   {
     type: types.EDIT_BTN,
+    objExpenses,
     toogle,
+  });
+
+export const editExpenseAction = (objExpenses) => (
+  {
+    type: types.EDIT_EXPENSE,
+    objExpenses,
   });
 
 // export const success = (prices) => ({

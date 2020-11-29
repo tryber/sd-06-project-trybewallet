@@ -20,11 +20,11 @@ class Table extends React.Component {
     });
   }
 
-  handleEdit() {
+  handleEdit(objectElement) {
     // const { expensesState: { expenses } } = this.props;
     const { editBtn } = this.props;
     const toogle = true;
-    editBtn(toogle);
+    editBtn(toogle, objectElement);
   }
 
   render() {
@@ -77,7 +77,7 @@ class Table extends React.Component {
                 <button
                   type="button"
                   name={ element.id }
-                  onClick={ this.handleEdit }
+                  onClick={ () => this.handleEdit(element) }
                   data-testid="edit-btn"
                 >
                   Editar
@@ -105,7 +105,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (id) => dispatch(deleteExpenseAction(id)),
-  editBtn: (toogle) => dispatch(editBtnAction(toogle)),
+  editBtn: (toogle, objectElement) => dispatch(editBtnAction(toogle, objectElement)),
 });
 
 Table.propTypes = {

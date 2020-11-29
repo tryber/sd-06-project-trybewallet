@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCurrenciesAction, fetchExchangeRatesAction } from '../actions';
+import { fetchCurrenciesAction,
+  fetchExchangeRatesAction, editExpenseAction } from '../actions';
 
 class Form extends React.Component {
   constructor() {
@@ -16,11 +17,25 @@ class Form extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.loadElement = this.loadElement.bind(this);
   }
 
   componentDidMount() {
     const { fetchCurrencies } = this.props;
     fetchCurrencies();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { btnEditState } = this.props;
+    if (btnEditState !== prevProps.btnEditState && btnEditState) {
+      this.loadElement();
+    }
+  }
+
+  loadElement() {
+    const { elementEditState } = this.props;
+    this.setState(elementEditState);
   }
 
   handleChange(event) {
@@ -36,12 +51,32 @@ class Form extends React.Component {
     const { id } = this.state;
     const index = id + 1;
     fetchExchangeRates(this.state);
-    this.setState({ id: index });
+    this.setState({
+      id: index,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    });
+  }
+
+  handleEdit() {
+    const { editExpense } = this.props;
+    editExpense(this.state);
+    this.setState({
+      id: 0,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    });
   }
 
   render() {
     const { currenciesState, btnEditState } = this.props;
-    const { value } = this.state;
+    const { value, description, currency, tag, method } = this.state;
     return (
       <form>
         <label htmlFor="value">
@@ -63,6 +98,7 @@ class Form extends React.Component {
             type="text"
             name="description"
             onChange={ this.handleChange }
+            value={ description }
           />
         </label>
         <label htmlFor="currency">
@@ -73,14 +109,15 @@ class Form extends React.Component {
             type="text"
             name="currency"
             onChange={ this.handleChange }
+            value={ currency }
           >
-            {currenciesState.map((currency) => (
+            {currenciesState.map((curr) => (
               <option
-                key={ currency }
-                value={ currency }
-                data-testid={ currency }
+                key={ curr }
+                value={ curr }
+                data-testid={ curr }
               >
-                {currency}
+                {curr}
               </option>
             ))}
           </select>
@@ -93,6 +130,7 @@ class Form extends React.Component {
             data-testid="method-input"
             name="method"
             onChange={ this.handleChange }
+            value={ method }
           >
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
@@ -107,6 +145,7 @@ class Form extends React.Component {
             data-testid="tag-input"
             name="tag"
             onChange={ this.handleChange }
+            value={ tag }
           >
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
@@ -118,7 +157,7 @@ class Form extends React.Component {
         {
           (btnEditState)
             ? (
-              <button type="button">
+              <button type="button" onClick={ this.handleEdit }>
                 Editar despesa
               </button>
             )
@@ -136,11 +175,13 @@ class Form extends React.Component {
 const mapStateToProps = (state) => ({
   currenciesState: state.wallet.currencies,
   btnEditState: state.wallet.btnEdit,
+  elementEditState: state.wallet.elementEdit,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(fetchCurrenciesAction()),
   fetchExchangeRates: (objExpenses) => dispatch(fetchExchangeRatesAction(objExpenses)),
+  editExpense: (objExpenses) => dispatch(editExpenseAction(objExpenses)),
 });
 
 Form.propTypes = {
@@ -148,6 +189,8 @@ Form.propTypes = {
   fetchCurrencies: PropTypes.func.isRequired,
   fetchExchangeRates: PropTypes.func.isRequired,
   btnEditState: PropTypes.bool.isRequired,
+  editExpense: PropTypes.func.isRequired,
+  elementEditState: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default connect(

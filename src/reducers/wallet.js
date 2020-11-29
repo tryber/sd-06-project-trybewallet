@@ -4,9 +4,15 @@ const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   btnEdit: false,
+  elementEdit: {},
 };
 
 export default function wallet(state = INITIAL_STATE, action) {
+  const index = (action.type === types.EDIT_EXPENSE)
+    ? state.expenses.findIndex((item) => (item.id === action.objExpenses.id))
+    : 0;
+  const newExpenses = [...state.expenses];
+  newExpenses[index] = action.objExpenses;
   switch (action.type) {
   case types.RESPONSE:
     return {
@@ -19,10 +25,17 @@ export default function wallet(state = INITIAL_STATE, action) {
       ...state,
       expenses: state.expenses.filter((item) => (item.id !== action.id)),
     };
+  case types.EDIT_EXPENSE:
+    return {
+      ...state,
+      expenses: newExpenses,
+      btnEdit: false,
+    };
   case types.EDIT_BTN:
     return {
       ...state,
       btnEdit: action.toogle,
+      elementEdit: action.objExpenses,
     };
   case types.EXPENSES:
     return {
@@ -46,4 +59,21 @@ export default function wallet(state = INITIAL_STATE, action) {
 // case types.REQUEST:
 //   return {
 //     ...state,
+//   };
+
+// case types.EDIT_EXPENSE:
+//   return {
+//     ...state,
+//     expenses: [...state.expenses.filter((item) => (item.id !== action.objExpenses.id)),
+//       {
+//         ...action.objExpenses,
+//       }],
+//     btnEdit: false,
+//   };
+
+// case types.EDIT_EXPENSE:
+//   return {
+//     ...state,
+//     expenses: state.expenses.findIndex((item) => (item.id === action.objExpenses.id)),
+//     btnEdit: false,
 //   };
