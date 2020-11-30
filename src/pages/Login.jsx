@@ -39,6 +39,10 @@ class Login extends React.Component {
     }
   }
 
+//  const six = /.{6,}/;
+//    const reg = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
+//    setEnable(reg.test(email) && six.test(pass));
+
   checkPassword(event) {
     const password = event.target.value;
     // verificar o erro do diley 5 -> 6
