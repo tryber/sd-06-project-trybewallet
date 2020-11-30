@@ -9,6 +9,7 @@ class Header extends React.Component {
     return (
       <div>
         <p data-testid="email-field">
+          Email: 
           {email}
           .
         </p>
