@@ -330,7 +330,7 @@ Crie uma página para gerenciar a carteira de gastos em diversas moedas, e que t
         "EUR": {
           "code": "EUR",
           "name": "Euro",
-          "ask": "6.6112",
+          "ask": "6.6112",<tr></tr>
           ...
         },
         "GBP": {
