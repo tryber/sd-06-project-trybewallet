@@ -9,25 +9,22 @@ class Header extends React.Component {
     return (
       <div>
         <p data-testid="email-field">
-          {email}.
+          {email}
+          .
         </p>
-        <p data-testid="total-field">
-          Dispesa total: 0
-        </p>
-        <p data-testid="header-currency-field">
-          cambio: BRL
-        </p>
+        <p data-testid="total-field">Dispesa total: 0</p>
+        <p data-testid="header-currency-field">cambio: BRL</p>
       </div>
     );
   }
 }
 
 const mapStateToPro = (state) => ({
-  email: state.user.email
-})
+  email: state.user.email,
+});
 
 Header.propTypes = {
   email: PropTypes.object,
 }.isRequired;
 
-export default connect(mapStateToPro) (Header);
+export default connect(mapStateToPro)(Header);
