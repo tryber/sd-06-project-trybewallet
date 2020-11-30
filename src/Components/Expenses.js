@@ -218,7 +218,7 @@ class Expenses extends Component {
                   <button
                     type="button"
                     data-testid="delete-btn"
-                    onClick={() => buttonDeleteItem(expense.id)}
+                    onClick={ () => buttonDeleteItem(expense.id) }
                   >
                     Excluir
                   </button>
