@@ -3,7 +3,7 @@ import {
   FETCH_CURRENCIES_SUCCESS,
   EXPENSES_SAVE,
   ADDTOTAL,
-  SUBTOTAL,
+  DELETE_ITEM,
 } from '../actions/index';
 
 const INITIAL_STATE = {
@@ -38,11 +38,11 @@ export default function reducer(state = INITIAL_STATE, action) {
         total: state.total + action.total,
       }
     );
-  case SUBTOTAL:
+  case DELETE_ITEM:
     return (
       {
         ...state,
-        total: state.total - action.total,
+        expenses: state.expenses.filter((expenses) => expenses.id !== action.id),
       }
     );
   default:

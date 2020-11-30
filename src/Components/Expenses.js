@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchingSaveExpense, fetchingCurrencies } from '../actions/index';
+import { fetchingSaveExpense, fetchingCurrencies, deleteItem } from '../actions/index';
 import '../styles/expenses.css';
 
 class Expenses extends Component {
@@ -9,6 +9,7 @@ class Expenses extends Component {
     super();
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.buttonDeleteItem = this.buttonDeleteItem.bind(this);
 
     this.state = {
       expenses: {
@@ -57,6 +58,11 @@ class Expenses extends Component {
     });
   }
 
+  buttonDeleteItem(id) {
+    const { deleteItemExpenses } = this.props;
+    deleteItemExpenses(id);
+  }
+
   render() {
     const { expenses: { value,
       description,
@@ -67,7 +73,7 @@ class Expenses extends Component {
     } = this.state;
 
     const { currencies, expenses } = this.props;
-    const { handleInput, handleSubmit } = this;
+    const { handleInput, handleSubmit, buttonDeleteItem } = this;
     return (
       <div>
         <form className="despesas">
@@ -212,7 +218,7 @@ class Expenses extends Component {
                   <button
                     type="button"
                     data-testid="delete-btn"
-                    onClick={ () => ('deletar') }
+                    onClick={() => buttonDeleteItem(expense.id)}
                   >
                     Excluir
                   </button>
@@ -232,6 +238,7 @@ Expenses.propTypes = {
   map: PropTypes.func.isRequired,
   fetchCurrenciesSuccess: PropTypes.func.isRequired,
   sendExpenseApi: PropTypes.func.isRequired,
+  deleteItemExpenses: PropTypes.arrayOf.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -243,7 +250,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrenciesSuccess: () => dispatch(fetchingCurrencies()),
   sendExpenseApi: (expenses) => dispatch(fetchingSaveExpense(expenses)),
-  // sendAddTotal: (total) => dispatch(addTotal(total)),
+  deleteItemExpenses: (id) => dispatch(deleteItem(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Expenses);

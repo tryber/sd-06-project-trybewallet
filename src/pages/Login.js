@@ -55,7 +55,8 @@ class Login extends React.Component {
   render() {
     const { email, btnDisable, senha } = this.state;
     return (
-      <div className="container">
+      <div className="container-login ">
+        <img src="trybeWallet.png" className="img-responsive" alt="Imagem Responsiva" />
         <div className="name-login">
           <label htmlFor="email-input">
             Email:

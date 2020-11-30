@@ -34,11 +34,11 @@ export const addTotal = (total) => ({
   total,
 });
 
-export const SUBTOTAL = 'SUBTOTAL';
+export const DELETE_ITEM = 'DELETE_ITEM';
 
-export const subTotal = (total) => ({
-  type: SUBTOTAL,
-  total,
+export const deleteItem = (id) => ({
+  type: DELETE_ITEM,
+  id,
 });
 
 export function fetchingSaveExpense(expenses) {
