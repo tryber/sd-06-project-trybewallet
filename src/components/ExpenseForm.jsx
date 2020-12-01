@@ -2,22 +2,21 @@ import React, { Component } from 'react';
 import '../css/expenseForm.css';
 
 class ExpenseForm extends Component {
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {
-      entry: {
-        id: 0,
-        value: '',
-        description: '',
-        currency: 'USD',
-      }
-    }
-
-  }
+  //   this.state = {
+  //     entry: {
+  //       id: 0,
+  //       value: '',
+  //       description: '',
+  //       currency: 'USD',
+  //     }
+  //   }
+  // }
 
   render() {
-    return(
+    return (
       <form action="" className="entry">
         <div className="system-information">
           <p className="id-input">Número de Id.</p>
@@ -32,15 +31,15 @@ class ExpenseForm extends Component {
               data-testid="value-input"
               placeholder="Valor da Despesa."
             />
-            <label htmlFor="currency-input" >
+            <label htmlFor="currency-input">
               Moeda:
-                <select data-testid="currency-input">
-                  <option value="teste1">teste1</option>
-                  <option value="teste2">teste2</option>
-                  <option value="teste3">teste3</option>
-                </select>
+              <select data-testid="currency-input">
+                <option value="teste1">teste1</option>
+                <option value="teste2">teste2</option>
+                <option value="teste3">teste3</option>
+              </select>
             </label>
-            <label htmlFor="method-input" >
+            <label htmlFor="method-input">
               Método de Pagamento:
               <select data-testid="method-input">
                 <option value="Dinheiro">Dinheiro</option>
@@ -48,9 +47,9 @@ class ExpenseForm extends Component {
                 <option value="Cartão de débito">Cartão de débito</option>
               </select>
             </label>
-            <label htmlFor="tag-input" >
+            <label htmlFor="tag-input">
               Tag:
-              <select data-testid="tag-input" >
+              <select data-testid="tag-input">
                 <option value="Lazer ">Lazer</option>
                 <option value="Alimentação">Alimentação</option>
                 <option value="Trabalho">Trabalho</option>
@@ -67,12 +66,11 @@ class ExpenseForm extends Component {
               placeholder="Descrição da Despesa."
             />
           </div>
-          <button type="button" >Adicionar Despesa</button>
+          <button type="button">Adicionar Despesa</button>
         </div>
       </form>
     );
-  };
+  }
 }
 
 export default ExpenseForm;
-

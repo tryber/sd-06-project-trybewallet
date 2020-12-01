@@ -1,12 +1,10 @@
 import React from 'react';
 
+import propType from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { salvarUsuario } from '../actions';
-import propType from 'prop-types';
-
 import '../css/login.css';
-
 
 class Login extends React.Component {
   constructor() {
@@ -23,8 +21,7 @@ class Login extends React.Component {
       checkEmail: true,
       checkPassword: true,
       btnEntrar: false,
-    }
-
+    };
   }
 
   checkEmail(event) {
@@ -38,10 +35,6 @@ class Login extends React.Component {
       this.setState({ checkEmail: true, email });
     }
   }
-
-//  const six = /.{6,}/;
-//    const reg = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
-//    setEnable(reg.test(email) && six.test(pass));
 
   checkPassword(event) {
     const password = event.target.value;
@@ -63,15 +56,13 @@ class Login extends React.Component {
       } else {
         this.setState({ emailError: '' });
       }
+    }
+    if (checkPassword) {
+      this.setState({ passwordError: 'A Senha dever ter mais de 5 caracteres' });
     } else {
-      if (checkPassword) {
-        this.setState({ passwordError: 'A Senha dever ter mais de 5 caracteres' });
-      } else {
-        this.setState({ passwordError: '' });
-      }
+      this.setState({ passwordError: '' });
     }
   }
-
 
   handleClick() {
     const { dispatchUserEmail } = this.props;
@@ -96,10 +87,9 @@ class Login extends React.Component {
           <input
             type="text"
             name="email"
-            value= { email }
+            value={ email }
             data-testid="email-input"
             placeholder="Informe o seu email"
-            autoFocus
             onChange={ this.checkEmail }
             onBlur={ () => this.checkValid('email') }
           />
@@ -112,12 +102,12 @@ class Login extends React.Component {
             data-testid="password-input"
             placeholder="Informe sua Senha"
             onChange={ this.checkPassword }
-            onBlur={ () => this.checkValid('password')}
-            />
+            onBlur={ () => this.checkValid('password') }
+          />
           <div className="erroMessage">{passwordError}</div>
           <br />
           <button
-            type='button'
+            type="button"
             disabled={ checkEmail + checkPassword }
             onClick={ this.handleClick }
           >
@@ -126,7 +116,7 @@ class Login extends React.Component {
           {btnEntrar ? <Redirect to="/carteira" /> : null}
         </div>
       </form>
-    )
+    );
   }
 }
 
