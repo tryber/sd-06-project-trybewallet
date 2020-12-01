@@ -38,7 +38,6 @@ class Login extends React.Component {
 
   checkPassword(event) {
     const password = event.target.value;
-    // verificar o erro do diley 5 -> 6
     const validator = 6;
     if (password.length < validator) {
       this.setState({ checkPassword: true, password });
@@ -65,9 +64,9 @@ class Login extends React.Component {
   }
 
   handleClick() {
-    const { dispatchUserEmail } = this.props;
+    const { emailDoUsuario } = this.props;
     const { email } = this.state;
-    dispatchUserEmail(email);
+    emailDoUsuario(email);
     this.setState({ btnEntrar: true });
   }
 
@@ -121,11 +120,11 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchUserEmail: (userEmail) => dispatch(salvarUsuario(userEmail)),
+  emailDoUsuario: (userEmail) => dispatch(salvarUsuario(userEmail)),
 });
 
 Login.propTypes = {
-  dispatchUserEmail: propType.func.isRequired,
+  emailDoUsuario: propType.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

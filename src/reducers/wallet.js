@@ -3,7 +3,7 @@ import { SALVAR_CARTEIRA } from '../actions';
 
 const ESTADO_INICIAL = {
   currencies: [],
-  expenses: [],
+  expenses: [0],
 };
 
 function wallet(state = ESTADO_INICIAL, action) {
