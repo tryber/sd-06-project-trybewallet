@@ -36,8 +36,7 @@ const LinhaTabela = (props) => {
           onClick={ () => {
             updateEditState(expense);
             nowEditing();
-            }
-          }
+        }}
         >
           Editar
         </button>

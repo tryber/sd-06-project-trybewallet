@@ -8,7 +8,7 @@ import SelectButton from './SelectButton';
 
 const Expenses = (props) => {
   const { currencies, newSelectedCurrency, currentCurrency, currentPaymentMethod,
-    newPaymentMethod, expenses, sumUpExpenses, newTagSelected, currentTag, isLoading,
+    newPaymentMethodProp, expenses, sumUpExpenses, newTagSelected, currentTag, isLoading,
     createNewExpense, newSpending, currentMoneySpent, editing, currentDescription,
     betterDescription, editExpense } = props;
 
@@ -17,7 +17,7 @@ const Expenses = (props) => {
   let currencyArray;
   let currencyNames;
 
-  if(currencies.length > 0) {
+  if (currencies.length > 0) {
     currencyArray = Object.entries(currencies[0]);
     currencyArray = currencyArray.filter((item) => item[0] !== 'USDT');
     currencyArray = currencyArray.map((item) => (item[1]));
@@ -67,7 +67,7 @@ const Expenses = (props) => {
           options={ paymentOptions }
           optionSelected={ currentPaymentMethod }
           datatestid="method-input"
-          onChange={ ({ target: { value } }) => newPaymentMethod(value) }
+          onChange={ ({ target: { value } }) => newPaymentMethodProp(value) }
         />
         <SelectButton
           options={ tags }
@@ -102,7 +102,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   sumUpExpenses: (value) => dispatch(totalMoneySpent(value)),
   newSelectedCurrency: (value) => dispatch(newCurrencySelected(value)),
-  newPaymentMethod: (value) => dispatch(newPaymentMethod(value)),
+  newPaymentMethodProp: (value) => dispatch(newPaymentMethod(value)),
   newTagSelected: (value) => dispatch(newSelectedTag(value)),
   createNewExpense: (value) => dispatch(newExpenseThunk(value)),
   newSpending: (value) => dispatch(newValueSpent(value)),

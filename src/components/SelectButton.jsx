@@ -14,7 +14,7 @@ const SelectButton = (props) => {
         >
           {option}
         </option>
-    ))}
+      ))}
     </select>
   );
 };
