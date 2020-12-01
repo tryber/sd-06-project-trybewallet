@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { currenciesFetcherThunk, newCurrencySelected,
-  newPaymentMethod, newSelectedTag, newExpenseThunk, newValueSpent, newDescription, totalMoneySpent, expenseEditor } from '../actions/currencyOptions';
+  newPaymentMethod, newSelectedTag, newExpenseThunk, newValueSpent, newDescription,
+  totalMoneySpent, expenseEditor } from '../actions/currencyOptions';
 import SelectButton from './SelectButton';
 
 const Expenses = (props) => {
-  const { currencies, newSelectedCurrency, currentCurrency, currentPaymentMethod, newPaymentMethod, expenses, sumUpExpenses,
-    newTagSelected, currentTag, isLoading, createNewExpense, newSpending, currentMoneySpent,
-    editing, currentDescription, betterDescription, editExpense } = props;
+  const { currencies, newSelectedCurrency, currentCurrency, currentPaymentMethod,
+    newPaymentMethod, expenses, sumUpExpenses, newTagSelected, currentTag, isLoading,
+    createNewExpense, newSpending, currentMoneySpent, editing, currentDescription,
+    betterDescription, editExpense } = props;
 
-  const paymentOptions = [ 'Dinheiro', 'Cartão de crédito', 'Cartão de débito' ];
+  const paymentOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
   const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
   let currencyArray;
   let currencyNames;
@@ -20,7 +23,7 @@ const Expenses = (props) => {
     currencyArray = currencyArray.map((item) => (item[1]));
     currencyNames = currencyArray.map(({ code }) => (code));
   }
-  
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(currenciesFetcherThunk());
@@ -30,7 +33,9 @@ const Expenses = (props) => {
     dispatch(sumUpExpenses(expenses));
   }, [expenses, dispatch, sumUpExpenses]);
 
-  if (isLoading) return <div>carregando</div>
+  if (isLoading) return <div>carregando</div>;
+
+  const correctFunction = editing ? editExpense : createNewExpense;
 
   return (
     <div>
@@ -74,7 +79,7 @@ const Expenses = (props) => {
       <button
         type="button"
         value={ editing ? 'Editar despesa' : 'Adicionar despesa' }
-        onClick={ () => editing ? editExpense() : createNewExpense() }
+        onClick={ () => correctFunction() }
       >
         { editing ? 'Editar despesa' : 'Adicionar despesa' }
       </button>
@@ -99,12 +104,30 @@ const mapDispatchToProps = (dispatch) => ({
   newSelectedCurrency: (value) => dispatch(newCurrencySelected(value)),
   newPaymentMethod: (value) => dispatch(newPaymentMethod(value)),
   newTagSelected: (value) => dispatch(newSelectedTag(value)),
-  createNewExpense: (value) => {dispatch(newExpenseThunk(value));
-    console.log('cria')},
+  createNewExpense: (value) => dispatch(newExpenseThunk(value)),
   newSpending: (value) => dispatch(newValueSpent(value)),
   betterDescription: (value) => dispatch(newDescription(value)),
-  editExpense: () => {dispatch(expenseEditor());
-     console.log('edit')},
+  editExpense: () => dispatch(expenseEditor()),
 });
+
+Expenses.propTypes = {
+  currencies: PropTypes.instanceOf(Object),
+  currentCurrency: PropTypes.string,
+  currentPaymentMethod: PropTypes.string,
+  currentTag: PropTypes.string,
+  isLoading: PropTypes.bool,
+  currentMoneySpent: PropTypes.number,
+  currentDescription: PropTypes.string,
+  expenses: PropTypes.instanceOf(Object),
+  editing: PropTypes.bool,
+  sumUpExpenses: PropTypes.func,
+  newSelectedCurrency: PropTypes.func,
+  newPaymentMethod: PropTypes.func,
+  newTagSelected: PropTypes.func,
+  createNewExpense: PropTypes.func,
+  newSpending: PropTypes.func,
+  betterDescription: PropTypes.func,
+  editExpense: PropTypes.func,
+}.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Expenses);

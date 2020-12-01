@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 const Header = (props) => {
@@ -10,7 +11,13 @@ const Header = (props) => {
       <p data-testid="header-currency-field">BRL</p>
     </div>
   );
-}
+};
+
+Header.propTypes = {
+  userEmail: PropTypes.string,
+  total: PropTypes.number,
+}.isRequired;
+
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
   total: state.wallet.totalMoneySpent,

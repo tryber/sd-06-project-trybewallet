@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LinhaTabela from './LinhaTabela';
 import { connect } from 'react-redux';
+import LinhaTabela from './LinhaTabela';
 
 const Tabela = (props) => {
   const { expenses } = props;
@@ -21,7 +21,9 @@ const Tabela = (props) => {
         </tr>
       </thead>
       <tbody>
-        {expenses.map((expense, index) => (<LinhaTabela expense={expense} key={ `${ index }has` } />))}
+        {expenses.map((expense, index) => (
+          <LinhaTabela expense={ expense } key={ `${index}has` } />
+        ))}
       </tbody>
     </table>
   );
