@@ -1,21 +1,39 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropType from 'prop-types';
+import apiCurrencies from '../actions';
 import '../css/expenseForm.css';
 
 class ExpenseForm extends Component {
-  // constructor(props) {
-  //   super(props);
+  constructor(props) {
+    super(props);
 
-  //   this.state = {
-  //     entry: {
-  //       id: 0,
-  //       value: '',
-  //       description: '',
-  //       currency: 'USD',
-  //     }
-  //   }
-  // }
+    this.state = {
+      // id: 0,
+      // value: '',
+      // description: '',
+      currency: 'USD',
+      // method: 'Dinheiro',
+      // tag: 'Alimentação',
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    const { salvarCurrencies } = this.props;
+    salvarCurrencies();
+  }
+
+  handleChange(event) {
+    const { value, name } = event.target;
+    this.setState({
+      [name]: value,
+    });
+  }
 
   render() {
+    const { currenciesState } = this.props;
+    const { currency } = this.state;
     return (
       <form action="" className="entry">
         <div className="system-information">
@@ -25,18 +43,35 @@ class ExpenseForm extends Component {
         </div>
         <div className="user-entry">
           <div className="org-left">
-            <input
-              type="number"
-              className="valueInput"
-              data-testid="value-input"
-              placeholder="Valor da Despesa."
-            />
+            <label htmlFor="value">
+              Valor:
+              <input
+                id="value"
+                type="number"
+                className="valueInput"
+                data-testid="value-input"
+                placeholder="Valor da Despesa."
+              />
+            </label>
             <label htmlFor="currency-input">
               Moeda:
-              <select data-testid="currency-input">
-                <option value="teste1">teste1</option>
-                <option value="teste2">teste2</option>
-                <option value="teste3">teste3</option>
+              <select
+                data-testid="currency-input"
+                id="currency"
+                type="text"
+                name="currency"
+                // onChange={ this.handleChange }
+                value={ currency }
+              >
+                {currenciesState.map((item) => (
+                  <option
+                    key={ item }
+                    value={ item }
+                    data-testid={ item }
+                  >
+                    {item}
+                  </option>
+                ))}
               </select>
             </label>
             <label htmlFor="method-input">
@@ -73,4 +108,17 @@ class ExpenseForm extends Component {
   }
 }
 
-export default ExpenseForm;
+const mapStateToProps = (state) => ({
+  currenciesState: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  salvarCurrencies: () => dispatch(apiCurrencies()),
+});
+
+ExpenseForm.propTypes = {
+  currenciesState: PropType.arrayOf(PropType.string).isRequired,
+  salvarCurrencies: PropType.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
