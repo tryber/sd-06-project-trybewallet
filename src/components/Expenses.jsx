@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { currenciesFetcherThunk, newCurrencySelected,
-  newPaymentMethod, newSelectedTag, newExpenseThunk, newValueSpent, newDescription, totalMoneySpent } from '../actions/currencyOptions';
+  newPaymentMethod, newSelectedTag, newExpenseThunk, newValueSpent, newDescription, totalMoneySpent, expenseEditor } from '../actions/currencyOptions';
 import SelectButton from './SelectButton';
 
 const Expenses = (props) => {
   const { currencies, newSelectedCurrency, currentCurrency, currentPaymentMethod, newPaymentMethod, expenses, sumUpExpenses,
-    newTagSelected, currentTag, isLoading, createNewExpense, newSpending, currentMoneySpent, currentDescription, betterDescription } = props;
+    newTagSelected, currentTag, isLoading, createNewExpense, newSpending, currentMoneySpent,
+    editing, currentDescription, betterDescription, editExpense } = props;
 
   const paymentOptions = [ 'Dinheiro', 'Cartão de crédito', 'Cartão de débito' ];
   const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -72,13 +73,14 @@ const Expenses = (props) => {
       </form>
       <button
         type="button"
-        onClick={ () => createNewExpense() }
+        value={ editing ? 'Editar despesa' : 'Adicionar despesa' }
+        onClick={ () => editing ? editExpense() : createNewExpense() }
       >
-        Adicionar despesa
+        { editing ? 'Editar despesa' : 'Adicionar despesa' }
       </button>
     </div>
   );
-}
+};
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
@@ -89,6 +91,7 @@ const mapStateToProps = (state) => ({
   currentMoneySpent: state.wallet.moneySpent,
   currentDescription: state.wallet.description,
   expenses: state.wallet.expenses,
+  editing: state.wallet.editing,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -96,9 +99,12 @@ const mapDispatchToProps = (dispatch) => ({
   newSelectedCurrency: (value) => dispatch(newCurrencySelected(value)),
   newPaymentMethod: (value) => dispatch(newPaymentMethod(value)),
   newTagSelected: (value) => dispatch(newSelectedTag(value)),
-  createNewExpense: () => dispatch(newExpenseThunk()),
+  createNewExpense: (value) => {dispatch(newExpenseThunk(value));
+    console.log('cria')},
   newSpending: (value) => dispatch(newValueSpent(value)),
   betterDescription: (value) => dispatch(newDescription(value)),
+  editExpense: () => {dispatch(expenseEditor());
+     console.log('edit')},
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Expenses);

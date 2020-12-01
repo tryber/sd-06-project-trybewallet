@@ -21,7 +21,7 @@ const Tabela = (props) => {
         </tr>
       </thead>
       <tbody>
-        {expenses.map((expense) => (<LinhaTabela expense={expense} key={expense.name} />))}
+        {expenses.map((expense, index) => (<LinhaTabela expense={expense} key={ `${ index }has` } />))}
       </tbody>
     </table>
   );

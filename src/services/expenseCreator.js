@@ -1,6 +1,20 @@
-const expenseCreator = (state, currentCotation) => {
+const expenseCreator = (state, currentCotation, currentID) => {
   if (state.expenses.length === 0) {
     return ([
+      {
+        id: currentID || state.expenses.length,
+        value: state.moneySpent,
+        description: state.description,
+        currency: state.currentCurrency,
+        method: state.paymentMethod,
+        tag: state.currentTag,
+        exchangeRates: currentCotation,
+      },
+    ]);
+  }
+  if (typeof currentID !== 'number') {
+    return ([
+      ...state.expenses,
       {
         id: state.expenses.length,
         value: state.moneySpent,
@@ -13,9 +27,8 @@ const expenseCreator = (state, currentCotation) => {
     ]);
   }
   return ([
-    ...state.expenses,
     {
-      id: state.expenses.length,
+      id: currentID,
       value: state.moneySpent,
       description: state.description,
       currency: state.currentCurrency,
@@ -23,6 +36,7 @@ const expenseCreator = (state, currentCotation) => {
       tag: state.currentTag,
       exchangeRates: currentCotation,
     },
+    ...state.expenses,
   ]);
 };
 

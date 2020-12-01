@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { expenseDeleter } from '../actions/currencyOptions';
+import { expenseDeleter, nowEditingExpense, updateStateWithEditedItem } from '../actions/currencyOptions';
 import { connect } from 'react-redux';
 
 const LinhaTabela = (props) => {
-  const { deleteExpense } = props;
-  const { currency, description, method, value, tag, exchangeRates, id } = props.expense;
+  const { deleteExpense, nowEditing, updateEditState, expense } = props;
+  const { currency, description, method, value, tag, exchangeRates, id } = expense;
   const cambio = parseFloat(exchangeRates[currency].ask);
   const decimalValue = parseFloat(value);
   const totalGasto = cambio * decimalValue;
@@ -24,9 +24,20 @@ const LinhaTabela = (props) => {
             type="button"
             data-testid="delete-btn"
             value={ id }
-            onClick={ ({ target: { value } }) => deleteExpense(value)}
+            onClick={ () => deleteExpense(expense)}
           >
             Deletar
+          </button>
+          <button
+            type="button"
+            data-testid="edit-btn"
+            value={ id }
+            onClick={ () => {
+              updateEditState(expense);
+              nowEditing();
+            }}
+          >
+            Editar
           </button>
         </td>
       </tr>
@@ -35,6 +46,8 @@ const LinhaTabela = (props) => {
 
 const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (value) => dispatch(expenseDeleter(value)),
+  nowEditing: () => dispatch(nowEditingExpense()),
+  updateEditState: (value) => dispatch(updateStateWithEditedItem(value))
 });
 
 LinhaTabela.propTypes = {

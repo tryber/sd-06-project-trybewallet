@@ -10,6 +10,9 @@ export const NEW_VALUE_SPENT = 'NEW_VALUE_SPENT';
 export const NEW_DESCRIPTION = 'NEW_DESCRIPTION';
 export const TOTAL_MONEY_SPENT = 'TOTAL_MONEY_SPENT';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const EXPENSE_EDIT = 'EXPENSE_DELETE';
+export const NOW_EDITING_EXPENSE = 'NOW_EDITING_EXPENSE';
+export const UPDATE_STATE = 'UPDATE_STATE';
 
 export function newCurrencySelected(selectedCurrency) {
   return { type: NEW_CURRENCY_SELECTED, selectedCurrency };
@@ -39,6 +42,14 @@ export function newDescription(description) {
   return { type: NEW_DESCRIPTION, description };
 }
 
+export function updateStateWithEditedItem(id) {
+  return { type: UPDATE_STATE, id };
+}
+
+export function nowEditingExpense(id) {
+  return { type: NOW_EDITING_EXPENSE, id };
+}
+
 function currenciesLoaded(response) {
   const currencies = [response];
   return { type: CURRENCIES_LOADED, currencies };
@@ -46,6 +57,10 @@ function currenciesLoaded(response) {
 
 export function expenseDeleter(id) {
   return { type: DELETE_EXPENSE, id };
+}
+
+export function expenseEditor() {
+  return { type: EXPENSE_EDIT };
 }
 
 export function totalMoneySpent(expenses) {
