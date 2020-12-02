@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropType from 'prop-types';
-import apiCurrencies from '../actions';
+import { apiCurrencies } from '../actions';
 import '../css/expenseForm.css';
 
 class ExpenseForm extends Component {
