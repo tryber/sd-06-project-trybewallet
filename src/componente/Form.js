@@ -1,43 +1,37 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchCurrencyThunk } from '../actions';
 
 class Form extends React.Component {
+  componentDidMount() {
+    const { currencysFetch } = this.props;
+    currencysFetch();
+  }
+
   render() {
+    const { currency } = this.props;
+    const maxLengthCur = 3;
     return (
       <form>
         <label htmlFor="dispense">
           Dispresa
-          <input
-            data-testid="value-input"
-            type="number"
-          />
+          <input data-testid="value-input" type="number" />
         </label>
         <label htmlFor="description">
           Descrição
-          <input
-            type="text"
-            data-testid="description-input"
-          />
+          <input type="text" data-testid="description-input" />
         </label>
-        <label htmlFor="cambio">
+        <label htmlFor="all-currency">
           Cambio
-          <select
-            data-testid="currency-input"
-            name="cambio"
-          >
-            <option value="usd" data-testid="USD">USD</option>
-            <option value="cad" data-testid="CAD">CAD</option>
-            <option value="eur" data-testid="EUR">EUR</option>
-            <option value="gbp" data-testid="GBP">GBP</option>
-            <option value="ars" data-testid="ARS">ARS</option>
-            <option value="btc" data-testid="BTC">BTC</option>
-            <option value="ltc" data-testid="LTC">LTC</option>
-            <option value="jpy" data-testid="JPY">JPY</option>
-            <option value="chf" data-testid="CHF">CHF</option>
-            <option value="aud" data-testid="AUD">AUD</option>
-            <option value="cny" data-testid="CNY">CNY</option>
-            <option value="ils" data-testid="ILS">ILS</option>
-            <option value="eth" data-testid="ETH">ETH</option>
-            <option value="xrp" data-testid="XRP">XRP</option>
+          <select data-testid="currency-input" name="all-currency">
+            {currency
+              .filter((cur) => cur.length === maxLengthCur)
+              .map((cur) => (
+                <option key={ cur } data-testid={ cur }>
+                  { cur }
+                </option>
+              ))}
           </select>
         </label>
         <label htmlFor="method">
@@ -58,13 +52,24 @@ class Form extends React.Component {
             <option value="saude">Saúde</option>
           </select>
         </label>
-        <label htmlFor="submit">
-          <button type="button">Adicionar Dispesa</button>
-        </label>
-        <label htmlFor="total-field" data-testid="total-field">Total: 0</label>
+        <button type="button">Adicionar Dispesa</button>
+        Total: 0
       </form>
-    )
+    );
   }
 }
 
-export default Form;
+const mapStateToProps = (state) => ({
+  currency: state.wallet.currency,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  currencysFetch: () => dispatch(fetchCurrencyThunk()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
+
+Form.propTypes = {
+  currencysFetch: PropTypes.fuc,
+  currencys: PropTypes.object,
+}.isRequired;
