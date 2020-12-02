@@ -1,0 +1,19 @@
+.container {
+  align-items: center;
+  flex-wrap: auto;
+  display: flex;
+  width: 80%;
+  border: 1px solid #cccccc;
+  padding: 10px;
+  background-color: rgb(201, 241, 228);
+}
+.container-login {
+  display: wrap;
+  border: 1px solid #cccccc;
+  padding: 100px;
+  background-color: rgb(201, 241, 228);
+}
+
+.btn btn-primary btn-sm {
+  border: 1px solid rgb(12, 31, 90);
+}
