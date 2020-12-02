@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropType from 'prop-types';
-import { apiCurrencies } from '../actions';
+import { userApi } from '../actions';
 import '../css/expenseForm.css';
 
 class ExpenseForm extends Component {
@@ -48,7 +48,6 @@ class ExpenseForm extends Component {
               <input
                 id="value"
                 type="number"
-                className="valueInput"
                 data-testid="value-input"
                 placeholder="Valor da Despesa."
               />
@@ -60,10 +59,10 @@ class ExpenseForm extends Component {
                 id="currency"
                 type="text"
                 name="currency"
-                // onChange={ this.handleChange }
+                onChange={ this.handleChange }
                 value={ currency }
               >
-                {currenciesState.map((item) => (
+                {Object.keys(currenciesState).map((item) => (
                   <option
                     key={ item }
                     value={ item }
@@ -113,11 +112,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  salvarCurrencies: () => dispatch(apiCurrencies()),
+  salvarCurrencies: () => dispatch(userApi()),
 });
 
 ExpenseForm.propTypes = {
-  currenciesState: PropType.arrayOf(PropType.string).isRequired,
+  currenciesState: PropType.arrayOf.isRequired,
   salvarCurrencies: PropType.func.isRequired,
 };
 
