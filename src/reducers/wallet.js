@@ -1,4 +1,11 @@
-import { ADD_EXPENSE, ADD_CURRENCY, FETCHING_LIST, REMOVE_EXPENSE } from '../actions';
+import {
+  ADD_EXPENSE,
+  ADD_CURRENCY,
+  FETCHING_LIST,
+  REMOVE_EXPENSE,
+  EDITING_EXPENSE,
+  EDIT_EXPENSE,
+} from '../actions';
 
 const INITIAL_STATE = { currencies: [], expenses: [], fetchingList: false };
 
@@ -24,6 +31,19 @@ function walletReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       fetchingList: true,
+    };
+  case EDITING_EXPENSE:
+    return {
+      ...state,
+      editingExpense: true,
+      expenseToEdit: action.value,
+    };
+  case EDIT_EXPENSE:
+    return {
+      ...state,
+      expenses: [...action.value],
+      editingExpense: false,
+      expenseToEdit: '',
     };
   default:
     return state;

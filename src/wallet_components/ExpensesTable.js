@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import bin from '../images/bin.svg';
 import edit from '../images/edit.svg';
 import '../App.css';
-import { removeExpense } from '../actions';
+import { removeExpense, editingExpense } from '../actions';
 
 class ExpensesTable extends React.Component {
   constructor() {
@@ -22,7 +22,8 @@ class ExpensesTable extends React.Component {
   }
 
   editClick(toEdit) {
-    console.log(toEdit);
+    const { editExpense } = this.props;
+    editExpense(toEdit);
   }
 
   createHeaders() {
@@ -130,11 +131,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (index) => dispatch(removeExpense(index)),
+  editExpense: (index) => dispatch(editingExpense(index)),
 });
 
 ExpensesTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   deleteExpense: PropTypes.func.isRequired,
+  editExpense: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
