@@ -6,10 +6,8 @@ import { addTotal } from '../actions/index';
 
 class Header extends Component {
   render() {
-    const { email, expenses } = this.props;
-    const valueTotalNumber = expenses.reduce((result, expense) => (
-      result + (parseFloat(expense.exchangeRates[expense.currency].ask * expense.value))
-    ), 0).toFixed(2);
+    const { email, total } = this.props;
+    const valueTotalNumber = total;
 
     return (
       <header>
@@ -48,7 +46,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
-  expenses: PropTypes.arrayOf.isRequired,
+  total: PropTypes.number.isRequired,
+  // expenses: PropTypes.arrayOf.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

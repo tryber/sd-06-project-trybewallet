@@ -4,6 +4,9 @@ import {
   EXPENSES_SAVE,
   ADDTOTAL,
   DELETE_ITEM,
+  EXP_EDIT_BUTTON,
+  IS_EDITING,
+  ADD_EDITION,
 } from '../actions/index';
 
 const INITIAL_STATE = {
@@ -11,6 +14,7 @@ const INITIAL_STATE = {
   expenses: [],
   total: 0,
   id: 0,
+  isEditing: false,
 };
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -31,11 +35,41 @@ export default function reducer(state = INITIAL_STATE, action) {
         id: state.id + 1,
       }
     );
+  case IS_EDITING:
+    return (
+      {
+        ...state,
+        isEditing: action.change,
+      }
+    );
+  case ADD_EDITION:
+    return (
+      {
+        ...state,
+        expenses: state.expenses.map((expense) => {
+          if (expense.id === action.expense.id) {
+            return action.expense;
+          }
+          return expense;
+        }),
+      }
+    );
+  case EXP_EDIT_BUTTON:
+    return (
+      {
+        ...state,
+        expenses: [...state.expenses, ...action.expenses.id],
+      }
+    );
+
   case ADDTOTAL:
     return (
       {
         ...state,
-        total: state.total + action.total,
+        total: state.expenses.reduce((result, expense) => (
+          result + (parseFloat(expense.exchangeRates[expense.currency]
+            .ask * expense.value))
+        ), 0).toFixed(2),
       }
     );
   case DELETE_ITEM:

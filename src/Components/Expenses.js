@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchingSaveExpense, fetchingCurrencies, deleteItem } from '../actions/index';
+import { fetchingSaveExpense,
+  fetchingCurrencies,
+  deleteItem,
+  addTotal,
+  changeIsEditing,
+  addEditionItem,
+} from '../actions/index';
 import '../styles/expenses.css';
 
 class Expenses extends Component {
@@ -10,6 +16,8 @@ class Expenses extends Component {
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.buttonDeleteItem = this.buttonDeleteItem.bind(this);
+    this.buttonEditarTab = this.buttonEditarTab.bind(this);
+    this.handleChangeExpense = this.handleChangeExpense.bind(this);
 
     this.state = {
       expenses: {
@@ -42,7 +50,7 @@ class Expenses extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { sendExpenseApi } = this.props;
+    const { sendExpenseApi } = this.props; // buscando da props a função para despachar
     const { expenses: expensesToSend } = this.state;
     sendExpenseApi(expensesToSend); // thunk
     this.setState({
@@ -55,6 +63,37 @@ class Expenses extends Component {
         tag: 'Alimentação',
         exchangeRates: {},
       },
+    });
+  }
+
+  upDateTotal(expense) {
+    addTotal(expense);
+  }
+
+  handleChangeExpense(event) {
+    event.preventDefault();
+    const { editing, addChangeEditDispatch } = this.props;
+    editing(false);
+    const { expenses: expensesToSendEdit } = this.state;
+    addChangeEditDispatch(expensesToSendEdit);
+    this.setState({
+      expenses: {
+        id: '',
+        value: 0,
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+        exchangeRates: {},
+      },
+    });
+  }
+
+  buttonEditarTab(expenses) {
+    const { editing } = this.props;
+    editing(true);
+    this.setState({
+      expenses,
     });
   }
 
@@ -72,8 +111,12 @@ class Expenses extends Component {
     },
     } = this.state;
 
-    const { currencies, expenses } = this.props;
-    const { handleInput, handleSubmit, buttonDeleteItem } = this;
+    const { currencies, expenses, isEditing } = this.props;
+    const { handleInput,
+      handleSubmit,
+      handleChangeExpense,
+    } = this;
+
     return (
       <div>
         <form className="despesas">
@@ -162,14 +205,24 @@ class Expenses extends Component {
                 </select>
               </label>
             </div>
+            { (!isEditing)
+              ? (
+                <button
+                  type="button"
+                  className="btn btn-primary btn-sm"
+                  onClick={ handleSubmit }
+                >
+                  Adicionar despesa
+                </button>)
+              : (
+                <button
+                  type="button"
+                  className="btn btn-primary btn-sm"
+                  onClick={ handleChangeExpense }
+                >
+                  Editar Despesa
+                </button>) }
 
-            <button
-              type="button"
-              className="btn btn-primary btn-sm"
-              onClick={ handleSubmit }
-            >
-              Adicionar despesa
-            </button>
           </div>
         </form>
         <table className="table">
@@ -209,16 +262,20 @@ class Expenses extends Component {
                   <button
                     type="button"
                     data-testid="edit-btn"
-                    onClick={ () => ('editar') }
+                    onClick={ () => {
+                      this.buttonEditarTab(expense);
+                      this.upDateTotal(expense);
+                    } }
                   >
                     Editar
                   </button>
-                </td>
-                <td>
                   <button
                     type="button"
                     data-testid="delete-btn"
-                    onClick={ () => buttonDeleteItem(expense.id) }
+                    onClick={ () => {
+                      this.buttonDeleteItem(expense.id);
+                      this.upDateTotal(expense);
+                    } }
                   >
                     Excluir
                   </button>
@@ -239,18 +296,28 @@ Expenses.propTypes = {
   fetchCurrenciesSuccess: PropTypes.func.isRequired,
   sendExpenseApi: PropTypes.func.isRequired,
   deleteItemExpenses: PropTypes.arrayOf.isRequired,
+  // editItemExpenses: PropTypes.arrayOf.isRequired,
+  isEditing: PropTypes.number.isRequired,
+  editing: PropTypes.func.isRequired,
+  addChangeEditDispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  isEditing: state.wallet.isEditing,
+  total: state.wallet.total,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrenciesSuccess: () => dispatch(fetchingCurrencies()),
   sendExpenseApi: (expenses) => dispatch(fetchingSaveExpense(expenses)),
   deleteItemExpenses: (id) => dispatch(deleteItem(id)),
+  upDateTotal: () => dispatch(addTotal()),
+  editing: (change) => dispatch(changeIsEditing(change)),
+  addChangeEditDispatch:
+  (expensesToSendEdit) => dispatch(addEditionItem(expensesToSendEdit)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Expenses);

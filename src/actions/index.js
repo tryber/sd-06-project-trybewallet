@@ -27,6 +27,13 @@ export const expensesSave = (expenses) => ({
   expenses,
 });
 
+export const EXP_EDIT_BUTTON = 'EXP_EDIT_BUTTON';
+
+export const expensesEdit = (expenses, id) => ({
+  type: EXP_EDIT_BUTTON,
+  id,
+  expenses,
+});
 export const ADDTOTAL = 'ADDTOTAL';
 
 export const addTotal = (total) => ({
@@ -41,11 +48,25 @@ export const deleteItem = (id) => ({
   id,
 });
 
+export const IS_EDITING = 'IS_EDITING';
+
+export const changeIsEditing = (change) => ({
+  type: IS_EDITING,
+  change,
+});
+export const ADD_EDITION = 'ADD_EDITION';
+
+export const addEditionItem = (expense) => ({
+  type: ADD_EDITION,
+  expense,
+});
+
 export function fetchingSaveExpense(expenses) {
   return async (dispatch) => {
     const apiResponse = await getApi();
     const newExpense = { ...expenses, exchangeRates: apiResponse }; // junção do que foi digitado com a api e a chave denominada conforme requisito
     (dispatch(expensesSave(newExpense)));
+    (dispatch(addTotal()));
   };
 }
 
