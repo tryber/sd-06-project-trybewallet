@@ -1,0 +1,128 @@
+.wallet-content {
+  padding: 20px;
+}
+
+.wallet-content form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  max-width: 900px;
+  margin: -50px auto 0;
+  color: white;
+
+  background-color: rgb(82, 80, 79);
+
+  padding: 20px 10px 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 6px 5px rgb(49, 49, 49, 0.4);
+}
+
+.wallet-content form .wallet-input {
+  margin: 0 6px 10px 0;
+  height: 72px;
+}
+
+.transactions-table table td.alternative-color {
+  background-color: rgb(232, 232, 232);
+}
+
+.wallet-content form .wallet-input input,
+.wallet-content form .wallet-input select {
+  padding: 12px;
+  border-radius: 5px;
+  background-color: white;
+  border: none;
+}
+
+form .value-input-container input {
+  width: 70px;
+}
+
+form .currency-input-container select {
+  width: 80px;
+}
+
+
+.wallet-content form .wallet-input label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.wallet-content form .wallet-input button {
+  margin: 30px 0 0 8px;
+}
+
+.transactions-table {
+  margin: 64px auto 0;
+  overflow-x: auto;
+  max-width: 1300px;
+}
+
+.transactions-table table {
+  width: 100%;
+  border-spacing: 0 8px;
+}
+
+.transactions-table table th {
+  color: #969cb3;
+  font-weight: normal;
+  padding: 20px 32px;
+  text-align: left;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.transactions-table table td {
+  padding: 20px 32px;
+  border: 0;
+  background: #fff;
+  font-size: 16px;
+  font-weight: normal;
+  color: #969cb3;
+}
+
+.transactions-table table td.field {
+  color: #363f5f;
+}
+
+.transactions-table table td.outcome {
+  color: #e83f5b;
+}
+
+.transactions-table table td div {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.transactions-table table td button {
+  height: 100%;
+  border: none;
+  display: flex;
+  align-items: center;
+  background: none;
+  color: red;
+}
+
+.transactions-table table td button.edit-btn {
+  color: rgb(255, 139, 62);
+}
+
+.transactions-table table td button + button {
+  margin-left: 5px;
+}
+
+.transactions-table table td button svg {
+  pointer-events: none;
+}
+
+.transactions-table table td:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.transactions-table table td:last-child {
+  border-radius: 0 8px 8px 0;
+}

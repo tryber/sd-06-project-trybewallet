@@ -1,0 +1,24 @@
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  padding: 5px 20px;
+
+  background-color: #5636d3;
+
+  height: 20vh;
+}
+
+.app-header img {
+  width: 9%;
+}
+
+.app-header .header-info span ~ span {
+  margin-left: 20px;
+}
+
+.app-header .user-container svg {
+  margin-right: 6px;
+  color: #ff872c;
+}
