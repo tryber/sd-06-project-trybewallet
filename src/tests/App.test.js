@@ -386,18 +386,28 @@ describe('6 - [PÁGINA DA CARTEIRA] Crie um botão para deletar uma despesa da t
 });
 
 describe('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela contendo as seguintes características:', () => {
-  const initial = initialStateWithExpenses;
-
+  const initial = initialStateWithExpenses;  
   test('O botão deve estar dentro do último item da linha da tabela e deve possuir `data-testid="edit-btn"`', () => {
     renderWithRouterAndStore(<Wallet />, '/carteira', initial);
     expect(screen.getAllByTestId('edit-btn')[0]).toBeInTheDocument();
   });
 
   test('Ao ser clicado, o botão habilita um formulário para editar a linha da tabela. Ao clicar em "Editar despesa" ela é atualizada, alterando o estado global.', async () => {
-    const { store } = renderWithRouterAndStore(<Wallet />, '/carteira', initial);
+const objDeletado = {
+        id: 0,
+        value: '10',
+        currency: 'USD',
+        method: 'Cartão de crédito',
+        tag: 'Lazer',
+        description: 'Dez dólares',
+        exchangeRates: mockData,
+      }  
+ initial.wallet.expenses.unshift(objDeletado)
+console.log(initial.wallet.expenses)    
+
+const { store } = renderWithRouterAndStore(<Wallet />, '/carteira', initial);
     const toggleEditBtn = screen.getAllByTestId('edit-btn')[0];
     fireEvent.click(toggleEditBtn);
-
     const valueInput = await screen.findByTestId('value-input');
     const currencyInput = await screen.findByTestId('currency-input');
     const methodInput = await screen.findByTestId('method-input');
@@ -451,3 +461,4 @@ describe('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela contendo
     expect(store.getState().wallet.expenses).toStrictEqual(newExpenses);
   });
 });
+

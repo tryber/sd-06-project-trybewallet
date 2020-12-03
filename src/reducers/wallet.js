@@ -3,6 +3,8 @@ const INITIAL_STATE = {
 
   currencies: [],
   expenses: [],
+  editar: {},
+  id: 0,
 };
 
 function wallet(state = INITIAL_STATE, action) {
@@ -16,7 +18,21 @@ function wallet(state = INITIAL_STATE, action) {
       expenses: [...state.expenses, payload.expenses],
       currencies: [...state.currencies, payload.currencies],
     };
-
+  case 'EDITAR':
+    return {
+      ...state,
+      editar: payload.editar,
+    };
+  case 'EXPENSES':
+    return {
+      ...state,
+      expenses: action.expenses,
+    };
+  case 'ID':   
+    return {
+      ...state,
+      id: action.id + 1,
+    };
   default:
     return state;
   }
