@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { selectEditar } from '../actions';
+import { selectEditar, deleteDespesa } from '../actions';
 
 class Table extends Component {
   constructor() {
@@ -23,8 +23,9 @@ class Table extends Component {
   }
 
   handleUpdate(exp) {
-    const { expenses } = this.props;
-    expenses.splice(exp, 1);
+    const { delDespesa } = this.props;
+    // expenses.splice(exp, 1);
+    delDespesa(exp);
     this.setState({
       test: 'ok',
     });
@@ -112,6 +113,7 @@ Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   setState: PropTypes.func.isRequired,
   editarSelect: PropTypes.func.isRequired,
+  delDespesa: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -122,6 +124,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   editarSelect: (despesa) => dispatch(selectEditar(despesa)),
+  delDespesa: (despesa) => dispatch(deleteDespesa(despesa)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

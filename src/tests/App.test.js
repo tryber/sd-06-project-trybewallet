@@ -395,19 +395,8 @@ describe('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela contendo
   });
 
   test('Ao ser clicado, o botão habilita um formulário para editar a linha da tabela. Ao clicar em "Editar despesa" ela é atualizada, alterando o estado global.', async () => {
-const objDeletado = {
-        id: 0,
-        value: '10',
-        currency: 'USD',
-        method: 'Cartão de crédito',
-        tag: 'Lazer',
-        description: 'Dez dólares',
-        exchangeRates: mockData,
-      }  
- initial.wallet.expenses.unshift(objDeletado)
-console.log(initial.wallet.expenses)    
 
-const { store } = renderWithRouterAndStore(<Wallet />, '/carteira', initial);
+    const { store } = renderWithRouterAndStore(<Wallet />, '/carteira', initial);
     const toggleEditBtn = screen.getAllByTestId('edit-btn')[0];
     fireEvent.click(toggleEditBtn);
     const valueInput = await screen.findByTestId('value-input');
@@ -463,4 +452,3 @@ const { store } = renderWithRouterAndStore(<Wallet />, '/carteira', initial);
     expect(store.getState().wallet.expenses).toStrictEqual(newExpenses);
   });
 });
-

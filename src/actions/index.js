@@ -25,6 +25,13 @@ export function uptExpenses(expenses) {
   };
 }
 
+export function deleteDespesa(id) {
+  return {
+    type: 'DELETAR',
+    id,
+  };
+}
+
 export function selectEditar(editar) {
   return {
     type: 'EDITAR',

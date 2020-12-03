@@ -10,6 +10,12 @@ const INITIAL_STATE = {
 function wallet(state = INITIAL_STATE, action) {
   const { payload } = action;
 
+  function removeItem(actionn) {
+    const list = state.expenses;
+    const newList = list.filter((desp) => desp.id !== actionn);
+    return newList;
+  }
+
   switch (action.type) {
   case 'ADD_WALLET':
 
@@ -32,6 +38,11 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       id: action.id + 1,
+    };
+  case 'DELETAR':
+    return {
+      ...state,
+      expenses: removeItem(action.id),
     };
   default:
     return state;
