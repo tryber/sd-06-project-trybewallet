@@ -36,7 +36,6 @@ class Wallet extends React.Component {
 
   setStateEdit(despesa) {
     const { id, value, description, currency, tag, method } = despesa;
-    const { form } = this.state;
     this.setState((prev) => ({
       currencyName: '',
       control: 'edit',
@@ -145,7 +144,8 @@ class Wallet extends React.Component {
 
   render() {
     const { email, expenses, currencies } = this.props;
-    const { total, currencys, form: { value, description, currency, method, tag } } = this.state;
+    const { total, currencys,
+      form: { value, description, currency, method, tag } } = this.state;
 
     return (
       <div>
@@ -210,7 +210,7 @@ class Wallet extends React.Component {
                 data-testid="currency-input"
                 id="moeda-despesa"
                 onChange={ (event) => this.handleChange(event, 'currency') }
-                value={currency}
+                value={ currency }
               >
                 <option
                   data-testid="currency"
@@ -218,13 +218,13 @@ class Wallet extends React.Component {
                 >
                   Currency
                 </option>
-                {currencys.map((currency, index) => (
+                {currencys.map((curr, index) => (
                   <option
                     key={ index }
-                    data-testid={ currency.code }
-                    value={ currency.code }
+                    data-testid={ curr.code }
+                    value={ curr.code }
                   >
-                    {currency.code}
+                    {curr.code}
                   </option>))}
 
               </select>
@@ -317,7 +317,12 @@ class Wallet extends React.Component {
             {this.renderChildButton()}
           </button>
         </form>
-        <Table expenses={ expenses } currencysName={ currencies } setState={ this.setStateEdit } updateExp={ this.updateDespesas } />
+        <Table
+          expenses={ expenses }
+          currencysName={ currencies }
+          setState={ this.setStateEdit }
+          updateExp={ this.updateDespesas }
+        />
       </div>
     );
   }
@@ -328,6 +333,9 @@ Wallet.propTypes = {
   fetchCurrency: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  idCurrent: PropTypes.number.isRequired,
+  expUpdate: PropTypes.func.isRequired,
+
 };
 
 const mapStateToProps = (state) => ({

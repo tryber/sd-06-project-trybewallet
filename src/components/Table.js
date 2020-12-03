@@ -36,7 +36,7 @@ class Table extends Component {
   }
 
   render() {
-    const { expenses, updateExp } = this.props;
+    const { expenses } = this.props;
     const { test } = this.state;
     return (
       <div>
@@ -65,8 +65,13 @@ class Table extends Component {
                     <td>{exp.method}</td>
                     <td>{exp.value}</td>
                     <td>{exp.exchangeRates[exp.currency].name}</td>
-                    <td>{(Math.round(exp.exchangeRates[exp.currency].ask * 100) / 100).toFixed(2)}</td>
-                    <td>{(exp.exchangeRates[exp.currency].ask * exp.value).toFixed(2)}</td>
+                    <td>
+                      {(Math.round(exp.exchangeRates[exp.currency].ask * 100) / 100)
+                        .toFixed(2)}
+                    </td>
+                    <td>
+                      {(exp.exchangeRates[exp.currency].ask * exp.value).toFixed(2)}
+                    </td>
                     <td>Real</td>
                     <td>
                       <button
@@ -105,6 +110,8 @@ class Table extends Component {
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setState: PropTypes.func.isRequired,
+  editarSelect: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

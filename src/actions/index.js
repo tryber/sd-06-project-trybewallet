@@ -1,5 +1,3 @@
-import { connectAdvanced } from 'react-redux';
-
 // Coloque aqui suas actions
 export function selectUser(email) {
   return {

@@ -28,7 +28,7 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       expenses: action.expenses,
     };
-  case 'ID':   
+  case 'ID':
     return {
       ...state,
       id: action.id + 1,
