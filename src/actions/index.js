@@ -24,13 +24,11 @@ export const fetchCurrencyThunk = () => async (dispatch) => {
   dispatch(saveCurrency(fetchCurrencyResponse));
 };
 
-export const fetchExpenseThunk = (expense) => {
-  return (dispatch) => {
-    fetch('https://economia.awesomeapi.com.br/json/all')
-      .then((response) => response.json)
-      .then((response) => {
-        const allExpenses = { ...expense, exchangeRates: response };
-        dispatch(allExpenses);
-      });
-  };
+export const fetchExpenseThunk = (expense) => (dispatch) => {
+  fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((response) => response.json)
+    .then((response) => {
+      const allExpenses = { ...expense, exchangeRates: response };
+      dispatch(allExpenses);
+    });
 };
