@@ -19,7 +19,7 @@ export const pegarCurrency = (currencies) => ({
   payload: currencies,
 });
 
-export const userApi = () => {
+export const userApi = async () => {
   return async (dispatch) => {
     const aux = await apiCurrencies();
     delete aux.USDT;
