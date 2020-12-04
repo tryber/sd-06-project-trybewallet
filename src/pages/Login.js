@@ -43,39 +43,41 @@ class Login extends React.Component {
     const { email, password, disabled } = this.state;
     return (
       <div className="Login-body">
-        <img
-          className="Login-logo"
-          src={ trybeWallet }
-          alt="logo da trybe com uma carteira"
-        />
-        <form className="Login-form">
-          <input
-            type="email"
-            placeholder="E-mail"
-            name="email"
-            data-testid="email-input"
-            onChange={ this.handleChange }
-            value={ email }
+        <div className="Login-container">
+          <img
+            className="Login-logo"
+            src={ trybeWallet }
+            alt="logo da trybe com uma carteira"
           />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            data-testid="password-input"
-            onChange={ this.handleChange }
-            value={ password }
-          />
-          <Link to="/carteira">
-            <button
-              type="button"
-              disabled={ disabled }
-              onClick={ this.handleClick }
-              className={ disabled ? 'my-disabled-button' : 'my-button' }
-            >
-              Entrar
-            </button>
-          </Link>
-        </form>
+          <form className="Login-form">
+            <input
+              type="email"
+              placeholder="E-mail"
+              name="email"
+              data-testid="email-input"
+              onChange={ this.handleChange }
+              value={ email }
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              data-testid="password-input"
+              onChange={ this.handleChange }
+              value={ password }
+            />
+            <Link to="/carteira">
+              <button
+                type="button"
+                disabled={ disabled }
+                onClick={ this.handleClick }
+                className={ disabled ? 'my-disabled-button' : 'my-button' }
+              >
+                Entrar
+              </button>
+            </Link>
+          </form>
+        </div>
       </div>
     );
   }

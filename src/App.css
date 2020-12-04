@@ -3,10 +3,19 @@
 }
 
 .Login-body {
+	align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  min-height: 900px;
+	justify-content: center;
+	min-height: 900px;
+}
+
+.Login-container {
+	border-radius: 50px;
+	background: linear-gradient(145deg, #e6e6e6, #ffffff);
+	box-shadow:  41px 41px 82px #d9d9d9, 
+							 -41px -41px 82px #ffffff;
+	padding: 60px;
 }
 
 .Login-logo {
@@ -77,10 +86,10 @@
 }
 
 .wallet-body {
-  background-color: #081c15;
-  background-image: url("https://www.transparenttextures.com/patterns/graphy-dark.png");
+	background-color: #ffffff;
+	background-image: url("https://www.transparenttextures.com/patterns/graphy-dark.png");
+	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
   height: 1000px;
-  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
 
 .wallet-header {
@@ -144,13 +153,13 @@
 .table-row {
   display: flex;
   width: 1840px;
-  color: white;
   justify-content: space-between;
 }
 
 .table-row th {
-  padding: 6px 12px;
+	padding: 6px 12px;
 }
+
 .edit-form-body {
   background-color: #1c4020;
   background-image: url("https://www.transparenttextures.com/patterns/pinstriped-suit.png");
