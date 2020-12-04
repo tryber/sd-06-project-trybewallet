@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import trybeWallet from '../images/trybeWallet.png';
 import { emailLogin } from '../actions';
 
 class Login extends React.Component {
@@ -41,31 +42,36 @@ class Login extends React.Component {
   render() {
     const { email, password, disabled } = this.state;
     return (
-      <div>
-        <h1>TrybeWallet</h1>
-        <form>
-          <label htmlFor="email">
-            E-mail:
-            <input
-              type="email"
-              name="email"
-              data-testid="email-input"
-              onChange={ this.handleChange }
-              value={ email }
-            />
-          </label>
-          <label htmlFor="password">
-            Password:
-            <input
-              type="password"
-              name="password"
-              data-testid="password-input"
-              onChange={ this.handleChange }
-              value={ password }
-            />
-          </label>
+      <div className="Login-body">
+        <img
+          className="Login-logo"
+          src={ trybeWallet }
+          alt="logo da trybe com uma carteira"
+        />
+        <form className="Login-form">
+          <input
+            type="email"
+            placeholder="E-mail"
+            name="email"
+            data-testid="email-input"
+            onChange={ this.handleChange }
+            value={ email }
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            data-testid="password-input"
+            onChange={ this.handleChange }
+            value={ password }
+          />
           <Link to="/carteira">
-            <button type="button" disabled={ disabled } onClick={ this.handleClick }>
+            <button
+              type="button"
+              disabled={ disabled }
+              onClick={ this.handleClick }
+              className={ disabled ? 'my-disabled-button' : 'my-button' }
+            >
               Entrar
             </button>
           </Link>
