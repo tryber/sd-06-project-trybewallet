@@ -100,7 +100,7 @@ class ExpenseForm extends Component {
               placeholder="Descrição da Despesa."
             />
           </div>
-          <button type="button">Adicionar Despesa</button>
+          <button type="button">Adicionar despesa</button>
         </div>
       </form>
     );
