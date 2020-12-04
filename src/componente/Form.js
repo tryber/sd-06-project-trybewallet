@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { fetchCurrencyThunk, fetchExpenseThunk } from '../actions';
 
 class Form extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.handleChange = this.handleChange.bind(this);
     this.handleExpenseButtonClick = this.handleExpenseButtonClick.bind(this);
@@ -15,7 +15,7 @@ class Form extends React.Component {
         id: 0,
         value: 0,
         description: '',
-        cur: 'USD',
+        currency: 'USD',
         method: 'Dinheiro',
         tag: 'Alimentação',
       },
@@ -46,7 +46,7 @@ class Form extends React.Component {
         id: prevState.expenses.id + 1,
         value: 0,
         description: '',
-        cur: 'BRL',
+        currency: 'BRL',
         method: '',
         tag: '',
       },
@@ -54,9 +54,9 @@ class Form extends React.Component {
   }
 
   render() {
-    const { currency } = this.props;
+    const { currencies } = this.props;
     const { expenses } = this.state;
-    const { value, description, cur, method, tag } = expenses;
+    const { value, description, currency, method, tag } = expenses;
     const maxLengthCur = 3;
     return (
       <form>
@@ -80,18 +80,23 @@ class Form extends React.Component {
             onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="cur">
-          Cambio
+        <label htmlFor="currency">
+          Cambio:
           <select
+            id="currency"
             data-testid="currency-input"
-            name="cur"
-            value={ cur }
+            name="currency"
+            value={ currency }
             onChange={ this.handleChange }
           >
-            {currency
+            {currencies
               .filter((aCurrency) => aCurrency.length === maxLengthCur)
               .map((onlycur) => (
-                <option key={ onlycur } data-testid={ onlycur }>
+                <option
+                  value={ onlycur }
+                  key={ onlycur }
+                  data-testid={ onlycur }
+                >
                   { onlycur }
                 </option>
               ))}
@@ -135,7 +140,7 @@ class Form extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  currency: state.wallet.currency,
+  currencies: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -148,6 +153,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Form);
 Form.propTypes = {
   currencysFetch: PropTypes.fuc,
   addNewExpense: PropTypes.func,
-  currencys: PropTypes.object,
+  currencies: PropTypes.object,
   expenses: PropTypes.object,
 }.isRequired;

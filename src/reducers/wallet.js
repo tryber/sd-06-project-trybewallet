@@ -2,14 +2,14 @@
 import { CURRENCY, EXPENSES } from '../actions';
 
 const initialState = {
-  currency: [],
+  currencies: [],
   expenses: [],
 };
 
 function walletReducer(state = initialState, action) {
   switch (action.type) {
   case CURRENCY:
-    return { ...state, currency: Object.keys(action.currency) };
+    return { ...state, currencies: Object.keys(action.currency) };
   case EXPENSES:
     return {
       ...state,
