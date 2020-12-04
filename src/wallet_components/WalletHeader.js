@@ -14,15 +14,16 @@ class WalletHeader extends React.Component {
         ))), 0);
     const localCurrency = 'BRL';
     return (
-      <header>
-        <div>
-          <span>TrybeWallet</span>
+      <header className="wallet-header">
+        <div className="wallet-title">
+          <h1>TrybeWallet</h1>
         </div>
         <div>
           <span data-testid="email-field">{ userEmail }</span>
         </div>
         <div>
           <span data-testid="total-field">{ totalExpense.toFixed(2) }</span>
+          {' '}
           <span data-testid="header-currency-field">{ localCurrency }</span>
         </div>
       </header>

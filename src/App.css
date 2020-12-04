@@ -76,3 +76,111 @@
 	top:1px;
 }
 
+.wallet-body {
+  background-color: #081c15;
+  background-image: url("https://www.transparenttextures.com/patterns/graphy-dark.png");
+  height: 1000px;
+  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+
+.wallet-header {
+  align-items: center;
+  background-color: #28401c;
+  background-image: url("https://www.transparenttextures.com/patterns/pinstripe-light.png");
+  display: flex;
+  justify-content: space-around;
+  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+
+.wallet-header span {
+  color: white;
+}
+
+.wallet-title {
+  color: white;
+}
+
+.expense-form-body {
+  background-color: #080f06;
+  background-image: url("https://www.transparenttextures.com/patterns/pinstriped-suit.png");
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px;
+  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+
+.expense-button {
+	box-shadow:inset 0px 1px 0px 0px #8e9989;
+	background:linear-gradient(to bottom, #b5ccaa 5%, #4a613d 100%);
+	background-color:#b5ccaa;
+	border:1px solid #818a7c;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:6px 12px;
+	text-decoration:none;
+}
+.expense-button:hover {
+	background:linear-gradient(to bottom, #4a613d 5%, #b5ccaa 100%);
+	background-color:#4a613d;
+}
+.expense-button:active {
+	position:relative;
+	top:1px;
+}
+
+.table-header {
+  background-color: #080f06;
+  background-image: url("https://www.transparenttextures.com/patterns/pinstripe-light.png");
+  color: white;
+  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+
+.table-row {
+  display: flex;
+  width: 1840px;
+  color: white;
+  justify-content: space-between;
+}
+
+.table-row th {
+  padding: 6px 12px;
+}
+.edit-form-body {
+  background-color: #1c4020;
+  background-image: url("https://www.transparenttextures.com/patterns/pinstriped-suit.png");
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px;
+  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+
+.edit-expense-button {
+	box-shadow:inset 0px 1px 0px 0px #8e9989;
+	background:linear-gradient(to bottom, #b5ccaa 5%, #4a613d 100%);
+	background-color:#b5ccaa;
+	border:1px solid #818a7c;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:6px 12px;
+	text-decoration:none;
+}
+.edit-expense-button:hover {
+	background:linear-gradient(to bottom, #4a613d 5%, #b5ccaa 100%);
+	background-color:#4a613d;
+}
+.edit-expense-button:active {
+	position:relative;
+	top:1px;
+}

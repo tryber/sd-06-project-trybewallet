@@ -10,7 +10,7 @@ class Wallet extends React.Component {
   render() {
     const { isEditing } = this.props;
     return (
-      <div>
+      <div className="wallet-body">
         <WalletHeader />
         { isEditing ? <EditForm /> : <ExpenseForm /> }
         <ExpensesTable />

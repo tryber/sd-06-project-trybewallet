@@ -73,7 +73,7 @@ class ExpenseForm extends React.Component {
       return <h1>LOADING INFORMATION...</h1>;
     }
     return (
-      <form>
+      <form className="expense-form-body">
         <label htmlFor="value">
           Valor:
           <input
@@ -141,7 +141,11 @@ class ExpenseForm extends React.Component {
             <option value="Saúde">Saúde</option>
           </select>
         </label>
-        <button type="button" onClick={ () => this.handleAddExpense() }>
+        <button
+          className="expense-button"
+          type="button"
+          onClick={ () => this.handleAddExpense() }
+        >
           Adicionar despesa
         </button>
       </form>

@@ -40,7 +40,7 @@ class ExpensesTable extends React.Component {
     ];
 
     return (
-      <tr className="table-header">
+      <tr className="table-header table-row">
         { dataHeaders.map((header, index) => (
           <th key={ `header-${index}` }>
             { header }
@@ -97,7 +97,7 @@ class ExpensesTable extends React.Component {
         const usedRate = parseFloat(exchangeRates[`${currency}`].ask);
         const expenseValue = parseFloat(value);
         return (
-          <tr key={ `expense-${id}` }>
+          <tr className="table-row" key={ `expense-${id}` }>
             <td>{ description }</td>
             <td>{ tag }</td>
             <td>{ method }</td>
@@ -115,7 +115,7 @@ class ExpensesTable extends React.Component {
 
   render() {
     return (
-      <table>
+      <table className="expense-table">
         <tbody>
           { this.createHeaders() }
           { this.createEntries() }
