@@ -89,7 +89,7 @@ class Form extends React.Component {
             onChange={ this.handleChange }
           >
             {currency
-              .filter((onlycur) => onlycur.length === maxLengthCur)
+              .filter((aCurrency) => aCurrency.length === maxLengthCur)
               .map((onlycur) => (
                 <option key={ onlycur } data-testid={ onlycur }>
                   { onlycur }
