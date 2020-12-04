@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { sendCurrencyThunk, addExpense } from '../actions/index';
+import { sendCurrencyThunk, addExpense, editExpense } from '../actions/index';
 
-class AddExpenseForm extends Component {
+class ExpenseForm extends Component {
   constructor() {
     super();
 
@@ -24,8 +24,8 @@ class AddExpenseForm extends Component {
     sendCoins();
   }
 
-  mountForm(total) {
-    const { sendExpense, expenses } = this.props;
+  expenseToAdd(total) {
+    const { sendExpense, expenses, idEdit, sendEditedExpense } = this.props;
     const {
       value,
       currency,
@@ -34,17 +34,31 @@ class AddExpenseForm extends Component {
       description,
       exchangeRates,
     } = this.state;
-    const id = expenses.length;
-    const expense = {
-      id,
-      value,
-      description,
-      currency,
-      method,
-      tag,
-      exchangeRates,
-    };
-    sendExpense(expense, total);
+
+    if (idEdit === undefined) {
+      const id = expenses.length;
+      const expense = {
+        id,
+        value,
+        description,
+        currency,
+        method,
+        tag,
+        exchangeRates,
+      };
+      sendExpense(expense, total);
+    } else {
+      expenses[idEdit] = {
+        id: idEdit,
+        value,
+        description,
+        currency,
+        method,
+        tag,
+        exchangeRates,
+      };
+      sendEditedExpense(expenses);
+    }
   }
 
   async handleSubmit() {
@@ -59,7 +73,7 @@ class AddExpenseForm extends Component {
     });
     this.setState({ exchangeRates: currencies });
     const newTotal = Number(total + (value * ask)).toFixed(2);
-    this.mountForm(+newTotal);
+    this.expenseToAdd(+(newTotal));
   }
 
   handleChange(event) {
@@ -68,8 +82,9 @@ class AddExpenseForm extends Component {
   }
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, idEdit, expenses } = this.props;
     const { value, currency, method, tag, description } = this.state;
+
     return (
       <div>
         <form action="">
@@ -85,7 +100,7 @@ class AddExpenseForm extends Component {
               onChange={ (event) => this.handleChange(event) }
             />
           </label>
-
+          {expenses.value}
           <label htmlFor="currency-input">
             Moeda:
             <select
@@ -153,8 +168,16 @@ class AddExpenseForm extends Component {
           <button
             type="button"
             onClick={ () => this.handleSubmit() }
+            disabled={ !(idEdit === undefined) }
           >
             Adicionar despesa
+          </button>
+          <button
+            type="button"
+            onClick={ () => this.handleSubmit() }
+            disabled={ !(idEdit !== undefined) }
+          >
+            Editar despesa
           </button>
         </form>
       </div>
@@ -166,19 +189,23 @@ const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
   total: state.wallet.total,
+  idEdit: state.wallet.id,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   sendCoins: () => dispatch(sendCurrencyThunk()),
   sendExpense: (expense, total) => dispatch(addExpense(expense, total)),
+  sendEditedExpense: (expense) => dispatch(editExpense(expense)),
 });
 
-AddExpenseForm.propTypes = {
+ExpenseForm.propTypes = {
   sendCoins: PropTypes.func.isRequired,
   sendExpense: PropTypes.func.isRequired,
+  sendEditedExpense: PropTypes.func.isRequired,
   currencies: PropTypes.objectOf(PropTypes.objectOf()).isRequired,
   expenses: PropTypes.objectOf(PropTypes.number).isRequired,
   total: PropTypes.number.isRequired,
+  idEdit: PropTypes.number.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddExpenseForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);

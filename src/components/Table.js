@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { removeExpense } from '../actions';
+import { idToEdit, removeExpense } from '../actions';
 
 class Table extends Component {
   constructor() {
     super();
 
     this.excludeCost = this.excludeCost.bind(this);
+    this.getIdExpense = this.getIdExpense.bind(this);
+  }
+
+  getIdExpense({ target }) {
+    const { sendIdToEdit } = this.props;
+    const targetID = +target.id;
+
+    sendIdToEdit(targetID);
   }
 
   excludeCost({ target }) {
     const { expenses, deleteExpense } = this.props;
     const selectedID = +target.id;
+
     const filteredExpenses = expenses.filter((expense) => expense.id !== selectedID);
 
     const
@@ -47,11 +56,11 @@ class Table extends Component {
           {expenses && expenses.map((expense) => {
             const {
               id,
-              description,
-              tag,
-              method,
-              currency,
               value,
+              description,
+              currency,
+              method,
+              tag,
               exchangeRates,
             } = expense;
             const { name, ask } = exchangeRates[currency];
@@ -70,8 +79,9 @@ class Table extends Component {
                 <td>Real</td>
                 <td>
                   <button
-                    data-testid="edit-btn"
+                    id={ id }
                     type="button"
+                    data-testid="edit-btn"
                     onClick={ this.getIdExpense }
                   >
                     Editar
@@ -96,15 +106,18 @@ class Table extends Component {
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
+  teste: state.wallet,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (expense, total) => dispatch(removeExpense(expense, total)),
+  sendIdToEdit: (id) => dispatch(idToEdit(id)),
 });
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf().isRequired,
   deleteExpense: PropTypes.func.isRequired,
+  sendIdToEdit: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
