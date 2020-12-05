@@ -7,7 +7,7 @@ class Header extends Component {
   render() {
     const { emailDoUsuario, totalDasDespesas } = this.props;
     let resultado = 0;
-    if (totalDasDespesas) {
+    if (totalDasDespesas.lenght > 0) {
       resultado = totalDasDespesas.reduce((acc, currentValue) => {
         const { currency, exchangeRates, value } = currentValue;
 

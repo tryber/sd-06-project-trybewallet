@@ -22,10 +22,10 @@ export const pegarCurrency = (currencies) => ({
   payload: currencies,
 });
 
-export const adicionarDespesas = (despesas) => (
+export const adicionarDespesas = (expenses) => (
   {
     type: ADICIONAR_DESPESAS,
-    expenses: despesas,
+    expenses,
   }
 );
 

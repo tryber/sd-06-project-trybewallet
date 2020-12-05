@@ -14,7 +14,10 @@ function wallet(state = ESTADO_INICIAL, action) {
   case PEGAR_CURRENCY:
     return { ...state, currencies: action.payload };
   case ADICIONAR_DESPESAS:
-    return { ...state, expenses: action.payload };
+    return {
+      ...state,
+      expenses: [...state.expenses, action.expense],
+    };
   default:
     return state;
   }

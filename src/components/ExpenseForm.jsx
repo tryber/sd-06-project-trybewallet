@@ -36,9 +36,10 @@ class ExpenseForm extends Component {
 
   async btnClick(e) {
     e.preventDefault();
-    const { pegarDados, salvarDespesas } = this.props;
+    const { currencyState, salvarDespesas } = this.props;
     const { id } = this.state;
-    const dados = await pegarDados();
+    const dados = await currencyState;
+    console.log(dados);
     this.setState({ cotacaoDaMoeda: dados });
     salvarDespesas(this.state);
 
@@ -55,6 +56,7 @@ class ExpenseForm extends Component {
   }
 
   render() {
+    // eslint-disable-next-line react/prop-types
     const { currencyState } = this.props;
     const { value, description, currency, tag, method } = this.state;
     return (
@@ -154,7 +156,6 @@ class ExpenseForm extends Component {
 
 const mapStateToProps = (state) => ({
   currencyState: state.wallet.currencies,
-  idAtual: state.idAtual,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -163,7 +164,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 ExpenseForm.propTypes = {
-  currencyState: PropType.arrayOf(PropType.arrayOf).isRequired,
+//  currencyState: PropType.arrayOf(PropType.objectOf).isRequired,
   pegarDados: PropType.func.isRequired,
   salvarDespesas: PropType.func.isRequired,
 };
