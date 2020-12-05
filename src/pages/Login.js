@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Wallet from './Wallet';
 import { storeUserEmail } from '../actions';
 

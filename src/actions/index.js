@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 const USER_EMAIL = 'USER_EMAIL';
 
 const storeUserEmail = (email) => ({
