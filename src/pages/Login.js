@@ -1,78 +1,74 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import user from '../actions';
+import { login } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
-
-    this.senhaTest = this.senhaTest.bind(this);
-    this.loginTest = this.loginTest.bind(this);
+  constructor(props) {
+    super(props);
 
     this.state = {
       email: '',
-      loginTest: false,
-      senhaTest: false,
+      password: '',
+      isDisabled: true,
     };
+
+    this.handleSignUp = this.handleSignUp.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.verifyEmailAndPassword = this.verifyEmailAndPassword.bind(this);
   }
 
-  senhaTest(password) {
-    let senhaTest = false;
-    const rule = 6;
-    if (password.length >= rule) {
-      senhaTest = true;
-    }
-    this.setState({
-      senhaTest,
-    });
+  handleSignUp(event) {
+    event.preventDefault();
+    const { sendEmail } = this.props;
+    const { email } = this.state;
+    sendEmail(email);
+    const { history } = this.props;
+    history.push('/carteira');
   }
 
-  loginTest(email) {
-    let loginTest = false;
-    const re = /[A-Z0-9]{1,}@[A-Z0-9]{2,}\.[A-Z0-9]{2,}/i;
-    if (re.test(email.toLowerCase())) {
-      loginTest = true;
-    }
-    this.setState({
-      email,
-      loginTest,
+  verifyEmailAndPassword() {
+    const { email, password } = this.state;
+    const emailFormat = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$/.test(email);
+    const passwordMinLength = 6;
+
+    this.setState({ isDisabled: !(password.length >= passwordMinLength && emailFormat) });
+  }
+
+  handleChange({ target }) {
+    this.setState({ [target.name]: target.value }, () => {
+      this.verifyEmailAndPassword();
     });
   }
 
   render() {
-    const { email, loginTest, senhaTest } = this.state;
-    const { state } = this.props;
+    const { email, password, isDisabled } = this.state;
     return (
       <div>
-        <form>
-          <div>
-            <input
-              data-testid="email-input"
-              name="email"
-              onChange={ (e) => this.loginTest(e.target.value) }
-            />
-          </div>
-          <div>
-            <input
-              data-testid="password-input"
-              type="password"
-              name="password"
-              onChange={ (e) => this.senhaTest(e.target.value) }
-            />
-          </div>
-          <div>
-            <Link to="/carteira">
-              <button
-                type="button"
-                disabled={ !(loginTest && senhaTest) }
-                onClick={ () => state(email) }
-              >
-                Entrar
-              </button>
-            </Link>
-          </div>
+        <h1>WALLET APP</h1>
+        <form onSubmit={ this.handleSignUp }>
+          <input
+            type="text"
+            placeholder="email"
+            name="email"
+            value={ email }
+            data-testid="email-input"
+            onChange={ this.handleChange }
+          />
+          <input
+            type="password"
+            placeholder="password"
+            name="password"
+            value={ password }
+            data-testid="password-input"
+            onChange={ this.handleChange }
+          />
+          <button
+            type="submit"
+            disabled={ isDisabled }
+          >
+            Entrar
+          </button>
         </form>
       </div>
     );
@@ -80,9 +76,12 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  state: (email) => dispatch(user(email)),
+  sendEmail: (emailUser) => dispatch(login(emailUser)),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+Login.propTypes = {
+  history: propTypes.shape({ push: propTypes.func }).isRequired,
+  sendEmail: propTypes.func.isRequired,
+};
 
-Login.propTypes = { state: PropTypes.func.isRequired };
+export default connect(null, mapDispatchToProps)(Login);
