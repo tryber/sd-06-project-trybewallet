@@ -1,6 +1,6 @@
 import React from 'react';
-import Wallet from './Wallet'
-import { storeUserEmail } from '../action/index'
+import Wallet from './Wallet';
+import { storeUserEmail } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -11,48 +11,36 @@ class Login extends React.Component {
 
     // state
     this.state = {
-        email: '',
-        isValidEmail: false,
-        isValidPassword: false,
-    }
+      email: '',
+      isValidEmail: false,
+      isValidPassword: false,
+    };
   }
 
-  handleEmailValidate = (password) => {
-    let isValidEmail = false;
-
-    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  handleEmailValidate(email) {
+    const regex = /[A-Z0-9]{1,}@[A-Z0-9]{2,}\.[A-Z0-9]{2,}/i;
 
     if (regex.test(email.toLowerCase())) {
-      isValidEmail = true;
+      this.setState({ isValidEmail: true, email });
     } else {
-      this.setState({
-        isValidEmail: false,
-      })
+      this.setState({ isValidEmail: false });
     }
-
-    this.setState({
-      email,
-      isValidEmail,
-    });
   }
 
-  handlePasswordValidate = (password) => {
-    let isValidPassword = false;
+  handlePasswordValidate(password) {
+    const passwordMinimunLength = 6;
 
-    if(password.length >= 6) {
-      isValidPassword = true;
+    if (password.length >= passwordMinimunLength) {
+      this.setState({ isValidPassword: true });
     } else {
-      this.setState({
-        isValidPassword: false,
-      })
+      this.setState({ isValidPassword: false });
     }
-    this.setState({
-      isValidPassword,
-    });
   }
 
   render() {
+    const { isValidEmail, isValidPassword, email } = this.state;
     const { sendEmailToStore } = this.props;
+    // const { email } = this.state;
 
     return (
       <div>
@@ -60,22 +48,23 @@ class Login extends React.Component {
         <form>
           <p>Email</p>
           <input
-          data-testid="email-input"
-            type='text'
-            name='email'
-            onChange={e => this.handleEmailValidate(e.target.value)}
+            data-testid="email-input"
+            type="text"
+            name="email"
+            onChange={ (e) => this.handleEmailValidate(e.target.value) }
           />
           <p>Password</p>
           <input
             data-testid="password-input"
-            type='password'
-            name='password'
-            onChange={e => this.handlePasswordValidate(e.target.value)}
+            type="password"
+            name="password"
+            onChange={ (e) => this.handlePasswordValidate(e.target.value) }
           />
           <button
             type="button"
             name="loginbtn"
-            onClick={() => sendEmailToStore(this.state.email)}
+            disable={ !(isValidEmail && isValidPassword) }
+            onClick={ () => sendEmailToStore(email) }
           >
             Login
           </button>
@@ -85,8 +74,12 @@ class Login extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  sendEmailToStore: (email) => dispatch(storeUserEmail(email));
-}
+const mapDispatchToProps = (dispatch) => ({
+  sendEmailToStore: (email) => dispatch(storeUserEmail(email)),
+});
+
+Login.propTypes = {
+  sendEmailToStore: PropTypes.shape.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);
