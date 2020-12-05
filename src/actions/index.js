@@ -1,8 +1,11 @@
 const USER_EMAIL = 'USER_EMAIL';
 
-const storeUserEmail = (email) => ({
+export const storeUserEmail = (email) => ({
   type: USER_EMAIL,
   email,
 });
 
-export default storeUserEmail;
+export const teste = (testando, setTeste) => ({
+  type: 'teste_action',
+  expenses: { ...testando, setTeste },
+});
