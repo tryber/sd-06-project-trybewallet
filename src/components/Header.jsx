@@ -13,12 +13,11 @@ class Header extends Component {
 
         const exchangeRateToBRL = exchangeRates[currency].ask;
         const valueInBRL = value * exchangeRateToBRL;
-
         return acc + valueInBRL;
       }, 0);
     }
-
     resultado = (Math.round(resultado * 100)) / 100;
+    console.log(resultado);
     const moedaAtual = 'BRL';
 
     return (
