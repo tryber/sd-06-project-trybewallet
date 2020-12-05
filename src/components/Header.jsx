@@ -4,27 +4,23 @@ import propType from 'prop-types';
 import '../css/header.css';
 
 class Header extends Component {
-  constructor() {
-    super();
-    this.despesas = this.despesas.bind(this);
-  }
-
-  despesas() {
-    const { totalDasDespesas } = this.props;
-    if (totalDasDespesas.length > 0) {
-      const total = totalDasDespesas.reduce((acc, element) => {
-        const { ask } = element.exchangeRates[element.currency];
-        return acc + (ask * element.value);
-      }, 0);
-      return total.toFixed(2);
-    }
-    return 0;
-  }
-
   render() {
-    const { emailDoUsuario } = this.props;
-    const total = this.despesas();
+    const { emailDoUsuario, totalDasDespesas } = this.props;
+    let resultado = 0;
+    if (totalDasDespesas) {
+      resultado = totalDasDespesas.reduce((acc, currentValue) => {
+        const { currency, exchangeRates, value } = currentValue;
+
+        const exchangeRateToBRL = exchangeRates[currency].ask;
+        const valueInBRL = value * exchangeRateToBRL;
+
+        return acc + valueInBRL;
+      }, 0);
+    }
+
+    resultado = (Math.round(resultado * 100)) / 100;
     const moedaAtual = 'BRL';
+
     return (
       <div className="walletHeader">
         <div className="user">
@@ -35,7 +31,7 @@ class Header extends Component {
           <h1 className="text-title">Controle de Despesas.</h1>
         </div>
         <div className="info">
-          <p className="valor_total" data-testid="total-field">{ total }</p>
+          <p className="valor_total" data-testid="total-field">{ resultado }</p>
           <p className="cambio" data-testid="header-currency-field">{ moedaAtual }</p>
         </div>
       </div>

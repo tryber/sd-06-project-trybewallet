@@ -1,7 +1,7 @@
 import apiCurrencies from '../services';
 
 export const SALVAR_USUARIO = 'SALVAR_USUARIO';
-export const SALVAR_CARTEIRA = 'SALVAR_CARTEIRA';
+export const SALVAR_MOEDA = 'SALVAR_MOEDA';
 export const PEGAR_CURRENCY = 'PEGAR_CURRENCY';
 export const ADICIONAR_DESPESAS = 'ADICIONAR_DESPESAS';
 export const APAGAR_DESPESAS = 'APAGAR_DESPESAS';
@@ -12,8 +12,8 @@ export const salvarUsuario = (usuario) => ({
   payload: usuario,
 });
 
-export const salvarCarteria = (payload) => ({
-  type: SALVAR_CARTEIRA,
+export const salvarMoeda = (payload) => ({
+  type: SALVAR_MOEDA,
   payload,
 });
 

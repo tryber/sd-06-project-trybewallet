@@ -5,24 +5,26 @@ import { userApi, adicionarDespesas } from '../actions';
 import '../css/expenseForm.css';
 
 class ExpenseForm extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+
+    this.handleChange = this.handleChange.bind(this);
+    this.btnClick = this.btnClick.bind(this);
 
     this.state = {
       id: 0,
-      value: '',
+      value: 0,
       description: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
+      currency: '',
+      method: '',
+      tag: '',
+      cotacaoDaMoeda: {},
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.btnClick = this.btnClick.bind(this);
   }
 
   componentDidMount() {
-    const { salvarCurrencies } = this.props;
-    salvarCurrencies();
+    const { pegarDados } = this.props;
+    pegarDados();
   }
 
   handleChange(event) {
@@ -32,17 +34,31 @@ class ExpenseForm extends Component {
     });
   }
 
-  btnClick() {
-    const { salvarCurrencies } = this.props;
-    console.log(this.state);
-    console.log(salvarCurrencies());
+  async btnClick(e) {
+    // preventDefault();
+    const { pegarDados, salvarDespesas } = this.props;
+    const { id } = this.state;
+    const dados = await pegarDados();
+    this.setState({ cotacaoDaMoeda: dados });
+    salvarDespesas(this.state);
+
+    const proximoId = id + 1;
+    this.setState({
+      id: proximoId,
+      value: 0,
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
+      cotacaoDaMoeda: {},
+    });
   }
 
   render() {
-    const { currenciesState } = this.props;
+    const { currencyState } = this.props;
     const { value, description, currency, tag, method } = this.state;
     return (
-      <form action="" className="entry">
+      <form onSubmit={ this.btnClick } className="entry">
         <div className="system-information">
           <p className="id-input"> Número de Id.</p>
           <p className="entry-date">Entrada</p>
@@ -59,7 +75,6 @@ class ExpenseForm extends Component {
                 type="number"
                 onChange={ this.handleChange }
                 data-testid="value-input"
-                placeholder="Valor da Despesa."
               />
             </label>
             <label htmlFor="currency-input">
@@ -71,7 +86,7 @@ class ExpenseForm extends Component {
                 type="text"
                 onChange={ this.handleChange }
               >
-                {Object.keys(currenciesState).map((item) => (
+                {Object.keys(currencyState).map((item) => (
                   <option
                     key={ item }
                     value={ item }
@@ -88,6 +103,7 @@ class ExpenseForm extends Component {
               <select
                 id="method"
                 value={ method }
+                onChange={ this.handleChange }
                 data-testid="method-input"
               >
                 <option value="Dinheiro">Dinheiro</option>
@@ -100,6 +116,7 @@ class ExpenseForm extends Component {
               <select
                 id="tag"
                 value={ tag }
+                onChange={ this.handleChange }
                 data-testid="tag-input"
               >
                 <option value="Lazer ">Lazer</option>
@@ -114,6 +131,7 @@ class ExpenseForm extends Component {
             <input
               id="description"
               value={ description }
+              onChange={ this.handleChange }
               type="text"
               className="descriptionInput"
               data-testid="description-input"
@@ -121,8 +139,10 @@ class ExpenseForm extends Component {
             />
           </div>
           <button
-            type="button"
-            onClick={ this.btnClick }
+            type="submit"
+            disabled={
+              !value || !currency || !method || !tag || !description ? 'disabled' : false
+            }
           >
             Adicionar despesa
           </button>
@@ -133,19 +153,19 @@ class ExpenseForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  currenciesState: state.wallet.currencies,
+  currencyState: state.wallet.currencies,
   idAtual: state.idAtual,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  salvarCurrencies: () => dispatch(userApi()),
-  salvarDespesas: () => dispatch(adicionarDespesas()),
+  pegarDados: () => dispatch(userApi()),
+  salvarDespesas: (e) => dispatch(adicionarDespesas(e)),
 });
 
 ExpenseForm.propTypes = {
-  currenciesState: PropType.arrayOf.isRequired,
-  salvarCurrencies: PropType.func.isRequired,
-  value: PropType.string.isRequired,
+  currencyState: PropType.arrayOf(PropType.arrayOf).isRequired,
+  pegarDados: PropType.func.isRequired,
+  salvarDespesas: PropType.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
