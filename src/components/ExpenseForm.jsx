@@ -35,7 +35,7 @@ class ExpenseForm extends Component {
   }
 
   async btnClick(e) {
-    // preventDefault();
+    e.preventDefault();
     const { pegarDados, salvarDespesas } = this.props;
     const { id } = this.state;
     const dados = await pegarDados();
