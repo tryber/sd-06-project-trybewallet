@@ -18,7 +18,6 @@ class Header extends Component {
       }, 0);
       return aux.toFixed(2);
     }
-    console.log(despesas);
     return 0;
   }
 

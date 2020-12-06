@@ -29,7 +29,7 @@ class ExpenseList extends Component {
               <td>{item.tag}</td>
               <td>{item.method}</td>
               <td>{item.value}</td>
-              <td>moeda</td>
+              <td>{item.currecy}</td>
               <td>valorConvertido</td>
               <td>moedaDeConversao</td>
               <td>moedaCorrente</td>

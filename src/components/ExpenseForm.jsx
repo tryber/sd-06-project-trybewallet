@@ -15,8 +15,8 @@ class ExpenseForm extends Component {
       id: 0,
       value: 0,
       description: '',
-      currency: '',
-      method: '',
+      currency: 'USD',
+      method: 'Dinheiro',
       tag: '',
       exchangeRates: {},
     };
@@ -87,6 +87,9 @@ class ExpenseForm extends Component {
                 type="text"
                 onChange={ this.handleChange }
               >
+                <option selected>
+                  Escolha sua moeda
+                </option>
                 {Object.keys(currencyState).map((item) => (
                   <option
                     key={ item }
