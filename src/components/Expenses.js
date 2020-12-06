@@ -1,24 +1,31 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import FormExpenseCurrencyInput from './FormExpenseCurrencyInput';
 import FormExpenseDescriptionInput from './FormExpenseDescriptionInput';
 import FormExpenseMethodInput from './FormExpenseMethodInput';
 import FormExpenseTagInput from './FormExpenseTagInput';
 import FormExpenseValueInput from './FormExpenseValueInput';
 import TableExpense from './TableExpense';
-import { fetchCurrenciesAction } from '../actions';
 import BtnEditState from './BtnEditState';
+import { fetchCurrenciesAction } from '../actions';
 
 class Expenses extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { };
+  constructor() {
+    super();
+    this.state = {
+      id: 0,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    };
   }
 
   componentDidMount() {
-    const { fetchCurrencies } = this.props;
-    fetchCurrencies();
+    const { fetchAPI } = this.props;
+    fetchAPI();
   }
 
   render() {
@@ -38,16 +45,8 @@ class Expenses extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  currenciesState: state.wallet.currencies,
-});
-
 const mapDispatchToProps = (dispatch) => ({
-  fetchCurrencies: () => dispatch(fetchCurrenciesAction()),
+  fetchAPI: () => dispatch(fetchCurrenciesAction()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Expenses);
-
-Expenses.propTypes = {
-  fetchCurrencies: PropTypes.func.isRequired,
-};
+export default connect(null, mapDispatchToProps)(Expenses);

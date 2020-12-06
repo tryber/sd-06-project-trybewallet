@@ -1,9 +1,10 @@
-async function getAllCurrency() {
-  const api = 'https://economia.awesomeapi.com.br/';
-  const endpoint = 'json/all';
-  const requestURL = `${api}${endpoint}`;
-  const categoriesPromise = await fetch(requestURL);
-  return categoriesPromise.json();
+async function apiCurrencies() {
+  const endpoint = 'https://economia.awesomeapi.com.br/json/all';
+  const data = await fetch(endpoint);
+  delete data.USDT;
+  console.log('api aaaaaa');
+  return data.json();
+
 }
 
-export default getAllCurrency;
+export default apiCurrencies;

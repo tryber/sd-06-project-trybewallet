@@ -14,7 +14,7 @@ class FormExpenseValueInput extends Component {
     return (
       <div>
         <label htmlFor={ `value-input-${value}` }>
-          Valor :
+          Valor:
           <input
             id={ `value-input-${value}` }
             type="text"

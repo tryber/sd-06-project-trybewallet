@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import user from '../actions';
+import { loginAction } from '../actions';
 import Wallet from '../img/wallet.jpg';
 
 class Login extends React.Component {
@@ -87,7 +87,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  saveUser: (email) => dispatch(user(email)),
+  saveUser: (email) => dispatch(loginAction(email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);

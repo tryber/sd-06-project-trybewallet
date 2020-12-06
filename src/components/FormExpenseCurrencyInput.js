@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class FormExpenseCurrencyInput extends Component {
   constructor(props) {
@@ -7,7 +9,8 @@ class FormExpenseCurrencyInput extends Component {
   }
 
   render() {
-    const currency = this.state;
+    const { currency } = this.props;
+    console.log(currency);
     return (
       <label htmlFor="currency">
         Moeda:
@@ -18,24 +21,28 @@ class FormExpenseCurrencyInput extends Component {
           data-testid="currency-input"
           id="currency"
         >
-          <option>USD</option>
-          <option>CAD</option>
-          <option>EUR</option>
-          <option>GBP</option>
-          <option>ARS</option>
-          <option>BTC</option>
-          <option>LTC</option>
-          <option>JPY</option>
-          <option>CHF</option>
-          <option>AUD</option>
-          <option>CNY</option>
-          <option>ILS</option>
-          <option>ETH</option>
-          <option>XRP</option>
+          {Object.keys(currency).map((curr) => (
+            <option
+              key={ curr }
+              value={ curr }
+              data-testis={ curr }
+            >
+              {curr}
+            </option>
+          ))}
         </select>
       </label>
     );
   }
 }
 
-export default FormExpenseCurrencyInput;
+const mapStateToProps = (state) => ({
+  currency: state.wallet.currencies,
+  // currenciesState: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps)(FormExpenseCurrencyInput);
+
+FormExpenseCurrencyInput.propTypes = {
+
+}
