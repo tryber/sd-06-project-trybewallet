@@ -13,7 +13,7 @@ class Header extends Component {
     const { despesas } = this.props;
     if (despesas.length > 0) {
       const aux = despesas.reduce((valor, proximoValor) => {
-        const cotacao = proximoValor.cotacaoDaMoeda[proximoValor.currency].ask;
+        const cotacao = proximoValor.exchangeRates[proximoValor.currency].ask;
         return valor + (cotacao * proximoValor.value);
       }, 0);
       return aux.toFixed(2);

@@ -18,7 +18,7 @@ class ExpenseForm extends Component {
       currency: '',
       method: '',
       tag: '',
-      cotacaoDaMoeda: {},
+      exchangeRates: {},
     };
   }
 
@@ -39,7 +39,7 @@ class ExpenseForm extends Component {
     const { currencyState, salvarDespesas } = this.props;
     const { id } = this.state;
     const dados = await currencyState;
-    this.setState({ cotacaoDaMoeda: dados });
+    this.setState({ exchangeRates: dados });
     salvarDespesas(this.state);
 
     const proximoId = id + 1;
@@ -50,7 +50,7 @@ class ExpenseForm extends Component {
       currency: '',
       method: '',
       tag: '',
-      cotacaoDaMoeda: {},
+      exchangeRates: {},
     });
   }
 

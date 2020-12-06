@@ -28,9 +28,7 @@ class ExpenseList extends Component {
               <td>{item.description}</td>
               <td>{item.tag}</td>
               <td>{item.method}</td>
-              <td>
-                { this.casasDecimais(item.value) }
-              </td>
+              <td>{item.value}</td>
               <td>moeda</td>
               <td>valorConvertido</td>
               <td>moedaDeConversao</td>
