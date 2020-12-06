@@ -1,6 +1,7 @@
 import fetchCurrencies from '../services';
 
 export const EXPENSES = 'EXPENSES';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 const walletData = ({ value, description, currency, method, tag, exchangeRates }) => ({
   type: EXPENSES,
@@ -42,3 +43,8 @@ export function createExpense({ value, description, currency, method, tag }) {
     }
   );
 }
+
+export const deleteExpense = (id) => ({
+  type: DELETE_EXPENSE,
+  id,
+});

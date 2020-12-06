@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createExpense, requestCurrencies } from '../actions/wallet';
+import { createExpense, requestCurrencies, deleteExpense } from '../actions/wallet';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class Wallet extends React.Component {
     };
     this.handleSpent = this.handleSpent.bind(this);
     this.submitWallet = this.submitWallet.bind(this);
+    this.renderTable = this.renderTable.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +38,61 @@ class Wallet extends React.Component {
       description: '',
       value: 0,
     });
+  }
+
+  renderTable() {
+    const { userExpenses, handleDelete } = this.props;
+    console.log('O que é user Expenses:', userExpenses);
+    const fieldHeader = [
+      'Descrição',
+      'Tag',
+      'Método de pagamento',
+      'Valor',
+      'Moeda',
+      'Câmbio utilizado',
+      'Valor convertido',
+      'Moeda de conversão',
+      'Editar/Excluir',
+    ];
+
+    return (
+      <table>
+        <thead>
+          <tr>
+            {fieldHeader.map((field, index) => (
+              <th key={ index }>{field}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {userExpenses.map((expense, i) => (
+            <tr key={ i }>
+              <td>{expense.description}</td>
+              <td>{expense.tag}</td>
+              <td>{expense.method}</td>
+              <td>{expense.value}</td>
+              <td>{expense.exchangeRates[expense.currency].name}</td>
+              <td>
+                {((expense.exchangeRates[expense.currency].ask * 100) / 100).toFixed(2)}
+              </td>
+              <td>
+                {(expense.value * expense.exchangeRates[expense.currency].ask).toFixed(2)}
+              </td>
+              <td>Real</td>
+              <td>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => handleDelete(expense.id) }
+                >
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
   }
 
   renderSelect() {
@@ -128,6 +184,7 @@ class Wallet extends React.Component {
           />
           {this.renderSelect()}
           <button type="submit">Adicionar Despesa</button>
+          {this.renderTable()}
         </form>
       </div>
     );
@@ -141,6 +198,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  handleDelete: (e) => dispatch(deleteExpense(e)),
   createNewExpense: (expensesUserInput) => dispatch(createExpense(expensesUserInput)),
   loadCurrencies: () => dispatch(requestCurrencies()),
 });
