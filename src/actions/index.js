@@ -1,6 +1,7 @@
-const USER_EMAIL = 'USER_EMAIL';
+export const USER_EMAIL = 'USER_EMAIL';
+// export const SAVE_USER = 'SAVE_USER';
 
-export const storeUserEmail = (email) => ({
+export const getUserEmail = (email) => ({
   type: USER_EMAIL,
   email,
 });

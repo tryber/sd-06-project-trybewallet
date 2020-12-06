@@ -1,12 +1,12 @@
-// import { SAVE_USER } from '../actions';
+import { USER_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
   email: '',
 };
 
-export default function handleStoreUser(state = INITIAL_STATE, action) {
+export default function user(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case SAVE_USER:
+  case USER_EMAIL:
     return {
       ...state,
       email: action.email,

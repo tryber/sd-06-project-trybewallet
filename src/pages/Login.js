@@ -1,14 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Wallet from './Wallet';
-import { storeUserEmail } from '../actions';
+// import Wallet from './Wallet';
+import { getUserEmail } from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
     // binds
     this.handleEmailValidate = this.handleEmailValidate.bind(this);
-    this.handleEmailValidate = this.handlePasswordValidate.bind(this);
+    this.handlePasswordValidate = this.handlePasswordValidate.bind(this);
 
     // state
     this.state = {
@@ -40,47 +42,48 @@ class Login extends React.Component {
 
   render() {
     const { isValidEmail, isValidPassword, email } = this.state;
-    const { sendEmailToStore } = this.props;
+    const { sendEmailToStoreAsProps } = this.props;
     // const { email } = this.state;
 
     return (
       <div>
-        <Wallet />
-        <form>
-          <p>Email</p>
-          <input
-            data-testid="email-input"
-            type="text"
-            name="email"
-            onChange={ (e) => this.handleEmailValidate(e.target.value) }
-          />
-          <p>Password</p>
-          <input
-            data-testid="password-input"
-            type="password"
-            name="password"
-            onChange={ (e) => this.handlePasswordValidate(e.target.value) }
-          />
+        {/* <Wallet /> */}
+        {/* <form> */}
+        <p>Email</p>
+        <input
+          data-testid="email-input"
+          type="text"
+          name="email"
+          onChange={ (e) => this.handleEmailValidate(e.target.value) }
+        />
+        <p>Password</p>
+        <input
+          data-testid="password-input"
+          type="password"
+          name="password"
+          onChange={ (e) => this.handlePasswordValidate(e.target.value) }
+        />
+        <Link to="/carteira">
           <button
             type="button"
-            name="loginbtn"
-            disable={ !(isValidEmail && isValidPassword) }
-            onClick={ () => sendEmailToStore(email) }
+            disabled={ !(isValidEmail && isValidPassword) }
+            onClick={ () => sendEmailToStoreAsProps(email) }
           >
-            Login
+            Entrar
           </button>
-        </form>
+        </Link>
+        {/* </form> */}
       </div>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  sendEmailToStore: (email) => dispatch(storeUserEmail(email)),
+  sendEmailToStoreAsProps: (email) => dispatch(getUserEmail(email)),
 });
 
 Login.propTypes = {
-  sendEmailToStore: PropTypes.shape.isRequired,
+  sendEmailToStoreAsProps: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
