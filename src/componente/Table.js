@@ -1,17 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteExpense } from '../actions';
+import { deleteExpense, editExpense } from '../actions';
 
 class Table extends React.Component {
   constructor() {
     super();
     this.deleteExpenseBtn = this.deleteExpenseBtn.bind(this);
+    this.editExpenseBtn = this.editExpenseBtn.bind(this);
   }
 
   deleteExpenseBtn(id) {
     const { deleteBtnDispatch } = this.props;
     deleteBtnDispatch(id);
+  }
+
+  editExpenseBtn(id) {
+    const { editBtnDispatch } = this.props;
+    editBtnDispatch(id);
   }
 
   render() {
@@ -77,6 +83,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   deleteBtnDispatch: (id) => dispatch(deleteExpense(id)),
+  editBtnDispatch: (id) => dispatch(editExpense(id)),
 });
 
 Table.propTypes = {

@@ -4,6 +4,7 @@ export const CURRENCY = 'CURRENCY';
 export const EXPENSES = 'EXPENSES';
 export const DELETE = 'DELETE';
 export const EDITING = 'EDITING';
+export const NEW_EDITING = 'NEW_EDITING';
 
 export const saveEmail = (value) => ({
   type: EMAIL,
@@ -25,9 +26,14 @@ export const deleteExpense = (id) => ({
   id,
 });
 
-export const editExpense = (change) => ({
+export const editExpense = (id) => ({
   type: EDITING,
-  change,
+  id,
+});
+
+export const editNewExpense = (expense) => ({
+  type: NEW_EDITING,
+  expense,
 });
 
 export const fetchCurrencyThunk = () => async (dispatch) => {
