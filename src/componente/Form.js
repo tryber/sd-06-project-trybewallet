@@ -10,6 +10,7 @@ class Form extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleExpenseButtonClick = this.handleExpenseButtonClick.bind(this);
     this.handleEditButtonClick = this.handleEditButtonClick.bind(this);
+    this.updateState = this.updateState.bind(this);
 
     this.state = {
       expenses: {
@@ -33,8 +34,12 @@ class Form extends React.Component {
     const { editing, expenses } = this.props;
     if (prevProps.editing !== editing) {
       const editingExpense = expenses.find((exp) => exp.id === editing.id);
-      this.setState((prevState) => ({ ...prevState, expenses: editingExpense }));
+      updateState(editingExpense);
     }
+  }
+
+  updateState(editingExpense) {
+    this.setState((prevState) => ({ ...prevState, expenses: editingExpense }));
   }
 
   handleChange({ target: { name, value } }) {
@@ -123,12 +128,8 @@ class Form extends React.Component {
             {currencies
               .filter((aCurrency) => aCurrency.length === maxLengthCur)
               .map((onlycur) => (
-                <option
-                  value={ onlycur }
-                  key={ onlycur }
-                  data-testid={ onlycur }
-                >
-                  { onlycur }
+                <option value={ onlycur } key={ onlycur } data-testid={ onlycur }>
+                  {onlycur}
                 </option>
               ))}
           </select>
