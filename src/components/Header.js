@@ -58,4 +58,5 @@ export default connect(
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  cashSum: PropTypes.string.isRequired,
 };

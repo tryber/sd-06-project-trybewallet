@@ -63,15 +63,19 @@ class Expenses extends Component {
   }
 
   render() {
+    const { value } = this.state;
     return (
       <div>
         <form>
-          <FormExpenseValueInput handleChange={ this.handleChange } value={ this.state.value } />
+          <FormExpenseValueInput
+            handleChange={ this.handleChange }
+            value={ value }
+          />
           <FormExpenseDescriptionInput handleChange={ this.handleChange } />
           <FormExpenseCurrencyInput handleChange={ this.handleChange } />
           <FormExpenseMethodInput handleChange={ this.handleChange } />
           <FormExpenseTagInput handleChange={ this.handleChange } />
-          {/* <BtnEditState /> */}
+          <BtnEditState />
           <button
             type="button"
             onClick={ this.handleClick }
@@ -94,4 +98,5 @@ export default connect(null, mapDispatchToProps)(Expenses);
 
 Expenses.propTypes = {
   fetchAPI: PropTypes.func.isRequired,
+  expenseRegister: PropTypes.func.isRequired,
 };
