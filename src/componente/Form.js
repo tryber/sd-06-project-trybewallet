@@ -34,7 +34,7 @@ class Form extends React.Component {
     const { editing, expenses } = this.props;
     if (prevProps.editing !== editing) {
       const editingExpense = expenses.find((exp) => exp.id === editing.id);
-      updateState(editingExpense);
+      this.updateState(editingExpense);
     }
   }
 
