@@ -4,10 +4,18 @@ import { connect } from 'react-redux';
 import Wallet from '../img/wallet.jpg';
 
 class Header extends React.Component {
+  constructor() {
+    super();
+    this.sumExpenses=this.sumExpenses.bind(this);
+  }
+  sumExpenses() {
+    const 
+  }
+  
   render() {
     const { email } = this.props;
     const cash = 0;
-    console.log(this.props);
+
     return (
       <header className="header-content">
         <div>

@@ -8,7 +8,7 @@ import FormExpenseTagInput from './FormExpenseTagInput';
 import FormExpenseValueInput from './FormExpenseValueInput';
 import TableExpense from './TableExpense';
 import BtnEditState from './BtnEditState';
-import { fetchCurrenciesAction } from '../actions';
+import { fetchCurrenciesAction, ratesList } from '../actions';
 
 class Expenses extends Component {
   constructor() {
@@ -21,6 +21,8 @@ class Expenses extends Component {
       method: 'Dinheiro',
       tag: 'Alimentação',
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -28,16 +30,54 @@ class Expenses extends Component {
     fetchAPI();
   }
 
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    const { expenseRegister } = this.props;
+    const {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+    } = this.state;
+    const expense = {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+    };
+    expenseRegister(expense);
+    const newId = id + 1;
+
+    this.setState({ id: newId });
+  }
+
   render() {
     return (
       <div>
         <form>
-          <FormExpenseValueInput />
-          <FormExpenseDescriptionInput />
-          <FormExpenseCurrencyInput />
-          <FormExpenseMethodInput />
-          <FormExpenseTagInput />
-          <BtnEditState />
+          <FormExpenseValueInput handleChange={ this.handleChange } value={ this.state.value } />
+          <FormExpenseDescriptionInput handleChange={ this.handleChange } />
+          <FormExpenseCurrencyInput handleChange={ this.handleChange } />
+          <FormExpenseMethodInput handleChange={ this.handleChange } />
+          <FormExpenseTagInput handleChange={ this.handleChange } />
+          {/* <BtnEditState /> */}
+          <button
+            type="button"
+            onClick={ this.handleClick }
+          >
+            Adicionar Despesa
+          </button>
         </form>
         <TableExpense />
       </div>
@@ -47,6 +87,11 @@ class Expenses extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   fetchAPI: () => dispatch(fetchCurrenciesAction()),
+  expenseRegister: (expense) => dispatch(ratesList(expense)),
 });
 
 export default connect(null, mapDispatchToProps)(Expenses);
+
+Expenses.propTypes = {
+  fetchAPI: PropTypes.func.isRequired,
+};

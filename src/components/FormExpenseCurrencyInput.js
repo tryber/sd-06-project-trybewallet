@@ -9,15 +9,14 @@ class FormExpenseCurrencyInput extends Component {
   }
 
   render() {
-    const { currency } = this.props;
-    console.log(currency);
+    const { currency, handleChange } = this.props;
     return (
       <label htmlFor="currency">
         Moeda:
         <select
           name="currency"
           value={ currency }
-          onChange={ (event) => this.handleChange(event) }
+          onChange={ handleChange }
           data-testid="currency-input"
           id="currency"
         >
@@ -25,7 +24,7 @@ class FormExpenseCurrencyInput extends Component {
             <option
               key={ curr }
               value={ curr }
-              data-testis={ curr }
+              data-testid={ curr }
             >
               {curr}
             </option>
@@ -38,11 +37,11 @@ class FormExpenseCurrencyInput extends Component {
 
 const mapStateToProps = (state) => ({
   currency: state.wallet.currencies,
-  // currenciesState: state.wallet.currencies,
 });
 
 export default connect(mapStateToProps)(FormExpenseCurrencyInput);
 
 FormExpenseCurrencyInput.propTypes = {
-
-}
+  currency: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+};
