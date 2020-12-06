@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropType from 'prop-types';
 import { userApi, adicionarDespesas } from '../actions';
 import '../css/expenseForm.css';
+import { apiCurrenciesTwo } from '../services';
 
 class ExpenseForm extends Component {
   constructor() {
@@ -35,10 +36,10 @@ class ExpenseForm extends Component {
   }
 
   async btnClick(e) {
-    e.preventDefault();
+    // e.preventDefault();
     const { currencyState, salvarDespesas } = this.props;
     const { id } = this.state;
-    const dados = await currencyState;
+    const dados = await apiCurrenciesTwo();
     this.setState({ exchangeRates: dados });
     salvarDespesas(this.state);
 
@@ -59,7 +60,8 @@ class ExpenseForm extends Component {
     const { currencyState } = this.props;
     const { value, description, currency, tag, method } = this.state;
     return (
-      <form onSubmit={ this.btnClick } className="entry">
+      <>
+        {/* <form onSubmit={ this.btnClick } className="entry"> */}
         <div className="system-information">
           <p className="id-input"> Número de Id.</p>
           <p className="entry-date">Entrada</p>
@@ -147,11 +149,12 @@ class ExpenseForm extends Component {
             disabled={
               !value || !currency || !method || !tag || !description ? 'disabled' : false
             }
+            onClick={ this.btnClick }
           >
             Adicionar despesa
           </button>
         </div>
-      </form>
+      </>
     );
   }
 }
