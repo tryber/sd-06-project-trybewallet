@@ -10,9 +10,9 @@ class Table extends React.Component {
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">Descrição</th>
+              <td>Descriçao</td>
               <th scope="col">Tag</th>
-              <th scope="col">Método de pagamento</th>
+              <th scope="col">Metodo de pagamento</th>
               <th scope="col">Valor</th>
               <th scope="col">Moeda</th>
               <th scope="col">Câmbio utilizado</th>
