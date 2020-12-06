@@ -19,10 +19,10 @@ export const saveExpense = (expenses) => ({
   expenses,
 });
 
-export const deleteExpense = (id => ({
+export const deleteExpense = (id) => ({
   type: DELETE,
   id,
-}));
+});
 
 export const fetchCurrencyThunk = () => async (dispatch) => {
   const fetchCurrency = await fetch('https://economia.awesomeapi.com.br/json/all');
