@@ -11,7 +11,6 @@ class Table extends React.Component {
 
   deleteExpenseBtn(id) {
     const { deleteBtnDispatch } = this.props;
-    console.log('carai');
     deleteBtnDispatch(id);
   }
 
@@ -22,7 +21,7 @@ class Table extends React.Component {
         <table className="table">
           <thead>
             <tr>
-              <td>Descriçao</td>
+              <th scope="col">Descriçao</th>
               <th scope="col">Tag</th>
               <th scope="col">Metodo de pagamento</th>
               <th scope="col">Valor</th>
@@ -54,7 +53,7 @@ class Table extends React.Component {
                       data-testid="delete-btn"
                       type="submit"
                       value="Excluir"
-                      onClick={ this.deleteExpenseBtn }
+                      onClick={ () => this.deleteExpenseBtn(dispesa.id) }
                     />
                   </td>
                 </tr>
@@ -77,7 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Table.propTypes = {
   expenses: PropTypes.object,
-  deleteBtnDispatch: PropTypes.arrayOf,
+  // deleteBtnDispatch: PropTypes.arrayOf,
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

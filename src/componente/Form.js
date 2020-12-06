@@ -15,9 +15,9 @@ class Form extends React.Component {
         id: 0,
         value: 0,
         description: '',
-        currency: 'USD',
-        method: '',
-        tag: '',
+        currency: 'BRL',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
         exchangeRates: '',
       },
     };
@@ -48,8 +48,8 @@ class Form extends React.Component {
         value: 0,
         description: '',
         currency: 'BRL',
-        method: '',
-        tag: '',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
       },
     }));
   }
