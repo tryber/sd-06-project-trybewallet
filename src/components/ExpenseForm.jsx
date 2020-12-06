@@ -39,9 +39,7 @@ class ExpenseForm extends Component {
     const { currencyState, salvarDespesas } = this.props;
     const { id } = this.state;
     const dados = await currencyState;
-    console.log(dados);
     this.setState({ cotacaoDaMoeda: dados });
-    console.log(this.state);
     salvarDespesas(this.state);
 
     const proximoId = id + 1;
@@ -165,7 +163,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 ExpenseForm.propTypes = {
-  currencyState: PropType.arrayOf(PropType.arrayOf).isRequired,
+  currencyState: PropType.objectOf(PropType.any).isRequired,
   pegarDados: PropType.func.isRequired,
   salvarDespesas: PropType.func.isRequired,
 };

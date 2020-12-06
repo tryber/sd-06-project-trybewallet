@@ -4,22 +4,28 @@ import propType from 'prop-types';
 import '../css/header.css';
 
 class Header extends Component {
-  render() {
-    const { emailDoUsuario, totalDasDespesas } = this.props;
-    let resultado = 0;
-    if (totalDasDespesas.lenght > 0) {
-      resultado = totalDasDespesas.reduce((acc, currentValue) => {
-        const { currency, exchangeRates, value } = currentValue;
+  constructor() {
+    super();
+    this.somaTotal = this.somaTotal.bind(this);
+  }
 
-        const exchangeRateToBRL = exchangeRates[currency].ask;
-        const valueInBRL = value * exchangeRateToBRL;
-        return acc + valueInBRL;
+  somaTotal() {
+    const { despesas } = this.props;
+    if (despesas.length > 0) {
+      const aux = despesas.reduce((valor, proximoValor) => {
+        const cotacao = proximoValor.cotacaoDaMoeda[proximoValor.currency].ask;
+        return valor + (cotacao * proximoValor.value);
       }, 0);
+      return aux.toFixed(2);
     }
-    resultado = (Math.round(resultado * 100)) / 100;
-    console.log(resultado);
-    const moedaAtual = 'BRL';
+    console.log(despesas);
+    return 0;
+  }
 
+  render() {
+    const { emailDoUsuario } = this.props;
+    const moedaAtual = 'BRL';
+    const total = this.somaTotal();
     return (
       <div className="walletHeader">
         <div className="user">
@@ -30,7 +36,7 @@ class Header extends Component {
           <h1 className="text-title">Controle de Despesas.</h1>
         </div>
         <div className="info">
-          <p className="valor_total" data-testid="total-field">{ resultado }</p>
+          <p className="valor_total" data-testid="total-field">{total}</p>
           <p className="cambio" data-testid="header-currency-field">{ moedaAtual }</p>
         </div>
       </div>
@@ -41,12 +47,12 @@ class Header extends Component {
 
 const mapStateToProps = (state) => ({
   emailDoUsuario: state.user.email,
-  totalDasDespesas: state.wallet.expenses,
+  despesas: state.wallet.expenses,
 });
 
 Header.propTypes = {
   emailDoUsuario: propType.string.isRequired,
-  totalDasDespesas: propType.arrayOf(propType.object).isRequired,
+  despesas: propType.arrayOf.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);
