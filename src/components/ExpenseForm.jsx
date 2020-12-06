@@ -78,58 +78,58 @@ class ExpenseForm extends Component {
                 data-testid="value-input"
               />
             </label>
-            <label htmlFor="currency-input">
-              Moeda:
-              <select
-                data-testid="currency-input"
-                id="currency"
-                value={ currency }
-                type="text"
-                onChange={ this.handleChange }
-              >
-                <option selected>
-                  Escolha sua moeda
+            {/* <label htmlFor="currency">
+              Moeda: */}
+            <select
+              data-testid="currency-input"
+              id="currency"
+              value={ currency }
+              type="text"
+              onChange={ this.handleChange }
+            >
+              <option selected>
+                Escolha sua moeda
+              </option>
+              {Object.keys(currencyState).map((item) => (
+                <option
+                  key={ item }
+                  value={ item }
+                  data-testid={ item }
+                >
+                  {item}
                 </option>
-                {Object.keys(currencyState).map((item) => (
-                  <option
-                    key={ item }
-                    value={ item }
-                    data-testid={ item }
-                  >
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </label>
+              ))}
+            </select>
+            {/* </label> */}
 
-            <label htmlFor="method-input">
-              Método de Pagamento:
-              <select
-                id="method"
-                value={ method }
-                onChange={ this.handleChange }
-                data-testid="method-input"
-              >
-                <option value="Dinheiro">Dinheiro</option>
-                <option value="Cartão de crédito">Cartão de crédito</option>
-                <option value="Cartão de débito">Cartão de débito</option>
-              </select>
-            </label>
-            <label htmlFor="tag-input">
-              Tag:
-              <select
-                id="tag"
-                value={ tag }
-                onChange={ this.handleChange }
-                data-testid="tag-input"
-              >
-                <option value="Lazer ">Lazer</option>
-                <option value="Alimentação">Alimentação</option>
-                <option value="Trabalho">Trabalho</option>
-                <option value="Transporte">Transporte</option>
-                <option value="Saúde">Saúde</option>
-              </select>
-            </label>
+            {/* <label htmlFor="method-input"> */}
+            {/* Método de Pagamento: */}
+            <select
+              id="method"
+              value={ method }
+              onChange={ this.handleChange }
+              data-testid="method-input"
+            >
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Cartão de crédito">Cartão de crédito</option>
+              <option value="Cartão de débito">Cartão de débito</option>
+            </select>
+            {/* </label>
+            <label htmlFor="tag-input"> */}
+            Tag:
+            <select
+              id="tag"
+              value={ tag }
+              onChange={ this.handleChange }
+              data-testid="tag-input"
+            >
+              <option value="Lazer ">Lazer</option>
+              <option value="Alimentação">Alimentação</option>
+              <option value="Trabalho">Trabalho</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Saúde">Saúde</option>
+            </select>
+            {/* </label> */}
           </div>
           <div className="org-right">
             <input
