@@ -48,7 +48,12 @@ class Table extends React.Component {
                   <td>{totalValue}</td>
                   <td>Real</td>
                   <td>
-                    <input type="submit" value="Editar" />
+                    <input
+                      data-testid="edit-btn"
+                      type="submit"
+                      value="Editar"
+                      onClick={ () => this.editExpenseBtn(dispesa.id) }
+                    />
                     <input
                       data-testid="delete-btn"
                       type="submit"
@@ -76,7 +81,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 Table.propTypes = {
   expenses: PropTypes.object,
-  // deleteBtnDispatch: PropTypes.arrayOf,
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
