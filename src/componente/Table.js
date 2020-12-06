@@ -54,7 +54,7 @@ class Table extends React.Component {
                       data-testid="delete-btn"
                       type="submit"
                       value="Excluir"
-                      onClick={ this.deleteExpenseBtn() }
+                      onClick={ this.deleteExpenseBtn }
                     />
                   </td>
                 </tr>
@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Table.propTypes = {
   expenses: PropTypes.object,
-  deleteBtnDispatch: PropTypes.func,
+  deleteBtnDispatch: PropTypes.arrayOf,
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
