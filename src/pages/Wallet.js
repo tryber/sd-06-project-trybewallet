@@ -20,9 +20,19 @@ class Wallet extends React.Component {
         <h1>
           TrybeWallet
         </h1>
-        <h4>
-          {email}
-        </h4>
+        <div>
+          <h4 data-testid="email-field">
+            {email}
+          </h4>
+        </div>
+        <div>
+          <span data-testid="total-field">
+            Despesa total: 0
+          </span>
+          <span data-testid="header-currency-field">
+            Câmbio: BRL
+          </span>
+        </div>
       </div>
     );
   }
