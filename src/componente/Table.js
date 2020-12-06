@@ -38,7 +38,7 @@ class Table extends React.Component {
                   <td>Real</td>
                   <td>
                     <input type="submit" value="Editar" />
-                    <input type="submit" value="Excluir" />
+                    <input data-testid="delete-btn" type="submit" value="Excluir" />
                   </td>
                 </tr>
               );

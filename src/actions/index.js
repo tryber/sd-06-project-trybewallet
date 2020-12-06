@@ -2,6 +2,7 @@
 export const EMAIL = 'EMAIL';
 export const CURRENCY = 'CURRENCY';
 export const EXPENSES = 'EXPENSES';
+export const DELETE = 'DELETE';
 
 export const saveEmail = (value) => ({
   type: EMAIL,
@@ -17,6 +18,11 @@ export const saveExpense = (expenses) => ({
   type: EXPENSES,
   expenses,
 });
+
+export const deleteExpense = (id => ({
+  type: DELETE,
+  id,
+}));
 
 export const fetchCurrencyThunk = () => async (dispatch) => {
   const fetchCurrency = await fetch('https://economia.awesomeapi.com.br/json/all');
