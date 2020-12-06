@@ -6,15 +6,23 @@ import Wallet from '../img/wallet.jpg';
 class Header extends React.Component {
   constructor() {
     super();
-    this.sumExpenses=this.sumExpenses.bind(this);
+    this.sumExpenses = this.sumExpenses.bind(this);
   }
+
   sumExpenses() {
-    const 
+    const { cashSum } = this.props;
+    if (cashSum.length > 0) {
+      const cashItems = cashSum.reduce((acc, cur) => {
+        const askReturn = cur.exchangeRates[cur.currency].ask;
+        return acc + askReturn * cur.value;
+      }, 0);
+      return cashItems.toFixed(2);
+    } return 0;
   }
-  
+
   render() {
     const { email } = this.props;
-    const cash = 0;
+    const cash = this.sumExpenses();
 
     return (
       <header className="header-content">
@@ -41,6 +49,7 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  cashSum: state.wallet.expenses,
 });
 
 export default connect(

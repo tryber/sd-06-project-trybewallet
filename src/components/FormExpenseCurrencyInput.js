@@ -15,7 +15,7 @@ class FormExpenseCurrencyInput extends Component {
         Moeda:
         <select
           name="currency"
-          value={ currency }
+          // value={ currency }
           onChange={ handleChange }
           data-testid="currency-input"
           id="currency"
