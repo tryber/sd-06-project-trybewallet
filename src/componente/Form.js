@@ -16,8 +16,9 @@ class Form extends React.Component {
         value: 0,
         description: '',
         currency: 'USD',
-        method: 'Dinheiro',
-        tag: 'Alimentação',
+        method: '',
+        tag: '',
+        exchangeRates: '',
       },
     };
   }
@@ -107,12 +108,13 @@ class Form extends React.Component {
           <select
             name="method"
             value={ method }
+            id="method"
             data-testid="method-input"
             onChange={ this.handleChange }
           >
-            <option value="dinheiro">Dinheiro</option>
-            <option value="credito">Cartão de crédito</option>
-            <option value="debito">Cartão de débito</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
         <label htmlFor="tag">
@@ -120,18 +122,19 @@ class Form extends React.Component {
           <select
             data-testid="tag-input"
             name="tag"
+            id="tag"
             value={ tag }
             onChange={ this.handleChange }
           >
-            <option value="alimentacao">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saude">Saúde</option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
         <button type="button" onClick={ this.handleExpenseButtonClick }>
-          Adicionar Dispesa
+          Adicionar Despesa
         </button>
         Total: 0
       </form>
@@ -141,6 +144,7 @@ class Form extends React.Component {
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({

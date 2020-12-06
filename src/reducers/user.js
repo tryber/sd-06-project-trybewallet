@@ -3,7 +3,7 @@ import { EMAIL } from '../actions';
 
 const INITIAL_STATE = {
   user: {
-    email: '',
+    email: 'email@default.com.br',
   },
 };
 
