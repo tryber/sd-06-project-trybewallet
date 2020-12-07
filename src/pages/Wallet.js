@@ -210,7 +210,9 @@ class Wallet extends React.Component {
           <tbody>
             {expensesProp.map((expense, index) => {
               if (expense !== undefined) {
-                let td5, td6, td7;
+                let td5;
+                let td6;
+                let td7;
                 if (expense.exchangeRates[expense.selectedCurrency] !== undefined) {
                   td5 = expense.exchangeRates[expense.selectedCurrency].name;
                 }
