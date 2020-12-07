@@ -29,8 +29,9 @@ class ExpenseForm extends Component {
     pegarDados();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.idEditado !== this.state.id) {
+  componentDidUpdate(prevProps) {
+    const { id } = this.state;
+    if (prevProps.idEditado !== id) {
       this.estadoEditar();
     }
   }
@@ -51,7 +52,6 @@ class ExpenseForm extends Component {
     }
   }
 
-
   handleChange(event) {
     const { value, id } = event.target;
     this.setState({
@@ -60,8 +60,8 @@ class ExpenseForm extends Component {
   }
 
   async btnClick(e) {
-    // e.preventDefault();
-    const { currencyState, salvarDespesas } = this.props;
+    e.preventDefault();
+    const { salvarDespesas } = this.props;
     const { id } = this.state;
     const dados = await apiCurrenciesTwo();
     this.setState({ exchangeRates: dados });
@@ -205,6 +205,8 @@ ExpenseForm.propTypes = {
   currencyState: PropType.objectOf(PropType.any).isRequired,
   pegarDados: PropType.func.isRequired,
   salvarDespesas: PropType.func.isRequired,
+  idEditado: PropType.func.isRequired,
+  despesas: PropType.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);

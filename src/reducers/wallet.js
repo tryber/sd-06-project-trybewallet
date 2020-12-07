@@ -14,7 +14,6 @@ function editarDespesas(despesas, despesaEditada) {
   const novasDespesa = [...despesas];
   novasDespesa[despesaEditada.id] = despesaEditada;
   return novasDespesa;
-
 }
 
 function wallet(state = ESTADO_INICIAL, action) {
