@@ -57,11 +57,11 @@ class Wallet extends React.Component {
     const { selectedCurrency, paymentChoice, tag, value, description,
       submitButtonText } = this.state;
 
-    if (Object.keys(dropdownList).length === 0) {
-      return (
-        <p>Carregando...</p>
-      );
-    }
+    // if (Object.keys(dropdownList).length === 0) {
+    //   return (
+    //     <p>Carregando...</p>
+    //   );
+    // }
 
     return (
       <div>
