@@ -19,7 +19,7 @@ class ExpenseForm extends Component {
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
-      tag: '',
+      tag: 'Lazer',
       exchangeRates: {},
     };
   }
@@ -150,6 +150,9 @@ class ExpenseForm extends Component {
               onChange={ this.handleChange }
               data-testid="tag-input"
             >
+              <option selected>
+                Escolha uma Tag
+              </option>
               <option value="Lazer ">Lazer</option>
               <option value="Alimentação">Alimentação</option>
               <option value="Trabalho">Trabalho</option>
@@ -203,11 +206,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 ExpenseForm.propTypes = {
-  currencyState: PropType.objectOf(PropType.any).isRequired,
+  currencyState: PropType.arrayOf(PropType.any).isRequired,
   pegarDados: PropType.func.isRequired,
   salvarDespesas: PropType.func.isRequired,
   idEditado: PropType.func.isRequired,
-  despesas: PropType.func.isRequired,
+  despesas: PropType.arrayOf.isRequired,
   salvarEditado: PropType.func.isRequired,
 };
 
