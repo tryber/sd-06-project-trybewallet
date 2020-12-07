@@ -3,6 +3,7 @@ import apiCurrencies from '../services/dataAPI';
 export const LOGIN = 'LOGIN';
 export const RESPONSE = 'RESPONSE';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const DEL_EXPENSE = 'DEL_EXPENSE';
 
 export const loginAction = (email) => ({
   type: LOGIN,
@@ -27,6 +28,11 @@ export const expenseAction = (exchangeRates, expense) => ({
   type: ADD_EXPENSE,
   expense,
   exchangeRates,
+});
+
+export const removeExpense = (id) => ({
+  type: DEL_EXPENSE,
+  id,
 });
 
 export const ratesList = (expense) => async (dispatch) => {

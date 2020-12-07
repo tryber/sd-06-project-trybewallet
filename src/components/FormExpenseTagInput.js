@@ -6,7 +6,7 @@ class FormExpenseTagInput extends Component {
     const { handleChange } = this.props;
     return (
       <label htmlFor="tag">
-        Método de pagamento
+        Tag:
         <select id="tag" data-testid="tag-input" name="tag" onChange={ handleChange }>
           <option>Alimentação</option>
           <option>Lazer</option>
