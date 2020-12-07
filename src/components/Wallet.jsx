@@ -1,8 +1,7 @@
-import React from 'react';
 import { connect } from 'react-redux';
-import Form from '../components/Form';
-import Header from '../components/header';
-import Table from '../components/Table';
+import Form from './Form';
+import Header from './header';
+import Table from './Table';
 
 class Wallet extends React.Component {
   render() {
