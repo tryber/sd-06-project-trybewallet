@@ -1,4 +1,5 @@
-import { RESPONSE, ADD_EXPENSE, DEL_EXPENSE, EDIT_EXPENSE, ID_SAVE, BTN_EDIT } from '../actions';
+import { RESPONSE,
+  ADD_EXPENSE, DEL_EXPENSE, EDIT_EXPENSE, ID_SAVE, BTN_EDIT } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
