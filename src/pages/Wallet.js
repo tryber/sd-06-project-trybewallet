@@ -54,7 +54,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { totalSpent, userEmail, dropdownList, expensesProp,
+    const { userEmail, dropdownList, expensesProp,
       removeExpenseProp } = this.props;
     const { currency, method, tag, value, description,
       submitButtonText } = this.state;
