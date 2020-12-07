@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import store from '../store/index';
 
+import Table from '../components/Table';
+
 import Form from '../components/Form';
 import AwesomeAPI from '../services/AwesomeAPI';
 import { getExchangeRateToStoreExpenses } from '../actions';
@@ -122,7 +124,7 @@ class Wallet extends React.Component {
           />
         </section>
         <section>
-          {/* <Table /> */}
+          <Table />
         </section>
       </div>
     );
