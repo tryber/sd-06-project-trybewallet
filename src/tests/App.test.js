@@ -410,6 +410,7 @@ describe('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela contendo
     userEvent.selectOptions(methodInput, 'Dinheiro');
     userEvent.selectOptions(tagInput, 'Trabalho');
     userEvent.type(descriptionInput, 'Cem dólares canadenses');
+    
 
     fireEvent.click(editButton);
 
