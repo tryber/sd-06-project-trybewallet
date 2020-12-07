@@ -1,7 +1,10 @@
 import React from 'react';
+import Router from './router/Router';
 
 function App() {
-  return <div>Hello, TrybeWallet!</div>;
+  return (
+    <Router />
+  );
 }
 
 export default App;
