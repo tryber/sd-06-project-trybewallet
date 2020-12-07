@@ -7,7 +7,7 @@ import FormExpenseMethodInput from './FormExpenseMethodInput';
 import FormExpenseTagInput from './FormExpenseTagInput';
 import FormExpenseValueInput from './FormExpenseValueInput';
 import TableExpense from './TableExpense';
-import BtnEditState from './BtnEditState';
+import BtnEditState from './BtnEdit';
 import { fetchCurrenciesAction, ratesList } from '../actions';
 
 class Expenses extends Component {

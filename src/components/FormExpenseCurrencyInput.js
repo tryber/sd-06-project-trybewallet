@@ -42,6 +42,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(FormExpenseCurrencyInput);
 
 FormExpenseCurrencyInput.propTypes = {
-  currency: PropTypes.string.isRequired,
+  currency: PropTypes.arrayOf.isRequired,
   handleChange: PropTypes.func.isRequired,
 };

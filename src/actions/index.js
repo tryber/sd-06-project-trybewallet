@@ -4,6 +4,8 @@ export const LOGIN = 'LOGIN';
 export const RESPONSE = 'RESPONSE';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const DEL_EXPENSE = 'DEL_EXPENSE';
+export const ID_SAVE = 'ID_SAVE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 
 export const loginAction = (email) => ({
   type: LOGIN,
@@ -33,6 +35,16 @@ export const expenseAction = (exchangeRates, expense) => ({
 export const removeExpense = (id) => ({
   type: DEL_EXPENSE,
   id,
+});
+
+export const saveId = (id) => ({
+  type: ID_SAVE,
+  id,
+});
+
+export const editExpense = (expense) => ({
+  type: EDIT_EXPENSE,
+  expense,
 });
 
 export const ratesList = (expense) => async (dispatch) => {
