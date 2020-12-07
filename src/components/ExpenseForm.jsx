@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropType from 'prop-types';
 import { userApi, adicionarDespesas, editarDespesas } from '../actions';
 import '../css/expenseForm.css';
-import { apiCurrenciesTwo } from '../services';
+import apiCurrencies from '../services';
 
 class ExpenseForm extends Component {
   constructor() {
@@ -63,7 +63,7 @@ class ExpenseForm extends Component {
     e.preventDefault();
     const { salvarDespesas } = this.props;
     const { id } = this.state;
-    const dados = await apiCurrenciesTwo();
+    const dados = await apiCurrencies();
     this.setState({ exchangeRates: dados });
     salvarDespesas(this.state);
 
@@ -84,8 +84,7 @@ class ExpenseForm extends Component {
     const { currencyState, salvarEditado } = this.props;
     const { value, description, currency, tag, method } = this.state;
     return (
-      <>
-        {/* <form onSubmit={ this.btnClick } className="entry"> */}
+      <form onSubmit={ this.btnClick } className="entry">
         <div className="system-information">
           <p className="id-input"> Número de Id.</p>
           <p className="entry-date">Entrada</p>
@@ -106,6 +105,7 @@ class ExpenseForm extends Component {
             </label>
             {/* <label htmlFor="currency">
               Moeda: */}
+            {/* </label> */}
             <select
               data-testid="currency-input"
               id="currency"
@@ -126,10 +126,8 @@ class ExpenseForm extends Component {
                 </option>
               ))}
             </select>
-            {/* </label> */}
 
-            {/* <label htmlFor="method-input"> */}
-            {/* Método de Pagamento: */}
+            <label>Método de Pagamento:</label>
             <select
               id="method"
               value={ method }
@@ -184,7 +182,7 @@ class ExpenseForm extends Component {
             Editar despesa
           </button>
         </div>
-      </>
+      </form>
     );
   }
 }
