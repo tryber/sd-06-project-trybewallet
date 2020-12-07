@@ -10,13 +10,15 @@ class Header extends Component {
   }
 
   somaTotal() {
+    const formatValue = (value) => Math.round(value * 100) / 100;
     const { despesas } = this.props;
+    console.log(typeof (despesas));
     if (despesas.length > 0) {
       const aux = despesas.reduce((valor, proximoValor) => {
         const cotacao = proximoValor.exchangeRates[proximoValor.currency].ask;
         return valor + (cotacao * proximoValor.value);
       }, 0);
-      return aux.toFixed(2);
+      return formatValue(aux);
     }
     return 0;
   }
@@ -51,7 +53,7 @@ const mapStateToProps = (state) => ({
 
 Header.propTypes = {
   emailDoUsuario: propType.string.isRequired,
-  despesas: propType.arrayOf.isRequired,
+  despesas: propType.objectOf.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);
