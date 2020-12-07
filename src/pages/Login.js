@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { actionLogin } from '../actions/index';
@@ -37,36 +36,31 @@ class Login extends React.Component {
 
     return (
       <div className="login-form">
-        <Form>
-          <Form.Group>
-            <Form.Control
-              data-testid="email-input"
-              onChange={ (e) => this.setState({ email: e.target.value }) }
-              placeholder="Email"
-              value={ email }
-            />
-            <Form.Control
-              data-testid="password-input"
-              onChange={ (e) => this.setState({ password: e.target.value }) }
-              placeholder="Password"
-              type="password"
-              value={ password }
-            />
-          </Form.Group>
-          <Form.Group>
-            <Button
-              block
-              disabled={ !loginButtonDisabled }
-              onClick={ () => {
-                actionLoginProp(email);
-                history.push('/carteira');
-              } }
-              variant="outline-success"
-            >
-              Entrar
-            </Button>
-          </Form.Group>
-        </Form>
+        <form>
+          <input
+            data-testid="email-input"
+            onChange={ (e) => this.setState({ email: e.target.value }) }
+            placeholder="Email"
+            value={ email }
+          />
+          <input
+            data-testid="password-input"
+            onChange={ (e) => this.setState({ password: e.target.value }) }
+            placeholder="Password"
+            type="password"
+            value={ password }
+          />
+          <button
+            disabled={ !loginButtonDisabled }
+            onClick={ () => {
+              actionLoginProp(email);
+              history.push('/carteira');
+            } }
+            type="button"
+          >
+            Entrar
+          </button>
+        </form>
       </div>
     );
   }
