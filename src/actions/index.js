@@ -6,6 +6,7 @@ export const PEGAR_CURRENCY = 'PEGAR_CURRENCY';
 export const ADICIONAR_DESPESAS = 'ADICIONAR_DESPESAS';
 export const APAGAR_DESPESAS = 'APAGAR_DESPESAS';
 export const EDITAR_DESPESAS = 'EDITAR_DESPESAS';
+export const SALVAR_ID_EDITAR = 'SALVAR_ID_EDITAR';
 
 export const salvarUsuario = (usuario) => ({
   type: SALVAR_USUARIO,
@@ -36,10 +37,14 @@ export const apagarDespesas = (id) => (
   }
 );
 
-export const editarDespesas = (estado, despesa) => (
+export const salvarIdEditar = (id) => ({
+  type: SALVAR_ID_EDITAR,
+  id,
+});
+
+export const editarDespesas = (despesa) => (
   {
     type: EDITAR_DESPESAS,
-    estado,
     despesa,
   }
 );

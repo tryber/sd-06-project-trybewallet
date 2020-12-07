@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropType from 'prop-types';
-import { userApi, adicionarDespesas } from '../actions';
+import { userApi, adicionarDespesas, editarDespesas } from '../actions';
 import '../css/expenseForm.css';
 import { apiCurrenciesTwo } from '../services';
 
@@ -11,6 +11,7 @@ class ExpenseForm extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.btnClick = this.btnClick.bind(this);
+    this.estadoEditar = this.estadoEditar.bind(this);
 
     this.state = {
       id: 0,
@@ -27,6 +28,29 @@ class ExpenseForm extends Component {
     const { pegarDados } = this.props;
     pegarDados();
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.idEditado !== this.state.id) {
+      this.estadoEditar();
+    }
+  }
+
+  estadoEditar() {
+    const { idEditado, despesas } = this.props;
+    if (idEditado !== null) {
+      const valorEditado = despesas[idEditado];
+      this.setState({
+        id: valorEditado.id,
+        value: valorEditado.value,
+        description: valorEditado.description,
+        currency: valorEditado.currency,
+        method: valorEditado.method,
+        tag: valorEditado.tag,
+        exchangeRates: valorEditado.exchangeRates,
+      });
+    }
+  }
+
 
   handleChange(event) {
     const { value, id } = event.target;
@@ -57,7 +81,7 @@ class ExpenseForm extends Component {
 
   render() {
     // eslint-disable-next-line react/prop-types
-    const { currencyState } = this.props;
+    const { currencyState, salvarEditado } = this.props;
     const { value, description, currency, tag, method } = this.state;
     return (
       <>
@@ -153,6 +177,12 @@ class ExpenseForm extends Component {
           >
             Adicionar despesa
           </button>
+          <button
+            type="button"
+            onClick={ () => salvarEditado(this.state) }
+          >
+            Editar despesa
+          </button>
         </div>
       </>
     );
@@ -161,11 +191,14 @@ class ExpenseForm extends Component {
 
 const mapStateToProps = (state) => ({
   currencyState: state.wallet.currencies,
+  idEditado: state.wallet.idEditar,
+  despesas: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   pegarDados: () => dispatch(userApi()),
   salvarDespesas: (e) => dispatch(adicionarDespesas(e)),
+  salvarEditado: (despesa) => dispatch(editarDespesas(despesa)),
 });
 
 ExpenseForm.propTypes = {

@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FaRegTrashAlt, FaEdit } from 'react-icons/fa';
 import { connect } from 'react-redux';
+import { apagarDespesas, salvarIdEditar } from '../actions';
 import '../css/expenseList.css';
 
 class ExpenseList extends Component {
   render() {
-    const { pegarDespesas } = this.props;
+    const { pegarDespesas, apagarDados, salvarId } = this.props;
+    const formatValue = (value) => Math.round(value * 100) / 100;
     return (
       <table className="tabela">
         <thead className="titulo">
@@ -29,16 +31,16 @@ class ExpenseList extends Component {
               <td>{item.tag}</td>
               <td>{item.method}</td>
               <td>{item.value}</td>
-              <td>{item.currecy}</td>
-              <td>valorConvertido</td>
-              <td>moedaDeConversao</td>
-              <td>moedaCorrente</td>
+              <td>{item.exchangeRates[item.currency].name}</td>
+              <td>{formatValue(item.exchangeRates[item.currency].ask)}</td>
+              <td>{formatValue(item.exchangeRates[item.currency].ask * item.value)}</td>
+              <td>Real</td>
               <td>
                 <button
                   type="button"
                   data-testid="delete-btn"
                   name={ item.id }
-                  // onClick={ () => apagarDespesas(id) }
+                  onClick={ () => apagarDados(item.id) }
                 >
                   <FaRegTrashAlt />
                 </button>
@@ -46,7 +48,7 @@ class ExpenseList extends Component {
                   type="button"
                   data-testid="edit-btn"
                   name={ item.id }
-                  // onClick={ () => editarDespesas(id) }
+                  onClick={ () => salvarId(item.id) }
                 >
                   <FaEdit />
                 </button>
@@ -63,7 +65,12 @@ const mapStateToProps = (state) => ({
   pegarDespesas: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(ExpenseList);
+const mapDispatchToProps = (dispatch) => ({
+  apagarDados: (id) => dispatch(apagarDespesas(id)),
+  salvarId: (id) => dispatch(salvarIdEditar(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseList);
 
 ExpenseList.propTypes = {
   id: PropTypes.number,
