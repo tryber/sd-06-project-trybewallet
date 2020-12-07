@@ -48,10 +48,9 @@ export const editExpense = (expense) => ({
   expense,
 });
 
-export const btnEdit = (btnEdit, editId) => ({
+export const btnEdit = (expense) => ({
   type: BTN_EDIT,
-  btnEdit,
-  editId,
+  editId: expense.id,
 });
 
 export const ratesList = (expense) => async (dispatch) => {

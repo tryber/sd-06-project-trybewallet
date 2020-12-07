@@ -7,7 +7,7 @@ import FormExpenseMethodInput from './FormExpenseMethodInput';
 import FormExpenseTagInput from './FormExpenseTagInput';
 import FormExpenseValueInput from './FormExpenseValueInput';
 import TableExpense from './TableExpense';
-import BtnEditState from './BtnEditState';
+// import BtnEditState from './BtnEditState';
 import { editExpense, fetchCurrenciesAction, ratesList } from '../actions';
 
 class Expenses extends Component {
@@ -69,14 +69,11 @@ class Expenses extends Component {
       edit(null);
       this.setState(temp);
     }
-    const { btnEditState } = this.props;
-    if (btnEditState !== prevProps.btnEditState && btnEditState) {
-      this.loadElement();
-    }
   }
 
   render() {
     const { value } = this.state;
+    const { btnEdit } = this.props;
     return (
       <div>
         <form>
@@ -88,13 +85,34 @@ class Expenses extends Component {
           <FormExpenseCurrencyInput handleChange={ this.handleChange } />
           <FormExpenseMethodInput handleChange={ this.handleChange } />
           <FormExpenseTagInput handleChange={ this.handleChange } />
+
+          {
+            (btnEdit)
+              ? (
+                <button
+                  type="button"
+                  onClick={ this.handleEdit }
+                  data-testid="edit-btn"
+                >
+                  Editar despesa
+                </button>
+              )
+              : (
+                <button
+                  type="button"
+                  onClick={ this.handleClick }
+                >
+                  Adicionar Despesa
+                </button>
+              )
+          }
           {/* <BtnEditState /> */}
-          <button
+          {/* <button
             type="button"
             onClick={ this.handleClick }
           >
             Adicionar Despesa
-          </button>
+          </button> */}
         </form>
         <TableExpense />
       </div>
@@ -105,6 +123,7 @@ class Expenses extends Component {
 const mapStateToProps = (state) => ({
   newExpense: state.wallet.editExpense,
   btnEditState: state.wallet.btnEdit,
+  btnEdit: state.wallet.btnEdit,
 });
 
 const mapDispatchToProps = (dispatch) => ({

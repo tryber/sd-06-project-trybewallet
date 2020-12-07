@@ -22,8 +22,8 @@ class TableExpense extends Component {
   }
 
   handleEdit(e) {
-    const { edit } = this.props;
-    edit(e);
+    const { editBtn } = this.props;
+    editBtn(e);
   }
 
   render() {
@@ -94,7 +94,7 @@ const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (id) => dispatch(removeExpense(id)),
   addId: (id) => dispatch(saveId(id)),
   edit: (expense) => dispatch(editExpense(expense)),
-  
+  editBtn: (expense) => dispatch(btnEdit(expense)),
 });
 
 const mapStateToProps = (state) => ({

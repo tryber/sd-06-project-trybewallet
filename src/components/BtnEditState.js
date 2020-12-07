@@ -7,14 +7,12 @@ class BtnEditState extends Component {
     this.state = {};
   }
 
-
-
   render() {
-    const btnEditState = this.props;
+    const { btnEdit } = this.props;
     return (
       <form>
         {
-          (btnEditState)
+          (btnEdit)
             ? (
               <button
                 type="button"
@@ -38,8 +36,8 @@ class BtnEditState extends Component {
   }
 }
 
-// const mapStateToProps = (state) => ({
-//   btnEdit: (btnEdit) => dispatch(btnEdit(btnEdit)),
-// });
+const mapStateToProps = (state) => ({
+  btnEdit: state.wallet.btnEdit,
+});
 
 export default BtnEditState;
