@@ -8,7 +8,7 @@ import '../css/expenseList.css';
 class ExpenseList extends Component {
   render() {
     const { pegarDespesas, apagarDados, salvarId } = this.props;
-    const formatValue = (value) => Math.round(value * 100) / 100;
+    const formatValue = (value) => (Math.round(value * 100) / 100).toString();
     return (
       <table className="tabela">
         <thead className="titulo">
@@ -32,7 +32,7 @@ class ExpenseList extends Component {
               <td>{item.method}</td>
               <td>{item.value}</td>
               <td>{item.exchangeRates[item.currency].name}</td>
-              <td>{formatValue(item.exchangeRates[item.currency].ask)}</td>
+              <td>{Number(item.exchangeRates[item.currency].ask).toFixed(2)}</td>
               <td>{formatValue(item.exchangeRates[item.currency].ask * item.value)}</td>
               <td>Real</td>
               <td>

@@ -40,6 +40,9 @@ class ExpenseForm extends Component {
     const { idEditado, despesas } = this.props;
     if (idEditado !== null) {
       const valorEditado = despesas[idEditado];
+      if (valorEditado === undefined) {
+        return null;
+      }
       this.setState({
         id: valorEditado.id,
         value: valorEditado.value,
@@ -169,7 +172,7 @@ class ExpenseForm extends Component {
           <button
             type="submit"
             disabled={
-              !value || !currency || !method || !tag || !description ? 'disabled' : false
+              !value || !currency /* || !method || !tag || !description */ ? 'disabled' : false
             }
             onClick={ this.btnClick }
           >
