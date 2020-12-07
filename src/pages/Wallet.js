@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Dropdown, Form, Navbar, Spinner, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addExpenseLong, editExpense, getCurrencies, removeExpense } from '../actions';
@@ -60,163 +59,141 @@ class Wallet extends React.Component {
 
     if (Object.keys(dropdownList).length === 0) {
       return (
-        <Spinner animation="border" role="status">
-          <span className="sr-only">Loading...</span>
-        </Spinner>
+        <p>Carregando...</p>
       );
     }
 
     return (
       <div>
-        <Navbar bg="dark" variant="dark">
-          <Navbar.Brand>Trybe Wallet</Navbar.Brand>
-          <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text data-testid="email-field">
-              Email:
-              {userEmail}
-            </Navbar.Text>
-          </Navbar.Collapse>
-          <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text data-testid="total-field">{totalSpent}</Navbar.Text>
-            <Navbar.Text data-testid="header-currency-field">BRL</Navbar.Text>
-          </Navbar.Collapse>
-        </Navbar>
-        <Navbar bg="dark" variant="dark">
-          <Form className="bg-dark" inline>
-            <Form.Group>
-              <Form.Control
-                as="input"
-                data-testid="value-input"
-                onChange={ (e) => this.setState({ value: parseInt(e.target.value, 10) }) }
-                type="number"
-                value={ value }
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Control
-                as="input"
-                data-testid="description-input"
-                onChange={ (e) => this.setState({ description: e.target.value }) }
-                type="text"
-                value={ description }
-              />
-            </Form.Group>
-            <Form.Group>
-              <Dropdown data-testid="currency-input">
-                <Dropdown.Toggle variant="secondary">
-                  {selectedCurrency}
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  {Object.keys(dropdownList).map((item, index) => {
-                    if (item !== 'USDT') {
-                      return (
-                        <Dropdown.Item
-                          data-testid={ item }
-                          key={ index }
-                          onClick={ () => this.setState({ selectedCurrency: item }) }
-                        >
-                          {item}
-                        </Dropdown.Item>
-                      );
-                    }
-                    return null;
-                  })}
-                </Dropdown.Menu>
-              </Dropdown>
-            </Form.Group>
-            <Form.Group>
-              <Dropdown data-testid="method-input">
-                <Dropdown.Toggle variant="secondary">
-                  {paymentChoice}
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item
-                    onClick={ () => {
-                      this.setState({ paymentChoice: 'Dinheiro' });
-                    } }
-                  >
-                    Dinheiro
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={ () => {
-                      this.setState({ paymentChoice: 'Cartão de crédito' });
-                    } }
-                  >
-                    Cartão de crédito
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={ () => {
-                      this.setState({ paymentChoice: 'Cartão de débito' });
-                    } }
-                  >
-                    Cartão de débito
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Form.Group>
-            <Form.Group>
-              <Dropdown data-testid="tag-input">
-                <Dropdown.Toggle variant="secondary">
-                  {tag}
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item
-                    onClick={ () => {
-                      this.setState({ tag: 'Alimentação' });
-                    } }
-                  >
-                    Alimentação
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={ () => {
-                      this.setState({ tag: 'Lazer' });
-                    } }
-                  >
-                    Lazer
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={ () => {
-                      this.setState({ tag: 'Trabalho' });
-                    } }
-                  >
-                    Trabalho
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={ () => {
-                      this.setState({ tag: 'Transporte' });
-                    } }
-                  >
-                    Transporte
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={ () => {
-                      this.setState({ tag: 'Saúde' });
-                    } }
-                  >
-                    Saúde
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Form.Group>
-            <Form.Group>
-              <Button
-                onClick={ (e) => {
-                  if (e.target.innerHTML !== 'Editar despesa') {
-                    this.saveExpense();
-                  } else if (e.target.innerHTML === 'Editar despesa') {
-                    this.editExpense();
-                  }
-                  this.setState({
-                    submitButtonText: 'Adicionar despesa',
-                  });
+        <div>
+          <p>Trybe Wallet</p>
+          <p data-testid="email-field">
+            Email:
+            {userEmail}
+          </p>
+          <p data-testid="total-field">{totalSpent}</p>
+          <p data-testid="header-currency-field">BRL</p>
+        </div>
+        <div>
+          <form>
+            <input
+              data-testid="value-input"
+              onChange={ (e) => this.setState({ value: parseInt(e.target.value, 10) }) }
+              type="number"
+              value={ value }
+            />
+            <input
+              data-testid="description-input"
+              onChange={ (e) => this.setState({ description: e.target.value }) }
+              type="text"
+              value={ description }
+            />
+            <select
+              data-testid="currency-input"
+              value={ selectedCurrency }
+              onChange={ (e) => this.setState({ selectedCurrency: e.target.value }) }
+            >
+              {Object.keys(dropdownList).map((item, index) => {
+                if (item !== 'USDT') {
+                  return (
+                    <option
+                      data-testid={ item }
+                      key={ index }
+                      onClick={ () => this.setState({ selectedCurrency: item }) }
+                    >
+                      {item}
+                    </option>
+                  );
+                }
+                return null;
+              })}
+            </select>
+            <select
+              value={ paymentChoice }
+              data-testid="method-input"
+              onChange={ (e) => this.setState({ paymentChoice: e.target.value }) }
+            >
+              <option
+                onClick={ () => {
+                  this.setState({ paymentChoice: 'Dinheiro' });
                 } }
               >
-                {submitButtonText}
-              </Button>
-            </Form.Group>
-          </Form>
-        </Navbar>
-        <Table striped bordered hover>
+                Dinheiro
+              </option>
+              <option
+                onClick={ () => {
+                  this.setState({ paymentChoice: 'Cartão de crédito' });
+                } }
+              >
+                Cartão de crédito
+              </option>
+              <option
+                onClick={ () => {
+                  this.setState({ paymentChoice: 'Cartão de débito' });
+                } }
+              >
+                Cartão de débito
+              </option>
+            </select>
+            <select
+              data-testid="tag-input"
+              value={ tag }
+              onChange={ (e) => this.setState({ tag: e.target.value }) }
+            >
+              <option
+                onClick={ () => {
+                  this.setState({ tag: 'Alimentação' });
+                } }
+              >
+                Alimentação
+              </option>
+              <option
+                onClick={ () => {
+                  this.setState({ tag: 'Lazer' });
+                } }
+              >
+                Lazer
+              </option>
+              <option
+                onClick={ () => {
+                  this.setState({ tag: 'Trabalho' });
+                } }
+              >
+                Trabalho
+              </option>
+              <option
+                onClick={ () => {
+                  this.setState({ tag: 'Transporte' });
+                } }
+              >
+                Transporte
+              </option>
+              <option
+                onClick={ () => {
+                  this.setState({ tag: 'Saúde' });
+                } }
+              >
+                Saúde
+              </option>
+            </select>
+            <button
+              onClick={ (e) => {
+                if (e.target.innerHTML !== 'Editar despesa') {
+                  this.saveExpense();
+                } else if (e.target.innerHTML === 'Editar despesa') {
+                  this.editExpense();
+                }
+                this.setState({
+                  submitButtonText: 'Adicionar despesa',
+                });
+              } }
+              type="button"
+            >
+              {submitButtonText}
+            </button>
+          </form>
+        </div>
+        <table>
           <thead>
             <tr>
               <th>Descrição</th>
@@ -247,7 +224,7 @@ class Wallet extends React.Component {
                 </td>
                 <td>Real</td>
                 <td>
-                  <Button
+                  <button
                     data-testid="edit-btn"
                     onClick={ () => {
                       const obj = expensesProp.find((e) => e.id === expense.id);
@@ -256,20 +233,22 @@ class Wallet extends React.Component {
                         ...obj,
                       });
                     } }
+                    type="button"
                   >
                     Editar despesa
-                  </Button>
-                  <Button
+                  </button>
+                  <button
                     data-testid="delete-btn"
                     onClick={ () => removeExpenseProp(expense.id) }
+                    type="button"
                   >
                     D
-                  </Button>
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
-        </Table>
+        </table>
       </div>
     );
   }
