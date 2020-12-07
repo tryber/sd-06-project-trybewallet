@@ -10,9 +10,9 @@ class Wallet extends React.Component {
     this.state = {
       submitButtonText: 'Adicionar despesa',
       description: '',
-      paymentChoice: 'Payment Method',
-      selectedCurrency: 'Currency',
-      tag: 'Tag',
+      paymentChoice: 'Dinheiro',
+      selectedCurrency: 'USD',
+      tag: 'Alimentação',
       value: 0,
     };
 
@@ -208,45 +208,64 @@ class Wallet extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {expensesProp.map((expense, index) => (
-              <tr key={ index }>
-                <td>{expense.description}</td>
-                <td>{expense.tag}</td>
-                <td>{expense.paymentChoice}</td>
-                <td>{expense.value}</td>
-                <td>{expense.exchangeRates[expense.selectedCurrency].name}</td>
-                <td>
-                  {Number(expense.exchangeRates[expense.selectedCurrency].ask).toFixed(2)}
-                </td>
-                <td>
-                  {(expense.exchangeRates[expense.selectedCurrency]
-                    .ask * expense.value).toFixed(2)}
-                </td>
-                <td>Real</td>
-                <td>
-                  <button
-                    data-testid="edit-btn"
-                    onClick={ () => {
-                      const obj = expensesProp.find((e) => e.id === expense.id);
-                      this.setState({
-                        submitButtonText: 'Editar despesa',
-                        ...obj,
-                      });
-                    } }
-                    type="button"
-                  >
-                    Editar despesa
-                  </button>
-                  <button
-                    data-testid="delete-btn"
-                    onClick={ () => removeExpenseProp(expense.id) }
-                    type="button"
-                  >
-                    D
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {expensesProp.map((expense, index) => {
+              if (expense !== undefined) {
+                let td5, td6, td7;
+                if (expense.exchangeRates[expense.selectedCurrency] !== undefined) {
+                  td5 = expense.exchangeRates[expense.selectedCurrency].name;
+                }
+                if (expense.exchangeRates[expense.selectedCurrency] !== undefined) {
+                  td6 = Number(expense.exchangeRates[expense.selectedCurrency]
+                    .ask).toFixed(2);
+                  td7 = (expense.exchangeRates[expense.selectedCurrency]
+                    .ask * expense.value).toFixed(2);
+                }
+                return (
+                  <tr key={ index }>
+                    <td>{expense.description}</td>
+                    <td>{expense.tag}</td>
+                    <td>{expense.paymentChoice}</td>
+                    <td>{expense.value}</td>
+                    <td>{td5}</td>
+                    <td>
+                      {td6}
+                    </td>
+                    <td>
+                      {td7}
+                    </td>
+                    <td>Real</td>
+                    <td>
+                      <button
+                        data-testid="edit-btn"
+                        onClick={ () => {
+                          const obj = expensesProp.find((e) => e.id === expense.id);
+                          this.setState({
+                            submitButtonText: 'Editar despesa',
+                            ...obj,
+                          });
+                        } }
+                        type="button"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        data-testid="delete-btn"
+                        onClick={ () => {
+                          removeExpenseProp(expense.id);
+                          this.setState({
+                            submitButtonText: 'Adicionar despesa',
+                          });
+                        } }
+                        type="button"
+                      >
+                        D
+                      </button>
+                    </td>
+                  </tr>
+                );
+              }
+              return null;
+            })}
           </tbody>
         </table>
       </div>
