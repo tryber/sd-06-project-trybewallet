@@ -1,8 +1,7 @@
-/* eslint-disable no-irregular-whitespace */
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { Button, Dropdown, Form, Navbar, Spinner, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { addExpenseLong, editExpense, getCurrencies, removeExpense } from '../actions';
 
 class Wallet extends React.Component {
@@ -79,7 +78,7 @@ class Wallet extends React.Component {
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text data-testid="total-field">{totalSpent}</Navbar.Text>
-            <Navbar.Text data-testid="header-currency-field">  BRL</Navbar.Text>
+            <Navbar.Text data-testid="header-currency-field">BRL</Navbar.Text>
           </Navbar.Collapse>
         </Navbar>
         <Navbar bg="dark" variant="dark">
@@ -291,5 +290,16 @@ const mapDispatchToProps = (dispatch) => ({
   removeExpenseProp: (id) => dispatch(removeExpense(id)),
   editExpenseProp: (expenses) => dispatch(editExpense(expenses)),
 });
+
+Wallet.propTypes = {
+  getCurrenciesProp: PropTypes.func,
+  addExpenseLongProp: PropTypes.func,
+  expensesProp: PropTypes.array,
+  editExpenseProp: PropTypes.func,
+  totalSpent: PropTypes.number,
+  userEmail: PropTypes.string,
+  dropdownList: PropTypes.object,
+  removeExpenseProp: PropTypes.func,
+}.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

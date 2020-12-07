@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { actionLogin } from '../actions/index';
 
 class Login extends React.Component {
@@ -75,5 +75,10 @@ class Login extends React.Component {
 const mapDispatchToProps = {
   actionLoginProp: actionLogin,
 };
+
+Login.propTypes = {
+  actionLoginProp: PropTypes.func,
+  history: PropTypes.func,
+}.isRequired;
 
 export default connect(null, mapDispatchToProps)(Login);
