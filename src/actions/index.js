@@ -3,11 +3,6 @@ export const actionLogin = (email) => ({
   email,
 });
 
-export const actionAccount = (sum) => ({
-  type: 'ACCOUNTING',
-  sum,
-});
-
 export const changeCurrency = (currencies) => ({
   type: 'CURRENCY',
   currencies,

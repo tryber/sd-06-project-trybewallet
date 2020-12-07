@@ -10,8 +10,8 @@ class Wallet extends React.Component {
     this.state = {
       submitButtonText: 'Adicionar despesa',
       description: '',
-      paymentChoice: 'Dinheiro',
-      selectedCurrency: 'USD',
+      method: 'Dinheiro',
+      currency: 'USD',
       tag: 'Alimentação',
       value: 0,
     };
@@ -27,12 +27,12 @@ class Wallet extends React.Component {
 
   saveExpense() {
     const { addExpenseLongProp } = this.props;
-    const { selectedCurrency, paymentChoice, tag, value, description } = this.state;
+    const { currency, method, tag, value, description } = this.state;
     console.log(value);
     const expense = {
       description,
-      paymentChoice,
-      selectedCurrency,
+      method,
+      currency,
       tag,
       value,
     };
@@ -41,20 +41,22 @@ class Wallet extends React.Component {
 
   editExpense() {
     const { expensesProp, editExpenseProp } = this.props;
-    const { selectedCurrency, paymentChoice, tag, value, description } = this.state;
+    const { currency, method, tag, value, description } = this.state;
     const { id } = this.state;
-    expensesProp[id].description = description;
-    expensesProp[id].paymentChoice = paymentChoice;
-    expensesProp[id].selectedCurrency = selectedCurrency;
-    expensesProp[id].tag = tag;
-    expensesProp[id].value = value;
+    const index = expensesProp.findIndex((e) => e.id === id);
+    console.log(expensesProp);
+    expensesProp[index].description = description;
+    expensesProp[index].method = method;
+    expensesProp[index].currency = currency;
+    expensesProp[index].tag = tag;
+    expensesProp[index].value = value;
     editExpenseProp(expensesProp);
   }
 
   render() {
     const { totalSpent, userEmail, dropdownList, expensesProp,
       removeExpenseProp } = this.props;
-    const { selectedCurrency, paymentChoice, tag, value, description,
+    const { currency, method, tag, value, description,
       submitButtonText } = this.state;
 
     // if (Object.keys(dropdownList).length === 0) {
@@ -71,14 +73,23 @@ class Wallet extends React.Component {
             Email:
             {userEmail}
           </p>
-          <p data-testid="total-field">{totalSpent}</p>
+          <p data-testid="total-field">
+            {expensesProp.reduce((accumulator, current) => {
+              const { exchangeRates } = current;
+              const crr = current.currency;
+              const vle = current.value;
+              let totalValue = (exchangeRates[crr].ask) * vle;
+              totalValue = accumulator + parseFloat(totalValue);
+              return totalValue;
+            }, 0).toFixed(2)}
+          </p>
           <p data-testid="header-currency-field">BRL</p>
         </div>
         <div>
           <form>
             <input
               data-testid="value-input"
-              onChange={ (e) => this.setState({ value: parseInt(e.target.value, 10) }) }
+              onChange={ (e) => this.setState({ value: e.target.value }) }
               type="number"
               value={ value }
             />
@@ -90,8 +101,8 @@ class Wallet extends React.Component {
             />
             <select
               data-testid="currency-input"
-              value={ selectedCurrency }
-              onChange={ (e) => this.setState({ selectedCurrency: e.target.value }) }
+              value={ currency }
+              onChange={ (e) => this.setState({ currency: e.target.value }) }
             >
               {Object.keys(dropdownList).map((item, index) => {
                 if (item !== 'USDT') {
@@ -99,7 +110,7 @@ class Wallet extends React.Component {
                     <option
                       data-testid={ item }
                       key={ index }
-                      onClick={ () => this.setState({ selectedCurrency: item }) }
+                      value={ item }
                     >
                       {item}
                     </option>
@@ -109,28 +120,22 @@ class Wallet extends React.Component {
               })}
             </select>
             <select
-              value={ paymentChoice }
+              value={ method }
               data-testid="method-input"
-              onChange={ (e) => this.setState({ paymentChoice: e.target.value }) }
+              onChange={ (e) => this.setState({ method: e.target.value }) }
             >
               <option
-                onClick={ () => {
-                  this.setState({ paymentChoice: 'Dinheiro' });
-                } }
+                value="Dinheiro"
               >
                 Dinheiro
               </option>
               <option
-                onClick={ () => {
-                  this.setState({ paymentChoice: 'Cartão de crédito' });
-                } }
+                value="Cartão de crédito"
               >
                 Cartão de crédito
               </option>
               <option
-                onClick={ () => {
-                  this.setState({ paymentChoice: 'Cartão de débito' });
-                } }
+                value="Cartão de débito"
               >
                 Cartão de débito
               </option>
@@ -141,37 +146,27 @@ class Wallet extends React.Component {
               onChange={ (e) => this.setState({ tag: e.target.value }) }
             >
               <option
-                onClick={ () => {
-                  this.setState({ tag: 'Alimentação' });
-                } }
+                value="Alimentação"
               >
                 Alimentação
               </option>
               <option
-                onClick={ () => {
-                  this.setState({ tag: 'Lazer' });
-                } }
+                value="Lazer"
               >
                 Lazer
               </option>
               <option
-                onClick={ () => {
-                  this.setState({ tag: 'Trabalho' });
-                } }
+                value="Trabalho"
               >
                 Trabalho
               </option>
               <option
-                onClick={ () => {
-                  this.setState({ tag: 'Transporte' });
-                } }
+                value="Transporte"
               >
                 Transporte
               </option>
               <option
-                onClick={ () => {
-                  this.setState({ tag: 'Saúde' });
-                } }
+                value="Saúde"
               >
                 Saúde
               </option>
@@ -194,81 +189,77 @@ class Wallet extends React.Component {
           </form>
         </div>
         <table>
-          <thead>
-            <tr>
-              <th>Descrição</th>
-              <th>Tag</th>
-              <th>Método de pagamento</th>
-              <th>Valor</th>
-              <th>Moeda</th>
-              <th>Câmbio utilizado</th>
-              <th>Valor convertido</th>
-              <th>Moeda de conversão</th>
-              <th>Editar/Excluir</th>
-            </tr>
-          </thead>
-          <tbody>
-            {expensesProp.map((expense, index) => {
-              if (expense !== undefined) {
-                let td5;
-                let td6;
-                let td7;
-                if (expense.exchangeRates[expense.selectedCurrency] !== undefined) {
-                  td5 = expense.exchangeRates[expense.selectedCurrency].name;
-                }
-                if (expense.exchangeRates[expense.selectedCurrency] !== undefined) {
-                  td6 = Number(expense.exchangeRates[expense.selectedCurrency]
-                    .ask).toFixed(2);
-                  td7 = (expense.exchangeRates[expense.selectedCurrency]
-                    .ask * expense.value).toFixed(2);
-                }
-                return (
-                  <tr key={ index }>
-                    <td>{expense.description}</td>
-                    <td>{expense.tag}</td>
-                    <td>{expense.paymentChoice}</td>
-                    <td>{expense.value}</td>
-                    <td>{td5}</td>
-                    <td>
-                      {td6}
-                    </td>
-                    <td>
-                      {td7}
-                    </td>
-                    <td>Real</td>
-                    <td>
-                      <button
-                        data-testid="edit-btn"
-                        onClick={ () => {
-                          const obj = expensesProp.find((e) => e.id === expense.id);
-                          this.setState({
-                            submitButtonText: 'Editar despesa',
-                            ...obj,
-                          });
-                        } }
-                        type="button"
-                      >
-                        Editar
-                      </button>
-                      <button
-                        data-testid="delete-btn"
-                        onClick={ () => {
-                          removeExpenseProp(expense.id);
-                          this.setState({
-                            submitButtonText: 'Adicionar despesa',
-                          });
-                        } }
-                        type="button"
-                      >
-                        D
-                      </button>
-                    </td>
-                  </tr>
-                );
+          <tr>
+            <th>Descrição</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
+            <th>Valor</th>
+            <th>Moeda</th>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+            <th>Editar/Excluir</th>
+          </tr>
+          {expensesProp.map((expense, index) => {
+            if (expense !== undefined) {
+              let td5;
+              let td6;
+              let td7;
+              if (expense.exchangeRates[expense.currency] !== undefined) {
+                td5 = expense.exchangeRates[expense.currency].name;
               }
-              return null;
-            })}
-          </tbody>
+              if (expense.exchangeRates[expense.currency] !== undefined) {
+                td6 = Number(expense.exchangeRates[expense.currency]
+                  .ask).toFixed(2);
+                td7 = (expense.exchangeRates[expense.currency]
+                  .ask * expense.value).toFixed(2);
+              }
+              return (
+                <tr key={ index }>
+                  <td>{expense.description}</td>
+                  <td>{expense.tag}</td>
+                  <td>{expense.method}</td>
+                  <td>{expense.value}</td>
+                  <td>{td5}</td>
+                  <td>
+                    {td6}
+                  </td>
+                  <td>
+                    {td7}
+                  </td>
+                  <td>Real</td>
+                  <td>
+                    <button
+                      data-testid="edit-btn"
+                      onClick={ () => {
+                        const obj = expensesProp.find((e) => e.id === expense.id);
+                        this.setState({
+                          submitButtonText: 'Editar despesa',
+                          ...obj,
+                        });
+                      } }
+                      type="button"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      data-testid="delete-btn"
+                      onClick={ () => {
+                        removeExpenseProp(expense.id);
+                        this.setState({
+                          submitButtonText: 'Adicionar despesa',
+                        });
+                      } }
+                      type="button"
+                    >
+                      D
+                    </button>
+                  </td>
+                </tr>
+              );
+            }
+            return null;
+          })}
         </table>
       </div>
     );

@@ -1,5 +1,4 @@
 const INITIAL_STATE = {
-  total: 0,
   currencies: {},
   expenses: [],
 };
@@ -28,10 +27,6 @@ export default function (state = INITIAL_STATE, action) {
     }
     return {
       ...state,
-      total: state.total + parseFloat(
-        (action.expense.exchangeRates[action.expense.selectedCurrency].ask)
-        * action.expense.value,
-      ),
       expenses: [
         ...state.expenses,
         { ...action.expense, id: idCount },
