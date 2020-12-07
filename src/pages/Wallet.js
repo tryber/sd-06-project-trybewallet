@@ -28,7 +28,6 @@ class Wallet extends React.Component {
   saveExpense() {
     const { addExpenseLongProp } = this.props;
     const { currency, method, tag, value, description } = this.state;
-    console.log(value);
     const expense = {
       description,
       method,
@@ -41,15 +40,13 @@ class Wallet extends React.Component {
 
   editExpense() {
     const { expensesProp, editExpenseProp } = this.props;
-    const { currency, method, tag, value, description } = this.state;
-    const { id } = this.state;
+    const { currency, method, tag, value, description, id } = this.state;
     const index = expensesProp.findIndex((e) => e.id === id);
-    console.log(expensesProp);
+    expensesProp[index].value = value;
     expensesProp[index].description = description;
     expensesProp[index].method = method;
     expensesProp[index].currency = currency;
     expensesProp[index].tag = tag;
-    expensesProp[index].value = value;
     editExpenseProp(expensesProp);
   }
 

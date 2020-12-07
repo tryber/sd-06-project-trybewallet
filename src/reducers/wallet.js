@@ -41,7 +41,9 @@ export default function (state = INITIAL_STATE, action) {
         mew.splice(index, 1);
         return {
           ...state,
-          ...mew,
+          expenses: [
+            ...mew,
+          ],
         };
       }
     }
@@ -49,7 +51,7 @@ export default function (state = INITIAL_STATE, action) {
   case 'EDIT':
     return {
       ...state,
-      expenses: [...action.expenses],
+      expenses: action.expenses,
     };
   default:
     return state;
