@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createExpense, requestCurrencies, deleteExpense } from '../actions/wallet';
+import {
+  createExpense,
+  requestCurrencies,
+  deleteExpense,
+  saveEditExpense,
+} from '../actions/wallet';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -12,10 +17,14 @@ class Wallet extends React.Component {
       currency: 'BRL',
       value: 0,
       method: 'Dinheiro',
+      noEditing: true,
+      idExpenseEdit: '',
     };
     this.handleSpent = this.handleSpent.bind(this);
     this.submitWallet = this.submitWallet.bind(this);
     this.renderTable = this.renderTable.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.renderSelect = this.renderSelect.bind(this);
   }
 
   componentDidMount() {
@@ -31,13 +40,35 @@ class Wallet extends React.Component {
 
   submitWallet(event) {
     event.preventDefault();
-    const { createNewExpense } = this.props;
-    const { tag, description, currency, method, value } = this.state;
-    createNewExpense({ tag, description, currency, method, value });
+    const { createNewExpense, edit } = this.props;
+    const {
+      tag,
+      description,
+      currency,
+      method,
+      value,
+      noEditing,
+      idExpenseEdit,
+    } = this.state;
+    if (noEditing) {
+      createNewExpense({ tag, description, currency, method, value });
+    } else {
+      edit({ idExpenseEdit, tag, description, currency, method, value });
+      console.log('o que é edit:', edit);
+    }
     this.setState({
       description: '',
       value: 0,
+      noEditing: true,
     });
+  }
+
+  handleEdit(id) {
+    this.setState({
+      noEditing: false,
+      idExpenseEdit: id,
+    });
+    console.log('qual id para editar?:', id);
   }
 
   renderTable() {
@@ -86,6 +117,15 @@ class Wallet extends React.Component {
                   onClick={ () => handleDelete(expense.id) }
                 >
                   Excluir
+                </button>
+              </td>
+              <td>
+                <button
+                  type="button"
+                  data-testid="edit-btn"
+                  onClick={ () => this.handleEdit(expense.id) }
+                >
+                  Editar
                 </button>
               </td>
             </tr>
@@ -146,7 +186,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { value, description } = this.state;
+    const { value, description, noEditing } = this.state;
     const { addEmail, userExpenses } = this.props;
     console.log('userExpenses:', userExpenses);
     const sumExpenses = userExpenses.reduce(
@@ -183,7 +223,8 @@ class Wallet extends React.Component {
             onChange={ ({ target }) => this.handleSpent(target) }
           />
           {this.renderSelect()}
-          <button type="submit">Adicionar Despesa</button>
+          {noEditing ? <button type="submit">Adicionar Despesa</button>
+            : <button type="submit">Editar despesa</button>}
           {this.renderTable()}
         </form>
       </div>
@@ -198,9 +239,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleDelete: (e) => dispatch(deleteExpense(e)),
   createNewExpense: (expensesUserInput) => dispatch(createExpense(expensesUserInput)),
   loadCurrencies: () => dispatch(requestCurrencies()),
+  handleDelete: (e) => dispatch(deleteExpense(e)),
+  edit: (payload) => dispatch(saveEditExpense(payload)),
 });
 
 Wallet.propTypes = {

@@ -385,7 +385,7 @@ describe('6 - [PÁGINA DA CARTEIRA] Crie um botão para deletar uma despesa da t
   });
 });
 
-describe.skip('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela contendo as seguintes características:', () => {
+describe('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela contendo as seguintes características:', () => {
   const initial = initialStateWithExpenses;
 
   test('O botão deve estar dentro do último item da linha da tabela e deve possuir `data-testid="edit-btn"`', () => {
@@ -410,6 +410,7 @@ describe.skip('7 - [BÔNUS] Crie um botão para editar uma despesa da tabela con
     userEvent.selectOptions(methodInput, 'Dinheiro');
     userEvent.selectOptions(tagInput, 'Trabalho');
     userEvent.type(descriptionInput, 'Cem dólares canadenses');
+    
 
     fireEvent.click(editButton);
 

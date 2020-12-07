@@ -2,6 +2,7 @@ import fetchCurrencies from '../services';
 
 export const EXPENSES = 'EXPENSES';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 
 const walletData = ({ value, description, currency, method, tag, exchangeRates }) => ({
   type: EXPENSES,
@@ -48,3 +49,32 @@ export const deleteExpense = (id) => ({
   type: DELETE_EXPENSE,
   id,
 });
+
+export const saveEditExpense = ({
+  idExpenseEdit,
+  value,
+  description,
+  currency,
+  method,
+  tag }) => ({
+  type: EDIT_EXPENSE,
+  idExpenseEdit,
+  value,
+  description,
+  currency,
+  method,
+  tag,
+});
+
+console.log('Objeto ação editar:', saveEditExpense);
+
+// export function editExpense({ id, tag, description, currency, method, value }) {
+//   return (
+//     async (dispatch) => {
+//       const exchangeRates = await fetchCurrencies();
+//       dispatch(saveEditExpense({
+//         id, tag, description, currency, method, value, exchangeRates,
+//       }));
+//     }
+//   );
+// }
