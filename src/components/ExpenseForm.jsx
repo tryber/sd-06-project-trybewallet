@@ -130,7 +130,7 @@ class ExpenseForm extends Component {
               ))}
             </select>
 
-            <label>Método de Pagamento:</label>
+            {/* <label>Método de Pagamento:</label> */}
             <select
               id="method"
               value={ method }
@@ -172,7 +172,7 @@ class ExpenseForm extends Component {
           <button
             type="submit"
             disabled={
-              !value || !currency /* || !method || !tag || !description */ ? 'disabled' : false
+              !value || !currency ? 'disabled' : false
             }
             onClick={ this.btnClick }
           >
