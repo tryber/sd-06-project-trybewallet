@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { btnEdit } from '../actions';
 
 class BtnEditState extends Component {
   constructor(props) {
@@ -36,8 +35,12 @@ class BtnEditState extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  btnEdit: state.wallet.btnEdit,
-});
+// const mapStateToProps = (state) => ({
+//   btnEdit: state.wallet.btnEdit,
+// });
 
 export default BtnEditState;
+
+BtnEditState.propTypes = {
+  btnEdit: func.isRequired,
+};

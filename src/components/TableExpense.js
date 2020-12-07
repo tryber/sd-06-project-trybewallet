@@ -106,4 +106,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(TableExpense);
 TableExpense.propTypes = {
   deleteExpense: func.isRequired,
   expenses: string.isRequired,
+  editBtn: func.isRequired,
 };

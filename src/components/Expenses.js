@@ -30,11 +30,17 @@ class Expenses extends Component {
     fetchAPI();
   }
 
-  handleChange(e) {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value,
-    });
+  componentDidUpdate(prevProps, prevState) {
+    const { newExpense, edit } = this.props;
+    if (prevState !== newExpense && newExpense !== null) {
+      const temp = newExpense;
+      edit(null);
+      this.aux(temp);
+    }
+  }
+
+  aux(temp) {
+    this.setState(temp);
   }
 
   handleClick(e) {
@@ -62,13 +68,11 @@ class Expenses extends Component {
     this.setState({ id: newId });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { newExpense, edit } = this.props;
-    if (prevState !== newExpense && newExpense !== null) {
-      const temp = newExpense;
-      edit(null);
-      this.setState(temp);
-    }
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
   }
 
   render() {
@@ -137,4 +141,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Expenses);
 Expenses.propTypes = {
   fetchAPI: PropTypes.func.isRequired,
   expenseRegister: PropTypes.func.isRequired,
+  newExpense: PropTypes.objectOf(PropTypes.obj).isRequired,
+  btnEdit: PropTypes.func.isRequired,
+  edit: PropTypes.func.isRequired,
 };
