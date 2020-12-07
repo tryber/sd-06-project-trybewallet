@@ -1,0 +1,73 @@
+.entry {
+  background: lightslategray;
+  padding: 0 1em;
+  border: groove 10px darkgray;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.system-information {
+  margin-left: -1em;
+  padding-left: 1em;
+  width: 100%;
+  background: linear-gradient(gray, lightgray, gray);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.user-entry {
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  width: 97%;
+}
+.org-left input {
+  width: 301px;
+  height: 20px;
+}
+
+.org-left label {
+  width: 309px;
+  height: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.org-left select {
+  width: 150px;
+  height: 20px;
+}
+
+.org-left input {
+  width: 139px;
+  height: 16px;
+  text-align: center;
+  padding-right: 5px;
+}
+
+.org-left {
+  margin: 10px 30px 10px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30%;
+}
+
+.org-right {
+  margin: 10px 30px 10px 0;
+  width: 55%;
+}
+
+.org-right input {
+  height: 95%;
+  width: 100%;
+}
+
+.user-entry button {
+  color: green;
+  font-weight: bolder;
+  margin: 8px 0px;
+  background: linear-gradient(black, gray, white, gray, black);
+}
