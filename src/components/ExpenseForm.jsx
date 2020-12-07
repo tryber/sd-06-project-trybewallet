@@ -207,6 +207,7 @@ ExpenseForm.propTypes = {
   salvarDespesas: PropType.func.isRequired,
   idEditado: PropType.func.isRequired,
   despesas: PropType.func.isRequired,
+  salvarEditado: PropType.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
