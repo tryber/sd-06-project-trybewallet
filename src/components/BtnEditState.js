@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
+import { btnEdit } from '../actions';
 
-class BtnEdit extends Component {
+class BtnEditState extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
+
+
   render() {
-    const btnEdit = this.props;
+    const btnEditState = this.props;
     return (
       <form>
         {
-          (btnEdit)
+          (btnEditState)
             ? (
               <button
                 type="button"
@@ -35,4 +38,8 @@ class BtnEdit extends Component {
   }
 }
 
-export default BtnEdit;
+// const mapStateToProps = (state) => ({
+//   btnEdit: (btnEdit) => dispatch(btnEdit(btnEdit)),
+// });
+
+export default BtnEditState;

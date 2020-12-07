@@ -7,8 +7,8 @@ import FormExpenseMethodInput from './FormExpenseMethodInput';
 import FormExpenseTagInput from './FormExpenseTagInput';
 import FormExpenseValueInput from './FormExpenseValueInput';
 import TableExpense from './TableExpense';
-import BtnEditState from './BtnEdit';
-import { fetchCurrenciesAction, ratesList } from '../actions';
+import BtnEditState from './BtnEditState';
+import { editExpense, fetchCurrenciesAction, ratesList } from '../actions';
 
 class Expenses extends Component {
   constructor() {
@@ -62,6 +62,19 @@ class Expenses extends Component {
     this.setState({ id: newId });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { newExpense, edit } = this.props;
+    if (prevState !== newExpense && newExpense !== null) {
+      const temp = newExpense;
+      edit(null);
+      this.setState(temp);
+    }
+    const { btnEditState } = this.props;
+    if (btnEditState !== prevProps.btnEditState && btnEditState) {
+      this.loadElement();
+    }
+  }
+
   render() {
     const { value } = this.state;
     return (
@@ -75,7 +88,7 @@ class Expenses extends Component {
           <FormExpenseCurrencyInput handleChange={ this.handleChange } />
           <FormExpenseMethodInput handleChange={ this.handleChange } />
           <FormExpenseTagInput handleChange={ this.handleChange } />
-          <BtnEditState />
+          {/* <BtnEditState /> */}
           <button
             type="button"
             onClick={ this.handleClick }
@@ -89,12 +102,18 @@ class Expenses extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  newExpense: state.wallet.editExpense,
+  btnEditState: state.wallet.btnEdit,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   fetchAPI: () => dispatch(fetchCurrenciesAction()),
   expenseRegister: (expense) => dispatch(ratesList(expense)),
+  edit: (expense) => dispatch(editExpense(expense)),
 });
 
-export default connect(null, mapDispatchToProps)(Expenses);
+export default connect(mapStateToProps, mapDispatchToProps)(Expenses);
 
 Expenses.propTypes = {
   fetchAPI: PropTypes.func.isRequired,

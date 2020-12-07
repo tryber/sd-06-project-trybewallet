@@ -6,6 +6,7 @@ export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const DEL_EXPENSE = 'DEL_EXPENSE';
 export const ID_SAVE = 'ID_SAVE';
 export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const BTN_EDIT = 'BTN_EDIT';
 
 export const loginAction = (email) => ({
   type: LOGIN,
@@ -45,6 +46,12 @@ export const saveId = (id) => ({
 export const editExpense = (expense) => ({
   type: EDIT_EXPENSE,
   expense,
+});
+
+export const btnEdit = (btnEdit, editId) => ({
+  type: BTN_EDIT,
+  btnEdit,
+  editId,
 });
 
 export const ratesList = (expense) => async (dispatch) => {

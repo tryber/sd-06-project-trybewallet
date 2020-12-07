@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { string, func } from 'prop-types';
-import { removeExpense, saveId, editExpense } from '../actions';
+import { removeExpense, saveId, editExpense, btnEdit } from '../actions';
 
 class TableExpense extends Component {
   constructor(props) {
@@ -94,6 +94,7 @@ const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (id) => dispatch(removeExpense(id)),
   addId: (id) => dispatch(saveId(id)),
   edit: (expense) => dispatch(editExpense(expense)),
+  
 });
 
 const mapStateToProps = (state) => ({
