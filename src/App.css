@@ -36,3 +36,26 @@
     transform: rotate(360deg);
   }
 }
+
+.btnDelete {
+  border-radius: 6px;
+  color: white;
+  background-color: purple;
+  height: 21px;
+  font-weight: bolder;
+  
+}
+/*table {
+  border-collapse: separate;
+  table-layout: fixed;
+  margin-bottom: 6px;
+}*/
+th {
+  width: 80px;
+  margin-left: 30px;
+}
+tr {
+  display: flex;
+  justify-content: space-around;
+  
+}
