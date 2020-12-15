@@ -1,0 +1,7 @@
+li {
+  list-style-type: none;
+}
+
+.table-element {
+  display: flex;
+}

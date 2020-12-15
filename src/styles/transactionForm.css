@@ -1,0 +1,13 @@
+.table {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.table-header {
+  display: flex;
+  font-size: 15px;
+  justify-content: flex-start;
+  margin-right: 100px;
+  margin-top: 30px;
+  width: 100px;
+}
