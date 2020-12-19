@@ -1,0 +1,26 @@
+.form-login {
+  background-color: white;
+  border: 10px solid rgb(226, 240, 147);
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  justify-content: space-around;
+  left: 35%;
+  margin: auto;
+  padding: 100px;
+  position: absolute;
+  width: fit-content;
+  text-align: center;
+  top: 30%;
+}
+
+.button-login {
+  width: 50px;
+  margin: auto;
+}
+
+.title {
+  color: rgb(93, 37, 167);
+  text-decoration: underline;
+}
