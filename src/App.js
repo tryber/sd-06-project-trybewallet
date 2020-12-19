@@ -1,7 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-function App() {
-  return <div>Hello, TrybeWallet!</div>;
-}
+const App = () => {
+  return (
+    <div>
+      <h1>Funfo</h1>
+    </div>
+  );
+};
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+// const mapDispatchToprops = (dispach) => {
+//   return {
+
+//   };
+// };
+
+export default connect(mapStateToProps)(App);
