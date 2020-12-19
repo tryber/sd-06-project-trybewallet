@@ -1,0 +1,27 @@
+.form-Wallet {
+  color: rgb(185, 183, 183);
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 20px;
+  background-color: black;
+  font-size: 15px;
+}
+
+.input-form {
+  margin: 1px 5px;
+  font-size: 15px;
+}
+
+.button-form {
+  border: 0.8px solid rgb(149, 148, 148);
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 0 10px;
+  height: 30px;
+  color: white;
+  background-color: teal;
+  margin: 0 15px;
+}
