@@ -6,4 +6,4 @@ import '@testing-library/jest-dom/extend-expect';
 import MutationObserver from '@sheerun/mutationobserver-shim';
 
 window.MutationObserver = MutationObserver;
-require('jest-localstorage-mock');
+require('jest-localstorage-mock');// jest-dom adds custom jest matchers for asserting on DOM nodes.
