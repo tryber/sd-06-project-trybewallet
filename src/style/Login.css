@@ -1,0 +1,53 @@
+.div_login {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 500px;
+  margin: 100px auto;
+  width: 500px;
+}
+
+.form_login {
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 20px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  height: 350px;
+  margin: auto;
+  padding: 50px;
+  width: 300px;
+}
+
+.image_wallet {
+  margin-bottom: 20px;
+}
+
+.input_login {
+  border: 1px solid gainsboro;
+  border-radius: 5px;
+  height: 30px;
+  margin-bottom: 5px;
+  text-align: center;
+  width: 250px;
+}
+
+.input_login:focus {
+  outline: 5px solid cadetblue;;
+}
+
+.button_login {
+  background-color: rgb(65, 185, 65);
+  border-radius: 5px;
+  color:white;
+  font-family: 'Open Sans', sans-serif;
+  height: 40px;
+  margin-top: 5px;
+  width: 260px;
+}
+
+.button_login:hover {
+  background-color: rgb(59, 141, 59);
+  cursor: pointer;
+}
