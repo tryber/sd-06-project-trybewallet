@@ -1,0 +1,40 @@
+.form-login {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+.form-login form {
+  align-items: center;
+  border: 2px solid rgba(0, 0, 0, 0.125);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-login img {
+  margin: 30px;
+  width: 60%;
+}
+
+.form-login label {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: -5px;
+  width: 100%;
+}
+
+.form-login label input {
+  margin: 5px;
+  padding: 5px;
+  width: 50%;
+}
+
+.form-login button {
+  margin: 5px;
+  padding: 6px;
+  width: 100%;
+}
