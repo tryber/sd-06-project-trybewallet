@@ -11,3 +11,71 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Meu CSS */
+
+.loginDiv {
+  border: 1px solid;
+  border-radius: 4px;
+  width: 350px;
+  text-align: center;
+}
+
+.loginDiv img {
+  margin: 10px;
+}
+
+.loginDiv input {
+  border: 1px solid gray;
+  border-radius: 4px;
+  font-size: 18px;
+  margin: 5px;
+  margin-top: 0;
+  height: 30px;
+}
+
+.loginDiv input::placeholder {
+  padding: 5px;
+}
+
+.loginDiv button {
+  border: 0;
+  border-radius: 4px;
+  width: 230px;
+  font-size: 18px;
+  margin: 0 5px 10px 5px;
+  background-color: #0FA36B;
+  color: white;
+  height: 30px;
+  cursor: pointer;
+}
+
+.loginDiv button:disabled {
+  background-color:#5FA36F;
+  cursor: default;
+}
+
+header {
+  /* border: 1px solid; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+header img {
+  width: 150px;
+}
+
+header div {
+  margin: 0 10px;
+}
+
+header div span {
+  margin-left: 10px;
+}
+
+.formComponent {
+  border: 1px solid;
+  margin: 0;
+}
