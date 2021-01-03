@@ -1,4 +1,3 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 import {
   SAVE_EXPENSE,
   SAVE_CURRENCIES_NAMES,
