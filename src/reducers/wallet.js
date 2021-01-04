@@ -32,9 +32,10 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       expenses: [
         ...state.expenses.filter((expense) => (
-          expense.id !== action.payload.toDeleteExpenseId
+          expense.id !== action.payload.expenseId
         )),
       ],
+      total: state.total - action.payload.convertedBRLExpense,
     });
   default:
     return state;

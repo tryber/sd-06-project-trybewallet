@@ -8,6 +8,7 @@ class Expense extends React.Component {
     const { expense, deleteExpenseAction } = this.props;
     const currencyName = expense.exchangeRates[expense.currency].name;
     const currencyRate = parseFloat(expense.exchangeRates[expense.currency].ask);
+    const convertedBRLExpense = (expense.value * currencyRate).toFixed(2);
     return (
       <tr>
         <td>{ expense.description }</td>
@@ -16,16 +17,14 @@ class Expense extends React.Component {
         <td>{ expense.value }</td>
         <td>{ currencyName }</td>
         <td>{ currencyRate.toFixed(2) }</td>
-        <td>
-          { (expense.value * currencyRate).toFixed(2) }
-        </td>
+        <td>{ convertedBRLExpense }</td>
         <td>Real</td>
         <td>
           <button type="button" data-testid="edit-btn">Editar</button>
           <button
             type="button"
             data-testid="delete-btn"
-            onClick={ () => deleteExpenseAction(expense.id) }
+            onClick={ () => deleteExpenseAction(expense.id, convertedBRLExpense) }
           >
             Excluir
           </button>
@@ -50,7 +49,9 @@ Expense.propTypes = {
 
 function mapDispatchToProps(dispatch) {
   return {
-    deleteExpenseAction: (expenseId) => dispatch(deleteExpense(expenseId)),
+    deleteExpenseAction: (expenseId, convertedBRLExpense) => dispatch(
+      deleteExpense(expenseId, convertedBRLExpense),
+    ),
   };
 }
 

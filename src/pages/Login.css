@@ -1,0 +1,41 @@
+.login {
+  background: linear-gradient(to left, #76b852, #8DC26F);
+  height: 100vh;
+  padding: 15% 0 0;
+  margin: auto;
+}
+
+.login-container {
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 45px;
+  text-align: center;
+  background: #FFFFFF;
+}
+
+.login-container input {
+  font-family: "Verdana", sans-serif;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.login-container button {
+  font-family: "Verdana", sans-serif;
+  text-transform: uppercase;
+  background: #4CAF50;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.login-container button:hover {
+  background: #43A047;
+}

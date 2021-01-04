@@ -1,10 +1,11 @@
 import { DELETE_EXPENSE } from './actionTypes';
 
-function deleteExpense(toDeleteExpenseId) {
+function deleteExpense(expenseId, convertedBRLExpense) {
   const action = {
     type: DELETE_EXPENSE,
     payload: {
-      toDeleteExpenseId,
+      expenseId,
+      convertedBRLExpense,
     },
   };
   return action;

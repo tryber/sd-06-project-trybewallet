@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { registerUser } from '../actions';
+import './Login.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -70,24 +71,27 @@ class Login extends React.Component {
   render() {
     const { isLoginValid } = this.state;
     return (
-      <div>
-        <input
-          id="teste"
-          type="email"
-          name="emailText"
-          data-testid="email-input"
-          placeholder="Digite seu email"
-          onChange={ (event) => this.handleInputChange(event) }
-        />
-        <input
-          type="password"
-          name="passwordText"
-          data-testid="password-input"
-          placeholder="Senha"
-          onChange={ (event) => this.handleInputChange(event) }
-        />
-        {isLoginValid ? this.renderEnabledLoginBtn() : this.renderDisabledLoginBtn()}
-      </div>
+      <section className="login">
+        <div className="login-container">
+          <input
+            id="teste"
+            type="email"
+            name="emailText"
+            data-testid="email-input"
+            placeholder="Digite seu email"
+            onChange={ (event) => this.handleInputChange(event) }
+          />
+          <input
+            type="password"
+            name="passwordText"
+            data-testid="password-input"
+            placeholder="Senha"
+            onChange={ (event) => this.handleInputChange(event) }
+          />
+          {isLoginValid ? this.renderEnabledLoginBtn() : this.renderDisabledLoginBtn()}
+        </div>
+
+      </section>
     );
   }
 }
