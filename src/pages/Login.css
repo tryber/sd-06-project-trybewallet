@@ -1,0 +1,28 @@
+.Email {
+    background-color:#E0EEEE;
+    border:solid 2px #5F9EA0;
+    border-radius:10px;
+    width:300px;
+    height:32px;
+    padding: 10px;
+    margin-right: 50px;
+}
+
+.Senha {
+    background-color:#E0EEEE;
+    border:solid 2px #5F9EA0;
+    border-radius:10px;
+    width:300px;
+    height:32px;
+    padding: 10px;
+}
+
+.Entrar {
+    background-color:#E0EEEE;
+    border:solid 2px #5F9EA0;
+    border-radius:10px;
+    width: 100px;
+    height:50px;
+    padding: 10px;
+    margin-top: 50px;
+}
